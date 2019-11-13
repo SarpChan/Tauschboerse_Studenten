@@ -1,33 +1,32 @@
 package de.hsrm.mi.swtpro.backend.model;
 
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 
 @Entity
 class Room {
-    private String campus;
-    private String building;
+
+    @Id
+    @GeneratedValue
+    private long id;
     private int number;
+    private int seats;
+    @ManyToOne(targetEntity = Building.class)
+    private Building building;
 
-    public Room(String campus, String building, int number) {
-        this.campus = campus;
-        this.building = building;
+
+    public Room(int number, int seats, Building building) {
         this.number = number;
-    }
-
-    public String getCampus() {
-        return campus;
-    }
-
-    public void setCampus(String campus) {
-        this.campus = campus;
-    }
-
-    public String getBuilding() {
-        return building;
-    }
-
-    public void setBuilding(String building) {
+        this.seats = seats;
         this.building = building;
+    }
+
+
+    public Room(int number) {
+ 
+        this.number = number;
     }
 
     public int getNumber() {
@@ -36,6 +35,22 @@ class Room {
 
     public void setNumber(int number) {
         this.number = number;
+    }
+
+    public int getSeats() {
+        return seats;
+    }
+
+    public void setSeats(int seats) {
+        this.seats = seats;
+    }
+
+    public Building getBuilding() {
+        return building;
+    }
+
+    public void setBuilding(Building building) {
+        this.building = building;
     }
     
 }

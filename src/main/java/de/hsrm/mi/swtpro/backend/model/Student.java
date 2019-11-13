@@ -8,15 +8,19 @@ class Student extends User {
     @Id
     private int enrolementNumber;
     private Term enrolementTerm;
-    private String fieldOfStudy;
-    private String examRegulation;
-    private String userName;
-    private String userPassword;
+    private String mail;
+    private ExamRegulation examRegulation;
 
-    public Student(String firstName, String lastName, String fieldOfStudy) {
-        super(firstName, lastName);
-        this.fieldOfStudy = fieldOfStudy;
+
+    public Student(String firstName, String lastName, String loginName, String password, boolean admin, 
+        int enrolementNumber, Term enrolmentTerm, String mail, ExamRegulation examRegulation) {
+        super(firstName, lastName, loginName, password, admin);
+        this.enrolementNumber = enrolementNumber;
+        this.enrolementTerm = enrolmentTerm;
+        this.mail = mail;
+        this.examRegulation = examRegulation;
     }
+
 
     public int getEnrolementNumber() {
         return enrolementNumber;
@@ -34,36 +38,20 @@ class Student extends User {
         this.enrolementTerm = enrolementTerm;
     }
 
-    public String getFieldOfStudy() {
-        return fieldOfStudy;
-    }
-
-    public void setFieldOfStudy(String fieldOfStudy) {
-        this.fieldOfStudy = fieldOfStudy;
-    }
-
-    public String getExamRegulation() {
+    public ExamRegulation getExamRegulation() {
         return examRegulation;
     }
 
-    public void setExamRegulation(String examRegulation) {
+    public void setExamRegulation(ExamRegulation examRegulation) {
         this.examRegulation = examRegulation;
     }
 
-    public String getUserName() {
-        return userName;
+    public String getMail() {
+        return mail;
     }
 
-    public void setUserName(String userName) {
-        this.userName = userName;
-    }
-
-    public String getUserPassword() {
-        return userPassword;
-    }
-
-    public void setUserPassword(String userPassword) {
-        this.userPassword = userPassword;
+    public void setMail(String mail) {
+        this.mail = mail;
     }
     
 }
