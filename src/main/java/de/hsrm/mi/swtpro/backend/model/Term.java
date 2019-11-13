@@ -2,39 +2,32 @@ package de.hsrm.mi.swtpro.backend.model;
 
 import java.sql.Date;
 
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+
 /**
  * Academic Term
  * the time interval in which an education facility holds classes
  * most common cycles are 2 terms per year, known as semester
  */
+@Entity
 class Term {
-    private int year;
-    private String name;
+    
+    @Id
+    @GeneratedValue
+    private long id;
     private Date start;
     private Date end;
+    private int period;
 
-    public Term(int year, String name, Date start, Date end) {
-        this.year = year;
-        this.name = name;
+
+    public Term(Date start, Date end, int period) {
         this.start = start;
         this.end = end;
+        this.period = period;
     }
 
-    public int getYear() {
-        return year;
-    }
-
-    public void setYear(int year) {
-        this.year = year;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
 
     public Date getStart() {
         return start;
@@ -50,5 +43,21 @@ class Term {
 
     public void setEnd(Date end) {
         this.end = end;
+    }
+
+    public long getId() {
+        return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
+    }
+
+    public int getPeriod() {
+        return period;
+    }
+
+    public void setPeriod(int period) {
+        this.period = period;
     }
 }
