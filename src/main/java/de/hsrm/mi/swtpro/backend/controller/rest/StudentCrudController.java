@@ -4,6 +4,7 @@ package de.hsrm.mi.swtpro.backend.controller.rest;
 import de.hsrm.mi.swtpro.backend.controller.exceptions.StudentNotFoundException;
 import de.hsrm.mi.swtpro.backend.model.*;
 import de.hsrm.mi.swtpro.backend.model.repositories.StudentRepository;
+import net.bytebuddy.implementation.bytecode.Throw;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.ui.Model;
