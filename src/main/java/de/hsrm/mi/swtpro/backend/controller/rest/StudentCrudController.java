@@ -1,6 +1,7 @@
 package de.hsrm.mi.swtpro.backend.controller.rest;
 
 
+import de.hsrm.mi.swtpro.backend.controller.exceptions.StudentNotFoundException;
 import de.hsrm.mi.swtpro.backend.model.*;
 import de.hsrm.mi.swtpro.backend.model.repositories.StudentRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,7 +13,9 @@ import org.springframework.web.multipart.MultipartFile;
 
 import javax.validation.Valid;
 import java.io.IOException;
+import java.net.URISyntaxException;
 import java.util.Optional;
+import java.util.function.Supplier;
 
 @RestController
 @RequestMapping("/rest")
@@ -22,7 +25,7 @@ public class StudentCrudController<Student> {
     StudentRepository studentRepository;
 
     @PostMapping(path = "/Student/create", consumes = "application/json", produces =  MediaType.APPLICATION_JSON_VALUE)
-    public Student createStudent(@RequestBody Student student) throws IOException {
+    public Student createStudent(@RequestBody Student student) throws URISyntaxException {
         studentRepository.save(student);
         return student;
     }
@@ -36,14 +39,13 @@ public class StudentCrudController<Student> {
     }
 
     @GetMapping(path = "/Student/read", produces =  MediaType.APPLICATION_JSON_VALUE)
-    public Optional<Student> findStudent(@RequestParam("matrNr") int matrNr) throws IOException {
-        return studentRepository.findById(matrNr);
+    public Student findStudent(@RequestParam("matrNr") int matrNr) throws Throwable {
+        return (Student)studentRepository.findById(matrNr)
+                .orElseThrow(()->new StudentNotFoundException(matrNr + "not found"));
     }
 
     @PostMapping(path = "/Student/delete", produces =  MediaType.APPLICATION_JSON_VALUE)
-    public Object deleteStudent(@RequestBody int matrNr) throws IOException {
-       Object fromDB = studentRepository.findByID(matrNr);
-       studentRepository.delete(fromDB);
-       return fromDB;
+    public void deleteStudent(@RequestBody int matrNr) throws IOException {
+       studentRepository.delete(matrNr);
     }
 }
