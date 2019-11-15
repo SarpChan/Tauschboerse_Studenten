@@ -20,11 +20,10 @@ public class Campus {
     private List<Building> buildings = new ArrayList<Building>();
     
 
-    public Campus(String name, String adress, University university, List<Building> buildings) {
+    public Campus(String name, String adress, University university) {
         this.name = name;
         this.adress = adress;
         this.university = university;
-        this.buildings = buildings;
     }
 
 

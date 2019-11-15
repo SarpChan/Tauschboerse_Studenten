@@ -17,10 +17,9 @@ public class University {
     private List<Campus> campus = new ArrayList<Campus>();    
 
 
-    public University(String name, String adress, List<Campus> campus) {
+    public University(String name, String adress) {
         this.name = name;
         this.adress = adress;
-        this.campus = campus;
     }
 
 

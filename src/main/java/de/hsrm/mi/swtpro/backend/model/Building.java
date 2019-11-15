@@ -22,10 +22,9 @@ public class Building {
     private List<Room> rooms = new ArrayList<Room>();
 
 
-    public Building(String name, Campus campus, List<Room> rooms) {
+    public Building(String name, Campus campus) {
         this.name = name;
         this.campus = campus;
-        this.rooms = rooms;
     }
 
 

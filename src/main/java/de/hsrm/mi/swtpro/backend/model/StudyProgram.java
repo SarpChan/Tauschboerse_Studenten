@@ -28,5 +28,13 @@ class StudyProgram {
 
     public void setTitle(String title) {
         this.title = title;
-    }    
+    }
+
+    public String getDegree() {
+        return degree;
+    }
+
+    public void setDegree(String degree) {
+        this.degree = degree;
+    }
 }
