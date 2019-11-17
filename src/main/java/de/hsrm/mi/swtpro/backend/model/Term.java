@@ -1,5 +1,6 @@
 package de.hsrm.mi.swtpro.backend.model;
 
+import java.io.Serializable;
 import java.sql.Date;
 
 /**
@@ -7,7 +8,7 @@ import java.sql.Date;
  * the time interval in which an education facility holds classes
  * most common cycles are 2 terms per year, known as semester
  */
-class Term {
+public class Term implements Serializable {
     private int year;
     private String name;
     private Date start;

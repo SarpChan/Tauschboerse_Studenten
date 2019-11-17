@@ -1,6 +1,8 @@
 package de.hsrm.mi.swtpro.backend.model;
 
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
 
 /**
  * Module
@@ -8,6 +10,7 @@ import javax.persistence.Entity;
 
 @Entity
 class Module {
+    @Id@GeneratedValue
     private int id;
     private String name;
 

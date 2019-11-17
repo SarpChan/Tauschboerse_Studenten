@@ -15,38 +15,40 @@ import org.springframework.web.multipart.MultipartFile;
 import javax.validation.Valid;
 import java.io.IOException;
 import java.net.URISyntaxException;
+import java.sql.Date;
 import java.util.Optional;
 import java.util.function.Supplier;
 
 @RestController
 @RequestMapping("/rest")
-public class StudentCrudController<Student> {
+public class StudentCrudController {
 
     @Autowired
     StudentRepository studentRepository;
 
-    @PostMapping(path = "/Student/create", consumes = "application/json", produces =  MediaType.APPLICATION_JSON_VALUE)
+    @PostMapping(path = "/student/create", consumes = "application/json", produces =  MediaType.APPLICATION_JSON_VALUE)
     public Student createStudent(@RequestBody Student student) throws URISyntaxException {
         studentRepository.save(student);
         return student;
     }
 
-    @PostMapping(path = "/Student/update", consumes = "application/json", produces =  MediaType.APPLICATION_JSON_VALUE)
-    public Student updateStudent(@RequestBody Optional<Student> student) throws IOException {
-        Optional<Student> fromDB = studentRepository.findById(student);
-        fromDB = student;
-        studentRepository.save(fromDB);
-        return student.orElse(null);
+    @PostMapping(path = "/student/update", consumes = "application/json", produces =  MediaType.APPLICATION_JSON_VALUE)
+    public Student updateStudent(@RequestBody Student student) throws IOException {
+        studentRepository.save(student);
+        return student;
     }
 
-    @GetMapping(path = "/Student/read", produces =  MediaType.APPLICATION_JSON_VALUE)
-    public Student findStudent(@RequestParam("matrNr") int matrNr) throws Throwable {
-        return (Student)studentRepository.findById(matrNr)
-                .orElseThrow(()->new StudentNotFoundException(matrNr + "not found"));
+    @GetMapping(path = "/student/read", produces =  MediaType.APPLICATION_JSON_VALUE)
+    public Student findStudent(@RequestParam("matrNr") int matrNr) throws StudentNotFoundException {
+        studentRepository.findByEnrolementNumber(matrNr);
+       // Term t = new Term(2020,"WS", new Date(2020, 10, 01), new Date(2021, 03, 31));
+        Student test = new Student("peter", "nicht lustig",  "Mi");
+        //test.setEnrolementTerm(t);
+        return  test;
     }
 
-    @PostMapping(path = "/Student/delete", produces =  MediaType.APPLICATION_JSON_VALUE)
-    public void deleteStudent(@RequestBody int matrNr) throws IOException {
-       studentRepository.delete(matrNr);
+    @PostMapping(path = "/student/delete", produces =  MediaType.APPLICATION_JSON_VALUE)
+    public void deleteStudent(@RequestBody Student student) throws IOException {
+        studentRepository.delete(student);
     }
 }

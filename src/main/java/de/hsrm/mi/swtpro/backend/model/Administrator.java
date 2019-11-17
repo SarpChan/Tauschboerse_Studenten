@@ -4,28 +4,28 @@ import javax.persistence.Entity;
 
 @Entity
 class Administrator extends User {
-    private String username;
-    private String password;
+    private String adminName;
+    private String adminPass;
 
-    public Administrator(String firstName, String lastName, String username, String password) {
+    public Administrator(String firstName, String lastName, String adminName, String adminPass) {
         super(firstName, lastName);
-        this.username = username;
-        this.password = password;
+        this.adminName = adminName;
+        this.adminPass = adminPass;
     }
 
     public String getUsername() {
-        return username;
+        return adminName;
     }
 
     public void setUsername(String username) {
-        this.username = username;
+        this.adminName = adminName;
     }
 
     public String getPassword() {
-        return password;
+        return adminPass;
     }
 
-    public void setPassword(String password) {
-        this.password = password;
+    public void setPassword(String adminPass) {
+        this.adminPass = adminPass;
     }
 }

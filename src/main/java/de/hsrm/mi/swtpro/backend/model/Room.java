@@ -1,9 +1,14 @@
 package de.hsrm.mi.swtpro.backend.model;
 
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
 
 @Entity
 class Room {
+    @Id
+    @GeneratedValue
+    private long id;
     private String campus;
     private String building;
     private int number;

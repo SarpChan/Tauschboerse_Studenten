@@ -1,10 +1,15 @@
 package de.hsrm.mi.swtpro.backend.model;
 
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import java.io.Serializable;
 
 /* Studiengang */
 @Entity
-class StudyProgram {
+class StudyProgram implements Serializable {
+    @Id
+    @GeneratedValue
     private int id;
     private String title;
     private String degree;

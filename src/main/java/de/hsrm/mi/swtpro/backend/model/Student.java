@@ -2,10 +2,10 @@ package de.hsrm.mi.swtpro.backend.model;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import java.io.Serializable;
 
 @Entity
-class Student extends User {
-    @Id
+public class Student extends User implements Serializable {
     private int enrolementNumber;
     private Term enrolementTerm;
     private String fieldOfStudy;
