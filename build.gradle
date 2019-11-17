@@ -27,6 +27,7 @@ dependencies {
 		exclude group: 'org.junit.vintage', module: 'junit-vintage-engine'
 	}
 	runtimeOnly 'com.h2database:h2'
+	compile 'com.fasterxml.jackson.core:jackson-core:2.10.1'
 }
 
 test {

@@ -7,6 +7,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 
+/* Fachbereich */
+
 @Entity
 class FieldOfStudy {
     @Id @GeneratedValue
