@@ -15,7 +15,7 @@ import javax.persistence.OneToMany;
  * The type of lesson must be unique for each course
  */
 @Entity
-class CourseComponent {
+public class CourseComponent {
     @Id
     @GeneratedValue
     private long id;

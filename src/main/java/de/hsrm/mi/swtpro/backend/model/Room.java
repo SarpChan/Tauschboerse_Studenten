@@ -5,14 +5,18 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 
+import com.fasterxml.jackson.annotation.*;
+
 @Entity
-class Room {
+public class Room {
 
     @Id
     @GeneratedValue
     private long id;
     private int number;
     private int seats;
+
+    @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
     @ManyToOne(targetEntity = Building.class)
     private Building building;
 
@@ -52,5 +56,15 @@ class Room {
     public void setBuilding(Building building) {
         this.building = building;
     }
+
+    public long getId() {
+        return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
+    }
+
+    
     
 }

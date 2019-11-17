@@ -4,15 +4,24 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+
 @Entity
 public class University {
-
+    
     @Id
+    @GeneratedValue
+    private long id;
     private String name;
     private String adress;
+
+    @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
     @OneToMany(mappedBy = "university")
     private List<Campus> campus = new ArrayList<Campus>();    
 
@@ -21,6 +30,7 @@ public class University {
         this.name = name;
         this.adress = adress;
     }
+    
 
 
     public String getName() {
@@ -45,6 +55,14 @@ public class University {
 
     public void setCampus(List<Campus> campus) {
         this.campus = campus;
+    }
+
+    public long getId() {
+        return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
     }
     
 }

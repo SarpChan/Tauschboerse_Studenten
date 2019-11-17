@@ -3,6 +3,7 @@ package de.hsrm.mi.swtpro.backend.model;
 import java.util.HashSet;
 import java.util.Set;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 
@@ -10,8 +11,9 @@ import javax.persistence.OneToMany;
  * Course of Studies
  */
 @Entity
-class StudyProgram {
+public class StudyProgram {
     @Id
+    @GeneratedValue
     private int id;
     private String title;
     private String degree;

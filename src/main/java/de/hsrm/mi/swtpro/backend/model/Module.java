@@ -14,7 +14,7 @@ import javax.persistence.ManyToMany;
  * There may be multiple courses applicable to one module
  */
 @Entity
-class Module {
+public class Module {
     @Id
     @GeneratedValue
     private long id;

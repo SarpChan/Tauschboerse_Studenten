@@ -10,8 +10,9 @@ import javax.persistence.ManyToMany;
 /* Fachbereich */
 
 @Entity
-class FieldOfStudy {
-    @Id @GeneratedValue
+public class FieldOfStudy {
+    @Id
+    @GeneratedValue
     private int id;
     private String title;
     

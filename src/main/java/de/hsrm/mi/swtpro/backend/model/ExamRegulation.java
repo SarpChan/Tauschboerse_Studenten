@@ -12,7 +12,7 @@ import javax.persistence.ManyToOne;
  * and additional rules on examination
  */
 @Entity
-class ExamRegulation {
+public class ExamRegulation {
     @Id
     @GeneratedValue
     private long id;

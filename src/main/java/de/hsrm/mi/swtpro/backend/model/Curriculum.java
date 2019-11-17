@@ -9,7 +9,7 @@ import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 
 @Entity
-class Curriculum {
+public class Curriculum {
     @Id
     @GeneratedValue
     private long id;

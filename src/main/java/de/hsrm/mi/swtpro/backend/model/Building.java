@@ -9,6 +9,11 @@ import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+
 @Entity
 public class Building {
  
@@ -16,8 +21,12 @@ public class Building {
     @GeneratedValue
     private long id;
     public String name;
+
+    @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
     @ManyToOne(targetEntity = Campus.class)
     private Campus campus;
+
+    @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
     @OneToMany(mappedBy = "building")
     private List<Room> rooms = new ArrayList<Room>();
 
@@ -51,5 +60,15 @@ public class Building {
     public void setRooms(List<Room> rooms) {
         this.rooms = rooms;
     }
+
+    public long getId() {
+        return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
+    }
+
+    
 
 }
