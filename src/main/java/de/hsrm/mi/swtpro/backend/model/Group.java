@@ -20,6 +20,7 @@ import javax.persistence.OneToOne;
  * A student may only attend one group for each lesson of the same type
  */
 public class Group {
+    
     @Id
     @GeneratedValue
     private long id;
