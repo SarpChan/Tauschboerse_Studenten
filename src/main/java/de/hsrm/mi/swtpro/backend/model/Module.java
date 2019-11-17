@@ -25,7 +25,7 @@ class Module {
     @ManyToMany(mappedBy = "modules")
     private Set<Curriculum> curriculums;
 
-    @ManyToMany(mappedBy = "modules")
+    @ManyToMany
     private Set<Course> courses;
 
     @Deprecated

@@ -7,6 +7,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 
 /**
@@ -22,7 +23,7 @@ class Course {
     private long id;
     private String title;
 
-    @ManyToMany
+    @ManyToOne
     private User owner;
 
     @OneToMany(mappedBy = "course")

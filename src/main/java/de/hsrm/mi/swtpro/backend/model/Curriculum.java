@@ -18,7 +18,7 @@ class Curriculum {
     @ManyToOne
     private ExamRegulation examRegulation;
 
-    @ManyToMany(mappedBy = "curriculum")
+    @ManyToMany
     private Set<Module> modules;
 
     @Deprecated

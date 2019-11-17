@@ -30,10 +30,10 @@ public class Lesson {
     @ManyToOne
     private CourseComponent courseComponent;
 
-    @ManyToMany
+    @ManyToOne
     private User lecturer;
 
-    @ManyToMany
+    @ManyToOne
     private Room room;
 
     @ManyToMany

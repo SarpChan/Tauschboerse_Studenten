@@ -9,6 +9,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 
 @Entity
 /**
@@ -26,15 +28,17 @@ public class Group {
     private DayOfWeek dayOfWeek;
     private LocalTime startTime;
     private LocalTime endTime;
+    
+    @OneToOne
     private Term term;
 
     @ManyToOne
     private CourseComponent courseComponent;
 
-    @ManyToMany
+    @ManyToOne
     private User lecturer;
 
-    @ManyToMany
+    @ManyToOne
     private Room room;
 
     @ManyToMany

@@ -23,7 +23,7 @@ class Term {
     private Date endDate;
     private int period;
 
-    @ManyToMany(mappedBy = "terms")
+    @ManyToMany
     private Set<Course> courses;
 
     @Deprecated

@@ -2,14 +2,18 @@ package de.hsrm.mi.swtpro.backend.model;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.OneToOne;
 
 @Entity
 class Student extends User {
-    @Id
     private int enrolementNumber;
-    private Term enrolementTerm;
     private String mail;
+
+    @OneToOne
     private ExamRegulation examRegulation;
+
+    @OneToOne
+    private Term enrolementTerm;
 
 
     public Student(String firstName, String lastName, String loginName, String password, boolean admin, 
