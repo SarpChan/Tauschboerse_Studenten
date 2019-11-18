@@ -16,6 +16,10 @@ public class Student extends User implements Serializable {
     @OneToOne
     private Term enrolementTerm;
 
+    public Student() {
+       super();
+    }
+
 
     public Student(String firstName, String lastName, String loginName, String password, boolean admin,
         int enrolementNumber, Term enrolmentTerm, String mail, ExamRegulation examRegulation) {

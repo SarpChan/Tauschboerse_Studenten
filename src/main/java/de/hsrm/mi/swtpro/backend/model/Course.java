@@ -18,9 +18,6 @@ import javax.persistence.OneToMany;
  */
 @Entity
 class Course {
-    @Id@GeneratedValue
-    private int id;
-    private int name;
     @Id
     @GeneratedValue
     private long id;

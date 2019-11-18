@@ -1,5 +1,6 @@
 package de.hsrm.mi.swtpro.backend.model;
 
+import java.io.Serializable;
 import java.sql.Date;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -12,7 +13,7 @@ import javax.persistence.ManyToOne;
  * and additional rules on examination
  */
 @Entity
-class ExamRegulation {
+class ExamRegulation implements Serializable {
     @Id
     @GeneratedValue
     private long id;

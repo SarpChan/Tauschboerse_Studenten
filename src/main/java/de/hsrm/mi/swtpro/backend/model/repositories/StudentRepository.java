@@ -9,4 +9,5 @@ import java.net.URISyntaxException;
 
 public interface StudentRepository extends PagingAndSortingRepository<Student,Integer> {
     public Student findByEnrolementNumber(int enrollmentNumber);
+    public void delete(Student student);
 }

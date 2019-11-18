@@ -8,7 +8,7 @@ class Administrator extends User {
     private String password;
 
     public Administrator(String firstName, String lastName, String username, String password) {
-        super(firstName, lastName);
+        super(firstName, lastName,username,password,true);
         this.username = username;
         this.password = password;
     }
@@ -18,14 +18,14 @@ class Administrator extends User {
     }
 
     public void setUsername(String username) {
-        this.adminName = adminName;
+        this.username = username;
     }
 
     public String getPassword() {
-        return adminPass;
+        return password;
     }
 
-    public void setPassword(String adminPass) {
-        this.adminPass = adminPass;
+    public void setPassword(String password) {
+        this.password = password;
     }
 }
