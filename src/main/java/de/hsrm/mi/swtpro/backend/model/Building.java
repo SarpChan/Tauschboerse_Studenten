@@ -52,4 +52,7 @@ public class Building {
         this.rooms = rooms;
     }
 
+    public long getId() {
+        return id;
+    }
 }

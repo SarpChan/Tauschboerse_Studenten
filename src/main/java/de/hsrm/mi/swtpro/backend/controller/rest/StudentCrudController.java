@@ -3,7 +3,7 @@ package de.hsrm.mi.swtpro.backend.controller.rest;
 
 import de.hsrm.mi.swtpro.backend.controller.exceptions.StudentNotFoundException;
 import de.hsrm.mi.swtpro.backend.model.Student;
-import de.hsrm.mi.swtpro.backend.model.repositories.StudentRepository;
+import de.hsrm.mi.swtpro.backend.service.repository.StudentRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
@@ -30,9 +30,9 @@ public class StudentCrudController {
     }
 
     @GetMapping(path = "/student/read", produces = MediaType.APPLICATION_JSON_VALUE)
-    public Student findStudent(@RequestParam("enrolementNumber") int matrNr) throws StudentNotFoundException {
-        if (studentRepository.findByEnrolementNumber(matrNr) != null) {
-            return studentRepository.findByEnrolementNumber(matrNr);
+    public Student findStudent(@RequestParam("enrolementNumber") int enrolementNumber) throws StudentNotFoundException {
+        if (studentRepository.findByEnrolementNumber(enrolementNumber) != null) {
+            return studentRepository.findByEnrolementNumber(enrolementNumber);
         } else {
             throw new StudentNotFoundException("Student not found");
         }

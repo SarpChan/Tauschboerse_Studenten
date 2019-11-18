@@ -53,4 +53,7 @@ public class Room {
         this.building = building;
     }
 
+    public long getId() {
+        return id;
+    }
 }

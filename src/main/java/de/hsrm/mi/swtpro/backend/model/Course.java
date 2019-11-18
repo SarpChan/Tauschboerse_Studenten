@@ -17,6 +17,7 @@ import javax.persistence.OneToMany;
  * When passed, the student is rewarded with the specified amount of credit points
  */
 @Entity
+public
 class Course {
     @Id
     @GeneratedValue

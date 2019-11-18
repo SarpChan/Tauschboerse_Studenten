@@ -12,6 +12,7 @@ import java.io.Serializable;
  * Course of Studies
  */
 @Entity
+public
 class StudyProgram implements Serializable {
     @Id
     private int id;

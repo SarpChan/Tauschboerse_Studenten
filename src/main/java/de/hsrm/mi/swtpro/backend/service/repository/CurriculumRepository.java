@@ -9,6 +9,6 @@ import java.util.List;
 
 @Repository
 public interface CurriculumRepository extends JpaRepository<Curriculum,Long> {
-
+    public Curriculum findById(long id);
     public List<Curriculum>findByTerm(Term term);
 }

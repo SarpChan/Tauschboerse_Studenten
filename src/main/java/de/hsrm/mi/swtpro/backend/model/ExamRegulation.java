@@ -14,6 +14,7 @@ import java.sql.Date;
  * and additional rules on examination
  */
 @Entity
+public
 class ExamRegulation implements Serializable {
     @Id
     @GeneratedValue
@@ -73,6 +74,8 @@ class ExamRegulation implements Serializable {
     public StudyProgram getStudyProgram() {
         return studyProgram;
     }
+
+    public long getId() {return id;}
 
 
 }
