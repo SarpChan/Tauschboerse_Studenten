@@ -1,14 +1,8 @@
 package de.hsrm.mi.swtpro.backend.model;
 
+import javax.persistence.*;
 import java.util.HashSet;
 import java.util.Set;
-
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.ManyToMany;
-import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
 
 /**
  * Course offered at the University
@@ -17,6 +11,7 @@ import javax.persistence.OneToMany;
  * When passed, the student is rewarded with the specified amount of credit points
  */
 @Entity
+public
 class Course {
     @Id
     @GeneratedValue

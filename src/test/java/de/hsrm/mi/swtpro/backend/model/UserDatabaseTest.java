@@ -78,7 +78,6 @@ class UserDatabaseTest {
         assertThat(userRepository.findByAdmin(admin),hasItem(testUser));
 
         assertEquals(userRepository.findByLoginName(loginName),testUser);
-
     }
 
 }

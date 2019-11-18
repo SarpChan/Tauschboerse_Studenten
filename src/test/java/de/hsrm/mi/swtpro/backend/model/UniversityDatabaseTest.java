@@ -100,8 +100,8 @@ public class UniversityDatabaseTest {
     @Test
     private void insertDuplicateNames(){
         String name = "HSRM",
-                wrongAddress = "nichtsotollweg. 42 21312 Fehler",
-                trueAddress = "nichtsotollweg. 42 21312 Fehler";
+                wrongAddress = "nichtsotollweg 42 21312 Fehler",
+                trueAddress = "dasIstgutweg 17 17171 rode";
 
         University u1 = new University(name,trueAddress),u2 = new University(name,wrongAddress);
 
