@@ -1,5 +1,8 @@
 package de.hsrm.mi.swtpro.backend.model;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+
 import java.util.HashSet;
 import java.util.Set;
 import javax.persistence.Entity;
@@ -23,9 +26,11 @@ public class CourseComponent {
     private int creditPoints;
     private String exam;
 
+    @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
     @ManyToOne
     private Course course;
 
+    @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
     @OneToMany(mappedBy = "courseComponent")
     private Set<Group> groups;
 
@@ -97,6 +102,14 @@ public class CourseComponent {
         }
     }
 
+    public long getId() {
+        return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
+    }
+
     public CourseType getType() {
         return type;
     }
@@ -162,7 +175,7 @@ public class CourseComponent {
 
     /**
      * Checks if a given group belongs to this lesson
-     * @param lesson
+     * @param group
      * @return true if given lesson belongs to this lesson
      */
     public boolean containsGroup(Group group) {

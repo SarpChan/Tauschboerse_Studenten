@@ -1,7 +1,9 @@
 package de.hsrm.mi.swtpro.backend.model;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -23,12 +25,18 @@ public class University {
 
     @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
     @OneToMany(mappedBy = "university")
-    private List<Campus> campus = new ArrayList<Campus>();    
+    private List<Campus> campus = new ArrayList<Campus>();
+
+
+    @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
+    @OneToMany(mappedBy = "university")
+    private Set<FieldOfStudy> fieldOfStudies;
 
 
     public University(String name, String adress) {
         this.name = name;
         this.adress = adress;
+        this.fieldOfStudies = new HashSet<FieldOfStudy>();
     }
     
 
@@ -63,6 +71,10 @@ public class University {
 
     public void setId(long id) {
         this.id = id;
+    }
+
+    public Set<FieldOfStudy> getFieldOfStudies() {
+        return fieldOfStudies;
     }
     
 }

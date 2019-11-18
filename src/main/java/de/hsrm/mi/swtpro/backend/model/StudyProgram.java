@@ -1,5 +1,8 @@
 package de.hsrm.mi.swtpro.backend.model;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+
 import java.util.HashSet;
 import java.util.Set;
 import javax.persistence.Entity;
@@ -14,10 +17,11 @@ import javax.persistence.OneToMany;
 public class StudyProgram {
     @Id
     @GeneratedValue
-    private int id;
+    private long id;
     private String title;
     private String degree;
 
+    @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
     @OneToMany(mappedBy = "studyProgram")
     private Set<ExamRegulation> examRegulations;
 
@@ -69,7 +73,7 @@ public class StudyProgram {
         }
     }
 
-    public int getId() {
+    public long getId() {
         return id;
     }
 

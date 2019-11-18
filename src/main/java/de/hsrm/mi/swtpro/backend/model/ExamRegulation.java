@@ -1,10 +1,12 @@
 package de.hsrm.mi.swtpro.backend.model;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+
 import java.sql.Date;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.ManyToOne;
+import java.util.HashSet;
+import java.util.Set;
+import javax.persistence.*;
 
 /**
  * Each study program has one or more exam regulations
@@ -19,8 +21,13 @@ public class ExamRegulation {
     private Date date;
     private int rule;
 
+    @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
     @ManyToOne
     private StudyProgram studyProgram;
+
+    @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
+    @OneToMany(mappedBy = "examRegulation")
+    private Set<Curriculum> curricula;
 
     /**
      * Constructor with Builder pattern
@@ -30,6 +37,7 @@ public class ExamRegulation {
         this.date = builder.date;
         this.studyProgram = builder.studyProgram;
         this.rule = builder.rule;
+        this.curricula = builder.curricula;
     }
 
     /**
@@ -40,9 +48,11 @@ public class ExamRegulation {
         private Date date;
         private StudyProgram studyProgram;
         private int rule;
+        private Set<Curriculum> curricula;
     
         public Builder(Date date) {
             this.date = date;
+            this.curricula = new HashSet<Curriculum>();
         }
 
         public Builder forStudyProgram(StudyProgram studyProgram) {
@@ -54,6 +64,7 @@ public class ExamRegulation {
             this.rule = rule;
             return this;
         }
+
 
         public ExamRegulation build() {
             return new ExamRegulation(this);
@@ -82,5 +93,21 @@ public class ExamRegulation {
 
     public void setRule(int rule) {
         this.rule = rule;
+    }
+
+    public long getId() {
+        return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
+    }
+
+    public Set<Curriculum> getCurricula() {
+        return curricula;
+    }
+
+    public void setCurricula(Set<Curriculum> curricula) {
+        this.curricula = curricula;
     }
 }

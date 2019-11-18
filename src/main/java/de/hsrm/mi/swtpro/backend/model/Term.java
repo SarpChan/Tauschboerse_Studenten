@@ -15,7 +15,7 @@ import javax.persistence.ManyToMany;
  * the courses offered each term may vary
  */
 @Entity
-class Term {    
+public class Term {
     @Id
     @GeneratedValue
     private long id;

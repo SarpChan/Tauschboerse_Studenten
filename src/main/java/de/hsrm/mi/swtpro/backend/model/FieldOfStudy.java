@@ -1,11 +1,11 @@
 package de.hsrm.mi.swtpro.backend.model;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+
 import java.util.Collection;
 import java.util.HashSet;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.ManyToMany;
+import javax.persistence.*;
 
 /* Fachbereich */
 
@@ -15,9 +15,15 @@ public class FieldOfStudy {
     @GeneratedValue
     private int id;
     private String title;
-    
+
+    @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
     @ManyToMany
     private Collection<StudyProgram> studyPrograms;
+
+    @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
+    @ManyToOne(targetEntity = University.class)
+    private University university;
+
 
     public FieldOfStudy(String title) {
         this.title = title;
@@ -26,6 +32,10 @@ public class FieldOfStudy {
 
     public int getId() {
         return id;
+    }
+
+    public void setUniversity(University university) {
+        this.university = university;
     }
 
     public void setId(int id) {

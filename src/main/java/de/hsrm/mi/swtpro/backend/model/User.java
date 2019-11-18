@@ -5,7 +5,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 
 @Entity
-class User {
+public class User {
     @Id
     @GeneratedValue
     private Long id;

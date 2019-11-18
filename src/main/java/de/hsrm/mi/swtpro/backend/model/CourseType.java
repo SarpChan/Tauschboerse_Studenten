@@ -1,5 +1,5 @@
 package de.hsrm.mi.swtpro.backend.model;
 
-enum CourseType {
+public enum CourseType {
     LECTURE, PRACTICE, TUTORIAL, TEST
 }
