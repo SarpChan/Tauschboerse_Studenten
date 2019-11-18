@@ -1,5 +1,8 @@
 package de.hsrm.mi.swtpro.backend.model;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+
 import java.time.DayOfWeek;
 import java.time.LocalTime;
 import java.util.HashSet;
@@ -20,6 +23,7 @@ import javax.persistence.OneToOne;
  * A student may only attend one group for each lesson of the same type
  */
 public class Group {
+    
     @Id
     @GeneratedValue
     private long id;
@@ -28,19 +32,24 @@ public class Group {
     private DayOfWeek dayOfWeek;
     private LocalTime startTime;
     private LocalTime endTime;
-    
+
+    @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
     @OneToOne
     private Term term;
 
+    @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
     @ManyToOne
     private CourseComponent courseComponent;
 
+    @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
     @ManyToOne
     private User lecturer;
 
+    @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
     @ManyToOne
     private Room room;
 
+    @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
     @ManyToMany
     private Set<Student> students;
 

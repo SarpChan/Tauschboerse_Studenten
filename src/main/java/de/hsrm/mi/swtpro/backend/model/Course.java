@@ -1,8 +1,17 @@
 package de.hsrm.mi.swtpro.backend.model;
 
-import javax.persistence.*;
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+
 import java.util.HashSet;
 import java.util.Set;
+
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 
 /**
  * Course offered at the University
@@ -11,22 +20,25 @@ import java.util.Set;
  * When passed, the student is rewarded with the specified amount of credit points
  */
 @Entity
-public
-class Course {
+public class Course {
     @Id
     @GeneratedValue
     private long id;
     private String title;
 
+    @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
     @ManyToOne
     private User owner;
 
+    @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
     @OneToMany(mappedBy = "course")
     private Set<CourseComponent> courseComponents;
 
+    @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
     @ManyToMany(mappedBy = "courses")
     private Set<Module> modules;
 
+    @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
     @ManyToMany(mappedBy = "courses")
     private Set<Term> terms;
 
@@ -44,10 +56,11 @@ class Course {
         this.title = builder.title;
         this.owner = builder.owner;
         this.courseComponents = builder.courseComponents;
+        this.modules = builder.modules;
     }
 
     /**
-     * Builder class
+     * Builder class 
      * defines the parameters of the Course object to be built
      */
     public static class Builder {
@@ -59,6 +72,7 @@ class Course {
         public Builder(String title) {
             this.title = title;
             this.courseComponents = new HashSet<CourseComponent>();
+            this.modules = new HashSet<Module>();
         }
 
         public Builder withOwner(User owner) {
@@ -115,7 +129,7 @@ class Course {
     }
 
     /**
-     * Adds course component to the collection of course components, which belong to this course
+     * Adds course component to the collection of course components, which belong to this course 
      * @param courseComponent
      */
     public void addCourseComponent(CourseComponent courseComponent) {
@@ -123,7 +137,7 @@ class Course {
     }
 
     /**
-     * Removes course component from the collection of course components, which belong to this course
+     * Removes course component from the collection of course components, which belong to this course 
      * @param courseComponent
      */
     public void removeCourseComponent(CourseComponent courseComponent) {
@@ -143,5 +157,21 @@ class Course {
      */
     public boolean containsCourseComponent(CourseComponent courseComponent) {
         return this.courseComponents.contains(courseComponent);
+    }
+
+    public long getId() {
+        return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
+    }
+
+    public Set<Term> getTerms() {
+        return terms;
+    }
+
+    public void setTerms(Set<Term> terms) {
+        this.terms = terms;
     }
 }

@@ -1,24 +1,27 @@
 package de.hsrm.mi.swtpro.backend.model;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+
 import java.util.HashSet;
 import java.util.Set;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
-import javax.persistence.GeneratedValue;
-import java.io.Serializable;
 
 /**
  * Course of Studies
  */
 @Entity
-public
-class StudyProgram implements Serializable {
+public class StudyProgram {
     @Id
-    private int id;
+    @GeneratedValue
+    private long id;
     private String title;
     private String degree;
 
+    @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
     @OneToMany(mappedBy = "studyProgram")
     private Set<ExamRegulation> examRegulations;
 
@@ -41,7 +44,7 @@ class StudyProgram implements Serializable {
     }
 
     /**
-     * Builder class
+     * Builder class 
      * defines the parameters of the Study Program object to be built
      */
     public static class Builder {
@@ -70,7 +73,7 @@ class StudyProgram implements Serializable {
         }
     }
 
-    public int getId() {
+    public long getId() {
         return id;
     }
 
@@ -103,7 +106,7 @@ class StudyProgram implements Serializable {
     }
 
     /**
-     * Adds exam regulation to the collection of exam regulations applicable for this study program
+     * Adds exam regulation to the collection of exam regulations applicable for this study program 
      * @param examRegulation
      */
     public void addExamRegulation(ExamRegulation examRegulation) {

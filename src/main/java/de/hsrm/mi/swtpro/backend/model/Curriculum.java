@@ -1,8 +1,15 @@
 package de.hsrm.mi.swtpro.backend.model;
 
-import javax.persistence.*;
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+
 import java.util.HashSet;
 import java.util.Set;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
 
 @Entity
 public class Curriculum {
@@ -10,10 +17,12 @@ public class Curriculum {
     @GeneratedValue
     private long id;
     private int term;
-    
+
+    @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
     @ManyToOne
     private ExamRegulation examRegulation;
 
+    @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
     @ManyToMany
     private Set<Module> modules;
 

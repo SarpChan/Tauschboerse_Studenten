@@ -1,26 +1,44 @@
 package de.hsrm.mi.swtpro.backend.model;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+
 @Entity
 public class University {
-
+    
     @Id
+    @GeneratedValue
+    private long id;
     private String name;
     private String adress;
+
+    @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
     @OneToMany(mappedBy = "university")
-    private List<Campus> campus = new ArrayList<Campus>();    
+    private List<Campus> campus = new ArrayList<Campus>();
+
+
+    @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
+    @OneToMany(mappedBy = "university")
+    private Set<FieldOfStudy> fieldOfStudies;
 
 
     public University(String name, String adress) {
         this.name = name;
         this.adress = adress;
+        this.fieldOfStudies = new HashSet<FieldOfStudy>();
     }
+    
 
 
     public String getName() {
@@ -47,5 +65,16 @@ public class University {
         this.campus = campus;
     }
 
+    public long getId() {
+        return id;
+    }
 
+    public void setId(long id) {
+        this.id = id;
+    }
+
+    public Set<FieldOfStudy> getFieldOfStudies() {
+        return fieldOfStudies;
+    }
+    
 }

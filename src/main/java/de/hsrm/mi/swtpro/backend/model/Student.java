@@ -1,24 +1,24 @@
 package de.hsrm.mi.swtpro.backend.model;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+
 import javax.persistence.Entity;
 import javax.persistence.Id;
-import java.io.Serializable;
 import javax.persistence.OneToOne;
 
 @Entity
-public class Student extends User implements Serializable {
+public class Student extends User {
     private int enrolementNumber;
     private String mail;
 
+    @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
     @OneToOne
     private ExamRegulation examRegulation;
 
+    @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
     @OneToOne
     private Term enrolementTerm;
-
-    public Student() {
-       super();
-    }
 
 
     public Student(String firstName, String lastName, String loginName, String password, boolean admin, 
