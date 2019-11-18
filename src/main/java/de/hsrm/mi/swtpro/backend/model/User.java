@@ -3,10 +3,10 @@ package de.hsrm.mi.swtpro.backend.model;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import java.io.Serializable;
 
 @Entity
-public
-class User {
+public class User implements Serializable {
     @Id
     @GeneratedValue
     private Long id;
@@ -15,6 +15,9 @@ class User {
     private String loginName;
     private String password;
     private boolean admin;
+
+    public User() {
+    }
 
     public User(String firstName, String lastName, String loginName, String password, boolean admin) {
         this.firstName = firstName;

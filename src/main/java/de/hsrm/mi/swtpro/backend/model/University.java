@@ -46,5 +46,6 @@ public class University {
     public void setCampus(List<Campus> campus) {
         this.campus = campus;
     }
-    
+
+
 }

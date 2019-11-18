@@ -1,5 +1,7 @@
 package de.hsrm.mi.swtpro.backend.model;
 
+import java.io.Serializable;
+import java.sql.Date;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
@@ -12,7 +14,8 @@ import java.sql.Date;
  * and additional rules on examination
  */
 @Entity
-public class ExamRegulation {
+public
+class ExamRegulation implements Serializable {
     @Id
     @GeneratedValue
     private long id;
@@ -33,14 +36,14 @@ public class ExamRegulation {
     }
 
     /**
-     * Builder class 
+     * Builder class
      * defines the parameters of the Exam Regulation object to be built
      */
     public static class Builder {
         private Date date;
         private StudyProgram studyProgram;
         private int rule;
-    
+
         public Builder(Date date) {
             this.date = date;
         }
@@ -72,15 +75,7 @@ public class ExamRegulation {
         return studyProgram;
     }
 
-    public void setStudyProgram(StudyProgram studyProgram) {
-        this.studyProgram = studyProgram;
-    }
+    public long getId() {return id;}
 
-    public int getRule() {
-        return rule;
-    }
 
-    public void setRule(int rule) {
-        this.rule = rule;
-    }
 }

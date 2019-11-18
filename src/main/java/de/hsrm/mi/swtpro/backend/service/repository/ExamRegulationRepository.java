@@ -9,7 +9,7 @@ import java.util.List;
 
 @Repository
 public interface ExamRegulationRepository extends JpaRepository<ExamRegulation,Long> {
-
+    public ExamRegulation findById(long id);
     public List<ExamRegulation> findByDate(Date date);
     public List<ExamRegulation> findByRule(int rule);
 }

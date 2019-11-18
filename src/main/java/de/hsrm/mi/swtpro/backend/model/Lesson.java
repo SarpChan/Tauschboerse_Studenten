@@ -1,5 +1,6 @@
 package de.hsrm.mi.swtpro.backend.model;
 
+import java.io.Serializable;
 import java.time.DayOfWeek;
 import java.time.LocalTime;
 import java.util.HashSet;
@@ -17,7 +18,7 @@ import javax.persistence.ManyToOne;
  * A student may only attend one group for each lesson of the same type
  */
 @Entity
-public class Lesson {
+public class Lesson implements Serializable {
     @Id
     @GeneratedValue
     private long id;

@@ -164,4 +164,8 @@ public class CourseComponent {
     public boolean containsGroup(Group group) {
         return this.groups.contains(group);
     }
+    public long getId() {
+        return id;
+    }
+
 }

@@ -25,7 +25,7 @@ public class Room {
 
 
     public Room(int number) {
- 
+
         this.number = number;
     }
 
@@ -52,5 +52,8 @@ public class Room {
     public void setBuilding(Building building) {
         this.building = building;
     }
-    
+
+    public long getId() {
+        return id;
+    }
 }

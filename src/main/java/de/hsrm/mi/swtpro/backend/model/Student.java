@@ -1,10 +1,12 @@
 package de.hsrm.mi.swtpro.backend.model;
 
 import javax.persistence.Entity;
+import javax.persistence.Id;
+import java.io.Serializable;
 import javax.persistence.OneToOne;
 
 @Entity
-public class Student extends User {
+public class Student extends User implements Serializable {
     private int enrolementNumber;
     private String mail;
 
@@ -13,6 +15,10 @@ public class Student extends User {
 
     @OneToOne
     private Term enrolementTerm;
+
+    public Student() {
+       super();
+    }
 
 
     public Student(String firstName, String lastName, String loginName, String password, boolean admin, 

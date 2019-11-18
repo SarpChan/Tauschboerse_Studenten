@@ -52,7 +52,7 @@ public class Module {
     }
 
     /**
-     * Builder class 
+     * Builder class
      * defines the parameters of the Module object to be built
      */
     public static class Builder {
@@ -156,7 +156,7 @@ public class Module {
     }
     
     /**
-     * Adds course to the collection of courses fitting this module 
+     * Adds course to the collection of courses fitting this module
      * @param course
      */
     public void addCourse(Course course) {
@@ -186,7 +186,7 @@ public class Module {
     public boolean containsCourse(Course course) {
         return this.courses.contains(course);
     }
-    
+
     /**
      * Adds curriculum to the collection of curriculums applicant to this module
      * @param curriculum

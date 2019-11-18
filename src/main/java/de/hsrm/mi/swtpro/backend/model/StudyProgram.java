@@ -1,16 +1,19 @@
 package de.hsrm.mi.swtpro.backend.model;
 
+import java.util.HashSet;
+import java.util.Set;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
-import java.util.HashSet;
-import java.util.Set;
+import javax.persistence.GeneratedValue;
+import java.io.Serializable;
 
 /**
  * Course of Studies
  */
 @Entity
-public class StudyProgram {
+public
+class StudyProgram implements Serializable {
     @Id
     private int id;
     private String title;
@@ -38,7 +41,7 @@ public class StudyProgram {
     }
 
     /**
-     * Builder class 
+     * Builder class
      * defines the parameters of the Study Program object to be built
      */
     public static class Builder {
@@ -100,7 +103,7 @@ public class StudyProgram {
     }
 
     /**
-     * Adds exam regulation to the collection of exam regulations applicable for this study program 
+     * Adds exam regulation to the collection of exam regulations applicable for this study program
      * @param examRegulation
      */
     public void addExamRegulation(ExamRegulation examRegulation) {

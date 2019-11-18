@@ -47,7 +47,7 @@ class Course {
     }
 
     /**
-     * Builder class 
+     * Builder class
      * defines the parameters of the Course object to be built
      */
     public static class Builder {
@@ -115,7 +115,7 @@ class Course {
     }
 
     /**
-     * Adds course component to the collection of course components, which belong to this course 
+     * Adds course component to the collection of course components, which belong to this course
      * @param courseComponent
      */
     public void addCourseComponent(CourseComponent courseComponent) {
@@ -123,7 +123,7 @@ class Course {
     }
 
     /**
-     * Removes course component from the collection of course components, which belong to this course 
+     * Removes course component from the collection of course components, which belong to this course
      * @param courseComponent
      */
     public void removeCourseComponent(CourseComponent courseComponent) {
