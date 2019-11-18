@@ -1,8 +1,6 @@
 package de.hsrm.mi.swtpro.backend.model;
 
 import de.hsrm.mi.swtpro.backend.service.repository.UserRepository;
-import static org.junit.Assert.*;
-import static org.hamcrest.CoreMatchers.*;
 import org.junit.jupiter.api.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,13 +8,13 @@ import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.boot.test.autoconfigure.orm.jpa.TestEntityManager;
 import org.springframework.test.context.junit4.SpringRunner;
 
-import java.util.List;
+import static org.hamcrest.CoreMatchers.hasItem;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertThat;
 
 @RunWith(SpringRunner.class)
 @DataJpaTest
 class UserDatabaseTest {
-
-    //Warum ist der loginName nicht der Schluessel
 
     @Autowired
     private TestEntityManager entityManager;

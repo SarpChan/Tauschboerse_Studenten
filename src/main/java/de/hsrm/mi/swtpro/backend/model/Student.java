@@ -1,11 +1,10 @@
 package de.hsrm.mi.swtpro.backend.model;
 
 import javax.persistence.Entity;
-import javax.persistence.Id;
 import javax.persistence.OneToOne;
 
 @Entity
-class Student extends User {
+public class Student extends User {
     private int enrolementNumber;
     private String mail;
 

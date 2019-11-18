@@ -1,11 +1,11 @@
 package de.hsrm.mi.swtpro.backend.model;
 
-import java.util.HashSet;
-import java.util.Set;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
+import java.util.HashSet;
+import java.util.Set;
 
 /**
  * Represents an element of the Curriculum
@@ -14,7 +14,7 @@ import javax.persistence.ManyToMany;
  * There may be multiple courses applicable to one module
  */
 @Entity
-class Module {
+public class Module {
     @Id
     @GeneratedValue
     private long id;

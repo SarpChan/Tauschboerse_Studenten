@@ -6,7 +6,7 @@ import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 
 @Entity
-class Room {
+public class Room {
 
     @Id
     @GeneratedValue

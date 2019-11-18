@@ -1,16 +1,16 @@
 package de.hsrm.mi.swtpro.backend.model;
 
-import java.util.HashSet;
-import java.util.Set;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
+import java.util.HashSet;
+import java.util.Set;
 
 /**
  * Course of Studies
  */
 @Entity
-class StudyProgram {
+public class StudyProgram {
     @Id
     private int id;
     private String title;

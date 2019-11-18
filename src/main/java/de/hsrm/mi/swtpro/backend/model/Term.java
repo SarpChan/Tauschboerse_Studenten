@@ -1,12 +1,12 @@
 package de.hsrm.mi.swtpro.backend.model;
 
-import java.sql.Date;
-import java.util.HashSet;
-import java.util.Set;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
+import java.sql.Date;
+import java.util.HashSet;
+import java.util.Set;
 
 /**
  * Academic Term
@@ -15,7 +15,7 @@ import javax.persistence.ManyToMany;
  * the courses offered each term may vary
  */
 @Entity
-class Term {    
+public class Term {
     @Id
     @GeneratedValue
     private long id;
