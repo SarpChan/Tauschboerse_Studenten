@@ -15,7 +15,6 @@ import javax.persistence.ManyToMany;
  * most common cycles are 2 terms per year, known as semester
  * the courses offered each term may vary
  */
-
 @Entity
 public class Term implements Serializable{
     @Id

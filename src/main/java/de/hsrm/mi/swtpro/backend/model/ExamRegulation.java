@@ -6,6 +6,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
+import java.sql.Date;
 
 /**
  * Each study program has one or more exam regulations
@@ -73,5 +74,5 @@ class ExamRegulation implements Serializable {
         return studyProgram;
     }
 
-    
+
 }

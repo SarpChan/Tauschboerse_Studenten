@@ -1,12 +1,8 @@
 package de.hsrm.mi.swtpro.backend.model;
 
+import javax.persistence.*;
 import java.util.HashSet;
 import java.util.Set;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
 
 /**
  * Describes the type of lesson of a course
@@ -15,7 +11,7 @@ import javax.persistence.OneToMany;
  * The type of lesson must be unique for each course
  */
 @Entity
-class CourseComponent {
+public class CourseComponent {
     @Id
     @GeneratedValue
     private long id;

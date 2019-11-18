@@ -14,7 +14,6 @@ import java.io.Serializable;
 @Entity
 class StudyProgram implements Serializable {
     @Id
-    @GeneratedValue
     private int id;
     private String title;
     private String degree;

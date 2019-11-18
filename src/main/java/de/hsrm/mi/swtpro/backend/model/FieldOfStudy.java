@@ -1,16 +1,16 @@
 package de.hsrm.mi.swtpro.backend.model;
 
-import java.util.Collection;
-import java.util.HashSet;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
+import java.util.Collection;
+import java.util.HashSet;
 
 /* Fachbereich */
 
 @Entity
-class FieldOfStudy {
+public class FieldOfStudy {
     @Id @GeneratedValue
     private int id;
     private String title;
