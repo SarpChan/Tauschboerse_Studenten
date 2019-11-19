@@ -31,7 +31,7 @@ public class FieldOfStudyTest {
 
     @Test
     public void whenGetTitle_thenReturnTitle(){
-        assertEquals("MI",fieldOfStudy.getTitle());
+        assertEquals("Informatik",fieldOfStudy.getTitle());
     }
 
     @Test
