@@ -9,11 +9,13 @@ import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
+/**
+ * A campus has a name and an adress
+ * Every campus belongs to one university and has one or more buildings
+ */
 @Entity
 public class Campus {
     @Id
@@ -29,16 +31,49 @@ public class Campus {
 
     @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
     @OneToMany(mappedBy = "campus")
-    private List<Building> buildings = new ArrayList<Building>();
+    private List<Building> buildings;
     
-
-    public Campus(String name, String adress, University university) {
-        this.name = name;
-        this.adress = adress;
-        this.university = university;
+    /**
+     * Constructor with Builder pattern
+     * @param builder
+     */
+    private Campus(Builder builder) {
+        this.name = builder.name;
+        this.adress = builder.adress;
+        this.university = builder.university;
+        this.buildings = builder.buildings;
     }
 
-    
+    /**
+     * Builder class 
+     * defines the parameters of the campus object to be built
+     */
+    public static class Builder {
+        private String name;
+        private String adress;
+        private University university;
+        private List<Building> buildings = new ArrayList<Building>();
+
+        public Builder(String name, String adress, University university) {
+            this.name = name;
+            this.adress = adress;
+            this.university = university;
+        }
+
+        public Builder hasBuilding(List<Building> buildings) {
+            this.buildings = buildings;
+            return this;
+        }
+
+        public Builder hasBuilding(Building building) {
+            this.buildings.add(building);
+            return this;
+        }
+
+        public Campus build() {
+            return new Campus(this);
+        }
+    }
 
     public String getName() {
         return name;

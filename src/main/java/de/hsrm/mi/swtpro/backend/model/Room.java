@@ -7,6 +7,9 @@ import javax.persistence.ManyToOne;
 
 import com.fasterxml.jackson.annotation.*;
 
+/**
+ * A room has a number within its building and a number of seats
+ */
 @Entity
 public class Room {
 
@@ -21,11 +24,36 @@ public class Room {
     private Building building;
 
 
-    public Room(int number, int seats, Building building) {
-        this.number = number;
-        this.seats = seats;
-        this.building = building;
+    /**
+     * Constructor with Builder pattern
+     * @param builder
+     */
+    private Room(Builder builder) {
+        this.number = builder.number;
+        this.seats = builder.seats;
+        this.building = builder.building;
     }
+
+
+    /**
+     * Builder class 
+     * defines the parameters of the room object to be built
+     */
+    public static class Builder {
+        private int number;
+        private int seats;
+        private Building building;
+
+        public Builder(int number, int seats, Building building) {
+            this.number = number;
+            this.seats = seats;
+            this.building = building;
+        }
+
+        public Room build() {
+            return new Room(this);
+        }
+    }    
 
 
     public Room(int number) {

@@ -4,9 +4,13 @@ import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
 import javax.persistence.Entity;
-import javax.persistence.Id;
 import javax.persistence.OneToOne;
 
+/**
+ * A student is a user 
+ * Each student has an enrolment number and an email adress
+ * as well as a exam regulation and their enrolment term
+ */
 @Entity
 public class Student extends User {
     private int enrolementNumber;
@@ -18,17 +22,45 @@ public class Student extends User {
 
     @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
     @OneToOne
-    private Term enrolementTerm;
+    private Term enrolmentTerm;
 
-
-    public Student(String firstName, String lastName, String loginName, String password, boolean admin, 
-        int enrolementNumber, Term enrolmentTerm, String mail, ExamRegulation examRegulation) {
-        super(firstName, lastName, loginName, password, admin);
-        this.enrolementNumber = enrolementNumber;
-        this.enrolementTerm = enrolmentTerm;
-        this.mail = mail;
-        this.examRegulation = examRegulation;
+    /**
+     * Constructor with Builder pattern
+     * @param builder
+     */
+    private Student(Builder builder) {
+        super(builder);
+        this.enrolementNumber = builder.enrolementNumber;
+        this.enrolmentTerm = builder.enrolmentTerm;
+        this.mail = builder.mail;
+        this.examRegulation = builder.examRegulation;
     }
+
+    
+     /**
+     * Builder class 
+     * defines the parameters of the student object to be built
+     */
+    public static class Builder extends User.Builder{
+
+        private ExamRegulation examRegulation;
+        private String mail;
+        private Term enrolmentTerm;
+        private int enrolementNumber;
+
+        public Builder(String firstName, String lastName, String loginName, 
+        String password, boolean admin, int enrolementNumber, Term enrolmentTerm, String mail, ExamRegulation examRegulation) {
+            super(firstName, lastName, loginName, password, admin);
+            this.examRegulation = examRegulation;
+            this.mail = mail;
+            this.enrolmentTerm = enrolmentTerm;
+            this.enrolementNumber = enrolementNumber;
+        }
+
+        public Student build() {
+            return new Student(this);
+        }
+    }    
 
 
     public int getEnrolementNumber() {
@@ -40,11 +72,11 @@ public class Student extends User {
     }
 
     public Term getEnrolementTerm() {
-        return enrolementTerm;
+        return enrolmentTerm;
     }
 
-    public void setEnrolementTerm(Term enrolementTerm) {
-        this.enrolementTerm = enrolementTerm;
+    public void setEnrolementTerm(Term enrolmentTerm) {
+        this.enrolmentTerm = enrolmentTerm;
     }
 
     public ExamRegulation getExamRegulation() {

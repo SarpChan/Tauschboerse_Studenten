@@ -10,10 +10,13 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
+/**
+ * A university has a name and the adress of its headquarter
+ * It has at least one campus and field of study
+ */
 @Entity
 public class University {
     
@@ -32,13 +35,57 @@ public class University {
     @OneToMany(mappedBy = "university")
     private Set<FieldOfStudy> fieldOfStudies;
 
-
-    public University(String name, String adress) {
-        this.name = name;
-        this.adress = adress;
-        this.fieldOfStudies = new HashSet<FieldOfStudy>();
+    /**
+     * Constructor with Builder pattern
+     * @param builder
+     */
+    private University(Builder builder) {
+        this.name = builder.name;
+        this.adress = builder.adress;
+        this.fieldOfStudies = builder.fieldOfStudies;
+        this.campus = builder.campus;
     }
     
+
+    /**
+     * Builder class 
+     * defines the parameters of the university object to be built
+     */
+    public static class Builder {
+        private String name;
+        private String adress;
+        private List<Campus> campus = new ArrayList<Campus>();
+        private Set<FieldOfStudy> fieldOfStudies = new HashSet<>(); 
+
+        public Builder(String name, String adress) {
+            this.name = name;
+            this.adress = adress;
+        }
+
+        public Builder hasCampi(List<Campus> campus) {
+            this.campus = campus;
+            return this;
+        }
+
+        public Builder hasCampus(Campus campus) {
+            this.campus.add(campus);
+            return this;
+        }
+
+        public Builder hasFieldsOfStudies(Set<FieldOfStudy> fieldOfStudies) {
+            this.fieldOfStudies = fieldOfStudies;
+            return this;
+        }
+
+        public Builder hasFieldOfStudy(FieldOfStudy fieldOfStudies) {
+            this.fieldOfStudies.add(fieldOfStudies);
+            return this;
+        }
+
+        public University build() {
+            return new University(this);
+        }
+    }   
 
 
     public String getName() {
