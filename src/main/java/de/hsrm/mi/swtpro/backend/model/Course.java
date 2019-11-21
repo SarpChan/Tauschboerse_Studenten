@@ -58,6 +58,7 @@ public class Course {
         this.owner = builder.owner;
         this.courseComponents = builder.courseComponents;
         this.modules = builder.modules;
+        this.terms = builder.terms;
     }
 
     /**
@@ -69,11 +70,13 @@ public class Course {
         private User owner;
         private Set<CourseComponent> courseComponents;
         private Set<Module> modules;
+        private Set<Term> terms;
 
         public Builder(String title) {
             this.title = title;
             this.courseComponents = new HashSet<CourseComponent>();
             this.modules = new HashSet<Module>();
+            this.terms = new HashSet<Term>();
         }
 
         public Builder withOwner(User owner) {

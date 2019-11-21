@@ -16,7 +16,7 @@ import javax.persistence.Id;
 public class User {
     @Id
     @GeneratedValue
-    private Long id;
+    private long id;
     private String firstName;
     private String lastName;
     private String loginName;
@@ -61,7 +61,7 @@ public class User {
     } 
 
 
-    public Long getId() {
+    public long getId() {
         return id;
     }
 

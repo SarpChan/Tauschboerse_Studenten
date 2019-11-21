@@ -46,7 +46,7 @@ public class Building {
 
 
     /**
-     * Builder class 
+     * Builder class
      * defines the parameters of the building object to be built
      */
     public static class Builder {
@@ -72,7 +72,7 @@ public class Building {
         public Building build() {
             return new Building(this);
         }
-    }    
+    }
 
 
     public String getName() {

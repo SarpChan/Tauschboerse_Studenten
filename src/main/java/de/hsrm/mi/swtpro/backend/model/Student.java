@@ -7,7 +7,7 @@ import javax.persistence.Entity;
 import javax.persistence.OneToOne;
 
 /**
- * A student is a user 
+ * A student is a user
  * Each student has an enrolment number and an email adress
  * as well as a exam regulation and their enrolment term
  */
@@ -37,9 +37,9 @@ public class Student extends User {
         this.examRegulation = builder.examRegulation;
     }
 
-    
+
      /**
-     * Builder class 
+     * Builder class
      * defines the parameters of the student object to be built
      */
     public static class Builder extends User.Builder{
@@ -49,7 +49,7 @@ public class Student extends User {
         private Term enrolmentTerm;
         private int enrolementNumber;
 
-        public Builder(String firstName, String lastName, String loginName, 
+        public Builder(String firstName, String lastName, String loginName,
         String password, boolean admin, int enrolementNumber, Term enrolmentTerm, String mail, ExamRegulation examRegulation) {
             super(firstName, lastName, loginName, password, admin);
             this.examRegulation = examRegulation;
@@ -61,7 +61,7 @@ public class Student extends User {
         public Student build() {
             return new Student(this);
         }
-    }    
+    }
 
 
     public int getEnrolementNumber() {

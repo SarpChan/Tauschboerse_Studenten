@@ -68,10 +68,10 @@ public class University {
             return this;
         }
 
-        public Builder hasCampus(Campus campus) {
+        /*public Builder hasCampus(Campus campus) {
             this.campus.add(campus);
             return this;
-        }
+        }*/
 
         public Builder hasFieldsOfStudies(Set<FieldOfStudy> fieldOfStudies) {
             this.fieldOfStudies = fieldOfStudies;

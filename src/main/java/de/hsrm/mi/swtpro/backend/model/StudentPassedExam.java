@@ -12,7 +12,7 @@ import javax.persistence.OneToOne;
  */
 @Entity
 @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
-class StudentPassedExam {
+public class StudentPassedExam {
     @Id
     @GeneratedValue
     private long id;

@@ -40,7 +40,7 @@ public class Campus {
      */
     private Campus(Builder builder) {
         this.name = builder.name;
-        this.adress = builder.adress;
+        this.adress = builder.address;
         this.university = builder.university;
         this.buildings = builder.buildings;
     }
@@ -51,13 +51,13 @@ public class Campus {
      */
     public static class Builder {
         private String name;
-        private String adress;
+        private String address;
         private University university;
         private List<Building> buildings = new ArrayList<Building>();
 
-        public Builder(String name, String adress, University university) {
+        public Builder(String name, String address, University university) {
             this.name = name;
-            this.adress = adress;
+            this.address = address;
             this.university = university;
         }
 

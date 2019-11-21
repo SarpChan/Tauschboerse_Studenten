@@ -44,6 +44,7 @@ public class Module {
         this.creditPoints = creditPoints;
         this.period = period;
         this.courses = new HashSet<Course>();
+        this.curriculums = new HashSet<Curriculum>();
     }
 
     /**
@@ -55,6 +56,7 @@ public class Module {
         this.creditPoints = builder.creditPoints;
         this.courses = builder.courses;
         this.period = builder.period;
+        this.curriculums = builder.curriculums;
     }
 
     /**
