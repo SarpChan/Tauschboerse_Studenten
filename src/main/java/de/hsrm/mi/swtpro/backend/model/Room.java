@@ -11,6 +11,7 @@ import com.fasterxml.jackson.annotation.*;
  * A room has a number within its building and a number of seats
  */
 @Entity
+@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
 public class Room {
 
     @Id
@@ -19,7 +20,7 @@ public class Room {
     private int number;
     private int seats;
 
-    @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
+
     @ManyToOne(targetEntity = Building.class)
     private Building building;
 

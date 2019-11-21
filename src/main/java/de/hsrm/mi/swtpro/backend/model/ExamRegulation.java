@@ -14,6 +14,7 @@ import javax.persistence.*;
  * and additional rules on examination
  */
 @Entity
+@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
 public class ExamRegulation {
     @Id
     @GeneratedValue
@@ -21,11 +22,11 @@ public class ExamRegulation {
     private Date date;
     private int rule;
 
-    @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
+    
     @ManyToOne
     private StudyProgram studyProgram;
 
-    @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
+    
     @OneToMany(mappedBy = "examRegulation")
     private Set<Curriculum> curricula;
 

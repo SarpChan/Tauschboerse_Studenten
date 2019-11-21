@@ -12,15 +12,16 @@ import javax.persistence.OneToOne;
  * as well as a exam regulation and their enrolment term
  */
 @Entity
+@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
 public class Student extends User {
     private int enrolementNumber;
     private String mail;
 
-    @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
+
     @OneToOne
     private ExamRegulation examRegulation;
 
-    @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
+
     @OneToOne
     private Term enrolmentTerm;
 

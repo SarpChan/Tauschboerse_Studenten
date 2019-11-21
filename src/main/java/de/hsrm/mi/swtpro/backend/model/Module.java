@@ -17,6 +17,7 @@ import javax.persistence.ManyToMany;
  * There may be multiple courses applicable to one module
  */
 @Entity
+@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
 public class Module {
     @Id
     @GeneratedValue
@@ -25,11 +26,11 @@ public class Module {
     private int creditPoints;
     private int period;
 
-    @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
+
     @ManyToMany(mappedBy = "modules")
     private Set<Curriculum> curriculums;
 
-    @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
+
     @ManyToMany
     private Set<Course> courses;
 

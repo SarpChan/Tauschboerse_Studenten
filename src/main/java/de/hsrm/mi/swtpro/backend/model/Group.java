@@ -15,13 +15,15 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 
-@Entity
+
 /**
  * A group is part of a course and takes place at a given time and place
  * Each lesson is held by a lecturer in a room, and has a limited capacity of seats
  * There may be multipe lessons for each course, split into different groups
  * A student may only attend one group for each lesson of the same type
  */
+@Entity
+@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
 public class Group {
     
     @Id
@@ -33,23 +35,23 @@ public class Group {
     private LocalTime startTime;
     private LocalTime endTime;
 
-    @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
+
     @OneToOne
     private Term term;
 
-    @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
+
     @ManyToOne
     private CourseComponent courseComponent;
 
-    @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
+
     @ManyToOne
     private User lecturer;
 
-    @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
+
     @ManyToOne
     private Room room;
 
-    @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
+
     @ManyToMany
     private Set<Student> students;
 

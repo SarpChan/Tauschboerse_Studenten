@@ -14,6 +14,7 @@ import javax.persistence.OneToMany;
  * Course of Studies
  */
 @Entity
+@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
 public class StudyProgram {
     @Id
     @GeneratedValue
@@ -21,7 +22,7 @@ public class StudyProgram {
     private String title;
     private String degree;
 
-    @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
+
     @OneToMany(mappedBy = "studyProgram")
     private Set<ExamRegulation> examRegulations;
 

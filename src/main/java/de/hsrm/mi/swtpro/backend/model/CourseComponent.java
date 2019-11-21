@@ -18,6 +18,7 @@ import javax.persistence.OneToMany;
  * The type of lesson must be unique for each course
  */
 @Entity
+@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
 public class CourseComponent {
     @Id
     @GeneratedValue
@@ -26,11 +27,11 @@ public class CourseComponent {
     private int creditPoints;
     private String exam;
 
-    @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
+
     @ManyToOne
     private Course course;
 
-    @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
+
     @OneToMany(mappedBy = "courseComponent")
     private Set<Group> groups;
 

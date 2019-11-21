@@ -20,25 +20,26 @@ import javax.persistence.OneToMany;
  * When passed, the student is rewarded with the specified amount of credit points
  */
 @Entity
+@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
 public class Course {
     @Id
     @GeneratedValue
     private long id;
     private String title;
 
-    @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
+
     @ManyToOne
     private User owner;
 
-    @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
+
     @OneToMany(mappedBy = "course")
     private Set<CourseComponent> courseComponents;
 
-    @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
+
     @ManyToMany(mappedBy = "courses")
     private Set<Module> modules;
 
-    @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
+
     @ManyToMany(mappedBy = "courses")
     private Set<Term> terms;
 

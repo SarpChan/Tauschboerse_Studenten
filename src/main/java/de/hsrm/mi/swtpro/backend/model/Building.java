@@ -18,6 +18,7 @@ import com.fasterxml.jackson.annotation.ObjectIdGenerators;
  * A campus has multiple rooms and a name
  */
 @Entity
+@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
 public class Building {
  
     @Id
@@ -25,11 +26,11 @@ public class Building {
     private long id;
     private String name;
 
-    @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
+
     @ManyToOne(targetEntity = Campus.class)
     private Campus campus;
 
-    @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
+
     @OneToMany(mappedBy = "building")
     private List<Room> rooms;
 

@@ -12,17 +12,18 @@ import javax.persistence.*;
  * Many universities can have the same studyprogram
  */
 @Entity
+@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
 public class FieldOfStudy {
     @Id
     @GeneratedValue
     private int id;
     private String title;
 
-    @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
+
     @ManyToMany
     private Collection<StudyProgram> studyPrograms;
 
-    @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
+
     @ManyToOne(targetEntity = University.class)
     private University university;
 

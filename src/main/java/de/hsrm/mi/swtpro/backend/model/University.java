@@ -18,6 +18,7 @@ import com.fasterxml.jackson.annotation.ObjectIdGenerators;
  * It has at least one campus and field of study
  */
 @Entity
+@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
 public class University {
     
     @Id
@@ -26,12 +27,12 @@ public class University {
     private String name;
     private String adress;
 
-    @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
+
     @OneToMany(mappedBy = "university")
     private List<Campus> campus = new ArrayList<Campus>();
 
 
-    @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
+
     @OneToMany(mappedBy = "university")
     private Set<FieldOfStudy> fieldOfStudies;
 

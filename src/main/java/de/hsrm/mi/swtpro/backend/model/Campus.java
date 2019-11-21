@@ -17,6 +17,7 @@ import com.fasterxml.jackson.annotation.ObjectIdGenerators;
  * Every campus belongs to one university and has one or more buildings
  */
 @Entity
+@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
 public class Campus {
     @Id
     @GeneratedValue
@@ -25,11 +26,11 @@ public class Campus {
     //@Id
     private String adress;
 
-    @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
+
     @ManyToOne(targetEntity = University.class)
     private University university;
 
-    @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
+
     @OneToMany(mappedBy = "campus")
     private List<Building> buildings;
     

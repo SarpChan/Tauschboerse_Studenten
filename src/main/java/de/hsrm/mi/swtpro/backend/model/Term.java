@@ -1,5 +1,8 @@
 package de.hsrm.mi.swtpro.backend.model;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+
 import java.sql.Date;
 import java.util.HashSet;
 import java.util.Set;
@@ -15,6 +18,7 @@ import javax.persistence.ManyToMany;
  * the courses offered each term may vary
  */
 @Entity
+@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
 public class Term {
     @Id
     @GeneratedValue
