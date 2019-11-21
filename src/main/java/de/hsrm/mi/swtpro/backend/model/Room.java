@@ -5,6 +5,11 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 
+import com.fasterxml.jackson.annotation.*;
+
+/**
+ * A room has a number within its building and a number of seats
+ */
 @Entity
 public class Room {
 
@@ -13,19 +18,46 @@ public class Room {
     private long id;
     private int number;
     private int seats;
+
+    @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
     @ManyToOne(targetEntity = Building.class)
     private Building building;
 
 
-    public Room(int number, int seats, Building building) {
-        this.number = number;
-        this.seats = seats;
-        this.building = building;
+    /**
+     * Constructor with Builder pattern
+     * @param builder
+     */
+    private Room(Builder builder) {
+        this.number = builder.number;
+        this.seats = builder.seats;
+        this.building = builder.building;
     }
 
 
-    public Room(int number) {
+    /**
+     * Builder class 
+     * defines the parameters of the room object to be built
+     */
+    public static class Builder {
+        private int number;
+        private int seats;
+        private Building building;
 
+        public Builder(int number, int seats, Building building) {
+            this.number = number;
+            this.seats = seats;
+            this.building = building;
+        }
+
+        public Room build() {
+            return new Room(this);
+        }
+    }    
+
+
+    public Room(int number) {
+ 
         this.number = number;
     }
 
@@ -56,4 +88,11 @@ public class Room {
     public long getId() {
         return id;
     }
+
+    public void setId(long id) {
+        this.id = id;
+    }
+
+    
+    
 }

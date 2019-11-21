@@ -1,11 +1,14 @@
 package de.hsrm.mi.swtpro.backend.model;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+
+import java.util.HashSet;
+import java.util.Set;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
-import java.util.HashSet;
-import java.util.Set;
 
 /**
  * Represents an element of the Curriculum
@@ -22,9 +25,11 @@ public class Module {
     private int creditPoints;
     private int period;
 
+    @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
     @ManyToMany(mappedBy = "modules")
     private Set<Curriculum> curriculums;
 
+    @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
     @ManyToMany
     private Set<Course> courses;
 
@@ -52,7 +57,7 @@ public class Module {
     }
 
     /**
-     * Builder class
+     * Builder class 
      * defines the parameters of the Module object to be built
      */
     public static class Builder {
@@ -65,6 +70,7 @@ public class Module {
         public Builder(String title) {
             this.title = title;
             this.courses = new HashSet<Course>();
+            this.curriculums = new HashSet<Curriculum>();
         }
 
         public Builder hasCreditPoints(int creditPoints) {
@@ -156,7 +162,7 @@ public class Module {
     }
     
     /**
-     * Adds course to the collection of courses fitting this module
+     * Adds course to the collection of courses fitting this module 
      * @param course
      */
     public void addCourse(Course course) {
@@ -186,7 +192,7 @@ public class Module {
     public boolean containsCourse(Course course) {
         return this.courses.contains(course);
     }
-
+    
     /**
      * Adds curriculum to the collection of curriculums applicant to this module
      * @param curriculum
@@ -197,7 +203,7 @@ public class Module {
 
     /**
      * Removes curriculum from the collection of curriculums applicant to this module
-     * @param curriuculum
+     * @param curriculum
      */
     public void removeCurriuculum(Curriculum curriculum) {
         this.curriculums.remove(curriculum);
@@ -212,7 +218,7 @@ public class Module {
 
     /**
      * Checks if a given curriculum applies to this module
-     * @param curriuculum
+     * @param curriculum
      * @return true if given curriculum applies to this module
      */
     public boolean containsCurriuculum(Curriculum curriculum) {

@@ -3,10 +3,13 @@ package de.hsrm.mi.swtpro.backend.model;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import java.io.Serializable;
 
+/**
+ * A user has a first name and last name as well as a username and password
+ * A user can be an admin
+ */
 @Entity
-public class User implements Serializable {
+public class User {
     @Id
     @GeneratedValue
     private Long id;
@@ -16,16 +19,43 @@ public class User implements Serializable {
     private String password;
     private boolean admin;
 
-    public User() {
+    /**
+     * Constructor with Builder pattern
+     * @param builder
+     */
+    protected User(Builder builder) {
+        this.firstName = builder.firstName;
+        this.lastName = builder.lastName;
+        this.loginName = builder.loginName;
+        this.password = builder.password;
+        this.admin = builder.admin;
     }
 
-    public User(String firstName, String lastName, String loginName, String password, boolean admin) {
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.loginName = loginName;
-        this.password = password;
-        this.admin = admin;
-    }
+
+    /**
+     * Builder class 
+     * defines the parameters of the user object to be built
+     */
+    public static class Builder {
+        private String firstName;
+        private String lastName;
+        private String loginName;
+        private String password;
+        private boolean admin;
+
+        public Builder(String firstName, String lastName, String loginName, String password, boolean admin) {
+            this.firstName = firstName;
+            this.lastName = lastName;
+            this.loginName = loginName;
+            this.password = password;
+            this.admin = admin;
+        }
+
+        public User build() {
+            return new User(this);
+        }
+    } 
+
 
     public Long getId() {
         return id;

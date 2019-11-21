@@ -1,6 +1,5 @@
 package de.hsrm.mi.swtpro.backend.model;
 
-import java.io.Serializable;
 import java.sql.Date;
 import java.util.HashSet;
 import java.util.Set;
@@ -16,7 +15,7 @@ import javax.persistence.ManyToMany;
  * the courses offered each term may vary
  */
 @Entity
-public class Term implements Serializable{
+public class Term {
     @Id
     @GeneratedValue
     private long id;
@@ -47,7 +46,7 @@ public class Term implements Serializable{
     }
 
     /**
-     * Builder class
+     * Builder class 
      * defines the parameters of the Term object to be built
      */
     public static class Builder {
@@ -64,6 +63,7 @@ public class Term implements Serializable{
             this.startDate = startDate;
             return this;
         }
+
         public Builder withEndDate(Date endDate) {
             this.endDate = endDate;
             return this;
@@ -119,10 +119,10 @@ public class Term implements Serializable{
 
     public void setPeriod(int period) {
         this.period = period;
-    }
+    }    
 
     /**
-     * Adds course to the collection of courses offered this term
+     * Adds course to the collection of courses offered this term 
      * @param course
      */
     public void addCourse(Course course) {
