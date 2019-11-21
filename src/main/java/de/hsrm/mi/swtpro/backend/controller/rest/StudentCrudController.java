@@ -10,6 +10,9 @@ import org.springframework.web.bind.annotation.*;
 
 import java.net.URISyntaxException;
 
+/**
+ * Basic CRUD Controller for insert, update, read and delete functionality at the model.
+ */
 @RestController
 @RequestMapping("/rest")
 public class StudentCrudController {
@@ -17,18 +20,37 @@ public class StudentCrudController {
     @Autowired
     StudentRepository studentRepository;
 
+    /**
+     * Insert a Student object into the Model
+     *
+     * @param student recieves a Student class via POST request
+     * @return Student object
+     * @throws URISyntaxException
+     */
     @PostMapping(path = "/student/create", consumes = "application/json", produces = MediaType.APPLICATION_JSON_VALUE)
     public Student createStudent(@RequestBody Student student) throws URISyntaxException {
         studentRepository.save(student);
         return student;
     }
 
+    /**
+     * Update a Student object into the Model
+     * @param student recieves a Student class via POST request
+     * @return Student object
+     * @throws StudentNotFoundException
+     */
     @PostMapping(path = "/student/update", consumes = "application/json", produces = MediaType.APPLICATION_JSON_VALUE)
     public Student updateStudent(@RequestBody Student student) throws StudentNotFoundException {
         return studentRepository.save(student);
 
     }
 
+    /**
+     * Find a Student object from the Model
+     * @param enrolementNumber recieves key from student
+     * @return Student object
+     * @throws StudentNotFoundException
+     */
     @GetMapping(path = "/student/read", produces = MediaType.APPLICATION_JSON_VALUE)
     public Student findStudent(@RequestParam("enrolementNumber") int enrolementNumber) throws StudentNotFoundException {
         if (studentRepository.findByEnrolementNumber(enrolementNumber) != null) {
@@ -38,6 +60,12 @@ public class StudentCrudController {
         }
     }
 
+    /**
+     * Remove a Student object from the Model
+     * @param student recieves a Student class via POST request
+     * @return Student object or
+     * @throws StudentNotFoundException
+     */
     @DeleteMapping(path = "/student/delete", consumes = "application/json")
     public void deleteStudent(@RequestBody Student student) throws StudentNotFoundException {
         if (studentRepository.findByEnrolementNumber(student.getEnrolementNumber()) != null) {

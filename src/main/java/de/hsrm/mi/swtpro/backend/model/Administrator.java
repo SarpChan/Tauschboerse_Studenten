@@ -7,11 +7,31 @@ class Administrator extends User {
     private String username;
     private String password;
 
-    public Administrator(String firstName, String lastName, String username, String password) {
-        super(firstName, lastName,username,password,true);
-        this.username = username;
-        this.password = password;
+    public Administrator(Builder builder) {
+        super(builder);
+        this.username = builder.username;
+        this.password = builder.password;
     }
+
+    /**
+     * Builder class
+     * defines the parameters of the administrator object to be built
+     */
+    private static class Builder extends User.Builder {
+
+        private String username;
+        private String password;
+
+        public Builder(String firstName, String lastName, String loginName, String password, boolean admin) {
+            super(firstName, lastName, loginName, password, admin);
+
+        }
+
+        public Administrator build() {
+            return new Administrator(this);
+        }
+    }
+
 
     public String getUsername() {
         return username;

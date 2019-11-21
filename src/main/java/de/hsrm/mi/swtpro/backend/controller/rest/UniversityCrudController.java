@@ -10,6 +10,9 @@ import org.springframework.web.bind.annotation.*;
 
 import java.net.URISyntaxException;
 
+/**
+ * Basic CRUD Controller for insert, update, read and delete functionality at the model.
+ */
 @RestController
 @RequestMapping("/rest")
 public class UniversityCrudController {
@@ -17,6 +20,13 @@ public class UniversityCrudController {
     @Autowired
     UniversityRepository universityRepository;
 
+    /**
+     * Insert a University object into the Model
+     *
+     * @param university recieves a University class via POST request
+     * @return University object
+     * @throws URISyntaxException
+     */
     @PostMapping(path = "/university/create", consumes = "application/json", produces = MediaType.APPLICATION_JSON_VALUE)
     public University createUniversity(@RequestBody University university) throws URISyntaxException {
         universityRepository.save(university);
@@ -38,6 +48,12 @@ public class UniversityCrudController {
         }
     }
 
+    /**
+     * Remove a University object from the Model
+     * @param university recieves a University class via POST request
+     * @return University object or
+     * @throws UniversityNotFoundException
+     */
     @DeleteMapping(path = "/university/delete", consumes = "application/json")
     public void deleteUniversity(@RequestBody University university) throws UniversityNotFoundException {
         if (universityRepository.findByName(university.getName()) != null) {

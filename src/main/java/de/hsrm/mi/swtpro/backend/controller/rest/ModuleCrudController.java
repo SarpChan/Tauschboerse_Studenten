@@ -10,6 +10,9 @@ import org.springframework.web.bind.annotation.*;
 
 import java.net.URISyntaxException;
 
+/**
+ * Basic CRUD Controller for insert, update, read and delete functionality at the model.
+ */
 @RestController
 @RequestMapping("/rest")
 public class ModuleCrudController {
@@ -17,18 +20,37 @@ public class ModuleCrudController {
     @Autowired
     ModuleRepository moduleRepository;
 
+    /**
+     * Insert a Module object into the Model
+     *
+     * @param module recieves a Module class via POST request
+     * @return Module object
+     * @throws URISyntaxException
+     */
     @PostMapping(path = "/module/create", consumes = "application/json", produces = MediaType.APPLICATION_JSON_VALUE)
     public Module createModule(@RequestBody Module module) throws URISyntaxException {
         moduleRepository.save(module);
         return module;
     }
 
+    /**
+     * Update a Module object into the Model
+     * @param module recieves a Module class via POST request
+     * @return Module object
+     * @throws ModuleNotFoundException
+     */
     @PostMapping(path = "/module/update", consumes = "application/json", produces = MediaType.APPLICATION_JSON_VALUE)
     public Module updateModule(@RequestBody Module module) throws ModuleNotFoundException {
         return moduleRepository.save(module);
 
     }
 
+    /**
+     * Find a Module object from the Model
+     * @param moduleID recieves key from module
+     * @return Module object
+     * @throws ModuleNotFoundException
+     */
     @GetMapping(path = "/module/read", produces = MediaType.APPLICATION_JSON_VALUE)
     public Module findModule(@RequestParam("moduleID") long moduleID) throws ModuleNotFoundException {
         if (moduleRepository.findById(moduleID) != null) {
@@ -38,6 +60,12 @@ public class ModuleCrudController {
         }
     }
 
+    /**
+     * Remove a Module object from the Model
+     * @param module recieves a Module class via POST request
+     * @return Module object or
+     * @throws ModuleNotFoundException
+     */
     @DeleteMapping(path = "/module/delete", consumes = "application/json")
     public void deleteModule(@RequestBody Module module) throws ModuleNotFoundException {
         if (moduleRepository.findById(module.getId()) != null) {

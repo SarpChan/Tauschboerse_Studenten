@@ -10,6 +10,9 @@ import org.springframework.web.bind.annotation.*;
 
 import java.net.URISyntaxException;
 
+/**
+ * Basic CRUD Controller for insert, update, read and delete functionality at the model.
+ */
 @RestController
 @RequestMapping("/rest")
 public class BuildingCrudController {
@@ -17,18 +20,37 @@ public class BuildingCrudController {
     @Autowired
     BuildingRepository buildingRepository;
 
+    /**
+     * Insert a Building object into the Model
+     *
+     * @param building recieves a Building class via POST request
+     * @return Building object
+     * @throws URISyntaxException
+     */
     @PostMapping(path = "/building/create", consumes = "application/json", produces = MediaType.APPLICATION_JSON_VALUE)
     public Building createBuilding(@RequestBody Building building) throws URISyntaxException {
         buildingRepository.save(building);
         return building;
     }
 
+    /**
+     * Update a Building object into the Model
+     * @param building recieves a Building class via POST request
+     * @return Building object
+     * @throws BuildingNotFoundException
+     */
     @PostMapping(path = "/building/update", consumes = "application/json", produces = MediaType.APPLICATION_JSON_VALUE)
     public Building updateBuilding(@RequestBody Building building) throws BuildingNotFoundException {
         return buildingRepository.save(building);
 
     }
 
+    /**
+     * Find a Building object from the Model
+     * @param buildingID recieves key from building
+     * @return Building object
+     * @throws BuildingNotFoundException
+     */
     @GetMapping(path = "/building/read", produces = MediaType.APPLICATION_JSON_VALUE)
     public Building findBuilding(@RequestParam("buildingID") long buildingID) throws BuildingNotFoundException {
         if (buildingRepository.findById(buildingID) != null) {
@@ -38,6 +60,12 @@ public class BuildingCrudController {
         }
     }
 
+    /**
+     * Remove a Building object from the Model
+     * @param building recieves a Building class via POST request
+     * @return Building object or
+     * @throws BuildingNotFoundException
+     */
     @DeleteMapping(path = "/building/delete", consumes = "application/json")
     public void deleteBuilding(@RequestBody Building building) throws BuildingNotFoundException {
         if (buildingRepository.findById(building.getId()) != null) {
