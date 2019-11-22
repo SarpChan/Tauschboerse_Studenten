@@ -23,6 +23,7 @@ public class CourseComponent {
     @GeneratedValue
     private long id;
     private CourseType type;
+    @
     private int creditPoints;
     private String exam;
 

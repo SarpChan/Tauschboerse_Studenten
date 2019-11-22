@@ -24,6 +24,7 @@ public class Course {
     @Id
     @GeneratedValue
     private long id;
+    @NotEmpty
     private String title;
 
     @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")

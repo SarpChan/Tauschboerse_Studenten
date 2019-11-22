@@ -21,6 +21,7 @@ public class Campus {
     @Id
     @GeneratedValue
     private long id;
+    @NotEmpty
     private String name;
     //@Id
     private String adress;

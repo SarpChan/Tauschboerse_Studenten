@@ -23,6 +23,7 @@ public class Building {
     @Id
     @GeneratedValue
     private long id;
+    @NotEmpty(message= "Name fehlt!")
     private String name;
 
     @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
