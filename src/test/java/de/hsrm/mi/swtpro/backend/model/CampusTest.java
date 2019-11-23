@@ -4,8 +4,8 @@ import org.junit.Before;
 import org.junit.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
 import static org.junit.Assert.assertEquals;
 
@@ -14,13 +14,20 @@ public class CampusTest {
 
     private University university;
     private Campus campus;
-    private List<Building> buildings;
+    private Set<Building> buildings;
 
     @Before
     public void setUp(){
-        university = new University("FH Kiel","Champ de Mars, 5 Avenue Anatole France, 75007 Paris, Frankreich");
-        campus = new Campus("Unter den Eichen","Platz der Republik 1, 11011 Berlin",university);
+        university = University.builder()
+                .name("FH Kiel")
+                .adress("Champ de Mars, 5 Avenue Anatole France, 75007 Paris, Frankreich")
+                .build();
 
+        campus = Campus.builder()
+                .name("Unter den Eichen")
+                .adress("Platz der Republik 1, 11011 Berlin")
+                .university(university)
+                .build();
     }
 
     @Test
@@ -40,15 +47,15 @@ public class CampusTest {
 
     @Test
     public void whenSetBuildings_thenSaveBuilding(){
-        buildings = new ArrayList<>();
-        buildings.add(new Building("C",campus));
-        buildings.add(new Building("C++",campus));
-        buildings.add(new Building("C#",campus));
+        buildings = new HashSet<>();
+        buildings.add(Building.builder().name("C").campus(campus).build());
+        buildings.add(Building.builder().name("C++").campus(campus).build());
+        buildings.add(Building.builder().name("C").campus(campus).build());
 
         campus.setBuildings(buildings);
-
-        assertEquals(campus.getBuildings().get(0).getName(),"C");
-        assertEquals(campus.getBuildings().get(1).getName(),"C++");
-        assertEquals(campus.getBuildings().get(2).getName(),"C#");
+        Object[] buildingsInCampus = campus.getBuildings().toArray();
+        assertEquals("C",((Building)buildingsInCampus[0]).getName());
+        assertEquals("C#",((Building)buildingsInCampus[1]).getName());
+        assertEquals("C++",((Building)buildingsInCampus[2]).getName());
     }
 }

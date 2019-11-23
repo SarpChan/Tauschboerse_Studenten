@@ -23,13 +23,24 @@ public class CourseRepositoryTest {
 
     @Before
     public void setUp(){
-        User user = new User("niemand","Nimandson","nie","password",false);
-        Course course = new Course.Builder("A")
-                .withOwner(user)
+        User user = User.builder()
+                .firstName("niemand")
+                .lastName("Nimandson")
+                .loginName("nie")
+                .password("password")
                 .build();
-        CourseComponent courseComponent = new CourseComponent.Builder(course,CourseType.LECTURE).build();
-        course.getCourseComponents().add(courseComponent);
 
+        Course course = Course.builder()
+                .title("A")
+                .owner(user)
+                .build();
+
+        CourseComponent courseComponent = CourseComponent.builder()
+                .course(course)
+                .type(CourseType.LECTURE)
+                .build();
+
+        course.getCourseComponents().add(courseComponent);
         entityManager.persist(user);
     }
 }

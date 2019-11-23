@@ -2,19 +2,13 @@ package de.hsrm.mi.swtpro.backend.model;
 
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
-
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.GeneratedValue;
-import javax.persistence.OneToOne;
-import javax.persistence.OneToMany;
-
-import java.util.Set;
-import java.util.HashSet;
-
 import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
+
+import javax.persistence.*;
+import java.util.HashSet;
+import java.util.Set;
 
 /**
  * A student is a user 
@@ -54,22 +48,6 @@ public class Student extends Role {
     @Getter @Setter
     @OneToMany
     private Set<Group> attendsGroups;
-
-    /**
-     * Constructor with Builder pattern
-     * @param builder
-     */
-    @Deprecated
-    private Student(Builder builder) {
-        this.enrolementNumber = builder.enrolementNumber;
-        this.enrolmentTerm = builder.enrolmentTerm;
-        this.mail = builder.mail;
-        this.examRegulation = builder.examRegulation;
-        this.attendsCourses = builder.attendsCourses;
-        this.passedExams = builder.passedExams;
-        this.attendsGroups = builder.attendsGroups;
-    }
-    
      /**
      * Builder class 
      * defines the parameters of the student object to be built
@@ -108,10 +86,6 @@ public class Student extends Role {
         public Builder withPassedExams(Set<StudentPassedExam> passedExams) {
             this.passedExams = passedExams;
             return this;
-        }
-
-        public Student build() {
-            return new Student(this);
         }
     }
 }

@@ -2,19 +2,14 @@ package de.hsrm.mi.swtpro.backend.model;
 
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
-
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.GeneratedValue;
-import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
-
-import java.util.HashSet;
-import java.util.Set;
-
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
+
+import javax.persistence.*;
+import java.util.HashSet;
+import java.util.Set;
 
 /**
  * A campus has a name and an adress
@@ -22,6 +17,7 @@ import lombok.Setter;
  */
 @Entity
 @Builder
+@AllArgsConstructor
 public class Campus {
     
     @Id

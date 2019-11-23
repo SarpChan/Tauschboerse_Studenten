@@ -19,7 +19,10 @@ public class ExamRegulationTest {
 
     @Before
     public void setUp(){
-        studyProgram = new StudyProgram.Builder("Medieninformatik","Bachlor").build();
+        studyProgram = StudyProgram.builder()
+                .title("Medieninformatik")
+                .degree("Bachlor")
+                .build();
         examRegulation = new ExamRegulation.Builder(Date.valueOf(LocalDate.of(2017,7,17)))
                 .forStudyProgram(studyProgram)
                 .build();

@@ -7,6 +7,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 
 import java.sql.Date;
 import java.time.LocalDate;
+import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -24,10 +25,17 @@ public class CurriculumTest {
 
     @Before
     public void setUp(){
-        examRegulation = new ExamRegulation.Builder(Date.valueOf(LocalDate.MAX)).build();
-        module = new Module.Builder("Mathe 3").build();
-        curriculum = new Curriculum.Builder(examRegulation)
-                .hasModule(module)
+        examRegulation = ExamRegulation.builder()
+                .date(Date.valueOf(LocalDate.MAX))
+                .build();
+
+        module = Module.builder()
+                .title("Mathe 3")
+                .build();
+
+        curriculum = Curriculum.builder()
+                .examRegulation(examRegulation)
+                .modules(new HashSet<>(Collections.singletonList(module)))
                 .build();
 
         moduleList = new HashSet<>();
@@ -51,7 +59,9 @@ public class CurriculumTest {
 
     @Test
     public void whenSetModules_thenSaveModules(){
-        module = new Module.Builder("Mathe 4").build();
+        module = Module.builder()
+                .title("Mathe 4")
+                .build();
 
         moduleList.add(module);
         curriculum.setModules(moduleList);

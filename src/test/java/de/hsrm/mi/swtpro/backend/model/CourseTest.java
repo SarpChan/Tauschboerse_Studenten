@@ -4,6 +4,7 @@ import org.junit.Before;
 import org.junit.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
+import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -17,18 +18,32 @@ public class CourseTest {
 
     private Course course;
     private User user;
+    private Term term;
     private Module module;
-    private Set<Module> modules;
 
     @Before
     public void setUp(){
-        user = new User("Gustav","Gans","glueck001","pass",true);
-        course = new Course.Builder("HCI")
-                .withOwner(user)
+        user = User.builder()
+                .firstName("Gustav")
+                .lastName("Gans")
+                .loginName("glueck001")
+                .password("pass")
                 .build();
-        modules = new HashSet<>();
-        module = new Module.Builder("erleuchtendes Module").build();
-        modules.add(module);
+
+        term = Term.builder()
+                .period(2)
+                .build();
+
+        module = Module.builder().
+                title("erleuchtendes Module").
+                build();
+
+        course = Course.builder()
+                .owner(user)
+                .title("HCI")
+                .modules(new HashSet<>(Collections.singletonList(module)))
+                .terms(new HashSet<>(Collections.singletonList(term)))
+                .build();
     }
 
     @Test
@@ -42,8 +57,13 @@ public class CourseTest {
     }
 
     @Test
+    public void whenGetModules_ReturnModuleList(){
+        assertThat(course.getModules(),hasItem(module));
+    }
+
+    @Test
     public void whenSetTerm_thenSaveTerm(){
-        Term term = new Term.Builder().inPeriod(1).build();
+        Term term = Term.builder().period(1).build();
         Set<Term> terms = new HashSet<>();
         terms.add(term);
         course.setTerms(terms);
@@ -59,15 +79,15 @@ public class CourseTest {
 
     @Test
     public void whenSetOwner_thenSaveOwner(){
-        User user = new User("Karl","Karlson","kool","wort",false);
+        User user = User.builder()
+                .firstName("Karl")
+                .lastName("Karlson")
+                .password("wort")
+                .loginName("kool")
+                .build();
+
         course.setOwner(user);
         assertEquals("Karlson",course.getOwner().getLastName());
-    }
-
-    @Test
-    public void whenSetModule_thenSaveModule(){
-        course.setModules(modules);
-        assertThat(course.getModules(),hasItem(module));
     }
 
 }

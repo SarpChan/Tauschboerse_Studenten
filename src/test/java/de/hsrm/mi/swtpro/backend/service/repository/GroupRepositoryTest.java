@@ -22,21 +22,39 @@ public class GroupRepositoryTest {
 
     @Before
     public void setUp(){
-        Course course = new Course.Builder("A").build();
-        CourseComponent courseComponent = new CourseComponent.Builder(course, CourseType.LECTURE).build();
-        User user = new User("Lukas","wede","w001","password",true);
-        Room room = new Room(17);
-        Term term = new Term.Builder().build();
+        Course course = Course.builder()
+                .title("A")
+                .build();
 
-        Group group = new Group.Builder()
-                .hasLecturer(user)
-                .onDayOfWeek(DayOfWeek.MONDAY)
-                .withStartTime(LocalTime.of(14,0))
-                .withEndTime(LocalTime.of(15,0))
-                .hasSlots(17)
-                .inRoom(room)
-                .inTerm(term)
-                .build(courseComponent,'A');
+        CourseComponent courseComponent = CourseComponent.builder()
+                .course(course)
+                .type(CourseType.LECTURE)
+                .build();
+
+        User user = User.builder()
+                .firstName("Lukas")
+                .lastName("wede")
+                .loginName("w001")
+                .password("password")
+                .build();
+
+        Room room = Room.builder()
+                .number(17)
+                .build();
+
+        Term term = Term.builder().build();
+
+        Group group = Group.builder()
+                .lecturer(user)
+                .dayOfWeek(DayOfWeek.MONDAY)
+                .startTime(LocalTime.of(14,0))
+                .endTime(LocalTime.of(15,0))
+                .slots(17)
+                .room(room)
+                .term(term)
+                .courseComponent(courseComponent)
+                .group('A')
+                .build();
 
         entityManager.persist(course);
         entityManager.persist(courseComponent);

@@ -4,10 +4,12 @@ import org.junit.Before;
 import org.junit.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
+import static org.hamcrest.Matchers.*;
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertThat;
 
 @SpringBootTest
 public class BuildingTest {
@@ -15,18 +17,26 @@ public class BuildingTest {
     private University university;
     private Campus campus;
     private Building building;
-    private List<Room> rooms;
+    private Set<Room> rooms;
 
     @Before
     public void setUp(){
-        university = new University("Hochschule RheinMain","Kurt-Schumacher-Ring 18, 65197 Wiesbaden");
-        campus = new Campus("Unter den Eichen","Kurt-Schumacher-Ring 18, 65197 Wiesbaden",university);
-        building = new Building("D Gebäude",campus);
+        campus = Campus.builder()
+                .name("Unter den Eichen")
+                .adress("Kurt-Schumacher-Ring 18, 65197 Wiesbaden")
+                .build();
 
-        rooms = new ArrayList<>();
-        rooms.add(new Room(17));
-        rooms.add(new Room(42));
-        rooms.add(new Room(14));
+        rooms = new HashSet<>();
+        rooms.add(Room.builder().number(17).build());
+        rooms.add(Room.builder().number(42).build());
+        rooms.add(Room.builder().number(14).build());
+
+        building = Building.builder()
+                .name("D Gebäude")
+                .campus(campus)
+                .rooms(rooms)
+                .build();
+
 
         building.setRooms(rooms);
         building.setId(17);
@@ -49,14 +59,22 @@ public class BuildingTest {
 
     @Test
     public void whenGetRooms_thanReturnRoomList(){
-        assertEquals(building.getRooms().get(0).getNumber(),17);
-        assertEquals(building.getRooms().get(1).getNumber(),42);
-        assertEquals(building.getRooms().get(2).getNumber(),14);
+        assertThat(building.getRooms(),containsInAnyOrder(
+                hasProperty("number",is(14)),
+                hasProperty("number",is(17)),
+                hasProperty("number",is(42))
+        ));
     }
 
     @Test
     public void whenSetCampus_thanSaveCampus(){
-        building.setCampus(new Campus("RüppelCampus","221B Baker, London",university));
+        building.setCampus(Campus.builder()
+                .name("RüppelCampus")
+                .adress("RüppelCampus")
+                .university(university)
+                .build()
+        );
+
         assertEquals(building.getCampus().getName(),"RüppelCampus");
     }
 
@@ -74,7 +92,7 @@ public class BuildingTest {
 
     @Test
     public void whenAddRoom_thanSaveRoom(){
-        building.getRooms().add(new Room(21));
-        assertEquals(building.getRooms().get(3).getNumber(),21);
+        building.getRooms().add(Room.builder().number(21).build());
+        assertThat(building.getRooms(),hasItem(hasProperty("number",is(21))));
     }
 }

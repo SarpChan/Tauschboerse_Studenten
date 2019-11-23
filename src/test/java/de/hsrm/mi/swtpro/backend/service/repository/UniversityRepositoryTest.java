@@ -25,7 +25,11 @@ public class UniversityRepositoryTest {
 
     @Before
     public void setUp(){
-        University university = new University("Hochschule RheinMain","Kurt-Schumacher-Ring 18, 65197 Wiesbaden");
+        University university = University.builder()
+                .name("Hochschule RheinMain")
+                .adress("Kurt-Schumacher-Ring 18, 65197 Wiesbaden")
+                .build();
+
         entityManager.persist(university);
     }
 

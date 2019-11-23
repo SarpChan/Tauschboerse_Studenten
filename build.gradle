@@ -26,8 +26,6 @@ repositories {
 dependencies {
     // https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-test
     testCompile group: 'org.springframework.boot', name: 'spring-boot-starter-test', version: '2.2.1.RELEASE'
-    compileOnly 'org.projectlombok:lombok:1.18.10'
-    annotationProcessor 'org.projectlombok:lombok:1.18.10'
     compile 'junit:junit:4.12'
 	implementation 'org.springframework.boot:spring-boot-starter-web'
 	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
@@ -37,8 +35,9 @@ dependencies {
 	}
 	runtimeOnly 'com.h2database:h2'
 	compile 'com.fasterxml.jackson.core:jackson-core:2.10.1'
-	compileOnly 'org.projectlombok:lombok:1.18.10'
-	annotationProcessor 'org.projectlombok:lombok:1.18.10'
+
+	compileOnly 'org.projectlombok:lombok:1.18.4'
+	annotationProcessor 'org.projectlombok:lombok:1.18.4'
 }
 
 test {

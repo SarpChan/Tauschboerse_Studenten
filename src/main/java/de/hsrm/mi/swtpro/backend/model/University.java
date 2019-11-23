@@ -2,18 +2,17 @@ package de.hsrm.mi.swtpro.backend.model;
 
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
-
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.GeneratedValue;
-import javax.persistence.OneToMany;
-
-import java.util.HashSet;
-import java.util.Set;
-
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
+
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.OneToMany;
+import java.util.HashSet;
+import java.util.Set;
 
 /**
  * A university has a name and the adress of its headquarter
@@ -21,6 +20,7 @@ import lombok.Setter;
  */
 @Entity
 @Builder
+@AllArgsConstructor
 public class University {
     
     @Id

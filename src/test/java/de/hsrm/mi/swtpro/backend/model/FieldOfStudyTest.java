@@ -7,8 +7,8 @@ import org.springframework.boot.test.context.SpringBootTest;
 
 import java.sql.Date;
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
 import static org.hamcrest.CoreMatchers.hasItem;
 import static org.junit.Assert.*;
@@ -23,10 +23,22 @@ public class FieldOfStudyTest {
 
     @Before
     public void setUp(){
-        university = new University("Störtebecker Hochschule","Adelheidstraße 84, 65185 Wiesbaden");
-        studyProgram = new StudyProgram.Builder("MI","Master").build();
-        term = new Term.Builder().withEndDate(Date.valueOf(LocalDate.MIN)).build();
-        fieldOfStudy = new FieldOfStudy("Informatik");
+        university = University.builder()
+                .name("Störtebecker Hochschule")
+                .adress("Adelheidstraße 84, 65185 Wiesbaden")
+                .build();
+
+        studyProgram = StudyProgram.builder()
+                .title("MI")
+                .degree("Master")
+                .build();
+
+        term = Term.builder()
+                .endDate(Date.valueOf(LocalDate.MIN))
+                .build();
+        fieldOfStudy = FieldOfStudy.builder()
+                .title("Informatik")
+                .build();
     }
 
     @Test
@@ -42,16 +54,16 @@ public class FieldOfStudyTest {
 
     @Test
     public void whenSetStudyProgram_thenSaveStudyProgram(){
-        List<StudyProgram> studyProgramList = new ArrayList<>();
+        Set<StudyProgram> studyProgramList = new HashSet<>();
         studyProgramList.add(studyProgram);
-        fieldOfStudy.setStudyProgram(studyProgramList);
-        assertThat(fieldOfStudy.getStudyProgram(),hasItem(studyProgram));
+        fieldOfStudy.setStudyPrograms(studyProgramList);
+        assertThat(fieldOfStudy.getStudyPrograms(),hasItem(studyProgram));
     }
 
     @Test
     public void whenSetUniversity_thenSaveUniversity(){
         fieldOfStudy.setUniversity(university);
-        assertTrue("kein Getter fuer die University",false);
+        assertEquals("Störtebecker Hochschule",fieldOfStudy.getUniversity().getName());
     }
 
     @Test

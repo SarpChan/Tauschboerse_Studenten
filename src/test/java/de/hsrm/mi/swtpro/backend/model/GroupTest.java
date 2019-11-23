@@ -5,10 +5,10 @@ import org.junit.Before;
 import org.junit.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
-import java.sql.Date;
 import java.time.DayOfWeek;
-import java.time.LocalDate;
 import java.time.LocalTime;
+import java.util.Collections;
+import java.util.HashSet;
 
 import static org.junit.Assert.assertEquals;
 
@@ -24,23 +24,36 @@ public class GroupTest {
 
     @Before
     public void setUp(){
-        Course course = new Course.Builder("curse").build();
-        courseComponent = new CourseComponent.Builder(course,CourseType.LECTURE).build();
-        lecture = new User("Doc Cheese","Cheesy","cheese","none",true);
-        group = new Group.Builder()
-                .hasSlots(17)
-                .hasLecturer(lecture)
-                .withEndTime(LocalTime.MIDNIGHT)
-                .withStartTime(LocalTime.of(13,27))
-                .onDayOfWeek(DayOfWeek.MONDAY)
-                .build(courseComponent,'D');
+        Course course =  Course.builder()
+                .title("kurs")
+                .build();
 
+        courseComponent = CourseComponent.builder()
+                .course(course)
+                .creditPoints(17)
+                .build();
 
-        student = new Student(
-                "Dödel","Werner","dower","1235",false,
-                1047892,new Term.Builder().build(),"a@e.de",
-                new ExamRegulation.Builder(Date.valueOf(LocalDate.MAX)).build());
-        term = new Term.Builder().build();
+        lecture = User.builder()
+                .firstName("Doc Cheese")
+                .lastName("Cheesy")
+                .loginName("cheese")
+                .password("none")
+                .build();
+
+        student = Student.builder()
+                .mail("a@e.de")
+                .build();
+
+        group = Group.builder()
+                .slots(17)
+                .lecturer(lecture)
+                .dayOfWeek(DayOfWeek.MONDAY)
+                .endTime(LocalTime.MIDNIGHT)
+                .startTime(LocalTime.of(13,27))
+                .courseComponent(courseComponent)
+                .students(new HashSet<>(Collections.singletonList(student)))
+                .group('D')
+                .build();
     }
 
     @Test

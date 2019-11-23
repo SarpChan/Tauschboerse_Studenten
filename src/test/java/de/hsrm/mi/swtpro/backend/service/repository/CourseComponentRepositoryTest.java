@@ -28,13 +28,21 @@ public class CourseComponentRepositoryTest {
 
     @Before
     public void setUp(){
-        Course course  = new Course.Builder("Analysis").build();
-        CourseComponent courseComponent = new CourseComponent.Builder(course, CourseType.LECTURE)
-                .hasExam("Test")
-                .hasCreditPoints(10)
+        Course course  = Course.builder()
+                .title("Analysis")
                 .build();
 
-        group = new Group.Builder().build(courseComponent,'D');
+        CourseComponent courseComponent = CourseComponent.builder()
+                .course(course)
+                .type(CourseType.LECTURE)
+                .exam("Test")
+                .creditPoints(10)
+                .build();
+
+        group = Group.builder()
+                .courseComponent(courseComponent)
+                .group('D')
+                .build();
 
         courseComponent.addGroup(group);
         courseComponent.setId(17);

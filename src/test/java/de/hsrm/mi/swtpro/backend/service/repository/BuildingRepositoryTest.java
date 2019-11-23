@@ -26,10 +26,21 @@ public class BuildingRepositoryTest {
 
     @Before
     public void setUp(){
-        University university = new University("Hochschule RheinMain","Kurt-Schumacher-Ring 18, 65197 Wiesbaden");
-        Campus campus = new Campus("Unter den Eichen","Kurt-Schumacher-Ring 18, 65197 Wiesbaden",university);
-        Building building = new Building("D Gebäude",campus);
-        building.setId(17);
+        University university = University.builder()
+                .name("Hochschule RheinMain")
+                .adress("Kurt-Schumacher-Ring 18, 65197 Wiesbaden")
+                .build();
+        Campus campus = Campus.builder()
+                .name("Unter den Eichen")
+                .adress("Kurt-Schumacher-Ring 18, 65197 Wiesbaden")
+                .university(university)
+                .build();
+
+        Building building= Building.builder()
+                .id(17)
+                .name("D Gebäude")
+                .campus(campus)
+                .build();
 
         entityManager.persist(university);
         entityManager.persist(campus);
