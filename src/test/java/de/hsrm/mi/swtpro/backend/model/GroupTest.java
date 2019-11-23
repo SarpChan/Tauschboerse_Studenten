@@ -78,7 +78,7 @@ public class GroupTest {
 
     @Test
     public void whenGetEndTime_thenReturnEndTime(){
-        assertEquals(LocalTime.MIDNIGHT.toNanoOfDay(),group.getStartTime().toNanoOfDay());
+        assertEquals(LocalTime.MIDNIGHT.toNanoOfDay(),group.getEndTime().toNanoOfDay());
     }
 
     @Test

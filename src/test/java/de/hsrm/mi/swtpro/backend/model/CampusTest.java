@@ -7,7 +7,9 @@ import org.springframework.boot.test.context.SpringBootTest;
 import java.util.HashSet;
 import java.util.Set;
 
+import static org.hamcrest.Matchers.*;
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertThat;
 
 @SpringBootTest
 public class CampusTest {
@@ -50,12 +52,13 @@ public class CampusTest {
         buildings = new HashSet<>();
         buildings.add(Building.builder().name("C").campus(campus).build());
         buildings.add(Building.builder().name("C++").campus(campus).build());
-        buildings.add(Building.builder().name("C").campus(campus).build());
+        buildings.add(Building.builder().name("C#").campus(campus).build());
 
         campus.setBuildings(buildings);
-        Object[] buildingsInCampus = campus.getBuildings().toArray();
-        assertEquals("C",((Building)buildingsInCampus[0]).getName());
-        assertEquals("C#",((Building)buildingsInCampus[1]).getName());
-        assertEquals("C++",((Building)buildingsInCampus[2]).getName());
+        assertThat(campus.getBuildings(),hasItems(
+                hasProperty("name",is("C")),
+                hasProperty("name",is("C++")),
+                hasProperty("name",is("C#"))
+        ));
     }
 }

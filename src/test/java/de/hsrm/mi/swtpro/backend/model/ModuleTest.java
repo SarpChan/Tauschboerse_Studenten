@@ -7,10 +7,13 @@ import org.springframework.boot.test.context.SpringBootTest;
 
 import java.sql.Date;
 import java.time.LocalDate;
+import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;
 
 import static org.hamcrest.CoreMatchers.hasItem;
+import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.Matchers.hasProperty;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertThat;
 
@@ -18,20 +21,29 @@ import static org.junit.Assert.assertThat;
 public class ModuleTest {
 
     private Module module;
-    private Curriculum curriculum;
     private Course course;
 
     @Before
     public void setUp(){
-        ExamRegulation examRegulation = new ExamRegulation.Builder(Date.valueOf(LocalDate.of(2017, 10, 14))).build();
-        curriculum = new Curriculum.Builder(examRegulation).build();
-        course = new Course.Builder("Kurs").build();
+        ExamRegulation examRegulation = ExamRegulation.builder()
+                .date(Date.valueOf(LocalDate.of(2017, 10, 14)))
+                .build();
 
-        module = new Module.Builder("Analysis")
-                .inPeriod(2)
-                .inCurriculum(curriculum)
-                .hasCreditPoints(10)
-                .withCourse(course)
+        Curriculum curriculum = Curriculum.builder()
+                .id(17)
+                .examRegulation(examRegulation)
+                .build();
+
+        course = Course.builder()
+                .title("Kurs")
+                .build();
+
+        module = Module.builder()
+                .title("Analysis")
+                .period(2)
+                .curriculums(new HashSet<>(Collections.singleton(curriculum)))
+                .creditPoints(10)
+                .courses(new HashSet<>(Collections.singletonList(course)))
                 .build();
     }
 
@@ -57,7 +69,9 @@ public class ModuleTest {
 
     @Test
     public void whenGetCurriculum_thenReturnCurriculum(){
-        assertThat(module.getCurriculums(),hasItem(curriculum));
+        assertThat(module.getCurriculums(),hasItem(
+                hasProperty("id",is(Integer.toUnsignedLong(17)))
+        ));
     }
 
     @Test
@@ -81,25 +95,36 @@ public class ModuleTest {
     @Test
     public void whenSetCourse_thenSaveCourse(){
         Set<Course> courseSet = new HashSet<>();
-        Course newCourse = new Course.Builder("neuer").build();
-        courseSet.add(course);
+        Course course = Course.builder()
+                .title("neuer")
+                .build();
 
+        courseSet.add(course);
         module.setCourses(courseSet);
-        assertThat(module.getCourses(),hasItem(newCourse));
+        assertThat(module.getCourses(),hasItem(
+                hasProperty("title",is("neuer"))
+        ));
     }
 
     @Test
     public void whenSetCurricula_thenSaveCurricula(){
         Set<Curriculum> curricula = new HashSet<>();
-        ExamRegulation examRegulation = new ExamRegulation.Builder(
-                Date.valueOf(LocalDate.of(2018,10,15)))
-                    .build();
-        Curriculum newCurriculum = new Curriculum.Builder(examRegulation)
+
+        ExamRegulation examRegulation = ExamRegulation.builder()
+                .date(Date.valueOf(LocalDate.of(2018,10,15)))
+                .build();
+
+        Curriculum newCurriculum = Curriculum.builder()
+                .id(421)
+                .examRegulation(examRegulation)
                 .build();
 
         curricula.add(newCurriculum);
         module.setCurriculums(curricula);
-        assertThat(module.getCurriculums(),hasItem(newCurriculum));
+
+        assertThat(module.getCurriculums(),hasItem(
+                hasProperty("id",is(Integer.toUnsignedLong(421)))
+        ));
     }
 
 
