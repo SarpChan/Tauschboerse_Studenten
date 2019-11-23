@@ -3,6 +3,7 @@ package de.hsrm.mi.swtpro.backend.model;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.GeneratedValue;
+import javax.persistence.ManyToOne;
 
 import lombok.Builder;
 import lombok.Getter;
@@ -18,5 +19,6 @@ public abstract class Role {
     private int id;
 
     @Getter @Setter
-    private String title;
+    @ManyToOne
+    private User user;
 }

@@ -92,6 +92,7 @@ public class StudyProgram {
         this.title = builder.title;
         this.degree = builder.degree;
         this.examRegulations = builder.examRegulations;
+        this.fieldsOfStudy = builder.fieldsOfStudy;
     }
 
     /**
@@ -109,6 +110,7 @@ public class StudyProgram {
             this.title = title;
             this.degree = degree;
             this.examRegulations = new HashSet<ExamRegulation>();
+            this.fieldsOfStudy = new HashSet<FieldOfStudy>();
         }
 
         public Builder hasExamRegulations(Set<ExamRegulation> examRegulation) {

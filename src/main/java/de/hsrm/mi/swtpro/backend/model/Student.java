@@ -55,10 +55,6 @@ public class Student extends Role {
     @OneToMany
     private Set<Group> attendsGroups;
 
-    @Getter @Setter
-    @OneToOne
-    private User user;
-
     /**
      * Constructor with Builder pattern
      * @param builder
