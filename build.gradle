@@ -1,7 +1,11 @@
 plugins {
-	id 'org.springframework.boot' version '2.2.1.RELEASE'
-	id 'io.spring.dependency-management' version '1.0.8.RELEASE'
-	id 'java'
+    id 'org.springframework.boot' version '2.2.1.RELEASE'
+    id 'io.spring.dependency-management' version '1.0.8.RELEASE'
+    id 'java'
+    id "application"
+    id "jacoco" // fuer Test-Coverage
+    id "org.ysb33r.doxygen" version "0.5"
+    id "org.sonarqube" version "2.7"
 }
 
 group = 'de.hsrm.mi.swtpro'
@@ -28,8 +32,31 @@ dependencies {
 	}
 	runtimeOnly 'com.h2database:h2'
 	compile 'com.fasterxml.jackson.core:jackson-core:2.10.1'
+	compileOnly 'org.projectlombok:lombok:1.18.10'
+	annotationProcessor 'org.projectlombok:lombok:1.18.10'
 }
 
 test {
 	useJUnitPlatform()
+}
+
+mainClassName = "de.hsrm.mi.swtpro.backend.DemoApplication"
+
+doxygen {
+    source new File(projectDir, 'src/main/java')
+    generate_html true
+    generate_latex false
+    javadoc_autobrief true
+    optimize_output_java true
+    tab_size 4
+    brief_member_desc true
+    markdown_support true
+    autolink_support true
+    extract_all true
+    inline_info true
+    inline_sources true
+    source_tooltips true
+    class_diagrams true
+    have_dot true
+    generate_treeview true
 }

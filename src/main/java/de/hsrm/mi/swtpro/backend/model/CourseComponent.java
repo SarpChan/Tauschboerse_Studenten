@@ -3,13 +3,18 @@ package de.hsrm.mi.swtpro.backend.model;
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
-import java.util.HashSet;
-import java.util.Set;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.GeneratedValue;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+
+import java.util.HashSet;
+import java.util.Set;
+
+import lombok.Builder;
+import lombok.Getter;
+import lombok.Setter;
 
 /**
  * Describes the type of lesson of a course
@@ -18,21 +23,64 @@ import javax.persistence.OneToMany;
  * The type of lesson must be unique for each course
  */
 @Entity
+@Builder
 public class CourseComponent {
+
     @Id
+    @Getter @Setter
     @GeneratedValue
     private long id;
+
+    @Getter @Setter
     private CourseType type;
+
+    @Getter @Setter
     private int creditPoints;
+
+    @Getter @Setter
     private String exam;
 
+    @Getter @Setter
     @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
     @ManyToOne
     private Course course;
 
+    @Getter @Setter
     @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
     @OneToMany(mappedBy = "courseComponent")
     private Set<Group> groups;
+
+    /**
+     * Adds group to the collection of groups, which belong to this lesson 
+     * @param group
+     */
+    public void addGroup(Group group) {
+        this.groups.add(group);
+    }
+
+    /**
+     * Removes group from the collection of groups, which belong to this lesson 
+     * @param group
+     */
+    public void removeGroup(Group group) {
+        this.groups.remove(group);
+    }
+
+    /**
+     * Empties collection of all groups belonging to this lesson 
+     */
+    public void clearGroups() {
+        this.groups.clear();
+    }
+
+    /**
+     * Checks if a given group belongs to this lesson
+     * @param group
+     * @return true if given lesson belongs to this lesson
+     */
+    public boolean containsGroup(Group group) {
+        return this.groups.contains(group);
+    }
 
     @Deprecated
     public CourseComponent(
@@ -52,6 +100,7 @@ public class CourseComponent {
      * Constructor with Builder pattern
      * @param builder
      */
+    @Deprecated
     private CourseComponent(Builder builder) {
         this.course = builder.course;
         this.type = builder.type;
@@ -64,6 +113,7 @@ public class CourseComponent {
      * Builder class 
      * defines the parameters of the Group object to be built
      */
+    @Deprecated
     public static class Builder {
         private int creditPoints;
         private String exam;
@@ -100,85 +150,5 @@ public class CourseComponent {
         public CourseComponent build() {
             return new CourseComponent(this);
         }
-    }
-
-    public long getId() {
-        return id;
-    }
-
-    public void setId(long id) {
-        this.id = id;
-    }
-
-    public CourseType getType() {
-        return type;
-    }
-
-    public void setType(CourseType type) {
-        this.type = type;
-    }
-
-    public int getCreditPoints() {
-        return creditPoints;
-    }
-
-    public void setCreditPoints(int creditPoints) {
-        this.creditPoints = creditPoints;
-    }
-
-    public String getExam() {
-        return exam;
-    }
-
-    public void setExam(String exam) {
-        this.exam = exam;
-    }
-
-    public Course getCourse() {
-        return course;
-    }
-
-    public void setCourse(Course course) {
-        this.course = course;
-    }
-
-    public Set<Group> getGroups() {
-        return groups;
-    }
-
-    public void setGroups(Set<Group> groups) {
-        this.groups = groups;
-    }
-
-    /**
-     * Adds group to the collection of groups, which belong to this lesson 
-     * @param group
-     */
-    public void addGroup(Group group) {
-        this.groups.add(group);
-    }
-
-    /**
-     * Removes group from the collection of groups, which belong to this lesson 
-     * @param group
-     */
-    public void removeGroup(Group group) {
-        this.groups.remove(group);
-    }
-
-    /**
-     * Empties collection of all groups belonging to this lesson 
-     */
-    public void clearGroups() {
-        this.groups.clear();
-    }
-
-    /**
-     * Checks if a given group belongs to this lesson
-     * @param group
-     * @return true if given lesson belongs to this lesson
-     */
-    public boolean containsGroup(Group group) {
-        return this.groups.contains(group);
     }
 }

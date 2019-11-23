@@ -1,7 +1,7 @@
 package de.hsrm.mi.swtpro.backend.model;
 
-import java.util.ArrayList;
-import java.util.List;
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -9,8 +9,12 @@ import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 
-import com.fasterxml.jackson.annotation.JsonIdentityInfo;
-import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+import java.util.Set;
+import java.util.HashSet;
+
+import lombok.Builder;
+import lombok.Getter;
+import lombok.Setter;
 
 
 /**
@@ -18,47 +22,54 @@ import com.fasterxml.jackson.annotation.ObjectIdGenerators;
  * A campus has multiple rooms and a name
  */
 @Entity
+@Builder
 public class Building {
- 
+
     @Id
+    @Getter @Setter 
     @GeneratedValue
     private long id;
+
+    @Getter @Setter 
     private String name;
 
+    @Getter @Setter 
     @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
     @ManyToOne(targetEntity = Campus.class)
     private Campus campus;
 
+    @Getter @Setter 
     @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
     @OneToMany(mappedBy = "building")
-    private List<Room> rooms;
+    private Set<Room> rooms;
 
     /**
      * Constructor with Builder pattern
      * @param builder
      */
+    @Deprecated
     private Building(Builder builder) {
         this.name = builder.name;
         this.campus = builder.campus;
         this.rooms = builder.rooms;
     }
 
-
     /**
      * Builder class 
      * defines the parameters of the building object to be built
      */
+    @Deprecated
     public static class Builder {
         private String name;
         private Campus campus;
-        private List<Room> rooms = new ArrayList<Room>();
+        private Set<Room> rooms = new HashSet<Room>();
 
         public Builder(String name, Campus campus) {
             this.name = name;
             this.campus = campus;
         }
 
-        public Builder hasRooms(List<Room> rooms) {
+        public Builder hasRooms(Set<Room> rooms) {
             this.rooms = rooms;
             return this;
         }
@@ -71,41 +82,5 @@ public class Building {
         public Building build() {
             return new Building(this);
         }
-    }    
-
-
-    public String getName() {
-        return name;
     }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public Campus getCampus() {
-        return campus;
-    }
-
-    public void setCampus(Campus campus) {
-        this.campus = campus;
-    }
-
-    public List<Room> getRooms() {
-        return rooms;
-    }
-
-    public void setRooms(List<Room> rooms) {
-        this.rooms = rooms;
-    }
-
-    public long getId() {
-        return id;
-    }
-
-    public void setId(long id) {
-        this.id = id;
-    }
-
-    
-
 }
