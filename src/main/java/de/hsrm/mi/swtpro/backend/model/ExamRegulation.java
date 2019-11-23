@@ -3,6 +3,8 @@ package de.hsrm.mi.swtpro.backend.model;
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
+import org.springframework.format.annotation.DateTimeFormat;
+
 import java.sql.Date;
 import java.util.HashSet;
 import java.util.Set;
@@ -18,6 +20,7 @@ public class ExamRegulation {
     @Id
     @GeneratedValue
     private long id;
+    @DateTimeFormat(pattern ="dd-mm-yyyy")
     private Date date;
     private int rule;
 

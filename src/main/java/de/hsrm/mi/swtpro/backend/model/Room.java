@@ -4,6 +4,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
+import javax.validation.constraints.Min;
 
 import com.fasterxml.jackson.annotation.*;
 
@@ -17,6 +18,7 @@ public class Room {
     @GeneratedValue
     private long id;
     private int number;
+    @Min(value = 0)
     private int seats;
 
     @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")

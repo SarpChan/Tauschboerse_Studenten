@@ -10,6 +10,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotEmpty;
 
 /**
  * Describes the type of lesson of a course
@@ -23,8 +25,9 @@ public class CourseComponent {
     @GeneratedValue
     private long id;
     private CourseType type;
-    @
+    @Min(value = 0)
     private int creditPoints;
+    @NotEmpty
     private String exam;
 
     @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")

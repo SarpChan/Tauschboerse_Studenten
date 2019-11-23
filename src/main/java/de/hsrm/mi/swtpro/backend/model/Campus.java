@@ -8,6 +8,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.validation.constraints.NotEmpty;
 
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
@@ -21,7 +22,7 @@ public class Campus {
     @Id
     @GeneratedValue
     private long id;
-    @NotEmpty
+    @NotEmpty(message = "Name fehlt")
     private String name;
     //@Id
     private String adress;

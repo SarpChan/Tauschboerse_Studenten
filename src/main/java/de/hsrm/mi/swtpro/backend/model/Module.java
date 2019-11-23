@@ -9,6 +9,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotEmpty;
 
 /**
  * Represents an element of the Curriculum
@@ -21,7 +23,9 @@ public class Module {
     @Id
     @GeneratedValue
     private long id;
+    @NotEmpty(message = "Modulname fehlt")
     private String title;
+    @Min(value = 0)
     private int creditPoints;
     private int period;
 

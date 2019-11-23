@@ -6,6 +6,7 @@ import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import java.util.Collection;
 import java.util.HashSet;
 import javax.persistence.*;
+import javax.validation.constraints.NotEmpty;
 
 /**
  * A field of study has a name and multiple studyPrograms
@@ -16,6 +17,7 @@ public class FieldOfStudy {
     @Id
     @GeneratedValue
     private int id;
+    @NotEmpty
     private String title;
 
     @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")

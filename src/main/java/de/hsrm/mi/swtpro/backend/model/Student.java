@@ -5,6 +5,7 @@ import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
 import javax.persistence.Entity;
 import javax.persistence.OneToOne;
+import javax.validation.constraints.Pattern;
 
 /**
  * A student is a user 
@@ -13,7 +14,9 @@ import javax.persistence.OneToOne;
  */
 @Entity
 public class Student extends User {
+    @Pattern(regexp = "*[0-9]")
     private int enrolementNumber;
+    @Pattern(regexp = "*[a-z].*[a-z]@student.hs-rm.de")
     private String mail;
 
     @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
