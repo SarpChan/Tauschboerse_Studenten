@@ -8,14 +8,8 @@ import lombok.Setter;
 
 @Entity
 @Builder
-public class Administrator extends Role {
+public class Lecturer extends Role {
 
     @Getter @Setter
-    private int rights;
-
-    @Getter @Setter
-    private String adminLogin;
-
-    @Getter @Setter
-    private String adminPassword;
+    private int priviledge;
 }

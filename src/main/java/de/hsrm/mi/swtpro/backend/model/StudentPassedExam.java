@@ -5,18 +5,27 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.OneToOne;
 
-/**
- */
+import lombok.Builder;
+import lombok.Getter;
+import lombok.Setter;
+
 @Entity
+@Builder
 class StudentPassedExam {
+
     @Id
+    @Getter @Setter
     @GeneratedValue
     private long id;
+
+    @Getter @Setter
     private boolean passed;
 
+    @Getter @Setter
     @OneToOne
     private Student student;
 
+    @Getter @Setter
     @OneToOne
     private CourseComponent courseComponent;
 
@@ -28,12 +37,14 @@ class StudentPassedExam {
         this.passed = passed;
     }
 
+    @Deprecated
     private StudentPassedExam(Builder builder) {
         this.student = builder.student;
         this.courseComponent = builder.courseComponent;
         this.passed = builder.passed;
     }
 
+    @Deprecated
     public static class Builder {
         private Student student;
         private CourseComponent courseComponent;
@@ -53,37 +64,4 @@ class StudentPassedExam {
             return new StudentPassedExam(this);
         }
     }
-
-    public long getId() {
-        return id;
-    }
-
-    public void setId(long id) {
-        this.id = id;
-    }
-
-    public Student getStudent() {
-        return student;
-    }
-
-    public void setStudent(Student student) {
-        this.student = student;
-    }
-
-    public boolean isPassed() {
-        return passed;
-    }
-
-    public void setPassed(boolean passed) {
-        this.passed = passed;
-    }
-
-    public CourseComponent getCourseComponent() {
-        return courseComponent;
-    }
-
-    public void setCourseComponent(CourseComponent courseComponent) {
-        this.courseComponent = courseComponent;
-    }
-
 }

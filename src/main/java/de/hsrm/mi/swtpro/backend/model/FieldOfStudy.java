@@ -3,58 +3,84 @@ package de.hsrm.mi.swtpro.backend.model;
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
-import java.util.Collection;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.GeneratedValue;
+import javax.persistence.ManyToOne;
+import javax.persistence.ManyToMany;
+
 import java.util.HashSet;
-import javax.persistence.*;
+import java.util.Set;
 
-/* Fachbereich */
+import lombok.Builder;
+import lombok.Getter;
+import lombok.Setter;
 
+/**
+ * A field of study has a name and multiple studyPrograms
+ * Many universities can have the same studyprogram
+ */
 @Entity
+@Builder
 public class FieldOfStudy {
+
     @Id
+    @Getter @Setter
     @GeneratedValue
     private int id;
+
+    @Getter @Setter
     private String title;
 
+    @Getter @Setter
     @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
-    @ManyToMany
-    private Collection<StudyProgram> studyPrograms;
+    @ManyToMany(mappedBy = "fieldsOfStudy")
+    private Set<StudyProgram> studyPrograms;
 
+    @Getter @Setter
     @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
     @ManyToOne(targetEntity = University.class)
     private University university;
 
-
-    public FieldOfStudy(String title) {
-        this.title = title;
-        this.studyPrograms = new HashSet<StudyProgram>();
+    /**
+     * Constructor with Builder pattern
+     * @param builder
+     */
+    @Deprecated
+    private FieldOfStudy(Builder builder) {
+        this.title = builder.title;
+        this.studyPrograms = builder.studyPrograms;
+        this.university = builder.university;
     }
 
-    public int getId() {
-        return id;
-    }
+    /**
+     * Builder class 
+     * defines the parameters of the field of study object to be built
+     */
+    @Deprecated
+    public static class Builder {
+        private String title;
+        private Set<StudyProgram> studyPrograms = new HashSet<>();
+        private University university;
 
-    public void setUniversity(University university) {
-        this.university = university;
-    }
 
-    public void setId(int id) {
-        this.id = id;
-    }
+        public Builder(String title) {
+            this.title = title;
+            this.studyPrograms = new HashSet<StudyProgram>();
+        }
 
-    public String getTitle() {
-        return title;
-    }
+        public Builder hasStudyPrograms(Set<StudyProgram> studyPrograms) {
+            this.studyPrograms = studyPrograms;
+            return this;
+        }
 
-    public void setTitle(String title) {
-        this.title = title;
-    }
+        public Builder hasStudyProgram(StudyProgram studyProgram) {
+            this.studyPrograms.add(studyProgram);
+            return this;
+        }
 
-    public Collection<StudyProgram> getStudyProgram() {
-        return studyPrograms;
-    }
-
-    public void setStudyProgram(Collection<StudyProgram> studyPrograms) {
-        this.studyPrograms = studyPrograms;
+        public FieldOfStudy build() {
+            return new FieldOfStudy(this);
+        }
     }
 }
