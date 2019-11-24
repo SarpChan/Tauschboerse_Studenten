@@ -5,6 +5,7 @@ build/
 !**/src/main/**
 !**/src/test/**
 *.class
+*.classpath
 
 ### STS ###
 .apt_generated
@@ -34,3 +35,4 @@ out/
 
 ### Binaries ###
 bin/
+/lombok.config
