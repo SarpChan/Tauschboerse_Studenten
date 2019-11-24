@@ -6,7 +6,10 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
 
-import javax.persistence.*;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -19,7 +22,6 @@ import java.util.Set;
 @Builder
 public class Student extends Role {
 
-    @Id
     @Getter @Setter
     @GeneratedValue
     private int enrolementNumber;

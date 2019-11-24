@@ -51,7 +51,7 @@ public class Building {
     }
 
     /**
-     * Builder class 
+     * Builder class
      * defines the parameters of the building object to be built
      */
     @Deprecated

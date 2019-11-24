@@ -15,7 +15,6 @@ public class ExamRegulationTest {
 
     private ExamRegulation examRegulation;
     private StudyProgram studyProgram;
-    private Curriculum curriculum;
 
     @Before
     public void setUp(){
@@ -23,10 +22,10 @@ public class ExamRegulationTest {
                 .title("Medieninformatik")
                 .degree("Bachlor")
                 .build();
-        examRegulation = new ExamRegulation.Builder(Date.valueOf(LocalDate.of(2017,7,17)))
-                .forStudyProgram(studyProgram)
+        examRegulation = ExamRegulation.builder()
+                .date(Date.valueOf(LocalDate.of(2017,7,17)))
+                .studyProgram(studyProgram)
                 .build();
-        curriculum = new Curriculum.Builder(examRegulation).build();
     }
 
     @Test
@@ -53,7 +52,10 @@ public class ExamRegulationTest {
 
     @Test
     public void whenSetStudyProgram_thenSaveStudyProgram(){
-        studyProgram = new StudyProgram.Builder("anderer Studiengang","Master").build();
+        studyProgram = StudyProgram.builder()
+                .title("anderer Studiengang")
+                .degree("Master")
+                .build();
 
         examRegulation.setStudyProgram(studyProgram);
         assertEquals("anderer Studiengang",examRegulation.getStudyProgram().getTitle());

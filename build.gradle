@@ -68,24 +68,3 @@ doxygen {
     have_dot true
     generate_treeview true
 }
-
-mainClassName = "de.hsrm.mi.swtpro.backend.DemoApplication"
-
-doxygen {
-    source new File(projectDir, 'src/main/java')
-    generate_html true
-    generate_latex false
-    javadoc_autobrief true
-    optimize_output_java true
-    tab_size 4
-    brief_member_desc true
-    markdown_support true
-    autolink_support true
-    extract_all true
-    inline_info true
-    inline_sources true
-    source_tooltips true
-    class_diagrams true
-    have_dot true
-    generate_treeview true
-}

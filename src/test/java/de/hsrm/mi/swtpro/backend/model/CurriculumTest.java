@@ -19,13 +19,12 @@ import static org.junit.Assert.assertThat;
 public class CurriculumTest {
 
     private Curriculum curriculum;
-    private ExamRegulation examRegulation;
     private Set<Module> moduleList;
     private Module module;
 
     @Before
     public void setUp(){
-        examRegulation = ExamRegulation.builder()
+        ExamRegulation examRegulation = ExamRegulation.builder()
                 .date(Date.valueOf(LocalDate.MAX))
                 .build();
 

@@ -16,10 +16,10 @@ import static org.junit.Assert.*;
 @SpringBootTest
 public class FieldOfStudyTest {
 
-    FieldOfStudy fieldOfStudy;
-    StudyProgram studyProgram;
-    University university;
-    Term term;
+    private FieldOfStudy fieldOfStudy;
+    private StudyProgram studyProgram;
+    private University university;
+    private Term term;
 
     @Before
     public void setUp(){

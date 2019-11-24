@@ -15,10 +15,15 @@ public class CourseComponentTest {
 
     @Before
     public void setUp(){
-        course = new Course.Builder("SuperCourse").build();
-        courseComponent = new CourseComponent.Builder(course,CourseType.LECTURE)
-                .hasExam("Klausur")
-                .hasCreditPoints(17)
+        course = Course.builder()
+                .title("SuperCourse")
+                .build();
+
+        courseComponent = CourseComponent.builder()
+                .course(course)
+                .type(CourseType.LECTURE)
+                .exam("Klausur")
+                .creditPoints(17)
                 .build();
     }
 
@@ -50,7 +55,10 @@ public class CourseComponentTest {
 
     @Test
     public  void whenSetCourse_thenSaveCourse(){
-        course = new Course.Builder("Anderer").build();
+        course = Course.builder()
+                .title("Anderer")
+                .build();
+
         courseComponent.setCourse(course);
         assertEquals("Anderer",courseComponent.getCourse().getTitle());
     }

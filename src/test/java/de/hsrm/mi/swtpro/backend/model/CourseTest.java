@@ -17,20 +17,18 @@ import static org.junit.Assert.assertThat;
 public class CourseTest {
 
     private Course course;
-    private User user;
-    private Term term;
     private Module module;
 
     @Before
     public void setUp(){
-        user = User.builder()
+        User user = User.builder()
                 .firstName("Gustav")
                 .lastName("Gans")
                 .loginName("glueck001")
                 .password("pass")
                 .build();
 
-        term = Term.builder()
+        Term term = Term.builder()
                 .period(2)
                 .build();
 

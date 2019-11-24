@@ -17,8 +17,6 @@ public class GroupTest {
 
     private Group group;
     private Term term;
-    private Student student;
-    private User lecture;
     private CourseComponent courseComponent;
 
 
@@ -33,14 +31,14 @@ public class GroupTest {
                 .creditPoints(17)
                 .build();
 
-        lecture = User.builder()
+        User lecture = User.builder()
                 .firstName("Doc Cheese")
                 .lastName("Cheesy")
                 .loginName("cheese")
                 .password("none")
                 .build();
 
-        student = Student.builder()
+        Student student = Student.builder()
                 .mail("a@e.de")
                 .build();
 

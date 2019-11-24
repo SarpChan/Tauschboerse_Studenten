@@ -14,13 +14,11 @@ import static org.junit.Assert.assertThat;
 @SpringBootTest
 public class CampusTest {
 
-    private University university;
     private Campus campus;
-    private Set<Building> buildings;
 
     @Before
     public void setUp(){
-        university = University.builder()
+        University university = University.builder()
                 .name("FH Kiel")
                 .adress("Champ de Mars, 5 Avenue Anatole France, 75007 Paris, Frankreich")
                 .build();
@@ -49,7 +47,7 @@ public class CampusTest {
 
     @Test
     public void whenSetBuildings_thenSaveBuilding(){
-        buildings = new HashSet<>();
+        Set<Building> buildings = new HashSet<>();
         buildings.add(Building.builder().name("C").campus(campus).build());
         buildings.add(Building.builder().name("C++").campus(campus).build());
         buildings.add(Building.builder().name("C#").campus(campus).build());

@@ -17,16 +17,22 @@ public class BuildingTest {
     private University university;
     private Campus campus;
     private Building building;
-    private Set<Room> rooms;
 
     @Before
     public void setUp(){
+
+        university = University.builder()
+                .name("HSRM")
+                .adress("Neuschwansteinstraße 20, 87645 Schwangau")
+                .build();
+
         campus = Campus.builder()
                 .name("Unter den Eichen")
                 .adress("Kurt-Schumacher-Ring 18, 65197 Wiesbaden")
+                .university(university)
                 .build();
 
-        rooms = new HashSet<>();
+        Set<Room> rooms = new HashSet<>();
         rooms.add(Room.builder().number(17).build());
         rooms.add(Room.builder().number(42).build());
         rooms.add(Room.builder().number(14).build());
