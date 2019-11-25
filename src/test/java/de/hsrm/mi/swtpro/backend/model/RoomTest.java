@@ -75,10 +75,10 @@ public class RoomTest {
     public void whenSetBuilding_thanSaveBuilding(){
         room.setBuilding(Building.builder()
             .campus(campus)
-            .name("Haus F")
+            .name("Haus D")
             .build()
         );
-        assertEquals(room.getBuilding().getName(), "Haus F");
+        assertEquals(room.getBuilding().getName(), "Haus D");
     }
 
 
