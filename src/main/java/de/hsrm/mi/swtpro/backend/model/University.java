@@ -11,6 +11,7 @@ import javax.persistence.OneToMany;
 import java.util.HashSet;
 import java.util.Set;
 
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
@@ -20,6 +21,7 @@ import lombok.Setter;
  * It has at least one campus and field of study
  */
 @Entity
+@AllArgsConstructor
 @Builder
 public class University {
     

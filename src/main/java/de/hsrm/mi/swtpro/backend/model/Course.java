@@ -13,6 +13,7 @@ import javax.persistence.OneToMany;
 import java.util.HashSet;
 import java.util.Set;
 
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
@@ -24,6 +25,7 @@ import lombok.Setter;
  * When passed, the student is rewarded with the specified amount of credit points
  */
 @Entity
+@AllArgsConstructor
 @Builder
 public class Course {
 

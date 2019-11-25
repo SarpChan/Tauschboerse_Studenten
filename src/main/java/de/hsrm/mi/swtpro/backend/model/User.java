@@ -8,6 +8,7 @@ import javax.persistence.OneToMany;
 import java.util.Set;
 import java.util.HashSet;
 
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
@@ -17,6 +18,7 @@ import lombok.Setter;
  * A user can be an admin
  */
 @Entity
+@AllArgsConstructor
 @Builder
 public class User {
 

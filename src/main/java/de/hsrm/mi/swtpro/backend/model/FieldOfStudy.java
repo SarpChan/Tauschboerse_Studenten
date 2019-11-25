@@ -12,6 +12,7 @@ import javax.persistence.ManyToMany;
 import java.util.HashSet;
 import java.util.Set;
 
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
@@ -21,6 +22,7 @@ import lombok.Setter;
  * Many universities can have the same studyprogram
  */
 @Entity
+@AllArgsConstructor
 @Builder
 public class FieldOfStudy {
 
@@ -34,7 +36,7 @@ public class FieldOfStudy {
 
     @Getter @Setter
     @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
-    @ManyToMany(mappedBy = "fieldsOfStudy")
+    @ManyToMany
     private Set<StudyProgram> studyPrograms;
 
     @Getter @Setter

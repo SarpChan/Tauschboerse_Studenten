@@ -15,6 +15,7 @@ import java.time.LocalTime;
 import java.util.HashSet;
 import java.util.Set;
 
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
@@ -26,6 +27,7 @@ import lombok.Setter;
  * A student may only attend one group for each lesson of the same type
  */
 @Entity
+@AllArgsConstructor
 @Builder
 public class Group {    
     

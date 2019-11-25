@@ -10,6 +10,7 @@ import java.util.HashSet;
 import java.util.Set;
 import java.sql.Date;
 
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
@@ -21,6 +22,7 @@ import lombok.Setter;
  * the courses offered each term may vary
  */
 @Entity
+@AllArgsConstructor
 @Builder
 public class Term {
 

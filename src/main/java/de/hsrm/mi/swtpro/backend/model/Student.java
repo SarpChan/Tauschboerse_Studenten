@@ -4,17 +4,15 @@ import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
 import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.GeneratedValue;
 import javax.persistence.OneToOne;
 import javax.persistence.OneToMany;
 
 import java.util.Set;
-import java.util.HashSet;
+import java.util.List;
 
-import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
+import lombok.experimental.SuperBuilder;
 
 /**
  * A student is a user 
@@ -22,12 +20,10 @@ import lombok.Setter;
  * as well as a exam regulation and their enrolment term
  */
 @Entity
-@Builder
+@SuperBuilder
 public class Student extends Role {
 
-    @Id
     @Getter @Setter
-    @GeneratedValue
     private int enrolementNumber;
 
     @Getter @Setter
@@ -55,63 +51,8 @@ public class Student extends Role {
     @OneToMany
     private Set<Group> attendsGroups;
 
-    /**
-     * Constructor with Builder pattern
-     * @param builder
-     */
-    @Deprecated
-    private Student(Builder builder) {
-        this.enrolementNumber = builder.enrolementNumber;
-        this.enrolmentTerm = builder.enrolmentTerm;
-        this.mail = builder.mail;
-        this.examRegulation = builder.examRegulation;
-        this.attendsCourses = builder.attendsCourses;
-        this.passedExams = builder.passedExams;
-        this.attendsGroups = builder.attendsGroups;
-    }
-    
-     /**
-     * Builder class 
-     * defines the parameters of the student object to be built
-     */
-    @Deprecated
-    public static class Builder {
-        private ExamRegulation examRegulation;
-        private String mail;
-        private Term enrolmentTerm;
-        private int enrolementNumber;
-        private Set<StudentAttendsCourse> attendsCourses;
-        private Set<StudentPassedExam> passedExams;
-        private Set<Group> attendsGroups;
+    @Getter @Setter
+    @OneToMany(mappedBy = "creator")
+    private List<SwapOffer> swapOffers;
 
-        public Builder() {
-            this.attendsCourses = new HashSet<StudentAttendsCourse>();
-            this.attendsGroups = new HashSet<Group>();
-            this.passedExams = new HashSet<StudentPassedExam>();
-        }
-
-        public Builder hasEnrolementNumber(int enrolementNumber) {
-            this.enrolementNumber = enrolementNumber;
-            return this;
-        }
-
-        public Builder inEnrolementTerm(Term enrolmentTerm) {
-            this.enrolmentTerm = enrolmentTerm;
-            return this;
-        }
-
-        public Builder hasMail(String mail) {
-            this.mail = mail;
-            return this;
-        }
-
-        public Builder withPassedExams(Set<StudentPassedExam> passedExams) {
-            this.passedExams = passedExams;
-            return this;
-        }
-
-        public Student build() {
-            return new Student(this);
-        }
-    }
 }

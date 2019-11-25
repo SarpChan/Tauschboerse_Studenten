@@ -12,6 +12,7 @@ import javax.persistence.ManyToMany;
 import java.util.HashSet;
 import java.util.Set;
 
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
@@ -20,6 +21,7 @@ import lombok.Setter;
  * Course of Studies
  */
 @Entity
+@AllArgsConstructor
 @Builder
 public class StudyProgram {
 

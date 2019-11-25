@@ -12,6 +12,7 @@ import javax.persistence.OneToMany;
 import java.util.HashSet;
 import java.util.Set;
 
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
@@ -23,6 +24,7 @@ import lombok.Setter;
  * The type of lesson must be unique for each course
  */
 @Entity
+@AllArgsConstructor
 @Builder
 public class CourseComponent {
 
