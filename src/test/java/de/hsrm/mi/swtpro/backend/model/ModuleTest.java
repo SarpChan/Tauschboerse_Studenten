@@ -70,7 +70,7 @@ public class ModuleTest {
     @Test
     public void whenGetCurriculum_thenReturnCurriculum(){
         assertThat(module.getCurriculums(),hasItem(
-                hasProperty("id",is(Integer.toUnsignedLong(17)))
+                hasProperty("id",is(17L))
         ));
     }
 
