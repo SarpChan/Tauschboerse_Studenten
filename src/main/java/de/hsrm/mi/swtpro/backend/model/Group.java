@@ -2,16 +2,23 @@ package de.hsrm.mi.swtpro.backend.model;
 
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.Setter;
 
-import javax.persistence.*;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.GeneratedValue;
+import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
+
 import java.time.DayOfWeek;
 import java.time.LocalTime;
 import java.util.HashSet;
 import java.util.Set;
+
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.Setter;
 
 /**
  * A group is part of a course and takes place at a given time and place
@@ -20,8 +27,8 @@ import java.util.Set;
  * A student may only attend one group for each lesson of the same type
  */
 @Entity
-@Builder
 @AllArgsConstructor
+@Builder
 public class Group {    
     
     @Id
@@ -121,7 +128,7 @@ public class Group {
         this.room = room;
         this.students = new HashSet<Student>();
     }
-
+    
     /**
      * Constructor with Builder pattern
      * @param builder
@@ -141,7 +148,7 @@ public class Group {
     }
 
     /**
-     * Builder class
+     * Builder class 
      * defines the parameters of the Group object to be built
      */
     @Deprecated
@@ -151,7 +158,7 @@ public class Group {
         private LocalTime startTime;
         private LocalTime endTime;
         private User lecturer;
-        private Room room;
+        private Room room;    
         private Term term;
         private Set<Student> students;
 

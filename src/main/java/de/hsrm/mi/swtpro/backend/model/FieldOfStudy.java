@@ -2,22 +2,28 @@ package de.hsrm.mi.swtpro.backend.model;
 
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.GeneratedValue;
+import javax.persistence.ManyToOne;
+import javax.persistence.ManyToMany;
+
+import java.util.HashSet;
+import java.util.Set;
+
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
-
-import javax.persistence.*;
-import java.util.HashSet;
-import java.util.Set;
 
 /**
  * A field of study has a name and multiple studyPrograms
  * Many universities can have the same studyprogram
  */
 @Entity
-@Builder
 @AllArgsConstructor
+@Builder
 public class FieldOfStudy {
 
     @Id
@@ -30,7 +36,7 @@ public class FieldOfStudy {
 
     @Getter @Setter
     @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
-    @ManyToMany(mappedBy = "fieldsOfStudy")
+    @ManyToMany
     private Set<StudyProgram> studyPrograms;
 
     @Getter @Setter

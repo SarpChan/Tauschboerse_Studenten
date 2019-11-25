@@ -14,14 +14,14 @@ version = '0.0.1-SNAPSHOT'
 sourceCompatibility = '1.8'
 
 configurations {
-    developmentOnly
-    runtimeClasspath {
-        extendsFrom developmentOnly
-    }
+	developmentOnly
+	runtimeClasspath {
+		extendsFrom developmentOnly
+	}
 }
 
 repositories {
-    mavenCentral()
+	mavenCentral()
 }
 
 dependencies {
@@ -36,10 +36,12 @@ dependencies {
 	}
 	runtimeOnly 'com.h2database:h2'
 	compile 'com.fasterxml.jackson.core:jackson-core:2.10.1'
+	//compileOnly 'org.projectlombok:lombok:1.18.10'
+	//annotationProcessor 'org.projectlombok:lombok:1.18.10'
 }
 
 test {
-    useJUnitPlatform()
+	useJUnitPlatform()
 }
 
 jacoco {

@@ -2,14 +2,22 @@ package de.hsrm.mi.swtpro.backend.model;
 
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
+
+import java.util.Set;
+import java.util.HashSet;
+
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
-
-import javax.persistence.*;
-import java.util.HashSet;
-import java.util.Set;
 
 
 /**
@@ -17,8 +25,8 @@ import java.util.Set;
  * A campus has multiple rooms and a name
  */
 @Entity
-@Builder
 @AllArgsConstructor
+@Builder
 public class Building {
 
     @Id
@@ -31,7 +39,8 @@ public class Building {
 
     @Getter @Setter 
     @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
-    @ManyToOne(targetEntity = Campus.class)
+    @ManyToOne(targetEntity = Campus.class, fetch = FetchType.LAZY)
+    @JoinColumn(name = "campus_id")
     private Campus campus;
 
     @Getter @Setter 
@@ -51,7 +60,7 @@ public class Building {
     }
 
     /**
-     * Builder class
+     * Builder class 
      * defines the parameters of the building object to be built
      */
     @Deprecated

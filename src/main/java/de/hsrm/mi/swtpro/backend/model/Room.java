@@ -2,22 +2,25 @@ package de.hsrm.mi.swtpro.backend.model;
 
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.GeneratedValue;
+import javax.persistence.ManyToOne;
+
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.ManyToOne;
-
 /**
  * A room has a number within its building and a number of seats
  */
 @Entity
-@Builder
 @AllArgsConstructor
+@Builder
 public class Room {
 
     @Id
@@ -33,7 +36,8 @@ public class Room {
 
     @Getter @Setter
     @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
-    @ManyToOne(targetEntity = Building.class)
+    @ManyToOne(targetEntity = Building.class, fetch = FetchType.LAZY)
+    @JoinColumn(name = "building_id")
     private Building building;
 
     /**

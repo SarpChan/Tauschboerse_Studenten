@@ -1,13 +1,13 @@
 package de.hsrm.mi.swtpro.backend.model;
 
-import lombok.Builder;
-import lombok.Getter;
-import lombok.Setter;
-
 import javax.persistence.Entity;
 
+import lombok.Getter;
+import lombok.Setter;
+import lombok.experimental.SuperBuilder;
+
 @Entity
-@Builder
+@SuperBuilder
 public class Administrator extends Role {
 
     @Getter @Setter

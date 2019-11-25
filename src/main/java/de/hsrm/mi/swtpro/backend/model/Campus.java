@@ -2,22 +2,30 @@ package de.hsrm.mi.swtpro.backend.model;
 
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.GeneratedValue;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
+
+import java.util.HashSet;
+import java.util.Set;
+
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
-
-import javax.persistence.*;
-import java.util.HashSet;
-import java.util.Set;
 
 /**
  * A campus has a name and an adress
  * Every campus belongs to one university and has one or more buildings
  */
 @Entity
-@Builder
 @AllArgsConstructor
+@Builder
 public class Campus {
     
     @Id
@@ -33,7 +41,8 @@ public class Campus {
 
     @Getter @Setter
     @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
-    @ManyToOne(targetEntity = University.class)
+    @ManyToOne(targetEntity = University.class, fetch = FetchType.LAZY)
+    @JoinColumn(name = "university_id")
     private University university;
 
     @Getter @Setter
