@@ -7,8 +7,12 @@ import org.springframework.boot.test.context.SpringBootTest;
 @SpringBootTest
 public class StudentTest {
 
+    private Student student;
+
     @Before
     public void setUp(){
+
+
 
     }
 }
