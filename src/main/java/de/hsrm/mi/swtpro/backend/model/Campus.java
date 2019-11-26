@@ -1,16 +1,23 @@
 package de.hsrm.mi.swtpro.backend.model;
 
-import java.util.ArrayList;
-import java.util.List;
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
+import javax.persistence.FetchType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.GeneratedValue;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 
-import com.fasterxml.jackson.annotation.JsonIdentityInfo;
-import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+import java.util.HashSet;
+import java.util.Set;
+
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.Setter;
 
 /**
  * A campus has a name and an adress
@@ -18,29 +25,40 @@ import com.fasterxml.jackson.annotation.ObjectIdGenerators;
  */
 @Entity
 @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
+@AllArgsConstructor
+@Builder
 public class Campus {
+    
     @Id
+    @Getter @Setter
     @GeneratedValue
     private long id;
+
+    @Getter @Setter
     private String name;
-    //@Id
+
+    @Getter @Setter
     private String adress;
 
+    @Getter @Setter
 
-    @ManyToOne(targetEntity = University.class)
+    @ManyToOne(targetEntity = University.class, fetch = FetchType.LAZY)
+    @JoinColumn(name = "university_id")
     private University university;
 
+    @Getter @Setter
 
     @OneToMany(mappedBy = "campus")
-    private List<Building> buildings;
+    private Set<Building> buildings;
     
     /**
      * Constructor with Builder pattern
      * @param builder
      */
+    @Deprecated
     private Campus(Builder builder) {
         this.name = builder.name;
-        this.adress = builder.address;
+        this.adress = builder.adress;
         this.university = builder.university;
         this.buildings = builder.buildings;
     }
@@ -49,19 +67,20 @@ public class Campus {
      * Builder class 
      * defines the parameters of the campus object to be built
      */
+    @Deprecated
     public static class Builder {
         private String name;
-        private String address;
+        private String adress;
         private University university;
-        private List<Building> buildings = new ArrayList<Building>();
+        private Set<Building> buildings = new HashSet<Building>();
 
-        public Builder(String name, String address, University university) {
+        public Builder(String name, String adress, University university) {
             this.name = name;
-            this.address = address;
+            this.adress = adress;
             this.university = university;
         }
 
-        public Builder hasBuilding(List<Building> buildings) {
+        public Builder hasBuilding(Set<Building> buildings) {
             this.buildings = buildings;
             return this;
         }
@@ -75,45 +94,4 @@ public class Campus {
             return new Campus(this);
         }
     }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getAdress() {
-        return adress;
-    }
-
-    public void setAdress(String adress) {
-        this.adress = adress;
-    }
-
-    public University getUniversity() {
-        return university;
-    }
-
-    public void setUniversity(University university) {
-        this.university = university;
-    }
-
-    public List<Building> getBuildings() {
-        return buildings;
-    }
-
-    public void setBuildings(List<Building> buildings) {
-        this.buildings = buildings;
-    }
-
-    public long getId() {
-        return id;
-    }
-
-    public void setId(long id) {
-        this.id = id;
-    }
-    
 }

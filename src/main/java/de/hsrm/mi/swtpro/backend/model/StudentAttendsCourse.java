@@ -1,29 +1,38 @@
 package de.hsrm.mi.swtpro.backend.model;
 
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.GeneratedValue;
+import javax.persistence.ManyToOne;
+
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.Setter;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.OneToOne;
-
-/**
- */
 @Entity
 @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
+@AllArgsConstructor
+@Builder
 public class StudentAttendsCourse {
+
     @Id
+    @Getter @Setter
     @GeneratedValue
     private long id;
 
-    @OneToOne
+    @Getter @Setter
+    @ManyToOne
     private Student student;
 
-    @OneToOne
+    @Getter @Setter
+    @ManyToOne
     private Course course;
 
-    @OneToOne
+    @Getter @Setter
+    @ManyToOne
     private Term term;
 
 
@@ -34,12 +43,14 @@ public class StudentAttendsCourse {
         this.term = term;
     }
 
+    @Deprecated
     private StudentAttendsCourse(Builder builder) {
         this.student = builder.student;
         this.course = builder.course;
         this.term = builder.term;
     }
 
+    @Deprecated
     public static class Builder {
         private Student student;
         private Course course;
@@ -64,37 +75,4 @@ public class StudentAttendsCourse {
             return new StudentAttendsCourse(this);
         }
     }
-
-    public long getId() {
-        return id;
-    }
-
-    public void setId(long id) {
-        this.id = id;
-    }
-
-    public Student getStudent() {
-        return student;
-    }
-
-    public void setStudent(Student student) {
-        this.student = student;
-    }
-
-    public Course getCourse() {
-        return course;
-    }
-
-    public void setCourse(Course course) {
-        this.course = course;
-    }
-
-    public Term getTerm() {
-        return term;
-    }
-
-    public void setTerm(Term term) {
-        this.term = term;
-    }
-
 }

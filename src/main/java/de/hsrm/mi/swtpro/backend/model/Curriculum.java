@@ -3,26 +3,40 @@ package de.hsrm.mi.swtpro.backend.model;
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
-import java.util.HashSet;
-import java.util.Set;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.GeneratedValue;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 
+import java.util.HashSet;
+import java.util.Set;
+
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.Setter;
+
 @Entity
 @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
+@AllArgsConstructor
+@Builder
 public class Curriculum {
+    
     @Id
+    @Getter @Setter
     @GeneratedValue
     private long id;
+
+    @Getter @Setter
     private int term;
 
+    @Getter @Setter
 
     @ManyToOne
     private ExamRegulation examRegulation;
 
+    @Getter @Setter
 
     @ManyToMany
     private Set<Module> modules;
@@ -38,6 +52,7 @@ public class Curriculum {
      * Constructor with Builder pattern
      * @param builder
      */
+    @Deprecated
     private Curriculum(Builder builder) {
         this.examRegulation = builder.examRegulation;
         this.term = builder.term;
@@ -48,6 +63,7 @@ public class Curriculum {
      * Builder class 
      * defines the parameters of the Curriculum object to be built
      */
+    @Deprecated
     public static class Builder {
         private int term;
         private ExamRegulation examRegulation;
@@ -76,37 +92,5 @@ public class Curriculum {
         public Curriculum build() {
             return new Curriculum(this);
         }
-    }
-
-    public long getId() {
-        return id;
-    }
-
-    public void setId(long id) {
-        this.id = id;
-    }
-
-    public int getTerm() {
-        return term;
-    }
-
-    public void setTerm(int term) {
-        this.term = term;
-    }
-
-    public ExamRegulation getExamRegulation() {
-        return examRegulation;
-    }
-
-    public void setExamRegulation(ExamRegulation examRegulation) {
-        this.examRegulation = examRegulation;
-    }
-
-    public Set<Module> getModules() {
-        return modules;
-    }
-
-    public void setModules(Set<Module> modules) {
-        this.modules = modules;
     }
 }

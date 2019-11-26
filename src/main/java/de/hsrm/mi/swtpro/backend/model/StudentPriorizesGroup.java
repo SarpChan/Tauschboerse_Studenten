@@ -1,9 +1,9 @@
 package de.hsrm.mi.swtpro.backend.model;
 
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import javax.persistence.OneToOne;
+import javax.persistence.GeneratedValue;
+import javax.persistence.ManyToOne;
 
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
@@ -16,7 +16,7 @@ import lombok.Setter;
 @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
 @AllArgsConstructor
 @Builder
-class StudentPassedExam {
+class StudentPriorizesGroup {
 
     @Id
     @Getter @Setter
@@ -24,49 +24,49 @@ class StudentPassedExam {
     private long id;
 
     @Getter @Setter
-    private boolean passed;
+    private int priority;
 
     @Getter @Setter
-    @OneToOne
+    @ManyToOne
     private Student student;
 
     @Getter @Setter
-    @OneToOne
-    private CourseComponent courseComponent;
+    @ManyToOne
+    private Group group;
 
 
     @Deprecated
-    public StudentPassedExam(Student student, CourseComponent courseComponent, boolean passed) {
+    public StudentPriorizesGroup(Student student, Group group, int priority) {
         this.student = student;
-        this.courseComponent = courseComponent;
-        this.passed = passed;
+        this.group = group;
+        this.priority = priority;
     }
 
     @Deprecated
-    private StudentPassedExam(Builder builder) {
+    private StudentPriorizesGroup(Builder builder) {
         this.student = builder.student;
-        this.courseComponent = builder.courseComponent;
-        this.passed = builder.passed;
+        this.group = builder.group;
+        this.priority = builder.priority;
     }
 
     @Deprecated
     public static class Builder {
         private Student student;
-        private CourseComponent courseComponent;
-        private boolean passed;
+        private Group group;
+        private int priority;
 
-        public Builder(Student student, CourseComponent courseComponent) {
+        public Builder(Student student, Group group) {
             this.student = student;
-            this.courseComponent = courseComponent;
+            this.group = group;
         }
 
-        public Builder hasPassed(boolean passed) {
-            this.passed = passed;
+        public Builder withPriority(int priority) {
+            this.priority = priority;
             return this;
         }
 
-        public StudentPassedExam build() {
-            return new StudentPassedExam(this);
+        public StudentPriorizesGroup build() {
+            return new StudentPriorizesGroup(this);
         }
     }
 }

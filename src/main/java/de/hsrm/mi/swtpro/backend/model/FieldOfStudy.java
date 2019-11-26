@@ -3,9 +3,19 @@ package de.hsrm.mi.swtpro.backend.model;
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
-import java.util.Collection;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.GeneratedValue;
+import javax.persistence.ManyToOne;
+import javax.persistence.ManyToMany;
+
 import java.util.HashSet;
-import javax.persistence.*;
+import java.util.Set;
+
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.Setter;
 
 /**
  * A field of study has a name and multiple studyPrograms
@@ -13,16 +23,24 @@ import javax.persistence.*;
  */
 @Entity
 @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
+@AllArgsConstructor
+@Builder
 public class FieldOfStudy {
+
     @Id
+    @Getter @Setter
     @GeneratedValue
     private int id;
+
+    @Getter @Setter
     private String title;
 
+    @Getter @Setter
 
     @ManyToMany
-    private Collection<StudyProgram> studyPrograms;
+    private Set<StudyProgram> studyPrograms;
 
+    @Getter @Setter
 
     @ManyToOne(targetEntity = University.class)
     private University university;
@@ -31,20 +49,21 @@ public class FieldOfStudy {
      * Constructor with Builder pattern
      * @param builder
      */
+    @Deprecated
     private FieldOfStudy(Builder builder) {
         this.title = builder.title;
         this.studyPrograms = builder.studyPrograms;
         this.university = builder.university;
     }
 
-
     /**
      * Builder class 
      * defines the parameters of the field of study object to be built
      */
+    @Deprecated
     public static class Builder {
         private String title;
-        private Collection<StudyProgram> studyPrograms = new HashSet<>();
+        private Set<StudyProgram> studyPrograms = new HashSet<>();
         private University university;
 
 
@@ -53,7 +72,7 @@ public class FieldOfStudy {
             this.studyPrograms = new HashSet<StudyProgram>();
         }
 
-        public Builder hasStudyPrograms(Collection<StudyProgram> studyPrograms) {
+        public Builder hasStudyPrograms(Set<StudyProgram> studyPrograms) {
             this.studyPrograms = studyPrograms;
             return this;
         }
@@ -66,34 +85,5 @@ public class FieldOfStudy {
         public FieldOfStudy build() {
             return new FieldOfStudy(this);
         }
-    }   
-
-
-    public int getId() {
-        return id;
-    }
-
-    public void setUniversity(University university) {
-        this.university = university;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
-
-    public String getTitle() {
-        return title;
-    }
-
-    public void setTitle(String title) {
-        this.title = title;
-    }
-
-    public Collection<StudyProgram> getStudyProgram() {
-        return studyPrograms;
-    }
-
-    public void setStudyProgram(Collection<StudyProgram> studyPrograms) {
-        this.studyPrograms = studyPrograms;
     }
 }

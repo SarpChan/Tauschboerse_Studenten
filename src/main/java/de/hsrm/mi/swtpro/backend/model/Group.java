@@ -3,18 +3,22 @@ package de.hsrm.mi.swtpro.backend.model;
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.GeneratedValue;
+import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
+
 import java.time.DayOfWeek;
 import java.time.LocalTime;
 import java.util.HashSet;
 import java.util.Set;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.ManyToMany;
-import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
 
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.Setter;
 
 /**
  * A group is part of a course and takes place at a given time and place
@@ -24,36 +28,86 @@ import javax.persistence.OneToOne;
  */
 @Entity
 @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
-public class Group {
+@AllArgsConstructor
+@Builder
+public class Group {    
     
     @Id
+    @Getter @Setter
     @GeneratedValue
     private long id;
+
+    @Getter @Setter
     private char group;
+
+    @Getter @Setter
     private int slots;
+
+    @Getter @Setter
     private DayOfWeek dayOfWeek;
+
+    @Getter @Setter
     private LocalTime startTime;
+
+    @Getter @Setter
     private LocalTime endTime;
 
+    @Getter @Setter
 
     @OneToOne
     private Term term;
 
+    @Getter @Setter
 
     @ManyToOne
     private CourseComponent courseComponent;
 
+    @Getter @Setter
 
     @ManyToOne
     private User lecturer;
 
+    @Getter @Setter
 
     @ManyToOne
     private Room room;
 
+    @Getter @Setter
 
     @ManyToMany
     private Set<Student> students;
+
+    /**
+     * Adds student to the collection of students attending this group 
+     * @param student
+     */
+    public void addStudent(Student student) {
+        this.students.add(student);
+    }
+
+    /**
+     * Removes student from the collection of students attending this group 
+     * @param student
+     */
+    public void removeStudent(Student student) {
+        this.students.remove(student);
+    }
+
+    /**
+     * Empties collection of all students attending this group
+     */
+    public void clearStudents() {
+        this.students.clear();
+    }
+
+    /**
+     * Checks if a given student attends this group
+     * @param student
+     * @return true if student attends this group
+     */
+    public boolean containsStudent(Student student) {
+        return this.students.contains(student);
+    }
 
     @Deprecated
     public Group(char group, CourseComponent courseComponent) {
@@ -80,6 +134,7 @@ public class Group {
      * Constructor with Builder pattern
      * @param builder
      */
+    @Deprecated
     private Group(Builder builder) {
         this.group = builder.group;
         this.slots = builder.slots;
@@ -97,6 +152,7 @@ public class Group {
      * Builder class 
      * defines the parameters of the Group object to be built
      */
+    @Deprecated
     public static class Builder {
         private int slots;
         private DayOfWeek dayOfWeek;
@@ -160,125 +216,5 @@ public class Group {
             this.term = term;
             return this;
         }
-    }
-
-    public long getId() {
-        return id;
-    }
-
-    public void setId(long id) {
-        this.id = id;
-    }
-
-    public char getGroup() {
-        return group;
-    }
-
-    public void setGroup(char group) {
-        this.group = group;
-    }
-
-    public int getSlots() {
-        return slots;
-    }
-
-    public void setSlots(int slots) {
-        this.slots = slots;
-    }
-
-    public DayOfWeek getDayOfWeek() {
-        return dayOfWeek;
-    }
-
-    public void setDayOfWeek(DayOfWeek dayOfWeek) {
-        this.dayOfWeek = dayOfWeek;
-    }
-
-    public LocalTime getStartTime() {
-        return startTime;
-    }
-
-    public void setStartTime(LocalTime startTime) {
-        this.startTime = startTime;
-    }
-
-    public LocalTime getEndTime() {
-        return endTime;
-    }
-
-    public void setEndTime(LocalTime endTime) {
-        this.endTime = endTime;
-    }    
-
-    public CourseComponent getCourseComponent() {
-        return courseComponent;
-    }
-
-    public void setCourseComponent(CourseComponent courseComponent) {
-        this.courseComponent = courseComponent;
-    }
-
-    public User getLecturer() {
-        return lecturer;
-    }
-
-    public void setLecturer(User lecturer) {
-        this.lecturer = lecturer;
-    }
-
-    public Room getRoom() {
-        return room;
-    }
-
-    public void setRoom(Room room) {
-        this.room = room;
-    }
-
-    public Set<Student> getStudents() {
-        return students;
-    }
-
-    public void setStudents(Set<Student> students) {
-        this.students = students;
-    }
-
-    public Term getTerm() {
-        return term;
-    }
-
-    public void setTerm(Term term) {
-        this.term = term;
-    }
-
-    /**
-     * Adds student to the collection of students attending this group 
-     * @param student
-     */
-    public void addStudent(Student student) {
-        this.students.add(student);
-    }
-
-    /**
-     * Removes student from the collection of students attending this group 
-     * @param student
-     */
-    public void removeStudent(Student student) {
-        this.students.remove(student);
-    }
-
-    /**
-     * Empties collection of all students attending this group
-     */
-    public void clearStudents() {
-        this.students.clear();
-    }
-
-    /**
-     * Checks if a given student attends this group
-     * @param student
-     * @return true if student attends this group
-     */
-    public boolean containsStudent(Student student) {
-        return this.students.contains(student);
     }
 }
