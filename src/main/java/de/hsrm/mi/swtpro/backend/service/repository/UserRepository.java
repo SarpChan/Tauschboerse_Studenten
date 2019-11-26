@@ -13,6 +13,5 @@ public interface UserRepository extends JpaRepository<User, Long> {
 
     public List<User> findByFirstName(String firstName);
     public List<User> findByLastName(String lastName);
-    public List<User> findByAdmin(boolean admin);
 
 }

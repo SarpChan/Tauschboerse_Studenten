@@ -12,6 +12,7 @@ import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import javax.persistence.EntityManager;
+import java.util.HashSet;
 
 import static org.junit.Assert.assertEquals;
 
@@ -33,9 +34,11 @@ public class CourseComponentRepositoryTest {
                 .build();
 
         CourseComponent courseComponent = CourseComponent.builder()
+                .id(17L)
                 .course(course)
                 .type(CourseType.LECTURE)
                 .exam("Test")
+                .groups(new HashSet<>()) //TODO: das sollt eigentlich der Builder machen
                 .creditPoints(10)
                 .build();
 
@@ -43,9 +46,7 @@ public class CourseComponentRepositoryTest {
                 .courseComponent(courseComponent)
                 .group('D')
                 .build();
-
         courseComponent.addGroup(group);
-        courseComponent.setId(17);
 
         entityManager.persist(course);
         entityManager.persist(courseComponent);
