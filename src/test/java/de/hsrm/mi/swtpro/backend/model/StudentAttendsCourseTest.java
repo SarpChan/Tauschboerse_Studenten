@@ -1,5 +1,6 @@
 package de.hsrm.mi.swtpro.backend.model;
 
+import org.junit.Before;
 import org.junit.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
@@ -13,6 +14,7 @@ public class StudentAttendsCourseTest {
 
     private StudentAttendsCourse studentAttendsCourse;
 
+    @Before
     public void setUp(){
 
         Course course = Course.builder()
