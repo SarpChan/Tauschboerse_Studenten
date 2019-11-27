@@ -3,6 +3,7 @@ package de.hsrm.mi.swtpro.backend.model;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 
 import lombok.AllArgsConstructor;
@@ -28,7 +29,7 @@ public class StudentPassedExam {
     private Student student;
 
     @Getter @Setter
-    @OneToOne
+    @OneToOne(mappedBy = "studentPassedExam")
     private CourseComponent courseComponent;
 
 }

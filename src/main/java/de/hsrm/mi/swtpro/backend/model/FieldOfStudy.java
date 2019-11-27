@@ -23,7 +23,7 @@ import lombok.Singular;
  * Many universities can have the same studyprogram
  */
 @Entity
-@AllArgsConstructor
+@AllArgsConstructors
 @Builder
 public class FieldOfStudy {
 

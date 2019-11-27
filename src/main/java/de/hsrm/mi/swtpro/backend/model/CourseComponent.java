@@ -54,6 +54,10 @@ public class CourseComponent {
     @OneToMany(mappedBy = "courseComponent")
     private Set<Group> groups;
 
+    @Getter @Setter
+    @OneToOne(mappedBy = "courseComponent")
+    private StudentPassedExam studentPassedExam;
+
     /**
      * Adds group to the collection of groups, which belong to this lesson 
      * @param group
