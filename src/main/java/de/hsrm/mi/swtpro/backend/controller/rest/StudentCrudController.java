@@ -58,6 +58,7 @@ public class StudentCrudController {
         } else {
             throw new StudentNotFoundException("Student not found");
         }
+
     }
 
     /**

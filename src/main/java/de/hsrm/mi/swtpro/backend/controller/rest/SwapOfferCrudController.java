@@ -47,7 +47,7 @@ public class SwapOfferCrudController {
 
     /**
      * Find a SwapOffer object from the Model
-     * @param enrolementNumber recieves key from swapOffer
+     * @param id recieves key from swapOffer
      * @return SwapOffer object
      * @throws SwapOfferNotFoundException
      */
