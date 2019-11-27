@@ -1,44 +1,61 @@
 package de.hsrm.mi.swtpro.backend.model;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
+import javax.persistence.FetchType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.GeneratedValue;
 import javax.persistence.ManyToOne;
 
-import com.fasterxml.jackson.annotation.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.Setter;
 
 /**
  * A room has a number within its building and a number of seats
  */
 @Entity
+@AllArgsConstructor
+@Builder
 public class Room {
 
     @Id
+    @Getter @Setter
     @GeneratedValue
     private long id;
+
+    @Getter @Setter
     private int number;
+
+    @Getter @Setter
     private int seats;
 
+    @Getter @Setter
     @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
-    @ManyToOne(targetEntity = Building.class)
+    @ManyToOne(targetEntity = Building.class, fetch = FetchType.LAZY)
+    @JoinColumn(name = "building_id")
     private Building building;
-
 
     /**
      * Constructor with Builder pattern
      * @param builder
      */
+    @Deprecated
     private Room(Builder builder) {
         this.number = builder.number;
         this.seats = builder.seats;
         this.building = builder.building;
     }
 
-
     /**
      * Builder class 
      * defines the parameters of the room object to be built
      */
+    @Deprecated
     public static class Builder {
         private int number;
         private int seats;
@@ -54,45 +71,4 @@ public class Room {
             return new Room(this);
         }
     }    
-
-
-    public Room(int number) {
- 
-        this.number = number;
-    }
-
-    public int getNumber() {
-        return number;
-    }
-
-    public void setNumber(int number) {
-        this.number = number;
-    }
-
-    public int getSeats() {
-        return seats;
-    }
-
-    public void setSeats(int seats) {
-        this.seats = seats;
-    }
-
-    public Building getBuilding() {
-        return building;
-    }
-
-    public void setBuilding(Building building) {
-        this.building = building;
-    }
-
-    public long getId() {
-        return id;
-    }
-
-    public void setId(long id) {
-        this.id = id;
-    }
-
-    
-    
 }
