@@ -1,0 +1,78 @@
+package de.hsrm.mi.swtpro.backend.controller.rest;
+
+
+import de.hsrm.mi.swtpro.backend.controller.exceptions.SwapOfferNotFoundException;
+import de.hsrm.mi.swtpro.backend.model.SwapOffer;
+import de.hsrm.mi.swtpro.backend.service.repository.SwapOfferRepository;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
+import org.springframework.web.bind.annotation.*;
+
+import java.net.URISyntaxException;
+
+/**
+ * Basic CRUD Controller for insert, update, read and delete functionality at the model.
+ */
+@RestController
+@RequestMapping("/rest")
+public class SwapOfferCrudController {
+
+    @Autowired
+    SwapOfferRepository swapOfferRepository;
+
+    /**
+     * Insert a SwapOffer object into the Model
+     *
+     * @param swapOffer recieves a SwapOffer class via POST request
+     * @return SwapOffer object
+     * @throws URISyntaxException
+     */
+    @PostMapping(path = "/swapOffer/create", consumes = "application/json", produces = MediaType.APPLICATION_JSON_VALUE)
+    public SwapOffer createSwapOffer(@RequestBody SwapOffer swapOffer) throws URISyntaxException {
+        swapOfferRepository.save(swapOffer);
+        return swapOffer;
+    }
+
+    /**
+     * Update a SwapOffer object into the Model
+     * @param swapOffer recieves a SwapOffer class via POST request
+     * @return SwapOffer object
+     * @throws SwapOfferNotFoundException
+     */
+    @PostMapping(path = "/swapOffer/update", consumes = "application/json", produces = MediaType.APPLICATION_JSON_VALUE)
+    public SwapOffer updateSwapOffer(@RequestBody SwapOffer swapOffer) throws SwapOfferNotFoundException {
+        return swapOfferRepository.save(swapOffer);
+
+    }
+
+    /**
+     * Find a SwapOffer object from the Model
+     * @param enrolementNumber recieves key from swapOffer
+     * @return SwapOffer object
+     * @throws SwapOfferNotFoundException
+     */
+    @GetMapping(path = "/swapOffer/read", produces = MediaType.APPLICATION_JSON_VALUE)
+    public SwapOffer findSwapOffer(@RequestParam("id") long id) throws SwapOfferNotFoundException {
+        if (swapOfferRepository.findById(id) != null) {
+            return swapOfferRepository.findById(id);
+        } else {
+            throw new SwapOfferNotFoundException("SwapOffer not found");
+        }
+    }
+
+    /**
+     * Remove a SwapOffer object from the Model
+     * @param swapOffer recieves a SwapOffer class via POST request
+     * @return SwapOffer object or
+     * @throws SwapOfferNotFoundException
+     */
+    @DeleteMapping(path = "/swapOffer/delete", consumes = "application/json")
+    public void deleteSwapOffer(@RequestBody SwapOffer swapOffer) throws SwapOfferNotFoundException {
+        if (swapOfferRepository.findById(swapOffer.getId()) != null) {
+            swapOfferRepository.delete(swapOffer);
+        } else {
+            throw new SwapOfferNotFoundException("SwapOffer not found");
+        }
+    }
+
+}
