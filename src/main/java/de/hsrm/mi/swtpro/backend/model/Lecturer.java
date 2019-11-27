@@ -1,11 +1,13 @@
 package de.hsrm.mi.swtpro.backend.model;
 
-import javax.persistence.Entity;
-
 import lombok.Getter;
 import lombok.Setter;
-import lombok.experimental.SuperBuilder;
 import lombok.Singular;
+import lombok.experimental.SuperBuilder;
+
+import javax.persistence.Entity;
+import javax.persistence.OneToMany;
+import java.util.Set;
 
 @Entity
 @SuperBuilder
