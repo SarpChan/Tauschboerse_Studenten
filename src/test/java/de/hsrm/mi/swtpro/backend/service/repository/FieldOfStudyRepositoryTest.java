@@ -34,7 +34,7 @@ public class FieldOfStudyRepositoryTest {
 
         university = University.builder()
                 .name("Hauptschule RheinMain")
-                .adress("76213876 uertoi3 09ujwdfij")
+                .address("76213876 uertoi3 09ujwdfij")
                 .build();
 
         studyProgram = StudyProgram.builder()

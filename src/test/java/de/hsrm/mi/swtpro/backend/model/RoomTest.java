@@ -4,6 +4,7 @@ package de.hsrm.mi.swtpro.backend.model;
 import org.junit.Before;
 import org.junit.Test;
 import org.springframework.boot.test.context.SpringBootTest;
+
 import static org.junit.Assert.assertEquals;
 
 @SpringBootTest
@@ -18,12 +19,12 @@ public class RoomTest {
 
         University university = University.builder()
                 .name("Hsrm")
-                .adress("Neuschwansteinstraße 20, 87645 Schwangau")
+                .address("Neuschwansteinstraße 20, 87645 Schwangau")
                 .build();
 
         campus = Campus.builder()
                 .name("Unter den Eichen")
-                .adress("Kurt-Schumacher-Ring 18, 65197 Wiesbaden")
+                .address("Kurt-Schumacher-Ring 18, 65197 Wiesbaden")
                 .university(university)
                 .build();
 

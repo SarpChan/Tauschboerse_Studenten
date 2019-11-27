@@ -13,8 +13,6 @@ import org.springframework.test.context.junit4.SpringRunner;
 import javax.persistence.EntityManager;
 import java.sql.Date;
 import java.time.LocalDate;
-import java.util.Collections;
-import java.util.HashSet;
 
 import static org.hamcrest.Matchers.*;
 import static org.junit.Assert.assertThat;
@@ -46,7 +44,7 @@ public class ExamRegulationRepositoryTest {
                 .id(17)
                 .date(Date.valueOf(LocalDate.of(2019,4,17)))
                 .rule(17)
-                .curricula(new HashSet<>(Collections.singleton(curriculum)))
+                .curriculum(curriculum)
                 .studyProgram(studyProgram)
                 .build();
 

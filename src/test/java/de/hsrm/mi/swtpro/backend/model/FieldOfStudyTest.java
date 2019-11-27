@@ -26,7 +26,7 @@ public class FieldOfStudyTest {
     public void setUp(){
         university = University.builder()
                 .name("Störtebecker Hochschule")
-                .adress("Adelheidstraße 84, 65185 Wiesbaden")
+                .address("Adelheidstraße 84, 65185 Wiesbaden")
                 .build();
 
         studyProgram = StudyProgram.builder()

@@ -23,12 +23,12 @@ public class BuildingTest {
 
         university = University.builder()
                 .name("HSRM")
-                .adress("Neuschwansteinstraße 20, 87645 Schwangau")
+                .address("Neuschwansteinstraße 20, 87645 Schwangau")
                 .build();
 
         campus = Campus.builder()
                 .name("Unter den Eichen")
-                .adress("Kurt-Schumacher-Ring 18, 65197 Wiesbaden")
+                .address("Kurt-Schumacher-Ring 18, 65197 Wiesbaden")
                 .university(university)
                 .build();
 
@@ -76,7 +76,7 @@ public class BuildingTest {
     public void whenSetCampus_thanSaveCampus(){
         building.setCampus(Campus.builder()
                 .name("RüppelCampus")
-                .adress("RüppelCampus")
+                .address("RüppelCampus")
                 .university(university)
                 .build()
         );

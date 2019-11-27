@@ -27,12 +27,12 @@ public class CampusRepositoryTest {
     public void setUp(){
         University university = University.builder()
                 .name("HSRM")
-                .adress("KSR 4,91233 Wiesbaden")
+                .address("KSR 4,91233 Wiesbaden")
                 .build();
 
         Campus campus = Campus.builder()
                 .name("unter den Eichen")
-                .adress("Unter den Eichen 5, 12389 Wiesbaden")
+                .address("Unter den Eichen 5, 12389 Wiesbaden")
                 .university(university)
                 .build();
 
@@ -54,7 +54,7 @@ public class CampusRepositoryTest {
     @Test
     public void whenFindByName_thenReturnCampusList(){
         assertEquals("Unter den Eichen 5, 12389 Wiesbaden",
-                campusRepository.findByName("unter den Eichen").get(0).getAdress());
+                campusRepository.findByName("unter den Eichen").get(0).getAddress());
     }
 
     @Test

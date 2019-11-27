@@ -25,7 +25,8 @@ public class ModuleRepositoryTest {
     @Before
     public void setUp(){
 
-        Module module = new Module.Builder("Analysis").inPeriod(1).build();
+        Module module = Module.builder()
+                .period(1).build();
         entityManager.persist(module);
     }
 

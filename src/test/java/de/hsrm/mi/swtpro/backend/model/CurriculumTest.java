@@ -12,6 +12,8 @@ import java.util.HashSet;
 import java.util.Set;
 
 import static org.hamcrest.CoreMatchers.hasItem;
+import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.Matchers.hasProperty;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertThat;
 
@@ -32,9 +34,13 @@ public class CurriculumTest {
                 .title("Mathe 3")
                 .build();
 
+        ModuleInCurriculum moduleInCurriculum = ModuleInCurriculum.builder()
+                .id(65)
+                .build();
+
         curriculum = Curriculum.builder()
                 .examRegulation(examRegulation)
-                .modules(new HashSet<>(Collections.singletonList(module)))
+                .moduleInCurriculum(moduleInCurriculum)
                 .build();
 
         moduleList = new HashSet<>();
@@ -46,8 +52,10 @@ public class CurriculumTest {
     }
 
     @Test
-    public void whenGetModules_thenReturnModules(){
-        assertThat(curriculum.getModules(),hasItem(module));
+    public void whenGetModulesInCurriculum_thenReturnModules(){
+        assertThat(curriculum.getModulesInCurriculum(),hasItem(
+                hasProperty("id",is(65))
+        ));
     }
 
     @Test
@@ -57,13 +65,14 @@ public class CurriculumTest {
     }
 
     @Test
-    public void whenSetModules_thenSaveModules(){
-        module = Module.builder()
-                .title("Mathe 4")
+    public void whenSetC_thenSaveModules(){
+        ModuleInCurriculum moduleIncurriculum = ModuleInCurriculum.builder()
+                .id(34)
                 .build();
 
-        moduleList.add(module);
-        curriculum.setModules(moduleList);
-        assertThat(curriculum.getModules(),hasItem(module));
+        curriculum.setModulesInCurriculum(new HashSet<>(Collections.singletonList(moduleIncurriculum)));
+        assertThat(curriculum.getModulesInCurriculum(),hasItem(
+                hasProperty("id",is(34))
+        ));
     }
 }

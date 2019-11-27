@@ -27,7 +27,7 @@ public class UniversityRepositoryTest {
     public void setUp(){
         University university = University.builder()
                 .name("Hochschule RheinMain")
-                .adress("Kurt-Schumacher-Ring 18, 65197 Wiesbaden")
+                .address("Kurt-Schumacher-Ring 18, 65197 Wiesbaden")
                 .build();
 
         entityManager.persist(university);
@@ -42,7 +42,7 @@ public class UniversityRepositoryTest {
     @Test
     public void whenFindByName_thenReturnUniversity(){
         University university = universityRepository.findByName("Hochschule RheinMain");
-        assertEquals(university.getAdress(),"Kurt-Schumacher-Ring 18, 65197 Wiesbaden");
+        assertEquals(university.getAddress(),"Kurt-Schumacher-Ring 18, 65197 Wiesbaden");
     }
 
     @Test

@@ -14,18 +14,18 @@ public class AdministratorTest {
     @Before
     public void setUp(){
         administrator = Administrator.builder()
-                .rights(1)
+                .priviledge(1)
                 .build();
     }
 
     @Test
-    public void whenGetRights_thenReturnRights(){
-        assertEquals(1,administrator.getRights());
+    public void whenGetPriviledge_thenReturnRights(){
+        assertEquals(1,administrator.getPriviledge());
     }
 
     @Test
     public void whenSetRights_thenSaveRights(){
-        administrator.setRights(2);
-        assertEquals(2,administrator.getRights());
+        administrator.setPriviledge(2);
+        assertEquals(2,administrator.getPriviledge());
     }
 }

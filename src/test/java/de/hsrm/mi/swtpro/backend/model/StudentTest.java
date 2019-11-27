@@ -8,9 +8,9 @@ import org.springframework.boot.test.context.SpringBootTest;
 import java.util.Collections;
 import java.util.HashSet;
 
+import static org.hamcrest.Matchers.hasItem;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertThat;
-import static org.hamcrest.Matchers.hasItem;
 @SpringBootTest
 public class StudentTest {
 
@@ -35,8 +35,8 @@ public class StudentTest {
                 .mail("homer.simpson@springfield.de")
                 .user(user)
                 .enrolementNumber(5)
-                .attendsCourses(new HashSet<>(Collections.singletonList(studentAttendsCourse)))
-                .attendsGroups(new HashSet<>(Collections.singletonList(group)))
+                .attendCourse(studentAttendsCourse)
+                .group(group)
                 .build();
     }
 
@@ -50,10 +50,10 @@ public class StudentTest {
     public void whenGetEnrollmentNumber_thanReturnEnrollmentNumber(){assertEquals(student.getEnrolementNumber(), 5);}
 
     @Test
-    public void whenGetAttendsCourses_thanReturnAttendsCourse(){assertThat(student.getAttendsCourses(), hasItem(studentAttendsCourse));}
+    public void whenGetAttendsCourses_thanReturnAttendsCourse(){assertThat(student.getAttendCourses(), hasItem(studentAttendsCourse));}
 
     @Test
-    public void whenGetAttendsGroups_thanReturnAttendsGroups(){assertThat(student.getAttendsGroups(), hasItem(group));}
+    public void whenGetAttendsGroups_thanReturnAttendsGroups(){assertThat(student.getGroups(), hasItem(group));}
 
     @Test
     public void whenSetMail_thanSaveMail(){
@@ -81,15 +81,15 @@ public class StudentTest {
     @Test
     public void whenSetStudentAttendsCourses_thanSaveCourses(){
         StudentAttendsCourse stc = StudentAttendsCourse.builder().id(123).build();
-        student.setAttendsCourses(new HashSet<>(Collections.singletonList(stc)));
-        assertThat(student.getAttendsCourses(), hasItem(stc));
+        student.setAttendCourses(new HashSet<>(Collections.singletonList(stc)));
+        assertThat(student.getAttendCourses(), hasItem(stc));
     }
 
     @Test
     public void whenSetStudentAttendsGroups_thanSaveGroups(){
         Group groupA = Group.builder().id(42).build();
-        student.setAttendsGroups(new HashSet<>(Collections.singletonList(groupA)));
-        assertThat(student.getAttendsGroups(), hasItem(groupA));
+        student.setGroups(new HashSet<>(Collections.singletonList(groupA)));
+        assertThat(student.getGroups(), hasItem(groupA));
     }
 
 

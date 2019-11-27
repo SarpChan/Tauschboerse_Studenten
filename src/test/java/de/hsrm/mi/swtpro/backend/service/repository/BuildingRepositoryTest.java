@@ -28,11 +28,11 @@ public class BuildingRepositoryTest {
     public void setUp(){
         University university = University.builder()
                 .name("Hochschule RheinMain")
-                .adress("Kurt-Schumacher-Ring 18, 65197 Wiesbaden")
+                .address("Kurt-Schumacher-Ring 18, 65197 Wiesbaden")
                 .build();
         Campus campus = Campus.builder()
                 .name("Unter den Eichen")
-                .adress("Kurt-Schumacher-Ring 18, 65197 Wiesbaden")
+                .address("Kurt-Schumacher-Ring 18, 65197 Wiesbaden")
                 .university(university)
                 .build();
 

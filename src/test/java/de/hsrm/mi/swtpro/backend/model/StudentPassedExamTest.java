@@ -4,7 +4,7 @@ import org.junit.Before;
 import org.junit.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 
 @SpringBootTest
 public class StudentPassedExamTest {
@@ -25,7 +25,7 @@ public class StudentPassedExamTest {
                 .id(10001)
                 .student(student)
                 .courseComponent(courseComponent)
-                .passed(true)
+                .grade(1.7F)
                 .build();
     }
 
@@ -42,11 +42,6 @@ public class StudentPassedExamTest {
     @Test
     public void whenGetCourseComponent_thenReturnCourseComponent(){
         assertEquals(17,studentPassedExam.getCourseComponent().getId());
-    }
-
-    @Test
-    public void whenIsPassed_thenReturnPassed(){
-        assertTrue(studentPassedExam.isPassed());
     }
 
     @Test
@@ -73,11 +68,5 @@ public class StudentPassedExamTest {
         studentPassedExam.setCourseComponent(courseComponent);
 
         assertEquals(42,studentPassedExam.getCourseComponent().getId());
-    }
-
-    @Test
-    public void whenSetPassed_thenSavePassed(){
-        studentPassedExam.setPassed(false);
-        assertFalse(studentPassedExam.isPassed());
     }
 }

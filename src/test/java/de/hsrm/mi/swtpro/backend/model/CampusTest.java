@@ -20,12 +20,12 @@ public class CampusTest {
     public void setUp(){
         University university = University.builder()
                 .name("FH Kiel")
-                .adress("Champ de Mars, 5 Avenue Anatole France, 75007 Paris, Frankreich")
+                .address("Champ de Mars, 5 Avenue Anatole France, 75007 Paris, Frankreich")
                 .build();
 
         campus = Campus.builder()
                 .name("Unter den Eichen")
-                .adress("Platz der Republik 1, 11011 Berlin")
+                .address("Platz der Republik 1, 11011 Berlin")
                 .university(university)
                 .build();
     }
@@ -37,7 +37,7 @@ public class CampusTest {
 
     @Test
     public void whenGetAddress_thenReturnAddress(){
-        assertEquals(campus.getAdress(),"Platz der Republik 1, 11011 Berlin");
+        assertEquals(campus.getAddress(),"Platz der Republik 1, 11011 Berlin");
     }
 
     @Test

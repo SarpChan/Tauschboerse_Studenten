@@ -3,6 +3,7 @@ package de.hsrm.mi.swtpro.backend.service.repository;
 import de.hsrm.mi.swtpro.backend.model.Curriculum;
 import de.hsrm.mi.swtpro.backend.model.ExamRegulation;
 import de.hsrm.mi.swtpro.backend.model.Module;
+import de.hsrm.mi.swtpro.backend.model.ModuleInCurriculum;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -11,8 +12,6 @@ import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import javax.persistence.EntityManager;
-import java.util.Collections;
-import java.util.HashSet;
 
 import static org.hamcrest.Matchers.*;
 import static org.junit.Assert.assertThat;
@@ -36,6 +35,10 @@ public class CurriculumRepositoryTest {
                 .id(42)
                 .build();
 
+        ModuleInCurriculum moduleInCurriculum = ModuleInCurriculum.builder()
+                .id(82)
+                .build();
+
         examRegulation = ExamRegulation.builder()
                 .id(72)
                 .build();
@@ -43,8 +46,8 @@ public class CurriculumRepositoryTest {
         Curriculum curriculum = Curriculum.builder()
                 .id(17)
                 .examRegulation(examRegulation)
-                .term(1)
-                .modules(new HashSet<>(Collections.singleton(module)))
+                .termPeriod(1)
+                .moduleInCurriculum(moduleInCurriculum)
                 .build();
 
         entityManager.persist(module);

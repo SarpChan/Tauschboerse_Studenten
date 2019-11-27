@@ -10,9 +10,9 @@ import java.time.LocalDate;
 import java.util.HashSet;
 import java.util.Set;
 
+import static org.hamcrest.Matchers.*;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertThat;
-import static org.hamcrest.Matchers.*;
 
 @SpringBootTest
 public class TermTest {
@@ -39,7 +39,7 @@ public class TermTest {
                 .startDate(Date.valueOf(LocalDate.MAX))
                 .endDate(Date.valueOf(LocalDate.MIN))
                 .courses(courses)
-                .studentsAttendCourses(studentAttendsCourses)
+                .studentAttendsCourses(studentAttendsCourses)
                 .build();
 
     }

@@ -31,11 +31,8 @@ public class GroupTest {
                 .creditPoints(17)
                 .build();
 
-        User lecture = User.builder()
-                .firstName("Doc Cheese")
-                .lastName("Cheesy")
-                .loginName("cheese")
-                .password("none")
+        Lecturer lecture = Lecturer.builder()
+                .priviledge(2)
                 .build();
 
         Student student = Student.builder()

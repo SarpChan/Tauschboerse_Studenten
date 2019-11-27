@@ -40,7 +40,7 @@ public class CampusCrudController {
 
     @DeleteMapping(path = "/campus/delete", consumes = "application/json")
     public void deleteCampus(@RequestBody Campus campus) throws CampusNotFoundException {
-        if (campusRepository.findByAdress(campus.getAdress()) != null) {
+        if (campusRepository.findByAdress(campus.getAddress()) != null) {
             campusRepository.delete(campus);
         } else {
             throw new CampusNotFoundException("Campus not found");
