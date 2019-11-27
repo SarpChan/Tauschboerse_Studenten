@@ -9,7 +9,7 @@ import static org.junit.Assert.assertEquals;
 @SpringBootTest
 public class AdministratorTest {
 
-    Administrator administrator;
+    private Administrator administrator;
 
     @Before
     public void setUp(){

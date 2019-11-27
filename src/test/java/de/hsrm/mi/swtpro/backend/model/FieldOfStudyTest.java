@@ -11,7 +11,8 @@ import java.util.HashSet;
 import java.util.Set;
 
 import static org.hamcrest.CoreMatchers.hasItem;
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertThat;
 
 @SpringBootTest
 public class FieldOfStudyTest {
@@ -65,10 +66,4 @@ public class FieldOfStudyTest {
         fieldOfStudy.setUniversity(university);
         assertEquals("Störtebecker Hochschule",fieldOfStudy.getUniversity().getName());
     }
-
-    @Test
-    public void whenSetTerm_thenSaveTerm(){
-        assertTrue("Term -> Attribut fehlt ",false);
-    }
-
 }
