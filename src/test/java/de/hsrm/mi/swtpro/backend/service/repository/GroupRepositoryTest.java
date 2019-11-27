@@ -50,7 +50,6 @@ public class GroupRepositoryTest {
 
         Group group = Group.builder()
                 .id(17)
-                .lecturer(user)
                 .dayOfWeek(DayOfWeek.MONDAY)
                 .startTime(LocalTime.of(14,0))
                 .endTime(LocalTime.of(15,0))
