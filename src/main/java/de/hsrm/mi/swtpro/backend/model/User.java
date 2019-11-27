@@ -39,62 +39,9 @@ public class User {
     @Getter @Setter 
     private String password;
 
+    @Singular("role")
     @Getter @Setter 
-    @OneToMany
+    @OneToMany(mappedBy = "user")
     private Set<Role> roles;
-
-    @Deprecated
-    private User(Builder builder) {
-        this.firstName = builder.firstName;
-        this.lastName = builder.lastName;
-        this.loginName = builder.loginName;
-        this.password = builder.password;
-        this.roles = builder.roles;
-    }
-
-    /**
-     * Builder class 
-     * defines the parameters of the user object to be built
-     */
-    @Deprecated
-    public static class Builder {
-        private String firstName;
-        private String lastName;
-        private String loginName;
-        private String password;
-        private Set<Role> roles;
-
-        public Builder(String firstName, String lastName) {
-            this.firstName = firstName;
-            this.lastName = lastName;
-            this.roles = new HashSet<Role>();
-        }
-
-        public Builder withFirstName(String firstName) {
-            this.firstName = firstName;
-            return this;
-        }
-        public Builder withLastName(String lastName) {
-            this.lastName = lastName;
-            return this;
-        }
-        public Builder withLoginName(String loginName) {
-            this.loginName = loginName;
-            return this;
-        }
-
-        public Builder withPassword(String password) {
-            this.password = password;
-            return this;
-        }
-
-        public Builder hasRoles(Set<Role> roles) {
-            this.roles = roles;
-            return this;
-        }
-
-        public User build() {
-            return new User(this);
-        }
-    }    
+    
 }

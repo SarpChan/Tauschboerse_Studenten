@@ -8,11 +8,11 @@ import javax.persistence.OneToOne;
 import javax.persistence.OneToMany;
 
 import java.util.Set;
-import java.util.List;
 
 import lombok.Getter;
 import lombok.Setter;
 import lombok.experimental.SuperBuilder;
+import lombok.Singular;
 
 /**
  * A student is a user 
@@ -31,28 +31,37 @@ public class Student extends Role {
 
     @Getter @Setter
     @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
-    @OneToOne
+    @ManyToOne(mappedBy = "students")
     private ExamRegulation examRegulation;
 
     @Getter @Setter
     @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
-    @OneToOne
+    @ManyToOne(mappedBy = "enroledStudents")
     private Term enrolmentTerm;
 
+    @Singular("attendCourse")
     @Getter @Setter
-    @OneToMany
-    private Set<StudentAttendsCourse> attendsCourses;
+    @OneToMany(mappedBy = "student")
+    private Set<StudentAttendsCourse> attendCourses;
 
+    @Singular("prioritizeGroup")
     @Getter @Setter
-    @OneToMany
+    @OneToMany(mappedBy = "student")
+    private Set<StudentPriorizesGroup> prioritizeGroups;
+
+    @Singular("passedExam")
+    @Getter @Setter
+    @OneToMany(mappedBy = "student")
     private Set<StudentPassedExam> passedExams;
 
+    @Singular("group")
     @Getter @Setter
-    @OneToMany
-    private Set<Group> attendsGroups;
+    @ManyToMany(mappedBy = "students")
+    private Set<Group> groups;
 
+    @Singular("swapOffer")
     @Getter @Setter
-    @OneToMany(mappedBy = "creator")
-    private List<SwapOffer> swapOffers;
+    @OneToMany(mappedBy = "student")
+    private Set<SwapOffer> swapOffers;
 
 }

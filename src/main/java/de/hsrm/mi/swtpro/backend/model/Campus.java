@@ -18,6 +18,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
+import lombok.Singular;
 
 /**
  * A campus has a name and an adress
@@ -37,7 +38,7 @@ public class Campus {
     private String name;
 
     @Getter @Setter
-    private String adress;
+    private String address;
 
     @Getter @Setter
     @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
@@ -45,52 +46,10 @@ public class Campus {
     @JoinColumn(name = "university_id")
     private University university;
 
+    @Singular("building")
     @Getter @Setter
     @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
     @OneToMany(mappedBy = "campus")
     private Set<Building> buildings;
-    
-    /**
-     * Constructor with Builder pattern
-     * @param builder
-     */
-    @Deprecated
-    private Campus(Builder builder) {
-        this.name = builder.name;
-        this.adress = builder.adress;
-        this.university = builder.university;
-        this.buildings = builder.buildings;
-    }
 
-    /**
-     * Builder class 
-     * defines the parameters of the campus object to be built
-     */
-    @Deprecated
-    public static class Builder {
-        private String name;
-        private String adress;
-        private University university;
-        private Set<Building> buildings = new HashSet<Building>();
-
-        public Builder(String name, String adress, University university) {
-            this.name = name;
-            this.adress = adress;
-            this.university = university;
-        }
-
-        public Builder hasBuilding(Set<Building> buildings) {
-            this.buildings = buildings;
-            return this;
-        }
-
-        public Builder hasBuilding(Building building) {
-            this.buildings.add(building);
-            return this;
-        }
-
-        public Campus build() {
-            return new Campus(this);
-        }
-    }
 }

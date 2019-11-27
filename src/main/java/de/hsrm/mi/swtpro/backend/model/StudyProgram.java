@@ -16,6 +16,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
+import lombok.Singular;
 
 /**
  * Course of Studies
@@ -36,11 +37,13 @@ public class StudyProgram {
     @Getter @Setter
     private String degree;
 
+    @Singular("examRegulation")
     @Getter @Setter
     @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
     @OneToMany(mappedBy = "studyProgram")
     private Set<ExamRegulation> examRegulations;
 
+    @Singular("fieldOfStudy")
     @Getter @Setter
     @ManyToMany(mappedBy = "studyPrograms")
     private Set<FieldOfStudy> fieldsOfStudy;

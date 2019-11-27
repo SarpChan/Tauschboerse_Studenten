@@ -16,6 +16,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
+import lombok.Singular;
 
 /**
  * Describes the type of lesson of a course
@@ -47,6 +48,7 @@ public class CourseComponent {
     @ManyToOne
     private Course course;
 
+    @Singular("group")
     @Getter @Setter
     @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
     @OneToMany(mappedBy = "courseComponent")
@@ -84,73 +86,4 @@ public class CourseComponent {
         return this.groups.contains(group);
     }
 
-    @Deprecated
-    public CourseComponent(
-        Course course, 
-        CourseType type, 
-        int creditPoints, 
-        String exam) {
-
-        this.course = course;
-        this.type = type;
-        this.creditPoints = creditPoints;
-        this.exam = exam;
-        this.groups = new HashSet<Group>();
-    }
-
-    /**
-     * Constructor with Builder pattern
-     * @param builder
-     */
-    @Deprecated
-    private CourseComponent(Builder builder) {
-        this.course = builder.course;
-        this.type = builder.type;
-        this.creditPoints = builder.creditPoints;
-        this.exam = builder.exam;
-        this.groups = builder.groups;
-    }
-
-    /**
-     * Builder class 
-     * defines the parameters of the Group object to be built
-     */
-    @Deprecated
-    public static class Builder {
-        private int creditPoints;
-        private String exam;
-        private Set<Group> groups;
-
-        private Course course;
-        private CourseType type;
-        public Builder(Course course, CourseType type) {
-            this.course = course;
-            this.type = type;
-            this.groups = new HashSet<Group>();
-        }
-
-        public Builder hasCreditPoints(int creditPoints) {
-            this.creditPoints = creditPoints;
-            return this;
-        }
-
-        public Builder hasExam(String exam) {
-            this.exam = exam;
-            return this;
-        }
-
-        public Builder hasGroups(HashSet<Group> groups) {
-            this.groups = groups;
-            return this;
-        }
-
-        public Builder withGroup(Group group) {
-            this.groups.add(group);
-            return this;
-        }
-
-        public CourseComponent build() {
-            return new CourseComponent(this);
-        }
-    }
 }

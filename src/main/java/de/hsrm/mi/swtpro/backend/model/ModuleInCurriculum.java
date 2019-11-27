@@ -1,9 +1,9 @@
 package de.hsrm.mi.swtpro.backend.model;
 
 import javax.persistence.Entity;
-import javax.persistence.Id;
 import javax.persistence.GeneratedValue;
-import javax.persistence.ManyToOne;
+import javax.persistence.Id;
+import javax.persistence.OneToOne;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -13,7 +13,7 @@ import lombok.Setter;
 @Entity
 @AllArgsConstructor
 @Builder
-public class StudentAttendsCourse {
+public class ModuleInCurriculum {
 
     @Id
     @Getter @Setter
@@ -21,15 +21,13 @@ public class StudentAttendsCourse {
     private long id;
 
     @Getter @Setter
-    @ManyToOne(mappedBy = "attendsCourses")
-    private Student student;
+    private int termPeriod;
 
     @Getter @Setter
-    @ManyToOne(mappedBy = "studentAttendsCourses")
-    private Course course;
+    @ManyToOne(mappedBy = "modulesInCurriculum")
+    private Curriculum curriculum;
 
     @Getter @Setter
-    @ManyToOne(mappedBy = "studentAttendsCourses")
-    private Term term;
-
+    @ManyToOne(mappedBy = "modulesInCurriculum")
+    private Module module;
 }

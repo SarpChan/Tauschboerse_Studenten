@@ -36,39 +36,14 @@ public class Room {
 
     @Getter @Setter
     @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
-    @ManyToOne(targetEntity = Building.class, fetch = FetchType.LAZY)
+    @ManyToOne(mappedBy = "rooms", targetEntity = Building.class, fetch = FetchType.LAZY)
     @JoinColumn(name = "building_id")
     private Building building;
 
-    /**
-     * Constructor with Builder pattern
-     * @param builder
-     */
-    @Deprecated
-    private Room(Builder builder) {
-        this.number = builder.number;
-        this.seats = builder.seats;
-        this.building = builder.building;
-    }
-
-    /**
-     * Builder class 
-     * defines the parameters of the room object to be built
-     */
-    @Deprecated
-    public static class Builder {
-        private int number;
-        private int seats;
-        private Building building;
-
-        public Builder(int number, int seats, Building building) {
-            this.number = number;
-            this.seats = seats;
-            this.building = building;
-        }
-
-        public Room build() {
-            return new Room(this);
-        }
-    }    
+    @Singular("group")
+    @Getter @Setter
+    @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
+    @ManyToOne(mappedBy = "room")
+    private Set<Group> groups;
+  
 }
