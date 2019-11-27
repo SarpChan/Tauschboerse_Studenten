@@ -25,7 +25,7 @@ public class StudentPassedExam {
     private float grade;
 
     @Getter @Setter
-    @ManyToOne(mappedBy = "passedExams")
+    @ManyToOne
     private Student student;
 
     @Getter @Setter

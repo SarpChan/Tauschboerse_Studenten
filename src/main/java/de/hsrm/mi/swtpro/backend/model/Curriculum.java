@@ -33,7 +33,7 @@ public class Curriculum {
 
     @Getter @Setter
     @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
-    @ManyToOne(mappedBy = "curriculums")
+    @ManyToOne
     private ExamRegulation examRegulation;
 
     @Singular("moduleInCurriculum")

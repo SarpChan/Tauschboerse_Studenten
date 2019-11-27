@@ -10,6 +10,10 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
 
+/** 
+    Relationship between a student and a group 
+    The priority indicates
+*/
 @Entity
 @AllArgsConstructor
 @Builder
@@ -24,11 +28,11 @@ public class StudentPriorizesGroup {
     private int priority;
 
     @Getter @Setter
-    @ManyToOne(mappedBy = "prioritizeGroups")
+    @ManyToOne
     private Student student;
 
     @Getter @Setter
-    @ManyToOne(mappedBy = "prioritezeGroups")
+    @ManyToOne
     private Group group;
 
 }

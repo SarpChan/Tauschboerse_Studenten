@@ -24,10 +24,10 @@ public class ModuleInCurriculum {
     private int termPeriod;
 
     @Getter @Setter
-    @ManyToOne(mappedBy = "modulesInCurriculum")
+    @ManyToOne
     private Curriculum curriculum;
 
     @Getter @Setter
-    @ManyToOne(mappedBy = "modulesInCurriculum")
+    @ManyToOne
     private Module module;
 }

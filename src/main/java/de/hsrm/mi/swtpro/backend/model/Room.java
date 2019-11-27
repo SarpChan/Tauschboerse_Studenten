@@ -37,14 +37,14 @@ public class Room {
 
     @Getter @Setter
     @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
-    @ManyToOne(mappedBy = "rooms", targetEntity = Building.class, fetch = FetchType.LAZY)
+    @ManyToOne(targetEntity = Building.class, fetch = FetchType.LAZY)
     @JoinColumn(name = "building_id")
     private Building building;
 
     @Singular("group")
     @Getter @Setter
     @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
-    @ManyToOne(mappedBy = "room")
+    @ManyToOne
     private Set<Group> groups;
   
 }

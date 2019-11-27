@@ -37,7 +37,7 @@ public class FieldOfStudy {
 
     @Getter @Setter
     @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
-    @ManyToOne(mappedBy = "fieldsOfStudy", targetEntity = University.class)
+    @ManyToOne(targetEntity = University.class)
     private University university;
 
     @Singular("studyProgram")

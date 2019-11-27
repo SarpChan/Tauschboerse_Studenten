@@ -33,12 +33,12 @@ public class Student extends Role {
 
     @Getter @Setter
     @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
-    @ManyToOne(mappedBy = "students")
+    @ManyToOne
     private ExamRegulation examRegulation;
 
     @Getter @Setter
     @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
-    @ManyToOne(mappedBy = "enroledStudents")
+    @ManyToOne
     private Term enrolmentTerm;
 
     @Singular("attendCourse")
