@@ -6,6 +6,8 @@ import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import javax.persistence.Entity;
 import javax.persistence.OneToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.ManyToOne;
+import javax.persistence.ManyToMany;
 
 import java.util.Set;
 
@@ -31,12 +33,12 @@ public class Student extends Role {
 
     @Getter @Setter
     @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
-    @ManyToOne(mappedBy = "students")
+    @ManyToOne
     private ExamRegulation examRegulation;
 
     @Getter @Setter
     @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
-    @ManyToOne(mappedBy = "enroledStudents")
+    @ManyToOne
     private Term enrolmentTerm;
 
     @Singular("attendCourse")

@@ -1,14 +1,14 @@
 package de.hsrm.mi.swtpro.backend.model;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.OneToOne;
-
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
+
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 
 @Entity
 @AllArgsConstructor
@@ -24,10 +24,10 @@ public class ModuleInCurriculum {
     private int termPeriod;
 
     @Getter @Setter
-    @ManyToOne(mappedBy = "modulesInCurriculum")
+    @ManyToOne
     private Curriculum curriculum;
 
     @Getter @Setter
-    @ManyToOne(mappedBy = "modulesInCurriculum")
+    @ManyToOne
     private Module module;
 }

@@ -21,15 +21,15 @@ public class StudentAttendsCourse {
     private long id;
 
     @Getter @Setter
-    @ManyToOne(mappedBy = "attendsCourses")
+    @ManyToOne
     private Student student;
 
     @Getter @Setter
-    @ManyToOne(mappedBy = "studentAttendsCourses")
+    @ManyToOne
     private Course course;
 
     @Getter @Setter
-    @ManyToOne(mappedBy = "studentAttendsCourses")
+    @ManyToOne
     private Term term;
 
 }

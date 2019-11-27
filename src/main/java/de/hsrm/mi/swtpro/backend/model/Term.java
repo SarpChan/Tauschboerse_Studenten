@@ -1,20 +1,12 @@
 package de.hsrm.mi.swtpro.backend.model;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.GeneratedValue;
-import javax.persistence.ManyToMany;
-import javax.persistence.OneToMany;
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+import lombok.*;
 
-import java.util.HashSet;
-import java.util.Set;
+import javax.persistence.*;
 import java.sql.Date;
-
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.Setter;
-import lombok.Singular;
+import java.util.Set;
 
 /**
  * Academic Term
@@ -47,7 +39,7 @@ public class Term {
     @ManyToMany(mappedBy = "terms")
     private Set<Course> courses;
 
-    @Singula("group")
+    @Singular("group")
     @Getter @Setter
     @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
     @OneToMany(mappedBy = "term")

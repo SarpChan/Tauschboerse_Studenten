@@ -9,6 +9,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
+import javax.persistence.OneToMany;
 
 import java.time.DayOfWeek;
 import java.time.LocalTime;
@@ -19,6 +20,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
+import lombok.Singular;
 
 /**
  * A group is part of a course and takes place at a given time and place
@@ -53,22 +55,22 @@ public class Group {
 
     @Getter @Setter
     @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
-    @ManyToOne(mappedBy = "groups")
+    @ManyToOne
     private Term term;
 
     @Getter @Setter
     @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
-    @ManyToOne(mappedBy = "groups")
+    @ManyToOne
     private CourseComponent courseComponent;
 
     @Getter @Setter
     @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
-    @ManyToOne(mappedBy = "groups")
+    @ManyToOne
     private Lecturer lecturer;
 
     @Getter @Setter
     @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
-    @ManyToOne(mappedBy = "groups")
+    @ManyToOne
     private Room room;
 
     @Singular("student")

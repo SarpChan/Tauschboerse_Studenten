@@ -42,7 +42,7 @@ public class ExamRegulation {
 
     @Getter @Setter
     @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
-    @ManyToOne(mappedBy = "examRegulations")
+    @ManyToOne
     private StudyProgram studyProgram;
 
     @Singular("curriculum")
