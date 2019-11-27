@@ -19,6 +19,6 @@ public abstract class Role {
     private int id;
 
     @Getter @Setter
-    @ManyToOne
+    @ManyToOne(mappedBy = "roles")
     private User user;
 }

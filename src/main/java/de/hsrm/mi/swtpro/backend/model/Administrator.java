@@ -11,11 +11,5 @@ import lombok.experimental.SuperBuilder;
 public class Administrator extends Role {
 
     @Getter @Setter
-    private int rights;
-
-    @Getter @Setter
-    private String adminLogin;
-
-    @Getter @Setter
-    private String adminPassword;
+    private int priviledge;
 }

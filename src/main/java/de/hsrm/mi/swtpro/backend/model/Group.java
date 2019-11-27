@@ -53,28 +53,44 @@ public class Group {
 
     @Getter @Setter
     @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
-    @OneToOne
+    @ManyToOne(mappedBy = "groups")
     private Term term;
 
     @Getter @Setter
     @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
-    @ManyToOne
+    @ManyToOne(mappedBy = "groups")
     private CourseComponent courseComponent;
 
     @Getter @Setter
     @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
-    @ManyToOne
-    private User lecturer;
+    @ManyToOne(mappedBy = "groups")
+    private Lecturer lecturer;
 
     @Getter @Setter
     @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
-    @ManyToOne
+    @ManyToOne(mappedBy = "groups")
     private Room room;
 
+    @Singular("student")
     @Getter @Setter
     @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
-    @ManyToMany
+    @ManyToMany(mappedBy = "groups")
     private Set<Student> students;
+
+    @Singular("prioritezeGroup")
+    @Getter @Setter
+    @OneToMany(mappedBy = "group")
+    private Set<StudentPriorizesGroup> prioritizeGroups;
+
+    @Singular("swapOffer")
+    @Getter @Setter
+    @OneToMany(mappedBy = "group")
+    private Set<SwapOffer> swapOffers;
+
+    @Singular("swapRequest")
+    @Getter @Setter
+    @OneToMany(mappedBy = "group")
+    private Set<SwapOffer> swapRequests;
 
     /**
      * Adds student to the collection of students attending this group 
@@ -108,112 +124,4 @@ public class Group {
         return this.students.contains(student);
     }
 
-    @Deprecated
-    public Group(char group, CourseComponent courseComponent) {
-        this.group = group;
-        this.courseComponent = courseComponent;
-        this.students = new HashSet<Student>();
-    }
-
-    @Deprecated
-    public Group(char group, int slots, DayOfWeek dayOfWeek, LocalTime startTime, LocalTime endTime,
-            CourseComponent courseComponent, User lecturer, Room room) {
-        this.group = group;
-        this.slots = slots;
-        this.dayOfWeek = dayOfWeek;
-        this.startTime = startTime;
-        this.endTime = endTime;
-        this.courseComponent = courseComponent;
-        this.lecturer = lecturer;
-        this.room = room;
-        this.students = new HashSet<Student>();
-    }
-    
-    /**
-     * Constructor with Builder pattern
-     * @param builder
-     */
-    @Deprecated
-    private Group(Builder builder) {
-        this.group = builder.group;
-        this.slots = builder.slots;
-        this.dayOfWeek = builder.dayOfWeek;
-        this.startTime = builder.startTime;
-        this.endTime = builder.endTime;
-        this.courseComponent = builder.courseComponent;
-        this.lecturer = builder.lecturer;
-        this.room = builder.room;
-        this.students = builder.students;
-        this.term = builder.term;
-    }
-
-    /**
-     * Builder class 
-     * defines the parameters of the Group object to be built
-     */
-    @Deprecated
-    public static class Builder {
-        private int slots;
-        private DayOfWeek dayOfWeek;
-        private LocalTime startTime;
-        private LocalTime endTime;
-        private User lecturer;
-        private Room room;    
-        private Term term;
-        private Set<Student> students;
-
-        private CourseComponent courseComponent;
-        private char group;
-        public Group build(CourseComponent courseComponent, char group) {
-            this.courseComponent = courseComponent;
-            this.group = group;
-            this.students = new HashSet<Student>();
-            return new Group(this);
-        }
-
-        public Builder hasSlots(int slots) {
-            this.slots = slots;
-            return this;
-        }
-
-        public Builder withStartTime(LocalTime startTime) {
-            this.startTime = startTime;
-            return this;
-        }
-
-        public Builder withEndTime(LocalTime endTime) {
-            this.endTime = endTime;
-            return this;
-        }
-
-        public Builder onDayOfWeek(DayOfWeek dayOfWeek) {
-            this.dayOfWeek = dayOfWeek;
-            return this;
-        }
-
-        public Builder hasLecturer(User lecturer) {
-            this.lecturer = lecturer;
-            return this;
-        }
-
-        public Builder hasStudents(Set<Student> students) {
-            this.students = students;
-            return this;
-        }
-
-        public Builder withStudent(Student student) {
-            this.students.add(student);
-            return this;
-        }
-
-        public Builder inRoom(Room room) {
-            this.room = room;
-            return this;
-        }
-
-        public Builder inTerm(Term term) {
-            this.term = term;
-            return this;
-        }
-    }
 }

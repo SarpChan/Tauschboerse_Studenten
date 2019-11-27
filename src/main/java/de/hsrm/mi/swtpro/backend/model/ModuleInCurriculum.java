@@ -1,19 +1,19 @@
 package de.hsrm.mi.swtpro.backend.model;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.Setter;
-
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.OneToOne;
 
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.Setter;
+
 @Entity
 @AllArgsConstructor
 @Builder
-public class StudentPassedExam {
+public class ModuleInCurriculum {
 
     @Id
     @Getter @Setter
@@ -21,14 +21,13 @@ public class StudentPassedExam {
     private long id;
 
     @Getter @Setter
-    private float grade;
+    private int termPeriod;
 
     @Getter @Setter
-    @ManyToOne(mappedBy = "passedExams")
-    private Student student;
+    @ManyToOne(mappedBy = "modulesInCurriculum")
+    private Curriculum curriculum;
 
     @Getter @Setter
-    @OneToOne
-    private CourseComponent courseComponent;
-
+    @ManyToOne(mappedBy = "modulesInCurriculum")
+    private Module module;
 }

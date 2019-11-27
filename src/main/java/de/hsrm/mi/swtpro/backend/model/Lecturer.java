@@ -12,4 +12,10 @@ public class Lecturer extends Role {
 
     @Getter @Setter
     private int priviledge;
+
+    @Singular("group")
+    @Getter @Setter
+    @OneToMany(mappedBy = "lecturer")
+    private Set<Group> groups;
+
 }

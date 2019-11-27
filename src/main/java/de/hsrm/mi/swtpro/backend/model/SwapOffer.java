@@ -12,6 +12,8 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.util.TimeStamp;
+
 /**
  * A swapOffer can be created by a student, who wants to swap form one group to another
  */
@@ -25,19 +27,20 @@ public class SwapOffer {
     @GeneratedValue
     private long id;
 
-    @ManyToOne(targetEntity = Student.class, fetch = FetchType.LAZY)
-    @JoinColumn(name = "student_id")
     @Getter @Setter
-    private Student creator;
+    @GeneratedValue
+    private TimeStamp date;
 
-    @ManyToOne(targetEntity = Group.class, fetch = FetchType.LAZY)
-    @JoinColumn(name="from_group_id")
     @Getter @Setter
+    @ManyToOne(mappedBy = "swapOffers", targetEntity = Student.class, fetch = FetchType.LAZY)
+    private Student student;
+
+    @Getter @Setter
+    @ManyToOne(mappedBy = "swapOffers", targetEntity = Group.class, fetch = FetchType.LAZY)
     private Group fromGroup;
 
-    @ManyToOne(targetEntity = Group.class, fetch = FetchType.LAZY)
-    @JoinColumn(name="to_group_id")
     @Getter @Setter
+    @ManyToOne(mappedBy = "swapRequests", targetEntity = Group.class, fetch = FetchType.LAZY)
     private Group toGroup;
 
-    }
+}

@@ -21,55 +21,15 @@ public class StudentAttendsCourse {
     private long id;
 
     @Getter @Setter
-    @ManyToOne
+    @ManyToOne(mappedBy = "attendsCourses")
     private Student student;
 
     @Getter @Setter
-    @ManyToOne
+    @ManyToOne(mappedBy = "studentAttendsCourses")
     private Course course;
 
     @Getter @Setter
-    @ManyToOne
+    @ManyToOne(mappedBy = "studentAttendsCourses")
     private Term term;
 
-
-    @Deprecated
-    public StudentAttendsCourse(Student student, Course course, Term term) {
-        this.student = student;
-        this.course = course;
-        this.term = term;
-    }
-
-    @Deprecated
-    private StudentAttendsCourse(Builder builder) {
-        this.student = builder.student;
-        this.course = builder.course;
-        this.term = builder.term;
-    }
-
-    @Deprecated
-    public static class Builder {
-        private Student student;
-        private Course course;
-        private Term term;
-
-        public Builder withStudent(Student student) {
-            this.student = student;
-            return this;
-        }
-
-        public Builder forCourse(Course course) {
-            this.course = course;
-            return this;
-        }
-
-        public Builder inTerm(Term term) {
-            this.term = term;
-            return this;
-        }
-
-        public StudentAttendsCourse build() {
-            return new StudentAttendsCourse(this);
-        }
-    }
 }
