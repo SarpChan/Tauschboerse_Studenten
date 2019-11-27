@@ -24,6 +24,8 @@ public class GroupRepositoryTest {
     @Autowired
     GroupRepository groupRepository;
 
+    private Room room;
+
     @Before
     public void setUp(){
         Course course = Course.builder()
@@ -42,7 +44,7 @@ public class GroupRepositoryTest {
                 .password("password")
                 .build();
 
-        Room room = Room.builder()
+        room = Room.builder()
                 .number(17)
                 .build();
 
@@ -94,6 +96,26 @@ public class GroupRepositoryTest {
     @Test
     public void whenFindByDayOfWeek_thenReturnGroupList(){
         assertThat(groupRepository.findByDayOfWeek(DayOfWeek.MONDAY),
+                hasItem(hasProperty("id",is(17))));
+    }
+
+    @Test
+    public void whenFindByStartTime_thenReturnGroupList(){
+        assertThat(groupRepository.findByStartTime(LocalTime.of(14,0)),hasItem(
+                hasProperty("id",is(17))
+        ));
+    }
+
+    @Test
+    public void whenFindByEndTime_thenReturnGroupList(){
+        assertThat(groupRepository.findByEndTime(LocalTime.of(15,0)),hasItem(
+                hasProperty("id",is(17))
+        ));
+    }
+
+    @Test
+    public void whenFindByRoom_thenReturnGroupList(){
+        assertThat(groupRepository.findByRoom(room),
                 hasItem(hasProperty("id",is(17))));
     }
 

@@ -41,7 +41,6 @@ public class ModuleTest {
         module = Module.builder()
                 .title("Analysis")
                 .period(2)
-                .curriculums(new HashSet<>(Collections.singleton(curriculum)))
                 .creditPoints(10)
                 .courses(new HashSet<>(Collections.singletonList(course)))
                 .build();
