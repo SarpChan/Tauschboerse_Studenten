@@ -5,6 +5,8 @@ import de.hsrm.mi.swtpro.backend.model.University;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.test.context.junit4.SpringRunner;
@@ -23,6 +25,9 @@ public class CampusRepositoryTest {
     EntityManager entityManager;
     @Autowired
     CampusRepository campusRepository;
+
+    private static final Logger logger = LoggerFactory.getLogger(CampusRepositoryTest.class);
+
     @Before
     public void setUp(){
 
@@ -40,7 +45,18 @@ public class CampusRepositoryTest {
 
 
         entityManager.persist(university);
-        entityManager.merge(campus);
+        entityManager.persist(campus);
+        selectAll();
+    }
+
+    private void selectAll(){
+        logger.info("CAMPUS TABLE CONTENT");
+        for(Campus c : campusRepository.findAll()){
+            logger.info("| ID :" +c.getId()
+                    +"| NAME : " +c.getName()
+                    +"| ADDRESS : "+c.getAddress()
+            );
+        }
     }
 
     @Test
@@ -50,6 +66,7 @@ public class CampusRepositoryTest {
 
     @Test
     public void whenFindById_thenReturnCampus(){
+        selectAll();
         assertTrue(campusRepository.findById(17L).isPresent());
         assertThat(campusRepository.findById(17L).get(),hasProperty("name",is("unter den Eichen")));
     }
