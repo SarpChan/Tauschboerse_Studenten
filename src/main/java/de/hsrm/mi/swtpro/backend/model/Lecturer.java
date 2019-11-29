@@ -1,18 +1,29 @@
 package de.hsrm.mi.swtpro.backend.model;
 
-import javax.persistence.Entity;
-
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
+import lombok.Singular;
 import lombok.experimental.SuperBuilder;
 
+import javax.persistence.Entity;
+import javax.persistence.OneToMany;
+import java.util.Set;
+
 @Entity
+@NoArgsConstructor
 @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
 @SuperBuilder
 public class Lecturer extends Role {
 
     @Getter @Setter
     private int priviledge;
+
+    @Singular("group")
+    @Getter @Setter
+    @OneToMany(mappedBy = "lecturer")
+    private Set<Group> groups;
+
 }

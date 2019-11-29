@@ -1,21 +1,12 @@
 package de.hsrm.mi.swtpro.backend.model;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.GeneratedValue;
-import javax.persistence.ManyToMany;
-import javax.persistence.OneToMany;
-
-import java.util.HashSet;
-import java.util.Set;
-import java.sql.Date;
-
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
+
+import javax.persistence.*;
+import java.sql.Date;
+import java.util.Set;
 
 /**
  * Academic Term
@@ -24,6 +15,7 @@ import lombok.Setter;
  * the courses offered each term may vary
  */
 @Entity
+@NoArgsConstructor
 @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
 @AllArgsConstructor
 @Builder
@@ -43,13 +35,25 @@ public class Term {
     @Getter @Setter
     private int period;
 
+    @Singular("course")
     @Getter @Setter
-    @ManyToMany
+    @ManyToMany(mappedBy = "terms")
     private Set<Course> courses;
 
+    @Singular("group")
     @Getter @Setter
-    @OneToMany
-    private Set<StudentAttendsCourse> studentsAttendCourses;
+    @OneToMany(mappedBy = "term")
+    private Set<Group> groups;
+
+    @Singular("studentAttendsCourse")
+    @Getter @Setter
+    @OneToMany(mappedBy = "term")
+    private Set<StudentAttendsCourse> studentAttendsCourses;
+
+    @Singular("enroledStudent")
+    @Getter @Setter
+    @OneToMany(mappedBy = "enrolmentTerm")
+    private Set<Student> enroledStudents;
     
     /**
      * Adds course to the collection of courses offered this term 
@@ -82,77 +86,5 @@ public class Term {
     public boolean containsCourse(Course course) {
         return this.courses.contains(course);
     }
-
-    @Deprecated
-    public Term(Date startDate, Date endDate, int period) {
-        this.startDate = startDate;
-        this.endDate = endDate;
-        this.period = period;
-        this.courses = new HashSet<Course>();
-    }
-
-    /**
-     * Constructor with Builder pattern
-     * @param builder
-     */
-    @Deprecated
-    private Term(Builder builder) {
-        this.startDate = builder.startDate;
-        this.endDate = builder.endDate;
-        this.period = builder.period;
-        this.courses = builder.courses;
-        this.studentsAttendCourses = builder.studentsAttendCourses;
-    }
-
-    /**
-     * Builder class 
-     * defines the parameters of the Term object to be built
-     */
-    @Deprecated
-    public static class Builder {
-        private Date startDate;
-        private Date endDate;
-        private int period;
-        private Set<Course> courses;
-        private Set<StudentAttendsCourse> studentsAttendCourses;
-
-        public Builder() {
-            this.courses = new HashSet<Course>();
-            this.studentsAttendCourses = new HashSet<StudentAttendsCourse>();
-        }
-
-        public Builder withStartDate(Date startDate) {
-            this.startDate = startDate;
-            return this;
-        }
-
-        public Builder withEndDate(Date endDate) {
-            this.endDate = endDate;
-            return this;
-        }
-
-        public Builder offersCourses(HashSet<Course> courses) {
-            this.courses = courses;
-            return this;
-        }
-
-        public Builder offersCourse(Course course) {
-            this.courses.add(course);
-            return this;
-        }
-
-        public Builder inPeriod(int period) {
-            this.period = period;
-            return this;
-        }
-
-        public Builder withStudentsAttendCourses(Set<StudentAttendsCourse> studentsAttendsCourses) {
-            this.studentsAttendCourses = studentsAttendsCourses;
-            return this;
-        }
-
-        public Term build() {
-            return new Term(this);
-        }
-    }
+    
 }

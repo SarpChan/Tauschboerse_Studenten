@@ -2,17 +2,17 @@ package de.hsrm.mi.swtpro.backend.model;
 
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import lombok.Singular;
+import lombok.experimental.SuperBuilder;
 
 import javax.persistence.Entity;
-import javax.persistence.OneToOne;
+import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
-
 import java.util.Set;
-import java.util.List;
-
-import lombok.Getter;
-import lombok.Setter;
-import lombok.experimental.SuperBuilder;
 
 /**
  * A student is a user 
@@ -20,6 +20,7 @@ import lombok.experimental.SuperBuilder;
  * as well as a exam regulation and their enrolment term
  */
 @Entity
+@NoArgsConstructor
 @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
 @SuperBuilder
 public class Student extends Role {
@@ -31,29 +32,36 @@ public class Student extends Role {
     private String mail;
 
     @Getter @Setter
-
-    @OneToOne
+    @ManyToOne
     private ExamRegulation examRegulation;
 
     @Getter @Setter
-
-    @OneToOne
+    @ManyToOne
     private Term enrolmentTerm;
 
+    @Singular("attendCourse")
     @Getter @Setter
-    @OneToMany
-    private Set<StudentAttendsCourse> attendsCourses;
+    @OneToMany(mappedBy = "student")
+    private Set<StudentAttendsCourse> attendCourses;
 
+    @Singular("prioritizeGroup")
     @Getter @Setter
-    @OneToMany
+    @OneToMany(mappedBy = "student")
+    private Set<StudentPriorizesGroup> prioritizeGroups;
+
+    @Singular("passedExam")
+    @Getter @Setter
+    @OneToMany(mappedBy = "student")
     private Set<StudentPassedExam> passedExams;
 
+    @Singular("group")
     @Getter @Setter
-    @OneToMany
-    private Set<Group> attendsGroups;
+    @ManyToMany(mappedBy = "students")
+    private Set<Group> groups;
 
+    @Singular("swapOffer")
     @Getter @Setter
-    @OneToMany(mappedBy = "creator")
-    private List<SwapOffer> swapOffers;
+    @OneToMany(mappedBy = "student")
+    private Set<SwapOffer> swapOffers;
 
 }

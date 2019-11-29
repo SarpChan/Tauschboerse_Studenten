@@ -2,21 +2,10 @@ package de.hsrm.mi.swtpro.backend.model;
 
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+import lombok.*;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.GeneratedValue;
-import javax.persistence.ManyToMany;
-import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
-
-import java.util.HashSet;
+import javax.persistence.*;
 import java.util.Set;
-
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.Setter;
 
 /**
  * Course offered at the University
@@ -25,6 +14,7 @@ import lombok.Setter;
  * When passed, the student is rewarded with the specified amount of credit points
  */
 @Entity
+@NoArgsConstructor
 @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
 @AllArgsConstructor
 @Builder
@@ -39,28 +29,34 @@ public class Course {
     private String title;
 
     @Getter @Setter
-
     @ManyToOne
     private User owner;
 
+    @Singular("module")
     @Getter @Setter
+    @ManyToMany
+    @JoinTable(name = "course_module",
+            joinColumns = @JoinColumn(name = "course_id", referencedColumnName = "id"),
+            inverseJoinColumns = @JoinColumn(name = "module_id", referencedColumnName = "id"))
+    private Set<Module> modules;
 
+    @Singular("term")
+    @Getter @Setter
+    @ManyToMany
+    @JoinTable(name = "course_term",
+            joinColumns = @JoinColumn(name = "course_id", referencedColumnName = "id"),
+            inverseJoinColumns = @JoinColumn(name = "term_id", referencedColumnName = "id"))
+    private Set<Term> terms;
+
+    @Singular("courseComponent")
+    @Getter @Setter
     @OneToMany(mappedBy = "course")
     private Set<CourseComponent> courseComponents;
 
+    @Singular("studentAttendsCourse")
     @Getter @Setter
-
-    @ManyToMany(mappedBy = "courses")
-    private Set<Module> modules;
-
-    @Getter @Setter
-
-    @ManyToMany(mappedBy = "courses")
-    private Set<Term> terms;
-
-    @Getter @Setter
-    @OneToMany
-    private Set<StudentAttendsCourse> studentsAttendCourse;
+    @OneToMany(mappedBy = "course")
+    private Set<StudentAttendsCourse> studentAttendsCourses;
 
     /**
      * Adds course component to the collection of course components, which belong to this course 
@@ -93,60 +89,4 @@ public class Course {
         return this.courseComponents.contains(courseComponent);
     }
 
-    @Deprecated
-    public Course(String title) {
-        this.title = title;
-        this.modules = new HashSet<Module>();
-    }
-
-    /**
-     * Constructor with Builder pattern
-     * @param builder
-     */
-    @Deprecated
-    private Course(Builder builder) {
-        this.title = builder.title;
-        this.owner = builder.owner;
-        this.courseComponents = builder.courseComponents;
-        this.modules = builder.modules;
-        this.studentsAttendCourse = builder.studentsAttendCourse;
-    }
-
-    /**
-     * Builder class 
-     * defines the parameters of the Course object to be built
-     */
-    @Deprecated
-    public static class Builder {
-        private String title;
-        private User owner;
-        private Set<CourseComponent> courseComponents;
-        private Set<Module> modules;
-        private Set<StudentAttendsCourse> studentsAttendCourse;
-
-        public Builder(String title) {
-            this.title = title;
-            this.courseComponents = new HashSet<CourseComponent>();
-            this.modules = new HashSet<Module>();
-        }
-
-        public Builder withOwner(User owner) {
-            this.owner = owner;
-            return this;
-        }
-
-        public Builder hasCourseComponents(Set<CourseComponent> courseComponents) {
-            this.courseComponents = courseComponents;
-            return this;
-        }
-
-        public Builder withCourseComponent(CourseComponent courseComponent) {
-            this.courseComponents.add(courseComponent);
-            return this;
-        }
-
-        public Course build() {
-            return new Course(this);
-        }
-    }
 }

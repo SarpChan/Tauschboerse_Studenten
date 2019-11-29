@@ -1,18 +1,16 @@
 package de.hsrm.mi.swtpro.backend.model;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.GeneratedValue;
-import javax.persistence.ManyToOne;
-
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
+
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 
 @Entity
+@NoArgsConstructor
 @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
 @AllArgsConstructor
 @Builder
@@ -35,44 +33,4 @@ public class StudentAttendsCourse {
     @ManyToOne
     private Term term;
 
-
-    @Deprecated
-    public StudentAttendsCourse(Student student, Course course, Term term) {
-        this.student = student;
-        this.course = course;
-        this.term = term;
-    }
-
-    @Deprecated
-    private StudentAttendsCourse(Builder builder) {
-        this.student = builder.student;
-        this.course = builder.course;
-        this.term = builder.term;
-    }
-
-    @Deprecated
-    public static class Builder {
-        private Student student;
-        private Course course;
-        private Term term;
-
-        public Builder withStudent(Student student) {
-            this.student = student;
-            return this;
-        }
-
-        public Builder forCourse(Course course) {
-            this.course = course;
-            return this;
-        }
-
-        public Builder inTerm(Term term) {
-            this.term = term;
-            return this;
-        }
-
-        public StudentAttendsCourse build() {
-            return new StudentAttendsCourse(this);
-        }
-    }
 }

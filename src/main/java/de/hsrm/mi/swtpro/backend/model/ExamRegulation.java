@@ -2,21 +2,11 @@ package de.hsrm.mi.swtpro.backend.model;
 
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+import lombok.*;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.GeneratedValue;
-import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
-
+import javax.persistence.*;
 import java.sql.Date;
-import java.util.HashSet;
 import java.util.Set;
-
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.Setter;
 
 /**
  * Each study program has one or more exam regulations
@@ -24,6 +14,7 @@ import lombok.Setter;
  * and additional rules on examination
  */
 @Entity
+@NoArgsConstructor
 @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
 @AllArgsConstructor
 @Builder
@@ -41,55 +32,17 @@ public class ExamRegulation {
     private int rule;
 
     @Getter @Setter
-
     @ManyToOne
     private StudyProgram studyProgram;
 
+    @Singular("curriculum")
     @Getter @Setter
-
     @OneToMany(mappedBy = "examRegulation")
-    private Set<Curriculum> curricula;
+    private Set<Curriculum> curriculums;
 
-    /**
-     * Constructor with Builder pattern
-     * @param builder
-     */
-    @Deprecated
-    private ExamRegulation(Builder builder) {
-        this.date = builder.date;
-        this.studyProgram = builder.studyProgram;
-        this.rule = builder.rule;
-        this.curricula = builder.curricula;
-    }
+    @Singular("student")
+    @Getter @Setter
+    @OneToMany(mappedBy = "examRegulation")
+    private Set<Student> students;
 
-    /**
-     * Builder class 
-     * defines the parameters of the Exam Regulation object to be built
-     */
-    @Deprecated
-    public static class Builder {
-        private Date date;
-        private StudyProgram studyProgram;
-        private int rule;
-        private Set<Curriculum> curricula;
-    
-        public Builder(Date date) {
-            this.date = date;
-            this.curricula = new HashSet<Curriculum>();
-        }
-
-        public Builder forStudyProgram(StudyProgram studyProgram) {
-            this.studyProgram = studyProgram;
-            return this;
-        }
-
-        public Builder hasRule(int rule) {
-            this.rule = rule;
-            return this;
-        }
-
-        public ExamRegulation build() {
-            return new ExamRegulation(this);
-        }
-    }
 }
