@@ -14,6 +14,8 @@ import java.util.Set;
  * There may be multiple courses applicable to one module
  */
 @Entity
+@NoArgsConstructor
+@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
 @AllArgsConstructor
 @Builder
 public class Module {
@@ -34,19 +36,18 @@ public class Module {
 
     @Singular("moduleInCurriculum")
     @Getter @Setter
-    @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
     @OneToMany(mappedBy = "module")
     private Set<ModuleInCurriculum> modulesInCurriculum;
 
     @Singular("course")
     @Getter @Setter
-    @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
     @ManyToMany(mappedBy = "modules")
     private Set<Course> courses;
     
     /**
      * Adds course to the collection of courses fitting this module 
      * @param course
+     *
      */
     public void addCourse(Course course) {
         this.courses.add(course);

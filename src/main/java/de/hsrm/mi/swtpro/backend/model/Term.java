@@ -15,6 +15,8 @@ import java.util.Set;
  * the courses offered each term may vary
  */
 @Entity
+@NoArgsConstructor
+@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
 @AllArgsConstructor
 @Builder
 public class Term {
@@ -35,26 +37,22 @@ public class Term {
 
     @Singular("course")
     @Getter @Setter
-    @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
     @ManyToMany(mappedBy = "terms")
     private Set<Course> courses;
 
     @Singular("group")
     @Getter @Setter
-    @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
     @OneToMany(mappedBy = "term")
     private Set<Group> groups;
 
     @Singular("studentAttendsCourse")
     @Getter @Setter
-    @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
     @OneToMany(mappedBy = "term")
     private Set<StudentAttendsCourse> studentAttendsCourses;
 
     @Singular("enroledStudent")
     @Getter @Setter
-    @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
-    @OneToMany(mappedBy = "enrolementTerm")
+    @OneToMany(mappedBy = "enrolmentTerm")
     private Set<Student> enroledStudents;
     
     /**

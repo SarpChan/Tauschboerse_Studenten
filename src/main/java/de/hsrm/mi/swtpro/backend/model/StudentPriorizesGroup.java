@@ -1,20 +1,18 @@
 package de.hsrm.mi.swtpro.backend.model;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.GeneratedValue;
-import javax.persistence.ManyToOne;
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+import lombok.*;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.Setter;
+import javax.persistence.*;
 
 /** 
     Relationship between a student and a group 
     The priority indicates
 */
 @Entity
+@NoArgsConstructor
+@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
 @AllArgsConstructor
 @Builder
 public class StudentPriorizesGroup {
@@ -29,10 +27,12 @@ public class StudentPriorizesGroup {
 
     @Getter @Setter
     @ManyToOne
+    @JoinColumn(name="student_id")
     private Student student;
 
     @Getter @Setter
     @ManyToOne
+    @JoinColumn(name="group_id")
     private Group group;
 
 }

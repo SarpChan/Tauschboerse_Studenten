@@ -8,6 +8,8 @@ import javax.persistence.*;
 import java.util.Set;
 
 @Entity
+@NoArgsConstructor
+@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
 @AllArgsConstructor
 @Builder
 public class Curriculum {
@@ -21,13 +23,11 @@ public class Curriculum {
     private int termPeriod;
 
     @Getter @Setter
-    @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
     @ManyToOne
     private ExamRegulation examRegulation;
 
     @Singular("moduleInCurriculum")
     @Getter @Setter
-    @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
     @OneToMany(mappedBy = "curriculum")
     private Set<ModuleInCurriculum> modulesInCurriculum;
 }

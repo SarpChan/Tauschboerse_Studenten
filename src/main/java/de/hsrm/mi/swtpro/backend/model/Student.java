@@ -2,19 +2,17 @@ package de.hsrm.mi.swtpro.backend.model;
 
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import lombok.Singular;
+import lombok.experimental.SuperBuilder;
 
 import javax.persistence.Entity;
-import javax.persistence.OneToOne;
-import javax.persistence.OneToMany;
-import javax.persistence.ManyToOne;
 import javax.persistence.ManyToMany;
-
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import java.util.Set;
-
-import lombok.Getter;
-import lombok.Setter;
-import lombok.experimental.SuperBuilder;
-import lombok.Singular;
 
 /**
  * A student is a user 
@@ -22,6 +20,8 @@ import lombok.Singular;
  * as well as a exam regulation and their enrolment term
  */
 @Entity
+@NoArgsConstructor
+@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
 @SuperBuilder
 public class Student extends Role {
 
@@ -32,12 +32,10 @@ public class Student extends Role {
     private String mail;
 
     @Getter @Setter
-    @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
     @ManyToOne
     private ExamRegulation examRegulation;
 
     @Getter @Setter
-    @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
     @ManyToOne
     private Term enrolmentTerm;
 

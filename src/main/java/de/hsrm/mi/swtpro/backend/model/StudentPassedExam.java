@@ -1,17 +1,14 @@
 package de.hsrm.mi.swtpro.backend.model;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.ManyToOne;
-import javax.persistence.OneToOne;
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+import lombok.*;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.Setter;
+import javax.persistence.*;
 
 @Entity
+@NoArgsConstructor
+@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
 @AllArgsConstructor
 @Builder
 public class StudentPassedExam {
@@ -29,7 +26,7 @@ public class StudentPassedExam {
     private Student student;
 
     @Getter @Setter
-    @OneToOne(mappedBy = "studentPassedExam")
+    @OneToOne
     private CourseComponent courseComponent;
 
 }
