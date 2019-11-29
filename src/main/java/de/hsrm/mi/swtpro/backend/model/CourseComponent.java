@@ -14,6 +14,8 @@ import java.util.Set;
  * The type of lesson must be unique for each course
  */
 @Entity
+@NoArgsConstructor
+@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
@@ -30,17 +32,16 @@ public class CourseComponent {
     @Getter @Setter
     private int creditPoints;
 
-    @Getter @Setter
+    @Getter
+    @Setter
     private String exam;
 
     @Getter @Setter
-    @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
     @ManyToOne
     private Course course;
 
     @Singular("group")
     @Getter @Setter
-    @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
     @OneToMany(mappedBy = "courseComponent")
     private Set<Group> groups;
 
@@ -49,7 +50,8 @@ public class CourseComponent {
     private StudentPassedExam studentPassedExam;
 
     /**
-     * Adds group to the collection of groups, which belong to this lesson 
+     * Adds group to the collection of groups, which belong to this lesson
+     *
      * @param group
      */
     public void addGroup(Group group) {
@@ -57,7 +59,8 @@ public class CourseComponent {
     }
 
     /**
-     * Removes group from the collection of groups, which belong to this lesson 
+     * Removes group from the collection of groups, which belong to this lesson
+     *
      * @param group
      */
     public void removeGroup(Group group) {
@@ -65,7 +68,7 @@ public class CourseComponent {
     }
 
     /**
-     * Empties collection of all groups belonging to this lesson 
+     * Empties collection of all groups belonging to this lesson
      */
     public void clearGroups() {
         this.groups.clear();
@@ -73,6 +76,7 @@ public class CourseComponent {
 
     /**
      * Checks if a given group belongs to this lesson
+     *
      * @param group
      * @return true if given lesson belongs to this lesson
      */

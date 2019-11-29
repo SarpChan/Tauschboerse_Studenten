@@ -13,8 +13,9 @@ import java.util.Set;
  * A campus has multiple rooms and a name
  */
 @Entity
-@AllArgsConstructor
 @NoArgsConstructor
+@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
+@AllArgsConstructor
 @Builder
 public class Building {
 
@@ -27,14 +28,12 @@ public class Building {
     private String name;
 
     @Getter @Setter 
-    @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
-    @ManyToOne
+    @ManyToOne(targetEntity = Campus.class, fetch = FetchType.LAZY)
     @JoinColumn(name = "campus_id")
     private Campus campus;
 
     @Singular("room")
-    @Getter @Setter 
-    @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
+    @Getter @Setter
     @OneToMany(mappedBy = "building")
     private Set<Room> rooms;
 

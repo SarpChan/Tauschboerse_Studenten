@@ -14,8 +14,9 @@ import java.util.Set;
  * When passed, the student is rewarded with the specified amount of credit points
  */
 @Entity
-@AllArgsConstructor(access = AccessLevel.PACKAGE)
-@NoArgsConstructor(access = AccessLevel.PACKAGE)
+@NoArgsConstructor
+@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
+@AllArgsConstructor
 @Builder
 public class Course {
 
@@ -28,25 +29,27 @@ public class Course {
     private String title;
 
     @Getter @Setter
-    @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
     @ManyToOne
     private User owner;
 
     @Singular("module")
     @Getter @Setter
-    @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
-    @ManyToMany(mappedBy = "courses")
+    @ManyToMany
+    @JoinTable(name = "course_module",
+            joinColumns = @JoinColumn(name = "course_id", referencedColumnName = "id"),
+            inverseJoinColumns = @JoinColumn(name = "module_id", referencedColumnName = "id"))
     private Set<Module> modules;
 
     @Singular("term")
     @Getter @Setter
-    @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
-    @ManyToMany(mappedBy = "courses")
+    @ManyToMany
+    @JoinTable(name = "course_term",
+            joinColumns = @JoinColumn(name = "course_id", referencedColumnName = "id"),
+            inverseJoinColumns = @JoinColumn(name = "term_id", referencedColumnName = "id"))
     private Set<Term> terms;
 
     @Singular("courseComponent")
     @Getter @Setter
-    @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
     @OneToMany(mappedBy = "course")
     private Set<CourseComponent> courseComponents;
 

@@ -11,6 +11,8 @@ import java.util.Set;
  * Course of Studies
  */
 @Entity
+@NoArgsConstructor
+@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
@@ -29,7 +31,6 @@ public class StudyProgram {
 
     @Singular("examRegulation")
     @Getter @Setter
-    @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
     @OneToMany(mappedBy = "studyProgram")
     private Set<ExamRegulation> examRegulations;
 

@@ -1,5 +1,7 @@
 package de.hsrm.mi.swtpro.backend.model;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import lombok.*;
 
 import javax.persistence.*;
@@ -9,8 +11,9 @@ import javax.persistence.*;
     The priority indicates
 */
 @Entity
-@AllArgsConstructor
 @NoArgsConstructor
+@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
+@AllArgsConstructor
 @Builder
 public class StudentPriorizesGroup {
 
@@ -24,11 +27,12 @@ public class StudentPriorizesGroup {
 
     @Getter @Setter
     @ManyToOne
+    @JoinColumn(name="student_id")
     private Student student;
 
     @Getter @Setter
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "group_id")
+    @ManyToOne
+    @JoinColumn(name="group_id")
     private Group group;
 
 }

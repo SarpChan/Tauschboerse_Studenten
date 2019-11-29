@@ -15,9 +15,10 @@ import java.util.Set;
  * It has at least one campus and field of study
  */
 @Entity
-@Builder(toBuilder = true)
-@AllArgsConstructor(access = AccessLevel.PACKAGE)
-@NoArgsConstructor(access = AccessLevel.PACKAGE)
+@NoArgsConstructor
+@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
+@AllArgsConstructor
+@Builder
 public class University {
     
     @Id
@@ -33,13 +34,11 @@ public class University {
 
     @Singular("campus")
     @Getter @Setter
-    @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
     @OneToMany(mappedBy = "university")
     private Set<Campus> campuses;
 
     @Singular("fieldOfStudy")
     @Getter @Setter
-    @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
     @OneToMany(mappedBy = "university")
     private Set<FieldOfStudy> fieldsOfStudy;
 

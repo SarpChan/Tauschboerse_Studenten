@@ -2,10 +2,16 @@ package de.hsrm.mi.swtpro.backend.model;
 
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
-import lombok.*;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import lombok.Singular;
 import lombok.experimental.SuperBuilder;
 
-import javax.persistence.*;
+import javax.persistence.Entity;
+import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import java.util.Set;
 
 /**
@@ -14,8 +20,8 @@ import java.util.Set;
  * as well as a exam regulation and their enrolment term
  */
 @Entity
-@AllArgsConstructor
 @NoArgsConstructor
+@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
 @SuperBuilder
 public class Student extends Role {
 
@@ -26,12 +32,10 @@ public class Student extends Role {
     private String mail;
 
     @Getter @Setter
-    @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
     @ManyToOne
     private ExamRegulation examRegulation;
 
     @Getter @Setter
-    @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
     @ManyToOne
     private Term enrolmentTerm;
 
@@ -52,16 +56,12 @@ public class Student extends Role {
 
     @Singular("group")
     @Getter @Setter
-    @ManyToMany
-    @JoinTable(
-            name = "group_student",
-            joinColumns = @JoinColumn(name = "student_id"),
-            inverseJoinColumns = @JoinColumn(name = "group_id"))
+    @ManyToMany(mappedBy = "students")
     private Set<Group> groups;
 
-    /*@Singular("swapOffer")
+    @Singular("swapOffer")
     @Getter @Setter
     @OneToMany(mappedBy = "student")
     private Set<SwapOffer> swapOffers;
-     */
+
 }

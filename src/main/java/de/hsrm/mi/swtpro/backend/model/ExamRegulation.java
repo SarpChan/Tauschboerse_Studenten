@@ -14,8 +14,9 @@ import java.util.Set;
  * and additional rules on examination
  */
 @Entity
-@AllArgsConstructor(access = AccessLevel.PACKAGE)
-@NoArgsConstructor(access = AccessLevel.PACKAGE)
+@NoArgsConstructor
+@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
+@AllArgsConstructor
 @Builder
 public class ExamRegulation {
     
@@ -31,19 +32,16 @@ public class ExamRegulation {
     private int rule;
 
     @Getter @Setter
-    @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
     @ManyToOne
     private StudyProgram studyProgram;
 
     @Singular("curriculum")
     @Getter @Setter
-    @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
     @OneToMany(mappedBy = "examRegulation")
     private Set<Curriculum> curriculums;
 
     @Singular("student")
     @Getter @Setter
-    @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
     @OneToMany(mappedBy = "examRegulation")
     private Set<Student> students;
 

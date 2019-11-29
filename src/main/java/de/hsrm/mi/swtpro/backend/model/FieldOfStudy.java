@@ -12,29 +12,31 @@ import java.util.Set;
  * Many universities can have the same studyprogram
  */
 @Entity
-@AllArgsConstructor
 @NoArgsConstructor
+@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
+@AllArgsConstructor
 @Builder
 public class FieldOfStudy {
 
     @Id
     @Getter @Setter
     @GeneratedValue
-    private long id;
+    private int id;
 
     @Getter @Setter
     private String title;
 
     @Getter @Setter
-    @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
     @ManyToOne
-    @JoinColumn(name = "university_id")
+    @JoinColumn(name="university_id")
     private University university;
 
     @Singular("studyProgram")
     @Getter @Setter
-    @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
-    @ManyToMany(targetEntity = StudyProgram.class,mappedBy = "fieldsOfStudy")
+    @ManyToMany
+    @JoinTable(name = "fieldofStudy_studyProgram",
+            joinColumns = @JoinColumn(name = "fieldofStudy_id", referencedColumnName = "id"),
+            inverseJoinColumns = @JoinColumn(name = "studyProgram_id", referencedColumnName = "id"))
     private Set<StudyProgram> studyPrograms;
 
 }

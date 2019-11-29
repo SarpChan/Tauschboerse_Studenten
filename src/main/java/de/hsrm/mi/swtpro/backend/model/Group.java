@@ -16,11 +16,12 @@ import java.util.Set;
  * A student may only attend one group for each lesson of the same type
  */
 @Entity
-@AllArgsConstructor
 @NoArgsConstructor
-@Table(name =  "\"Group\"")
+@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
+@AllArgsConstructor
 @Builder
-public class Group {    
+@Table(name =  "group_table")
+public class Group {
     
     @Id
     @Getter @Setter
@@ -28,8 +29,7 @@ public class Group {
     private long id;
 
     @Getter @Setter
-    @Column(name = "\"group\"")
-    private char group;
+    private char groupChar;
 
     @Getter @Setter
     private int slots;
@@ -44,33 +44,31 @@ public class Group {
     private LocalTime endTime;
 
     @Getter @Setter
-    @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
     @ManyToOne
-    @JoinColumn(name = "term_id")
+    @JoinColumn(name="term_id")
     private Term term;
 
     @Getter @Setter
-    @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
     @ManyToOne
     @JoinColumn(name="courseComponent_id")
     private CourseComponent courseComponent;
 
     @Getter @Setter
-    @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
     @ManyToOne
-    @JoinColumn(name = "lecture_id")
+    @JoinColumn(name="lecturer_id")
     private Lecturer lecturer;
 
     @Getter @Setter
-    @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
     @ManyToOne
-    @JoinColumn(name = "room_id")
+    @JoinColumn(name="room_id")
     private Room room;
 
     @Singular("student")
     @Getter @Setter
-    @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
-    @ManyToMany(mappedBy = "groups")
+    @ManyToMany
+    @JoinTable(name = "group_student",
+            joinColumns = @JoinColumn(name = "group_id", referencedColumnName = "id"),
+            inverseJoinColumns = @JoinColumn(name = "student_id", referencedColumnName = "id"))
     private Set<Student> students;
 
     @Singular("prioritezeGroup")
@@ -78,17 +76,15 @@ public class Group {
     @OneToMany(mappedBy = "group")
     private Set<StudentPriorizesGroup> prioritizeGroups;
 
-    /*
-    @Singular("swapOffer")
+    @Singular("swapTo")
     @Getter @Setter
-    @OneToMany(mappedBy = "group")
-    private Set<SwapOffer> swapOffers;
+    @OneToMany(mappedBy = "toGroup")
+    private Set<SwapOffer> swapTos;
 
-    @Singular("swapRequest")
+    @Singular("swapFrom")
     @Getter @Setter
-    @OneToMany(mappedBy = "group")
-    private Set<SwapOffer> swapRequests;
-     */
+    @OneToMany(mappedBy = "fromGroup")
+    private Set<SwapOffer> swapFroms;
 
     /**
      * Adds student to the collection of students attending this group 
