@@ -5,6 +5,7 @@ import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import lombok.*;
 
 import javax.persistence.*;
+import java.util.HashSet;
 import java.util.Set;
 
 /**
@@ -34,9 +35,9 @@ public class Room {
     @JoinColumn(name = "building_id")
     private Building building;
 
-    @Singular("group")
+    @Builder.Default
     @Getter @Setter
     @OneToMany(mappedBy = "room")
-    private Set<Group> groups;
+    private Set<Group> groups = new HashSet<>();
   
 }

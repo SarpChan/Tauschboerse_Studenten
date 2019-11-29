@@ -8,6 +8,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
+import java.util.HashSet;
 import java.util.Set;
 
 /**
@@ -38,9 +39,9 @@ public class User {
     @Getter @Setter 
     private String password;
 
-    @Singular("role")
+    @Builder.Default
     @Getter @Setter 
     @OneToMany(mappedBy = "user")
-    private Set<Role> roles;
+    private Set<Role> roles = new HashSet<>();
     
 }

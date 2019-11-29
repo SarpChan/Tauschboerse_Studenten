@@ -5,6 +5,7 @@ import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import lombok.*;
 
 import javax.persistence.*;
+import java.util.HashSet;
 import java.util.Set;
 
 /**
@@ -32,31 +33,31 @@ public class Course {
     @ManyToOne
     private User owner;
 
-    @Singular("module")
+    @Builder.Default
     @Getter @Setter
     @ManyToMany
     @JoinTable(name = "course_module",
             joinColumns = @JoinColumn(name = "course_id", referencedColumnName = "id"),
             inverseJoinColumns = @JoinColumn(name = "module_id", referencedColumnName = "id"))
-    private Set<Module> modules;
+    private Set<Module> modules = new HashSet<>();
 
-    @Singular("term")
+    @Builder.Default
     @Getter @Setter
     @ManyToMany
     @JoinTable(name = "course_term",
             joinColumns = @JoinColumn(name = "course_id", referencedColumnName = "id"),
             inverseJoinColumns = @JoinColumn(name = "term_id", referencedColumnName = "id"))
-    private Set<Term> terms;
+    private Set<Term> terms = new HashSet<>();
 
-    @Singular("courseComponent")
+    @Builder.Default
     @Getter @Setter
     @OneToMany(mappedBy = "course")
-    private Set<CourseComponent> courseComponents;
+    private Set<CourseComponent> courseComponents = new HashSet<>();
 
-    @Singular("studentAttendsCourse")
+    @Builder.Default
     @Getter @Setter
     @OneToMany(mappedBy = "course")
-    private Set<StudentAttendsCourse> studentAttendsCourses;
+    private Set<StudentAttendsCourse> studentAttendsCourses = new HashSet<>();
 
     /**
      * Adds course component to the collection of course components, which belong to this course 

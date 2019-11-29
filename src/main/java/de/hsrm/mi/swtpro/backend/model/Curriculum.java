@@ -5,6 +5,7 @@ import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import lombok.*;
 
 import javax.persistence.*;
+import java.util.HashSet;
 import java.util.Set;
 
 @Entity
@@ -26,8 +27,8 @@ public class Curriculum {
     @ManyToOne
     private ExamRegulation examRegulation;
 
-    @Singular("moduleInCurriculum")
+    @Builder.Default
     @Getter @Setter
     @OneToMany(mappedBy = "curriculum")
-    private Set<ModuleInCurriculum> modulesInCurriculum;
+    private Set<ModuleInCurriculum> modulesInCurriculum = new HashSet<>();
 }

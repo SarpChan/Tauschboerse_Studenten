@@ -5,6 +5,7 @@ import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import lombok.*;
 
 import javax.persistence.*;
+import java.util.HashSet;
 import java.util.Set;
 
 /**
@@ -34,15 +35,15 @@ public class Module {
     @Getter @Setter
     private int period;
 
-    @Singular("moduleInCurriculum")
+    @Builder.Default
     @Getter @Setter
     @OneToMany(mappedBy = "module")
-    private Set<ModuleInCurriculum> modulesInCurriculum;
+    private Set<ModuleInCurriculum> modulesInCurriculum = new HashSet<>();
 
-    @Singular("course")
+    @Builder.Default
     @Getter @Setter
     @ManyToMany(mappedBy = "modules")
-    private Set<Course> courses;
+    private Set<Course> courses = new HashSet<>();
     
     /**
      * Adds course to the collection of courses fitting this module 

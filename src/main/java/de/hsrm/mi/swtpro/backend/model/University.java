@@ -8,6 +8,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
+import java.util.HashSet;
 import java.util.Set;
 
 /**
@@ -32,14 +33,14 @@ public class University {
     @Getter @Setter
     private String address;
 
-    @Singular("campus")
     @Getter @Setter
+    @Builder.Default
     @OneToMany(mappedBy = "university")
-    private Set<Campus> campuses;
+    private Set<Campus> campuses = new HashSet<>();
 
-    @Singular("fieldOfStudy")
+    @Builder.Default
     @Getter @Setter
     @OneToMany(mappedBy = "university")
-    private Set<FieldOfStudy> fieldsOfStudy;
+    private Set<FieldOfStudy> fieldsOfStudy = new HashSet<>();;
 
 }

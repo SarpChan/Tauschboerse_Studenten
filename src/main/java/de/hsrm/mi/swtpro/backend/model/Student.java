@@ -2,16 +2,14 @@ package de.hsrm.mi.swtpro.backend.model;
 
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-import lombok.Singular;
+import lombok.*;
 import lombok.experimental.SuperBuilder;
 
 import javax.persistence.Entity;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import java.util.HashSet;
 import java.util.Set;
 
 /**
@@ -39,29 +37,29 @@ public class Student extends Role {
     @ManyToOne
     private Term enrolmentTerm;
 
-    @Singular("attendCourse")
+    @Builder.Default
     @Getter @Setter
     @OneToMany(mappedBy = "student")
-    private Set<StudentAttendsCourse> attendCourses;
+    private Set<StudentAttendsCourse> attendCourses = new HashSet<>();
 
-    @Singular("prioritizeGroup")
+    @Builder.Default
     @Getter @Setter
     @OneToMany(mappedBy = "student")
-    private Set<StudentPriorizesGroup> prioritizeGroups;
+    private Set<StudentPriorizesGroup> prioritizeGroups = new HashSet<>();
 
-    @Singular("passedExam")
+    @Builder.Default
     @Getter @Setter
     @OneToMany(mappedBy = "student")
-    private Set<StudentPassedExam> passedExams;
+    private Set<StudentPassedExam> passedExams = new HashSet<>();
 
-    @Singular("group")
+    @Builder.Default
     @Getter @Setter
     @ManyToMany(mappedBy = "students")
-    private Set<Group> groups;
+    private Set<Group> groups = new HashSet<>();
 
-    @Singular("swapOffer")
+    @Builder.Default
     @Getter @Setter
     @OneToMany(mappedBy = "student")
-    private Set<SwapOffer> swapOffers;
+    private Set<SwapOffer> swapOffers = new HashSet<>();
 
 }

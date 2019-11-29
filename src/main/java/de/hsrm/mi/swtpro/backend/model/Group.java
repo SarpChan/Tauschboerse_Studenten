@@ -7,6 +7,7 @@ import lombok.*;
 import javax.persistence.*;
 import java.time.DayOfWeek;
 import java.time.LocalTime;
+import java.util.HashSet;
 import java.util.Set;
 
 /**
@@ -63,28 +64,28 @@ public class Group {
     @JoinColumn(name="room_id")
     private Room room;
 
-    @Singular("student")
+    @Builder.Default
     @Getter @Setter
     @ManyToMany
     @JoinTable(name = "group_student",
             joinColumns = @JoinColumn(name = "group_id", referencedColumnName = "id"),
             inverseJoinColumns = @JoinColumn(name = "student_id", referencedColumnName = "id"))
-    private Set<Student> students;
+    private Set<Student> students = new HashSet<>();
 
-    @Singular("prioritezeGroup")
+    @Builder.Default
     @Getter @Setter
     @OneToMany(mappedBy = "group")
-    private Set<StudentPriorizesGroup> prioritizeGroups;
+    private Set<StudentPriorizesGroup> prioritizeGroups = new HashSet<>();
 
-    @Singular("swapTo")
+    @Builder.Default
     @Getter @Setter
     @OneToMany(mappedBy = "toGroup")
-    private Set<SwapOffer> swapTos;
+    private Set<SwapOffer> swapTos = new HashSet<>();
 
-    @Singular("swapFrom")
+    @Builder.Default
     @Getter @Setter
     @OneToMany(mappedBy = "fromGroup")
-    private Set<SwapOffer> swapFroms;
+    private Set<SwapOffer> swapFroms = new HashSet<>();
 
     /**
      * Adds student to the collection of students attending this group 

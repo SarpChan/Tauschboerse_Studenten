@@ -5,6 +5,7 @@ import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import lombok.*;
 
 import javax.persistence.*;
+import java.util.HashSet;
 import java.util.Set;
 
 /**
@@ -28,15 +29,15 @@ public class StudyProgram {
     @Getter @Setter
     private String degree;
 
-    @Singular("examRegulation")
+    @Builder.Default
     @Getter @Setter
     @OneToMany(mappedBy = "studyProgram")
-    private Set<ExamRegulation> examRegulations;
+    private Set<ExamRegulation> examRegulations = new HashSet<>();
 
-    @Singular("fieldOfStudy")
+    @Builder.Default
     @Getter @Setter
     @ManyToMany(mappedBy = "studyPrograms")
-    private Set<FieldOfStudy> fieldsOfStudy;
+    private Set<FieldOfStudy> fieldsOfStudy = new HashSet<>();
 
     /**
      * Adds exam regulation to the collection of exam regulations applicable for this study program 

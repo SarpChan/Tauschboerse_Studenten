@@ -5,6 +5,7 @@ import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import lombok.*;
 
 import javax.persistence.*;
+import java.util.HashSet;
 import java.util.Set;
 
 /**
@@ -31,12 +32,12 @@ public class FieldOfStudy {
     @JoinColumn(name="university_id")
     private University university;
 
-    @Singular("studyProgram")
+    @Builder.Default
     @Getter @Setter
     @ManyToMany
     @JoinTable(name = "fieldofStudy_studyProgram",
             joinColumns = @JoinColumn(name = "fieldofStudy_id", referencedColumnName = "id"),
             inverseJoinColumns = @JoinColumn(name = "studyProgram_id", referencedColumnName = "id"))
-    private Set<StudyProgram> studyPrograms;
+    private Set<StudyProgram> studyPrograms = new HashSet<>();
 
 }

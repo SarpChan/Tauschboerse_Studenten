@@ -6,6 +6,7 @@ import lombok.*;
 
 import javax.persistence.*;
 import java.sql.Date;
+import java.util.HashSet;
 import java.util.Set;
 
 /**
@@ -35,14 +36,14 @@ public class ExamRegulation {
     @ManyToOne
     private StudyProgram studyProgram;
 
-    @Singular("curriculum")
+    @Builder.Default
     @Getter @Setter
     @OneToMany(mappedBy = "examRegulation")
-    private Set<Curriculum> curriculums;
+    private Set<Curriculum> curriculums = new HashSet<>();
 
-    @Singular("student")
+    @Builder.Default
     @Getter @Setter
     @OneToMany(mappedBy = "examRegulation")
-    private Set<Student> students;
+    private Set<Student> students = new HashSet<>();
 
 }

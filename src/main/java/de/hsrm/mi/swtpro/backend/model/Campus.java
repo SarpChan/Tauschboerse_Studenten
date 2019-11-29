@@ -5,6 +5,7 @@ import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import lombok.*;
 
 import javax.persistence.*;
+import java.util.HashSet;
 import java.util.Set;
 
 /**
@@ -34,10 +35,9 @@ public class Campus {
     @JoinColumn(name = "university_id")
     private University university;
 
-    @Singular("building")
+    @Builder.Default
     @Getter @Setter
-
     @OneToMany(mappedBy = "campus")
-    private Set<Building> buildings;
+    private Set<Building> buildings = new HashSet<>();;
 
 }

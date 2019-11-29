@@ -6,6 +6,7 @@ import lombok.*;
 
 import javax.persistence.*;
 import java.sql.Date;
+import java.util.HashSet;
 import java.util.Set;
 
 /**
@@ -35,25 +36,25 @@ public class Term {
     @Getter @Setter
     private int period;
 
-    @Singular("course")
+    @Builder.Default
     @Getter @Setter
     @ManyToMany(mappedBy = "terms")
-    private Set<Course> courses;
+    private Set<Course> courses = new HashSet<>();
 
-    @Singular("group")
+    @Builder.Default
     @Getter @Setter
     @OneToMany(mappedBy = "term")
-    private Set<Group> groups;
+    private Set<Group> groups = new HashSet<>();
 
-    @Singular("studentAttendsCourse")
+    @Builder.Default
     @Getter @Setter
     @OneToMany(mappedBy = "term")
-    private Set<StudentAttendsCourse> studentAttendsCourses;
+    private Set<StudentAttendsCourse> studentAttendsCourses = new HashSet<>();
 
-    @Singular("enroledStudent")
+    @Builder.Default
     @Getter @Setter
     @OneToMany(mappedBy = "enrolmentTerm")
-    private Set<Student> enroledStudents;
+    private Set<Student> enroledStudents = new HashSet<>();
     
     /**
      * Adds course to the collection of courses offered this term 
