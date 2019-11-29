@@ -1,23 +1,19 @@
 package de.hsrm.mi.swtpro.backend.model;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.GeneratedValue;
-import javax.persistence.ManyToOne;
-
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
 
-/** 
-    Relationship between a student and a group 
-    The priority indicates
-*/
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.ManyToOne;
+
 @Entity
 @AllArgsConstructor
 @Builder
-public class StudentPriorizesGroup {
+public class ModuleInCurriculum {
 
     @Id
     @Getter @Setter
@@ -25,14 +21,13 @@ public class StudentPriorizesGroup {
     private long id;
 
     @Getter @Setter
-    private int priority;
+    private int termPeriod;
 
     @Getter @Setter
     @ManyToOne
-    private Student student;
+    private Curriculum curriculum;
 
     @Getter @Setter
     @ManyToOne
-    private Group group;
-
+    private Module module;
 }

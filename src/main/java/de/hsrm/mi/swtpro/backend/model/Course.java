@@ -17,6 +17,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
+import lombok.Singular;
 
 /**
  * Course offered at the University
@@ -42,24 +43,28 @@ public class Course {
     @ManyToOne
     private User owner;
 
-    @Getter @Setter
-    @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
-    @OneToMany(mappedBy = "course")
-    private Set<CourseComponent> courseComponents;
-
+    @Singular("module")
     @Getter @Setter
     @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
     @ManyToMany(mappedBy = "courses")
     private Set<Module> modules;
 
+    @Singular("term")
     @Getter @Setter
     @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
     @ManyToMany(mappedBy = "courses")
     private Set<Term> terms;
 
+    @Singular("courseComponent")
     @Getter @Setter
-    @OneToMany
-    private Set<StudentAttendsCourse> studentsAttendCourse;
+    @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
+    @OneToMany(mappedBy = "course")
+    private Set<CourseComponent> courseComponents;
+
+    @Singular("studentAttendsCourse")
+    @Getter @Setter
+    @OneToMany(mappedBy = "course")
+    private Set<StudentAttendsCourse> studentAttendsCourses;
 
     /**
      * Adds course component to the collection of course components, which belong to this course 
@@ -92,60 +97,4 @@ public class Course {
         return this.courseComponents.contains(courseComponent);
     }
 
-    @Deprecated
-    public Course(String title) {
-        this.title = title;
-        this.modules = new HashSet<Module>();
-    }
-
-    /**
-     * Constructor with Builder pattern
-     * @param builder
-     */
-    @Deprecated
-    private Course(Builder builder) {
-        this.title = builder.title;
-        this.owner = builder.owner;
-        this.courseComponents = builder.courseComponents;
-        this.modules = builder.modules;
-        this.studentsAttendCourse = builder.studentsAttendCourse;
-    }
-
-    /**
-     * Builder class 
-     * defines the parameters of the Course object to be built
-     */
-    @Deprecated
-    public static class Builder {
-        private String title;
-        private User owner;
-        private Set<CourseComponent> courseComponents;
-        private Set<Module> modules;
-        private Set<StudentAttendsCourse> studentsAttendCourse;
-
-        public Builder(String title) {
-            this.title = title;
-            this.courseComponents = new HashSet<CourseComponent>();
-            this.modules = new HashSet<Module>();
-        }
-
-        public Builder withOwner(User owner) {
-            this.owner = owner;
-            return this;
-        }
-
-        public Builder hasCourseComponents(Set<CourseComponent> courseComponents) {
-            this.courseComponents = courseComponents;
-            return this;
-        }
-
-        public Builder withCourseComponent(CourseComponent courseComponent) {
-            this.courseComponents.add(courseComponent);
-            return this;
-        }
-
-        public Course build() {
-            return new Course(this);
-        }
-    }
 }

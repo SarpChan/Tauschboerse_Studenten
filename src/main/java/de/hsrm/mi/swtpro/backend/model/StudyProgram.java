@@ -16,6 +16,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
+import lombok.Singular;
 
 /**
  * Course of Studies
@@ -36,11 +37,13 @@ public class StudyProgram {
     @Getter @Setter
     private String degree;
 
+    @Singular("examRegulation")
     @Getter @Setter
     @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
     @OneToMany(mappedBy = "studyProgram")
     private Set<ExamRegulation> examRegulations;
 
+    @Singular("fieldOfStudy")
     @Getter @Setter
     @ManyToMany(mappedBy = "studyPrograms")
     private Set<FieldOfStudy> fieldsOfStudy;
@@ -77,61 +80,4 @@ public class StudyProgram {
         return this.examRegulations.contains(examRegulation);
     }
 
-    @Deprecated
-    public StudyProgram(int id, String title, String degree) {
-        this.id = id;
-        this.title = title;
-        this.degree = degree;
-        this.examRegulations = new HashSet<ExamRegulation>();
-    }
-
-    /**
-     * Constructor with Builder pattern
-     * @param builder
-     */
-    @Deprecated
-    private StudyProgram(Builder builder) {
-        this.title = builder.title;
-        this.degree = builder.degree;
-        this.examRegulations = builder.examRegulations;
-        this.fieldsOfStudy = builder.fieldsOfStudy;
-    }
-
-    /**
-     * Builder class 
-     * defines the parameters of the Study Program object to be built
-     */
-    @Deprecated
-    public static class Builder {
-        private String title;
-        private String degree;
-        private Set<ExamRegulation> examRegulations;
-        private Set<FieldOfStudy> fieldsOfStudy;
-
-        public Builder(String title, String degree) {
-            this.title = title;
-            this.degree = degree;
-            this.examRegulations = new HashSet<ExamRegulation>();
-            this.fieldsOfStudy = new HashSet<FieldOfStudy>();
-        }
-
-        public Builder hasExamRegulations(Set<ExamRegulation> examRegulation) {
-            this.examRegulations = examRegulation;
-            return this;
-        }
-
-        public Builder withExamRegulation(ExamRegulation examRegulation) {
-            this.examRegulations.add(examRegulation);
-            return this;
-        }
-
-        public Builder inFieldsOfStudy(Set<FieldOfStudy> fieldOfStudy) {
-            this.fieldsOfStudy = fieldOfStudy;
-            return this;
-        }
-
-        public StudyProgram build() {
-            return new StudyProgram(this);
-        }
-    }
 }

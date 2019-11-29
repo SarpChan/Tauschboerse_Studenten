@@ -6,16 +6,13 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.experimental.SuperBuilder;
 
+/**
+ * Administrator is a role with administrative permissions
+ */
 @Entity
 @SuperBuilder
 public class Administrator extends Role {
 
     @Getter @Setter
-    private int rights;
-
-    @Getter @Setter
-    private String adminLogin;
-
-    @Getter @Setter
-    private String adminPassword;
+    private int priviledge;
 }

@@ -17,6 +17,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
+import lombok.Singular;
 
 /**
  * Each study program has one or more exam regulations
@@ -44,51 +45,16 @@ public class ExamRegulation {
     @ManyToOne
     private StudyProgram studyProgram;
 
+    @Singular("curriculum")
     @Getter @Setter
     @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
     @OneToMany(mappedBy = "examRegulation")
-    private Set<Curriculum> curricula;
+    private Set<Curriculum> curriculums;
 
-    /**
-     * Constructor with Builder pattern
-     * @param builder
-     */
-    @Deprecated
-    private ExamRegulation(Builder builder) {
-        this.date = builder.date;
-        this.studyProgram = builder.studyProgram;
-        this.rule = builder.rule;
-        this.curricula = builder.curricula;
-    }
+    @Singular("student")
+    @Getter @Setter
+    @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
+    @OneToMany(mappedBy = "examRegulation")
+    private Set<Student> students;
 
-    /**
-     * Builder class 
-     * defines the parameters of the Exam Regulation object to be built
-     */
-    @Deprecated
-    public static class Builder {
-        private Date date;
-        private StudyProgram studyProgram;
-        private int rule;
-        private Set<Curriculum> curricula;
-    
-        public Builder(Date date) {
-            this.date = date;
-            this.curricula = new HashSet<Curriculum>();
-        }
-
-        public Builder forStudyProgram(StudyProgram studyProgram) {
-            this.studyProgram = studyProgram;
-            return this;
-        }
-
-        public Builder hasRule(int rule) {
-            this.rule = rule;
-            return this;
-        }
-
-        public ExamRegulation build() {
-            return new ExamRegulation(this);
-        }
-    }
 }
