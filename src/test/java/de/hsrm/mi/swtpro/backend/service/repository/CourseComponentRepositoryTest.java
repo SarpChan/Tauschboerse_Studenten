@@ -44,7 +44,7 @@ public class CourseComponentRepositoryTest {
 
         group = Group.builder()
                 .courseComponent(courseComponent)
-                .group('D')
+                .groupChar('D')
                 .build();
         courseComponent.addGroup(group);
 

@@ -17,7 +17,6 @@ import java.util.Set;
 @NoArgsConstructor
 @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
 @AllArgsConstructor
-@NoArgsConstructor
 @Builder
 public class CourseComponent {
 

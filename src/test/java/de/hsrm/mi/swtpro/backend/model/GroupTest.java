@@ -47,13 +47,13 @@ public class GroupTest {
                 .startTime(LocalTime.of(13,27))
                 .courseComponent(courseComponent)
                 .students(new HashSet<>(Collections.singletonList(student)))
-                .group('D')
+                .groupChar('D')
                 .build();
     }
 
     @Test
     public void whenGetGroup_thenReturnGroupSign(){
-        assertEquals('D',group.getGroup());
+        assertEquals('D',group.getGroupChar());
     }
 
     @Test

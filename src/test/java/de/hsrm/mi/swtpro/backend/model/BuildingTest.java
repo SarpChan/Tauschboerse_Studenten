@@ -43,7 +43,6 @@ public class BuildingTest {
                 .rooms(rooms)
                 .build();
 
-
         building.setRooms(rooms);
         building.setId(17);
     }
@@ -80,7 +79,6 @@ public class BuildingTest {
                 .university(university)
                 .build()
         );
-
         assertEquals(building.getCampus().getName(),"RüppelCampus");
     }
 

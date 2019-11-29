@@ -59,9 +59,11 @@ public class Student extends Role {
     @ManyToMany(mappedBy = "students")
     private Set<Group> groups;
 
+    /*
     @Singular("swapOffer")
     @Getter @Setter
     @OneToMany(mappedBy = "student")
     private Set<SwapOffer> swapOffers;
+    */
 
 }

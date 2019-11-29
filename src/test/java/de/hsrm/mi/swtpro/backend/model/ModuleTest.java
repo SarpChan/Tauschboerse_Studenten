@@ -38,10 +38,16 @@ public class ModuleTest {
                 .title("Kurs")
                 .build();
 
+        ModuleInCurriculum moduleInCurriculum = ModuleInCurriculum.builder()
+                .id(17L)
+                .curriculum(curriculum)
+                .build();
+
         module = Module.builder()
                 .title("Analysis")
                 .period(2)
                 .creditPoints(10)
+                .moduleInCurriculum(moduleInCurriculum)
                 .courses(new HashSet<>(Collections.singletonList(course)))
                 .build();
     }
@@ -67,7 +73,7 @@ public class ModuleTest {
     }
 
     @Test
-    public void whenGetCurriculum_thenReturnCurriculum(){
+    public void whenGetModuleInCurriculum_thenReturnModuleInCurriculum(){
         assertThat(module.getModulesInCurriculum(),hasItem(
                 hasProperty("id",is(17L))
         ));
@@ -106,25 +112,15 @@ public class ModuleTest {
     }
 
     @Test
-    public void whenSetCurricula_thenSaveCurricula(){
-        Set<Curriculum> curricula = new HashSet<>();
-
-        ExamRegulation examRegulation = ExamRegulation.builder()
-                .date(Date.valueOf(LocalDate.of(2018,10,15)))
+    public void whenSetModuleInCurriculum_thenSaveModuleInCurriculum(){
+        ModuleInCurriculum moduleInCurriculum = ModuleInCurriculum.builder()
+                .id(32L)
                 .build();
 
-        Curriculum newCurriculum = Curriculum.builder()
-                .id(421)
-                .examRegulation(examRegulation)
-                .build();
-
-        curricula.add(newCurriculum);
-        //TODO:module.setModulesInCurriculum(curricula);
-
-        /*assertThat(module.getCurriculums(),hasItem(
-                hasProperty("id",is(Integer.toUnsignedLong(421)))
-        ));
-        */
+        module.setModulesInCurriculum(new HashSet<>(Collections.singletonList(moduleInCurriculum)));
+        assertThat(module.getModulesInCurriculum(),hasItem(
+                hasProperty("id",is(32L)))
+        );
     }
 
 

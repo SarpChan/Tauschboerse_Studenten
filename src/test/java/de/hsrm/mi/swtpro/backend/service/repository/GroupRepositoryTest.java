@@ -59,7 +59,7 @@ public class GroupRepositoryTest {
                 .room(room)
                 .term(term)
                 .courseComponent(courseComponent)
-                .group('A')
+                .groupChar('A')
                 .build();
 
         entityManager.persist(course);

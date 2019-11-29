@@ -2,6 +2,7 @@ package de.hsrm.mi.swtpro.backend.service.repository;
 
 import de.hsrm.mi.swtpro.backend.model.Building;
 import de.hsrm.mi.swtpro.backend.model.Campus;
+import de.hsrm.mi.swtpro.backend.model.Room;
 import de.hsrm.mi.swtpro.backend.model.University;
 import org.junit.Before;
 import org.junit.Test;
@@ -30,27 +31,33 @@ public class BuildingRepositoryTest {
                 .name("Hochschule RheinMain")
                 .address("Kurt-Schumacher-Ring 18, 65197 Wiesbaden")
                 .build();
+        
         Campus campus = Campus.builder()
                 .name("Unter den Eichen")
                 .address("Kurt-Schumacher-Ring 18, 65197 Wiesbaden")
                 .university(university)
                 .build();
 
+        Room room = Room.builder()
+                .number(17)
+                .build();
+
         Building building= Building.builder()
-                .id(17)
                 .name("D Gebäude")
                 .campus(campus)
+                .room(room)
                 .build();
 
         entityManager.persist(university);
         entityManager.persist(campus);
+        entityManager.persist(room);
         entityManager.persist(building);
     }
 
     @Test
     public void whenFindByName_thenReturnBuildingList(){
         List<Building> buildings = buildingRepository.findByName("D Gebäude");
-        assertEquals(buildings.get(0).getId(),17);
+        assertEquals(buildings.get(0).getCampus().getName(),"Unter den Eichen");
     }
 
     @Test

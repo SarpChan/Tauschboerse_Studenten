@@ -29,8 +29,7 @@ public class Room {
     private int seats;
 
     @Getter @Setter
-
-    @ManyToOne(targetEntity = Building.class, fetch = FetchType.LAZY)
+    @ManyToOne
     @JoinColumn(name = "building_id")
     private Building building;
 
