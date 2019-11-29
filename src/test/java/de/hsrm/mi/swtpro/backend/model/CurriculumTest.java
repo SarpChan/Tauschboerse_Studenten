@@ -54,7 +54,7 @@ public class CurriculumTest {
     @Test
     public void whenGetModulesInCurriculum_thenReturnModules(){
         assertThat(curriculum.getModulesInCurriculum(),hasItem(
-                hasProperty("id",is(65))
+                hasProperty("id",is(65L))
         ));
     }
 
@@ -72,7 +72,7 @@ public class CurriculumTest {
 
         curriculum.setModulesInCurriculum(new HashSet<>(Collections.singletonList(moduleIncurriculum)));
         assertThat(curriculum.getModulesInCurriculum(),hasItem(
-                hasProperty("id",is(34))
+                hasProperty("id",is(34L))
         ));
     }
 }

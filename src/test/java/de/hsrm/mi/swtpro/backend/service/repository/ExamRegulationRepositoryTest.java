@@ -83,7 +83,7 @@ public class ExamRegulationRepositoryTest {
 
     @Test
     public void whenFindByCurricula_thenReturnExamRegulationList(){
-        assertThat(examRegulationRepository.findByCurricula(curriculum),
+        assertThat(examRegulationRepository.findByCurriculums(curriculum),
                 hasItem(hasProperty("id",is(17))));
     }
 

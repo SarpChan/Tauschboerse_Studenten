@@ -35,7 +35,7 @@ public class UniversityRepositoryTest {
 
     @Test
     public void whenFindByAddress_thenReturnUniversityList(){
-        List<University> universities = universityRepository.findByAdress("Kurt-Schumacher-Ring 18, 65197 Wiesbaden");
+        List<University> universities = universityRepository.findByAddress("Kurt-Schumacher-Ring 18, 65197 Wiesbaden");
         assertEquals(universities.get(0).getName(),"Hochschule RheinMain");
     }
 

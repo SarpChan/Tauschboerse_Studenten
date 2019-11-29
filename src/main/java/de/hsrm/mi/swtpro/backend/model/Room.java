@@ -11,7 +11,8 @@ import java.util.Set;
  * A room has a number within its building and a number of seats
  */
 @Entity
-@AllArgsConstructor
+@AllArgsConstructor(access = AccessLevel.PACKAGE)
+@NoArgsConstructor(access = AccessLevel.PACKAGE)
 @Builder
 public class Room {
 
@@ -35,7 +36,8 @@ public class Room {
     @Singular("group")
     @Getter @Setter
     @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
-    @ManyToOne
+    @ManyToOne(targetEntity = Group.class, fetch = FetchType.LAZY)
+    @JoinColumn(name = "group_id")
     private Set<Group> groups;
   
 }

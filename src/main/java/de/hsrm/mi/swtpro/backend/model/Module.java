@@ -15,6 +15,7 @@ import java.util.Set;
  */
 @Entity
 @AllArgsConstructor
+@NoArgsConstructor
 @Builder
 public class Module {
     
@@ -41,7 +42,7 @@ public class Module {
     @Singular("course")
     @Getter @Setter
     @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
-    @ManyToMany(mappedBy = "modules")
+    @ManyToMany
     private Set<Course> courses;
     
     /**

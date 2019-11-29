@@ -13,26 +13,28 @@ import java.util.Set;
  */
 @Entity
 @AllArgsConstructor
+@NoArgsConstructor
 @Builder
 public class FieldOfStudy {
 
     @Id
     @Getter @Setter
     @GeneratedValue
-    private int id;
+    private long id;
 
     @Getter @Setter
     private String title;
 
     @Getter @Setter
     @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
-    @ManyToOne(targetEntity = University.class)
+    @ManyToOne
+    @JoinColumn(name = "university_id")
     private University university;
 
     @Singular("studyProgram")
     @Getter @Setter
     @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
-    @ManyToMany(mappedBy = "fieldsOfStudy")
+    @ManyToMany(targetEntity = StudyProgram.class,mappedBy = "fieldsOfStudy")
     private Set<StudyProgram> studyPrograms;
 
 }

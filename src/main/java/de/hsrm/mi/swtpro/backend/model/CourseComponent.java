@@ -15,6 +15,7 @@ import java.util.Set;
  */
 @Entity
 @AllArgsConstructor
+@NoArgsConstructor
 @Builder
 public class CourseComponent {
 
@@ -44,7 +45,7 @@ public class CourseComponent {
     private Set<Group> groups;
 
     @Getter @Setter
-    @OneToOne(mappedBy = "courseComponent")
+    @OneToOne
     private StudentPassedExam studentPassedExam;
 
     /**

@@ -2,27 +2,17 @@ package de.hsrm.mi.swtpro.backend.model;
 
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+import lombok.*;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.OneToMany;
-import javax.persistence.ManyToMany;
-
-import java.util.HashSet;
+import javax.persistence.*;
 import java.util.Set;
-
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.Setter;
-import lombok.Singular;
 
 /**
  * Course of Studies
  */
 @Entity
 @AllArgsConstructor
+@NoArgsConstructor
 @Builder
 public class StudyProgram {
 
@@ -45,7 +35,12 @@ public class StudyProgram {
 
     @Singular("fieldOfStudy")
     @Getter @Setter
-    @ManyToMany(mappedBy = "studyPrograms")
+    @ManyToMany(fetch = FetchType.LAZY)
+    @JoinTable(
+            name = "FieldOfStudy_StudyProgram",
+            joinColumns = { @JoinColumn(name = "studyProgram_id") },
+            inverseJoinColumns = { @JoinColumn(name = "fieldOfStudy_id") }
+    )
     private Set<FieldOfStudy> fieldsOfStudy;
 
     /**

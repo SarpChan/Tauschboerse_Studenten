@@ -11,8 +11,9 @@ import org.springframework.test.context.junit4.SpringRunner;
 
 import javax.persistence.EntityManager;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
+import static org.hamcrest.beans.HasPropertyWithValue.hasProperty;
+import static org.hamcrest.core.Is.is;
+import static org.junit.Assert.*;
 
 @RunWith(SpringRunner.class)
 @DataJpaTest
@@ -22,22 +23,24 @@ public class CampusRepositoryTest {
     EntityManager entityManager;
     @Autowired
     CampusRepository campusRepository;
-
     @Before
     public void setUp(){
+
         University university = University.builder()
                 .name("HSRM")
                 .address("KSR 4,91233 Wiesbaden")
                 .build();
 
         Campus campus = Campus.builder()
+                .id(17L)
                 .name("unter den Eichen")
-                .address("Unter den Eichen 5, 12389 Wiesbaden")
                 .university(university)
+                .address("Unter den Eichen 5, 12389 Wiesbaden")
                 .build();
 
+
         entityManager.persist(university);
-        entityManager.persist(campus);
+        entityManager.merge(campus);
     }
 
     @Test
@@ -47,8 +50,8 @@ public class CampusRepositoryTest {
 
     @Test
     public void whenFindById_thenReturnCampus(){
-        assertTrue(campusRepository.findById("Unter den Eichen 5, 12389 Wiesbaden").isPresent());
-        assertEquals(campusRepository.findById("Unter den Eichen 5, 12389 Wiesbaden").get().getName(),"unter den Eichen");
+        assertTrue(campusRepository.findById(17L).isPresent());
+        assertThat(campusRepository.findById(17L).get(),hasProperty("name",is("unter den Eichen")));
     }
 
     @Test
@@ -60,6 +63,6 @@ public class CampusRepositoryTest {
     @Test
     public void whenFindByAddress_thenReturnCampus(){
         assertEquals("unter den Eichen",
-                campusRepository.findByAdress("Unter den Eichen 5, 12389 Wiesbaden").getName());
+                campusRepository.findByAddress("Unter den Eichen 5, 12389 Wiesbaden").getName());
     }
 }

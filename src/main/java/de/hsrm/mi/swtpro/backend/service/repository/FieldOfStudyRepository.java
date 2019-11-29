@@ -9,7 +9,7 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 @Repository
-public interface FieldOfStudyRepository extends JpaRepository<FieldOfStudy,Integer> {
+public interface FieldOfStudyRepository extends JpaRepository<FieldOfStudy,Long> {
     public FieldOfStudy findById(long id);
     public List<FieldOfStudy> findByTitle(String title);
     public List<FieldOfStudy> findByStudyPrograms(StudyProgram studyProgram);

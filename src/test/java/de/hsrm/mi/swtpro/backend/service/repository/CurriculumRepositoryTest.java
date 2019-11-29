@@ -26,6 +26,7 @@ public class CurriculumRepositoryTest {
     CurriculumRepository curriculumRepository;
 
     private Module module;
+    private ModuleInCurriculum moduleInCurriculum;
     private ExamRegulation examRegulation;
 
     @Before
@@ -35,7 +36,7 @@ public class CurriculumRepositoryTest {
                 .id(42)
                 .build();
 
-        ModuleInCurriculum moduleInCurriculum = ModuleInCurriculum.builder()
+        moduleInCurriculum = ModuleInCurriculum.builder()
                 .id(82)
                 .build();
 
@@ -69,15 +70,15 @@ public class CurriculumRepositoryTest {
 
     @Test
     public void whenFindByPeriod_thenReturnCurriculumList(){
-        assertThat(curriculumRepository.findByTerm(1),hasItem(
+        assertThat(curriculumRepository.findByTermPeriod(1),hasItem(
                 hasProperty("id",is(17))
         ));
     }
 
     @Test
     public void whenFindByModules_thenReturnCurriculumList(){
-        assertThat(curriculumRepository.findByModules(module),hasItem(
-                hasProperty("id",is(17))
+        assertThat(curriculumRepository.findByModulesInCurriculum(moduleInCurriculum),hasItem(
+                hasProperty("id",is(82))
         ));
     }
 

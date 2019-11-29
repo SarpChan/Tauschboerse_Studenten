@@ -8,7 +8,8 @@ import javax.persistence.*;
 import java.util.Set;
 
 @Entity
-@AllArgsConstructor
+@AllArgsConstructor(access = AccessLevel.PACKAGE)
+@NoArgsConstructor(access = AccessLevel.PACKAGE)
 @Builder
 public class Curriculum {
     

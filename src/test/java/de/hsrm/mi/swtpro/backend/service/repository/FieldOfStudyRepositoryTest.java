@@ -23,11 +23,18 @@ public class FieldOfStudyRepositoryTest {
 
     @Autowired
     EntityManager entityManager;
+
     @Autowired
     FieldOfStudyRepository fieldOfStudyRepository;
 
-    University university;
-    StudyProgram studyProgram;
+    @Autowired
+    StudyProgramRepository studyProgramRepository;
+
+    @Autowired
+    UniversityRepository universityRepository;
+
+    private University university;
+    private StudyProgram studyProgram;
 
     @Before
     public void setUp(){
@@ -48,28 +55,30 @@ public class FieldOfStudyRepositoryTest {
                 .university(university)
                 .build();
 
+
         entityManager.persist(university);
         entityManager.persist(studyProgram);
         entityManager.persist(fieldOfStudy);
+
     }
 
     @Test
     public void whenFindAll_thenReturnFieldOfStudyList(){
         assertThat(fieldOfStudyRepository.findAll(),hasItem(
-                hasProperty("id",is(17))
+                hasProperty("id",is(17L))
         ));
     }
 
     @Test
     public void whenFindById_thenReturnFieldOfStudyList(){
-        assertThat(fieldOfStudyRepository.findById(17),
+        assertThat(fieldOfStudyRepository.findById(17L),
                 hasProperty("title",is("Faulenzen")));
     }
 
     @Test
     public void whenFindByStudyProgram_thenReturnFieldOfStudyList(){
         assertThat(fieldOfStudyRepository.findByStudyPrograms(studyProgram),hasItem(
-                hasProperty("id",is(17))
+                hasProperty("id",is(17L))
         ));
     }
 
@@ -79,5 +88,4 @@ public class FieldOfStudyRepositoryTest {
                 hasProperty("id",is(17))
         ));
     }
-
 }

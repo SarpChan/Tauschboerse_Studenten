@@ -14,6 +14,6 @@ public interface ExamRegulationRepository extends JpaRepository<ExamRegulation,L
     public ExamRegulation findById(long id);
     public List<ExamRegulation> findByDate(Date date);
     public List<ExamRegulation> findByRule(int rule);
-    public List<ExamRegulation> findByCurricula(Curriculum curriculum);
+    public List<ExamRegulation> findByCurriculums(Curriculum curriculum);
     public List<ExamRegulation> findByStudyProgram(StudyProgram studyProgram);
 }

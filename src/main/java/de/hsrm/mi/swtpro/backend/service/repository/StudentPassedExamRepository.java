@@ -12,5 +12,5 @@ import java.util.List;
 public interface StudentPassedExamRepository extends JpaRepository<StudentPassedExam,Long> {
     public List<StudentPassedExam> findByStudent(Student student);
     public List<StudentPassedExam> findByCourseComponent(CourseComponent courseComponent);
-    public List<StudentPassedExam> findByPassed(boolean passed);
+    public List<StudentPassedExam> findByGrade(float grade);
 }

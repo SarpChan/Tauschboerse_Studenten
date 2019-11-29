@@ -15,7 +15,8 @@ import java.util.Set;
  * the courses offered each term may vary
  */
 @Entity
-@AllArgsConstructor
+@AllArgsConstructor(access = AccessLevel.PACKAGE)
+@NoArgsConstructor(access = AccessLevel.PACKAGE)
 @Builder
 public class Term {
 
@@ -36,7 +37,7 @@ public class Term {
     @Singular("course")
     @Getter @Setter
     @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
-    @ManyToMany(mappedBy = "terms")
+    @ManyToMany
     private Set<Course> courses;
 
     @Singular("group")
@@ -54,7 +55,7 @@ public class Term {
     @Singular("enroledStudent")
     @Getter @Setter
     @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
-    @OneToMany(mappedBy = "enrolementTerm")
+    @OneToMany(mappedBy = "enrolmentTerm")
     private Set<Student> enroledStudents;
     
     /**

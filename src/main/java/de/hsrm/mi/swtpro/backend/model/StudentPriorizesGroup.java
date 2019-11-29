@@ -1,14 +1,8 @@
 package de.hsrm.mi.swtpro.backend.model;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.GeneratedValue;
-import javax.persistence.ManyToOne;
+import lombok.*;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.Setter;
+import javax.persistence.*;
 
 /** 
     Relationship between a student and a group 
@@ -16,6 +10,7 @@ import lombok.Setter;
 */
 @Entity
 @AllArgsConstructor
+@NoArgsConstructor
 @Builder
 public class StudentPriorizesGroup {
 
@@ -32,7 +27,8 @@ public class StudentPriorizesGroup {
     private Student student;
 
     @Getter @Setter
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "group_id")
     private Group group;
 
 }

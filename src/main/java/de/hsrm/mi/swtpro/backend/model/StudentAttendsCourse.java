@@ -1,9 +1,6 @@
 package de.hsrm.mi.swtpro.backend.model;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -11,7 +8,8 @@ import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 
 @Entity
-@AllArgsConstructor
+@AllArgsConstructor(access = AccessLevel.PACKAGE)
+@NoArgsConstructor(access = AccessLevel.PACKAGE)
 @Builder
 public class StudentAttendsCourse {
 

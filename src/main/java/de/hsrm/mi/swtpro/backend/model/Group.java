@@ -2,25 +2,12 @@ package de.hsrm.mi.swtpro.backend.model;
 
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+import lombok.*;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.GeneratedValue;
-import javax.persistence.ManyToMany;
-import javax.persistence.ManyToOne;
-import javax.persistence.OneToOne;
-import javax.persistence.OneToMany;
-
+import javax.persistence.*;
 import java.time.DayOfWeek;
 import java.time.LocalTime;
-import java.util.HashSet;
 import java.util.Set;
-
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.Setter;
-import lombok.Singular;
 
 /**
  * A group is part of a course and takes place at a given time and place
@@ -30,6 +17,8 @@ import lombok.Singular;
  */
 @Entity
 @AllArgsConstructor
+@NoArgsConstructor
+@Table(name =  "\"Group\"")
 @Builder
 public class Group {    
     
@@ -39,6 +28,7 @@ public class Group {
     private long id;
 
     @Getter @Setter
+    @Column(name = "\"group\"")
     private char group;
 
     @Getter @Setter
@@ -56,21 +46,25 @@ public class Group {
     @Getter @Setter
     @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
     @ManyToOne
+    @JoinColumn(name = "term_id")
     private Term term;
 
     @Getter @Setter
     @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
     @ManyToOne
+    @JoinColumn(name="courseComponent_id")
     private CourseComponent courseComponent;
 
     @Getter @Setter
     @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
     @ManyToOne
+    @JoinColumn(name = "lecture_id")
     private Lecturer lecturer;
 
     @Getter @Setter
     @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
     @ManyToOne
+    @JoinColumn(name = "room_id")
     private Room room;
 
     @Singular("student")
@@ -84,6 +78,7 @@ public class Group {
     @OneToMany(mappedBy = "group")
     private Set<StudentPriorizesGroup> prioritizeGroups;
 
+    /*
     @Singular("swapOffer")
     @Getter @Setter
     @OneToMany(mappedBy = "group")
@@ -93,6 +88,7 @@ public class Group {
     @Getter @Setter
     @OneToMany(mappedBy = "group")
     private Set<SwapOffer> swapRequests;
+     */
 
     /**
      * Adds student to the collection of students attending this group 

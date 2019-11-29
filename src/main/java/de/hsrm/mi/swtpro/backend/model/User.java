@@ -14,6 +14,7 @@ import java.util.Set;
  */
 @Entity
 @AllArgsConstructor
+@NoArgsConstructor
 @Builder
 public class User {
 
