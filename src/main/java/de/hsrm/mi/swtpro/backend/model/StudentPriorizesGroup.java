@@ -5,19 +5,17 @@ import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import lombok.*;
 
 import javax.persistence.*;
-import java.util.Set;
 
-
-/**
- * Each campus has several buildings
- * A campus has multiple rooms and a name
- */
+/** 
+    Relationship between a student and a group 
+    The priority indicates
+*/
 @Entity
 @NoArgsConstructor
 @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
 @AllArgsConstructor
 @Builder
-public class Building {
+public class StudentPriorizesGroup {
 
     @Id
     @Getter @Setter
@@ -25,17 +23,16 @@ public class Building {
     private long id;
 
     @Getter @Setter
-    @NotEmpty(message= "Name fehlt")
-    private String name;
+    private int priority;
 
     @Getter @Setter
-    @ManyToOne(targetEntity = Campus.class, fetch = FetchType.LAZY)
-    @JoinColumn(name = "campus_id")
-    private Campus campus;
+    @ManyToOne
+    @JoinColumn(name="student_id")
+    private Student student;
 
-    @Singular("room")
     @Getter @Setter
-    @OneToMany(mappedBy = "building")
-    private Set<Room> rooms;
+    @ManyToOne
+    @JoinColumn(name="group_id")
+    private Group group;
 
 }

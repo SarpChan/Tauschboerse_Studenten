@@ -4,20 +4,17 @@ import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import lombok.*;
 
-import javax.persistence.*;
-import java.util.Set;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 
-
-/**
- * Each campus has several buildings
- * A campus has multiple rooms and a name
- */
 @Entity
 @NoArgsConstructor
 @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
 @AllArgsConstructor
 @Builder
-public class Building {
+public class ModuleInCurriculum {
 
     @Id
     @Getter @Setter
@@ -25,17 +22,13 @@ public class Building {
     private long id;
 
     @Getter @Setter
-    @NotEmpty(message= "Name fehlt")
-    private String name;
+    private int termPeriod;
 
     @Getter @Setter
-    @ManyToOne(targetEntity = Campus.class, fetch = FetchType.LAZY)
-    @JoinColumn(name = "campus_id")
-    private Campus campus;
+    @ManyToOne
+    private Curriculum curriculum;
 
-    @Singular("room")
     @Getter @Setter
-    @OneToMany(mappedBy = "building")
-    private Set<Room> rooms;
-
+    @ManyToOne
+    private Module module;
 }

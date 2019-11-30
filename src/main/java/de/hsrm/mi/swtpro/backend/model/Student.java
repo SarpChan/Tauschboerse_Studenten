@@ -2,8 +2,17 @@ package de.hsrm.mi.swtpro.backend.model;
 
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import lombok.Singular;
+import lombok.experimental.SuperBuilder;
 
 import javax.persistence.Entity;
+import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
+import java.util.Set;
 import javax.persistence.OneToOne;
 import javax.validation.constraints.Pattern;
 
@@ -13,89 +22,50 @@ import javax.validation.constraints.Pattern;
  * as well as a exam regulation and their enrolment term
  */
 @Entity
-public class Student extends User {
+@NoArgsConstructor
+@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
+@SuperBuilder
+public class Student extends Role {
+
+    @Getter @Setter
     @Pattern(regexp = "*[0-9]")
     private int enrolementNumber;
+
+    @Getter @Setter
     @Pattern(regexp = "*[a-z].*[a-z]@student.hs-rm.de")
     private String mail;
 
-    @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
-    @OneToOne
+    @Getter @Setter
+    @ManyToOne
     private ExamRegulation examRegulation;
 
-    @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
-    @OneToOne
+    @Getter @Setter
+    @ManyToOne
     private Term enrolmentTerm;
 
-    /**
-     * Constructor with Builder pattern
-     * @param builder
-     */
-    private Student(Builder builder) {
-        super(builder);
-        this.enrolementNumber = builder.enrolementNumber;
-        this.enrolmentTerm = builder.enrolmentTerm;
-        this.mail = builder.mail;
-        this.examRegulation = builder.examRegulation;
-    }
+    @Singular("attendCourse")
+    @Getter @Setter
+    @OneToMany(mappedBy = "student")
+    private Set<StudentAttendsCourse> attendCourses;
 
-    
-     /**
-     * Builder class 
-     * defines the parameters of the student object to be built
-     */
-    public static class Builder extends User.Builder{
+    @Singular("prioritizeGroup")
+    @Getter @Setter
+    @OneToMany(mappedBy = "student")
+    private Set<StudentPriorizesGroup> prioritizeGroups;
 
-        private ExamRegulation examRegulation;
-        private String mail;
-        private Term enrolmentTerm;
-        private int enrolementNumber;
+    @Singular("passedExam")
+    @Getter @Setter
+    @OneToMany(mappedBy = "student")
+    private Set<StudentPassedExam> passedExams;
 
-        public Builder(String firstName, String lastName, String loginName, 
-        String password, boolean admin, int enrolementNumber, Term enrolmentTerm, String mail, ExamRegulation examRegulation) {
-            super(firstName, lastName, loginName, password, admin);
-            this.examRegulation = examRegulation;
-            this.mail = mail;
-            this.enrolmentTerm = enrolmentTerm;
-            this.enrolementNumber = enrolementNumber;
-        }
+    @Singular("group")
+    @Getter @Setter
+    @ManyToMany(mappedBy = "students")
+    private Set<Group> groups;
 
-        public Student build() {
-            return new Student(this);
-        }
-    }    
+    @Singular("swapOffer")
+    @Getter @Setter
+    @OneToMany(mappedBy = "student")
+    private Set<SwapOffer> swapOffers;
 
-
-    public int getEnrolementNumber() {
-        return enrolementNumber;
-    }
-
-    public void setEnrolementNumber(int enrolementNumber) {
-        this.enrolementNumber = enrolementNumber;
-    }
-
-    public Term getEnrolementTerm() {
-        return enrolmentTerm;
-    }
-
-    public void setEnrolementTerm(Term enrolmentTerm) {
-        this.enrolmentTerm = enrolmentTerm;
-    }
-
-    public ExamRegulation getExamRegulation() {
-        return examRegulation;
-    }
-
-    public void setExamRegulation(ExamRegulation examRegulation) {
-        this.examRegulation = examRegulation;
-    }
-
-    public String getMail() {
-        return mail;
-    }
-
-    public void setMail(String mail) {
-        this.mail = mail;
-    }
-    
 }

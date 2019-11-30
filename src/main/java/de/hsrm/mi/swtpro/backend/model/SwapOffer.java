@@ -5,40 +5,37 @@ import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import lombok.*;
 
 import javax.persistence.*;
-import java.util.Set;
+import java.sql.Timestamp;
 
 /**
- * A campus has a name and an adress
- * Every campus belongs to one university and has one or more buildings
+ * A swapOffer can be created by a student, who wants to swap form one group to another
  */
 @Entity
 @NoArgsConstructor
 @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
 @AllArgsConstructor
 @Builder
-public class Campus {
-
+public class SwapOffer {
+    
     @Id
     @Getter @Setter
     @GeneratedValue
     private long id;
 
     @Getter @Setter
-    @NotEmpty(message = "Name fehlt")
-    private String name;
+    @GeneratedValue
+    private Timestamp date;
 
     @Getter @Setter
-    private String address;
+    @ManyToOne(targetEntity = Student.class, fetch = FetchType.LAZY)
+    private Student student;
 
     @Getter @Setter
-    @ManyToOne
-    @JoinColumn(name = "university_id")
-    private University university;
+    @ManyToOne(targetEntity = Group.class, fetch = FetchType.LAZY)
+    private Group fromGroup;
 
-    @Singular("building")
     @Getter @Setter
-
-    @OneToMany(mappedBy = "campus")
-    private Set<Building> buildings;
+    @ManyToOne(targetEntity = Group.class, fetch = FetchType.LAZY)
+    private Group toGroup;
 
 }

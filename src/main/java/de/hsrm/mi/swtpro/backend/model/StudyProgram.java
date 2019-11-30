@@ -2,108 +2,41 @@ package de.hsrm.mi.swtpro.backend.model;
 
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+import lombok.*;
 
-import java.util.HashSet;
+import javax.persistence.*;
 import java.util.Set;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.OneToMany;
 
 /**
  * Course of Studies
  */
 @Entity
+@NoArgsConstructor
+@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
+@AllArgsConstructor
+@Builder
 public class StudyProgram {
+
     @Id
+    @Getter @Setter
     @GeneratedValue
     private long id;
+
+    @Getter @Setter
     private String title;
+
+    @Getter @Setter
     private String degree;
 
-    @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
+    @Singular("examRegulation")
+    @Getter @Setter
     @OneToMany(mappedBy = "studyProgram")
     private Set<ExamRegulation> examRegulations;
 
-    @Deprecated
-    public StudyProgram(int id, String title, String degree) {
-        this.id = id;
-        this.title = title;
-        this.degree = degree;
-        this.examRegulations = new HashSet<ExamRegulation>();
-    }
-
-    /**
-     * Constructor with Builder pattern
-     * @param builder
-     */
-    private StudyProgram(Builder builder) {
-        this.title = builder.title;
-        this.degree = builder.degree;
-        this.examRegulations = builder.examRegulations;
-    }
-
-    /**
-     * Builder class 
-     * defines the parameters of the Study Program object to be built
-     */
-    public static class Builder {
-        private String title;
-        private String degree;
-        private Set<ExamRegulation> examRegulations;
-
-        public Builder(String title, String degree) {
-            this.title = title;
-            this.degree = degree;
-            this.examRegulations = new HashSet<ExamRegulation>();
-        }
-
-        public Builder hasExamRegulations(Set<ExamRegulation> examRegulation) {
-            this.examRegulations = examRegulation;
-            return this;
-        }
-
-        public Builder withExamRegulation(ExamRegulation examRegulation) {
-            this.examRegulations.add(examRegulation);
-            return this;
-        }
-
-        public StudyProgram build() {
-            return new StudyProgram(this);
-        }
-    }
-
-    public long getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
-
-    public String getTitle() {
-        return title;
-    }
-
-    public void setTitle(String title) {
-        this.title = title;
-    }
-
-    public String getDegree() {
-        return degree;
-    }
-
-    public void setDegree(String degree) {
-        this.degree = degree;
-    }
-
-    public Set<ExamRegulation> getExamRegulations() {
-        return examRegulations;
-    }
-
-    public void setExamRegulations(Set<ExamRegulation> examRegulations) {
-        this.examRegulations = examRegulations;
-    }
+    @Singular("fieldOfStudy")
+    @Getter @Setter
+    @ManyToMany(mappedBy = "studyPrograms")
+    private Set<FieldOfStudy> fieldsOfStudy;
 
     /**
      * Adds exam regulation to the collection of exam regulations applicable for this study program 
@@ -136,4 +69,5 @@ public class StudyProgram {
     public boolean containsExamRegulation(ExamRegulation examRegulation) {
         return this.examRegulations.contains(examRegulation);
     }
+
 }

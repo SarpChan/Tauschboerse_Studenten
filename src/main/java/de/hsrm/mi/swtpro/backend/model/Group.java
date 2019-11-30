@@ -2,251 +2,89 @@ package de.hsrm.mi.swtpro.backend.model;
 
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+import lombok.*;
 
+import javax.persistence.*;
 import java.time.DayOfWeek;
 import java.time.LocalTime;
-import java.util.HashSet;
 import java.util.Set;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.ManyToMany;
-import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
 
-@Entity
 /**
  * A group is part of a course and takes place at a given time and place
  * Each lesson is held by a lecturer in a room, and has a limited capacity of seats
  * There may be multipe lessons for each course, split into different groups
  * A student may only attend one group for each lesson of the same type
  */
+@Entity
+@NoArgsConstructor
+@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
+@AllArgsConstructor
+@Builder
+@Table(name =  "group_table")
 public class Group {
     
     @Id
+    @Getter @Setter
     @GeneratedValue
     private long id;
-    private char group;
+
+    @Getter @Setter
+    private char groupChar;
+
+    @Getter @Setter
     private int slots;
+
+    @Getter @Setter
     private DayOfWeek dayOfWeek;
+
+    @Getter @Setter
     private LocalTime startTime;
+
+    @Getter @Setter
     private LocalTime endTime;
 
-    @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
-    @OneToOne
+    @Getter @Setter
+    @ManyToOne
+    @JoinColumn(name="term_id")
     private Term term;
 
-    @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
+    @Getter @Setter
     @ManyToOne
+    @JoinColumn(name="courseComponent_id")
     private CourseComponent courseComponent;
 
-    @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
+    @Getter @Setter
     @ManyToOne
-    private User lecturer;
+    @JoinColumn(name="lecturer_id")
+    private Lecturer lecturer;
 
-    @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
+    @Getter @Setter
     @ManyToOne
+    @JoinColumn(name="room_id")
     private Room room;
 
-    @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
+    @Singular("student")
+    @Getter @Setter
     @ManyToMany
+    @JoinTable(name = "group_student",
+            joinColumns = @JoinColumn(name = "group_id", referencedColumnName = "id"),
+            inverseJoinColumns = @JoinColumn(name = "student_id", referencedColumnName = "id"))
     private Set<Student> students;
 
-    @Deprecated
-    public Group(char group, CourseComponent courseComponent) {
-        this.group = group;
-        this.courseComponent = courseComponent;
-        this.students = new HashSet<Student>();
-    }
+    @Singular("prioritezeGroup")
+    @Getter @Setter
+    @OneToMany(mappedBy = "group")
+    private Set<StudentPriorizesGroup> prioritizeGroups;
 
-    @Deprecated
-    public Group(char group, int slots, DayOfWeek dayOfWeek, LocalTime startTime, LocalTime endTime,
-            CourseComponent courseComponent, User lecturer, Room room) {
-        this.group = group;
-        this.slots = slots;
-        this.dayOfWeek = dayOfWeek;
-        this.startTime = startTime;
-        this.endTime = endTime;
-        this.courseComponent = courseComponent;
-        this.lecturer = lecturer;
-        this.room = room;
-        this.students = new HashSet<Student>();
-    }
-    
-    /**
-     * Constructor with Builder pattern
-     * @param builder
-     */
-    private Group(Builder builder) {
-        this.group = builder.group;
-        this.slots = builder.slots;
-        this.dayOfWeek = builder.dayOfWeek;
-        this.startTime = builder.startTime;
-        this.endTime = builder.endTime;
-        this.courseComponent = builder.courseComponent;
-        this.lecturer = builder.lecturer;
-        this.room = builder.room;
-        this.students = builder.students;
-        this.term = builder.term;
-    }
+    @Singular("swapTo")
+    @Getter @Setter
+    @OneToMany(mappedBy = "toGroup")
+    private Set<SwapOffer> swapTos;
 
-    /**
-     * Builder class 
-     * defines the parameters of the Group object to be built
-     */
-    public static class Builder {
-        private int slots;
-        private DayOfWeek dayOfWeek;
-        private LocalTime startTime;
-        private LocalTime endTime;
-        private User lecturer;
-        private Room room;    
-        private Term term;
-        private Set<Student> students;
-
-        private CourseComponent courseComponent;
-        private char group;
-        public Group build(CourseComponent courseComponent, char group) {
-            this.courseComponent = courseComponent;
-            this.group = group;
-            this.students = new HashSet<Student>();
-            return new Group(this);
-        }
-
-        public Builder hasSlots(int slots) {
-            this.slots = slots;
-            return this;
-        }
-
-        public Builder withStartTime(LocalTime startTime) {
-            this.startTime = startTime;
-            return this;
-        }
-
-        public Builder withEndTime(LocalTime endTime) {
-            this.endTime = endTime;
-            return this;
-        }
-
-        public Builder onDayOfWeek(DayOfWeek dayOfWeek) {
-            this.dayOfWeek = dayOfWeek;
-            return this;
-        }
-
-        public Builder hasLecturer(User lecturer) {
-            this.lecturer = lecturer;
-            return this;
-        }
-
-        public Builder hasStudents(Set<Student> students) {
-            this.students = students;
-            return this;
-        }
-
-        public Builder withStudent(Student student) {
-            this.students.add(student);
-            return this;
-        }
-
-        public Builder inRoom(Room room) {
-            this.room = room;
-            return this;
-        }
-
-        public Builder inTerm(Term term) {
-            this.term = term;
-            return this;
-        }
-    }
-
-    public long getId() {
-        return id;
-    }
-
-    public void setId(long id) {
-        this.id = id;
-    }
-
-    public char getGroup() {
-        return group;
-    }
-
-    public void setGroup(char group) {
-        this.group = group;
-    }
-
-    public int getSlots() {
-        return slots;
-    }
-
-    public void setSlots(int slots) {
-        this.slots = slots;
-    }
-
-    public DayOfWeek getDayOfWeek() {
-        return dayOfWeek;
-    }
-
-    public void setDayOfWeek(DayOfWeek dayOfWeek) {
-        this.dayOfWeek = dayOfWeek;
-    }
-
-    public LocalTime getStartTime() {
-        return startTime;
-    }
-
-    public void setStartTime(LocalTime startTime) {
-        this.startTime = startTime;
-    }
-
-    public LocalTime getEndTime() {
-        return endTime;
-    }
-
-    public void setEndTime(LocalTime endTime) {
-        this.endTime = endTime;
-    }    
-
-    public CourseComponent getCourseComponent() {
-        return courseComponent;
-    }
-
-    public void setCourseComponent(CourseComponent courseComponent) {
-        this.courseComponent = courseComponent;
-    }
-
-    public User getLecturer() {
-        return lecturer;
-    }
-
-    public void setLecturer(User lecturer) {
-        this.lecturer = lecturer;
-    }
-
-    public Room getRoom() {
-        return room;
-    }
-
-    public void setRoom(Room room) {
-        this.room = room;
-    }
-
-    public Set<Student> getStudents() {
-        return students;
-    }
-
-    public void setStudents(Set<Student> students) {
-        this.students = students;
-    }
-
-    public Term getTerm() {
-        return term;
-    }
-
-    public void setTerm(Term term) {
-        this.term = term;
-    }
+    @Singular("swapFrom")
+    @Getter @Setter
+    @OneToMany(mappedBy = "fromGroup")
+    private Set<SwapOffer> swapFroms;
 
     /**
      * Adds student to the collection of students attending this group 
@@ -279,4 +117,5 @@ public class Group {
     public boolean containsStudent(Student student) {
         return this.students.contains(student);
     }
+
 }
