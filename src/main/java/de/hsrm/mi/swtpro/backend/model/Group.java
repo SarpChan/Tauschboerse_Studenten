@@ -5,6 +5,7 @@ import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import lombok.*;
 
 import javax.persistence.*;
+import javax.validation.constraints.*;
 import java.time.DayOfWeek;
 import java.time.LocalTime;
 import java.util.Set;
@@ -26,41 +27,51 @@ public class Group {
     @Id
     @Getter @Setter
     @GeneratedValue
+    @NotNull
     private long id;
 
     @Getter @Setter
+    @NotNull
     private char groupChar;
 
     @Getter @Setter
+    @NotNull
     private int slots;
 
     @Getter @Setter
+    @NotNull
     private DayOfWeek dayOfWeek;
 
     @Getter @Setter
+    @NotNull
     private LocalTime startTime;
 
     @Getter @Setter
+    @NotNull
     private LocalTime endTime;
 
     @Getter @Setter
     @ManyToOne
     @JoinColumn(name="term_id")
+    @NotNull
     private Term term;
 
     @Getter @Setter
     @ManyToOne
     @JoinColumn(name="courseComponent_id")
+    @NotNull
     private CourseComponent courseComponent;
 
     @Getter @Setter
     @ManyToOne
     @JoinColumn(name="lecturer_id")
+    @NotNull
     private Lecturer lecturer;
 
     @Getter @Setter
     @ManyToOne
     @JoinColumn(name="room_id")
+    @NotNull
     private Room room;
 
     @Singular("student")

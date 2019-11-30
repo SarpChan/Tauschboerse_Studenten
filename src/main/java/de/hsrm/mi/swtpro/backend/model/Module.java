@@ -6,8 +6,8 @@ import lombok.*;
 
 import javax.persistence.*;
 import java.util.Set;
-import javax.validation.constraints.Min;
-import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.*;
+import javax.validation.constraints.*;
 
 /**
  * Represents an element of the Curriculum
@@ -25,6 +25,7 @@ public class Module {
     @Id
     @Getter @Setter
     @GeneratedValue
+    @NotNull
     private long id;
 
     @Getter @Setter
@@ -36,6 +37,7 @@ public class Module {
     private int creditPoints;
 
     @Getter @Setter
+    @NotNull
     private int period;
 
     @Singular("moduleInCurriculum")

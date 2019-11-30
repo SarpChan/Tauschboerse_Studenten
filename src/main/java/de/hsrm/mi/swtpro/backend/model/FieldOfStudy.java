@@ -5,7 +5,7 @@ import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import lombok.*;
 
 import javax.persistence.*;
-import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.*;
 import java.util.Set;
 
 /**
@@ -22,6 +22,7 @@ public class FieldOfStudy {
     @Id
     @Getter @Setter
     @GeneratedValue
+    @NotNull
     private int id;
 
     @Getter @Setter
@@ -31,6 +32,7 @@ public class FieldOfStudy {
     @Getter @Setter
     @ManyToOne
     @JoinColumn(name="university_id")
+    @NotNull
     private University university;
 
     @Singular("studyProgram")

@@ -14,7 +14,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import java.util.Set;
 import javax.persistence.OneToOne;
-import javax.validation.constraints.Pattern;
+import javax.validation.constraints.*;
 
 /**
  * A student is a user 
@@ -28,19 +28,23 @@ import javax.validation.constraints.Pattern;
 public class Student extends Role {
 
     @Getter @Setter
-    @Pattern(regexp = "*[0-9]")
+    @Pattern(regexp = "[0-9]*")
+    @NotNull
     private int enrolementNumber;
 
     @Getter @Setter
-    @Pattern(regexp = "*[a-z].*[a-z]@student.hs-rm.de")
+    @Pattern(regexp = "[a-zA-Z0-9-+_.]+@[a-z0-9-+_]+")
+    @NotEmpty
     private String mail;
 
     @Getter @Setter
     @ManyToOne
+    @NotNull
     private ExamRegulation examRegulation;
 
     @Getter @Setter
     @ManyToOne
+    @NotNull
     private Term enrolmentTerm;
 
     @Singular("attendCourse")

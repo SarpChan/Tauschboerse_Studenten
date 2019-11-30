@@ -5,6 +5,8 @@ import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import lombok.*;
 
 import javax.persistence.*;
+import javax.validation.constraints.*;
+
 import org.springframework.format.annotation.DateTimeFormat;
 
 import java.sql.Date;
@@ -25,10 +27,12 @@ public class ExamRegulation {
     @Id
     @Getter @Setter
     @GeneratedValue
+    @NotNull
     private long id;
 
     @Getter @Setter
     @DateTimeFormat(pattern ="dd-mm-yyyy")
+    @NotNull
     private Date date;
 
     @Getter @Setter
@@ -36,6 +40,7 @@ public class ExamRegulation {
 
     @Getter @Setter
     @ManyToOne
+    @NotNull
     private StudyProgram studyProgram;
 
     @Singular("curriculum")

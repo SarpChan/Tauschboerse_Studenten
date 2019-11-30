@@ -6,8 +6,8 @@ import lombok.*;
 
 import javax.persistence.*;
 import java.util.Set;
-import javax.validation.constraints.Min;
-import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.*;
+import javax.validation.constraints.*;
 
 /**
  * Describes the type of lesson of a course
@@ -25,9 +25,11 @@ public class CourseComponent {
     @Id
     @Getter @Setter
     @GeneratedValue
+    @NotNull
     private long id;
 
     @Getter @Setter
+    @NotNull
     private CourseType type;
 
     @Getter @Setter
@@ -41,6 +43,7 @@ public class CourseComponent {
 
     @Getter @Setter
     @ManyToOne
+    @NotNull
     private Course course;
 
     @Singular("group")

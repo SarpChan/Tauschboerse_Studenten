@@ -3,7 +3,7 @@ package de.hsrm.mi.swtpro.backend.model;
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import lombok.*;
-import javax.validation.constraints.Min;
+import javax.validation.constraints.*;
 
 import javax.persistence.*;
 import java.util.Set;
@@ -21,9 +21,11 @@ public class Room {
     @Id
     @Getter @Setter
     @GeneratedValue
+    @NotNull
     private long id;
 
     @Getter @Setter
+    @NotNull
     private int number;
 
     @Getter @Setter
@@ -31,9 +33,9 @@ public class Room {
     private int seats;
 
     @Getter @Setter
-
     @ManyToOne(targetEntity = Building.class, fetch = FetchType.LAZY)
     @JoinColumn(name = "building_id")
+    @NotNull
     private Building building;
 
     @Singular("group")
