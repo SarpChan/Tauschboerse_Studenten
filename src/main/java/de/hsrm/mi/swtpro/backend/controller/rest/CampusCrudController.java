@@ -53,8 +53,8 @@ public class CampusCrudController {
      */
     @GetMapping(path = "/campus/read", produces = MediaType.APPLICATION_JSON_VALUE)
     public Campus findCampus(@RequestParam("campusAddress") String campusAddress) throws CampusNotFoundException {
-        if (campusRepository.findByAdress(campusAddress) != null) {
-            return campusRepository.findByAdress(campusAddress);
+        if (campusRepository.findByAddress(campusAddress) != null) {
+            return campusRepository.findByAddress(campusAddress);
         } else {
             throw new CampusNotFoundException("Campus not found");
         }
@@ -68,7 +68,7 @@ public class CampusCrudController {
      */
     @DeleteMapping(path = "/campus/delete", consumes = "application/json")
     public void deleteCampus(@RequestBody Campus campus) throws CampusNotFoundException {
-        if (campusRepository.findByAdress(campus.getAdress()) != null) {
+        if (campusRepository.findById(campus.getId()) != null) {
             campusRepository.delete(campus);
         } else {
             throw new CampusNotFoundException("Campus not found");
