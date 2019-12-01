@@ -9,7 +9,6 @@ import java.sql.Date;
 import java.time.LocalDate;
 import java.util.Collections;
 import java.util.HashSet;
-import java.util.Set;
 
 import static org.hamcrest.CoreMatchers.hasItem;
 import static org.hamcrest.CoreMatchers.is;
@@ -21,17 +20,11 @@ import static org.junit.Assert.assertThat;
 public class CurriculumTest {
 
     private Curriculum curriculum;
-    private Set<Module> moduleList;
-    private Module module;
 
     @Before
     public void setUp(){
         ExamRegulation examRegulation = ExamRegulation.builder()
                 .date(Date.valueOf(LocalDate.MAX))
-                .build();
-
-        module = Module.builder()
-                .title("Mathe 3")
                 .build();
 
         ModuleInCurriculum moduleInCurriculum = ModuleInCurriculum.builder()
@@ -41,9 +34,8 @@ public class CurriculumTest {
         curriculum = Curriculum.builder()
                 .examRegulation(examRegulation)
                 .moduleInCurriculum(moduleInCurriculum)
+                .termPeriod(2)
                 .build();
-
-        moduleList = new HashSet<>();
     }
 
     @Test
@@ -56,6 +48,11 @@ public class CurriculumTest {
         assertThat(curriculum.getModulesInCurriculum(),hasItem(
                 hasProperty("id",is(65L))
         ));
+    }
+
+    @Test
+    public void whenGetTermPeriod_thenReturnTermPeriod(){
+        assertEquals(2,curriculum.getTermPeriod());
     }
 
     @Test
@@ -74,5 +71,11 @@ public class CurriculumTest {
         assertThat(curriculum.getModulesInCurriculum(),hasItem(
                 hasProperty("id",is(34L))
         ));
+    }
+
+    @Test
+    public void whenSetTermPeriod_thenSaveTermPeriod(){
+        curriculum.setTermPeriod(1);
+        assertEquals(1, curriculum.getTermPeriod());
     }
 }

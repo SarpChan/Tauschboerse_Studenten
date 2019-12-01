@@ -4,7 +4,6 @@ import org.junit.Before;
 import org.junit.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
-import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -39,8 +38,8 @@ public class CourseTest {
         course = Course.builder()
                 .owner(user)
                 .title("HCI")
-                .modules(new HashSet<>(Collections.singletonList(module)))
-                .terms(new HashSet<>(Collections.singletonList(term)))
+                .module(module)
+                .term(term)
                 .build();
     }
 
