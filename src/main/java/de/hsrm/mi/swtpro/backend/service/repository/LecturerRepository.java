@@ -1,10 +1,10 @@
 package de.hsrm.mi.swtpro.backend.service.repository;
 
-import de.hsrm.mi.swtpro.backend.model.Curriculum;
+import de.hsrm.mi.swtpro.backend.model.Lecturer;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface CurriculumRepository extends JpaRepository<Curriculum,Long> {
-    public Curriculum findById(long id);
+public interface LecturerRepository extends JpaRepository<Lecturer, Long> {
+    public Lecturer findById(long id);
 }
