@@ -1,19 +1,21 @@
 package de.hsrm.mi.swtpro.backend.model;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.GeneratedValue;
-import javax.persistence.ManyToOne;
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+import lombok.*;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.Setter;
+import javax.persistence.*;
 
+/** 
+    Relationship between a student and a group 
+    The priority indicates
+*/
 @Entity
+@NoArgsConstructor
+@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
 @AllArgsConstructor
 @Builder
-class StudentPriorizesGroup {
+public class StudentPriorizesGroup {
 
     @Id
     @Getter @Setter
@@ -25,45 +27,12 @@ class StudentPriorizesGroup {
 
     @Getter @Setter
     @ManyToOne
+    @JoinColumn(name="student_id")
     private Student student;
 
     @Getter @Setter
     @ManyToOne
+    @JoinColumn(name="group_id")
     private Group group;
 
-
-    @Deprecated
-    public StudentPriorizesGroup(Student student, Group group, int priority) {
-        this.student = student;
-        this.group = group;
-        this.priority = priority;
-    }
-
-    @Deprecated
-    private StudentPriorizesGroup(Builder builder) {
-        this.student = builder.student;
-        this.group = builder.group;
-        this.priority = builder.priority;
-    }
-
-    @Deprecated
-    public static class Builder {
-        private Student student;
-        private Group group;
-        private int priority;
-
-        public Builder(Student student, Group group) {
-            this.student = student;
-            this.group = group;
-        }
-
-        public Builder withPriority(int priority) {
-            this.priority = priority;
-            return this;
-        }
-
-        public StudentPriorizesGroup build() {
-            return new StudentPriorizesGroup(this);
-        }
-    }
 }
