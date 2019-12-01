@@ -22,10 +22,23 @@ public class ExamRegulationTest {
                 .title("Medieninformatik")
                 .degree("Bachlor")
                 .build();
+
         examRegulation = ExamRegulation.builder()
+                .id(17L)
                 .date(Date.valueOf(LocalDate.of(2017,7,17)))
                 .studyProgram(studyProgram)
+                .rule(4)
                 .build();
+    }
+
+    @Test
+    public void whenGetId_thenReturnId(){
+        assertEquals(17L,examRegulation.getId());
+    }
+
+    @Test
+    public void whenGetRule_thenReturnRule(){
+        assertEquals(4,examRegulation.getRule());
     }
 
     @Test
@@ -42,6 +55,12 @@ public class ExamRegulationTest {
     public void whenSetId_thenSaveId(){
         examRegulation.setId(17);
         assertEquals(17,examRegulation.getId());
+    }
+
+    @Test
+    public void whenSetRule_thenSaveRule(){
+        examRegulation.setRule(2);
+        assertEquals(2,examRegulation.getRule());
     }
 
     @Test
