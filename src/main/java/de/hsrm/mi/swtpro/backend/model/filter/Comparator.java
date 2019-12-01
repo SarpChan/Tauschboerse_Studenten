@@ -1,6 +1,6 @@
 package de.hsrm.mi.swtpro.backend.model.filter;
 
-public class Comparator<T> {
+public class Comparator {
     ComparatorType comparatorType;
-    T comparatorValue;
+    Object comparatorValue;
 }
