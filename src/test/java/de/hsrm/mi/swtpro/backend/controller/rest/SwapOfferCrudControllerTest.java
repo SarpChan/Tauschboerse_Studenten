@@ -14,6 +14,7 @@ import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
 import de.hsrm.mi.swtpro.backend.model.Group;
+import de.hsrm.mi.swtpro.backend.model.Student;
 import de.hsrm.mi.swtpro.backend.model.SwapOffer;
 import de.hsrm.mi.swtpro.backend.service.repository.SwapOfferRepository;
 
@@ -24,6 +25,7 @@ import static org.hamcrest.Matchers.is;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
+import java.sql.Timestamp;
 
 @SpringBootTest
 @AutoConfigureMockMvc
@@ -40,16 +42,23 @@ public class SwapOfferCrudControllerTest {
     public void setUp(){
         Group fromGroup = Group.builder()
                 .id(1L)
-                .groupChar('C');
+                .groupChar('C')
+                .build();
 
         Group toGroup = Group.builder()
                 .id(2L)
-                .groupChar('X');
+                .groupChar('X')
+                .build();
+
+        Student student = Student.builder()
+                .enrolementNumber(1001338)
+                .mail("fischiges_gewoell@klabusterbaerenbande.org")
+                .build();
 
         SwapOffer swapOffer = SwapOffer.builder()
                 .id(33L)
-                .date("12.03.1999")
-                .student("Ein Student")
+                .date(new Timestamp(454454121))
+                .student(student)
                 .fromGroup(fromGroup)
                 .toGroup(toGroup)
                 .build();
@@ -61,16 +70,23 @@ public class SwapOfferCrudControllerTest {
     public void whenCreateSwapOffer_thenSaveSwapOffer() throws Exception{
         Group fromGroup = Group.builder()
                 .id(1L)
-                .groupChar('A');
+                .groupChar('A')
+                .build();;
 
         Group toGroup = Group.builder()
                 .id(2L)
-                .groupChar('B');
+                .groupChar('B')
+                .build();;
+
+        Student student = Student.builder()
+                .enrolementNumber(1001339)
+                .mail("dude@carpet.co.nz")
+                .build();
 
         SwapOffer swapOffer = SwapOffer.builder()
                 .id(22L)
-                .date("31.12.2019")
-                .student("Dude")
+                .date(new Timestamp(455454121))
+                .student(student)
                 .fromGroup(fromGroup)
                 .toGroup(toGroup)
                 .build();
@@ -102,16 +118,23 @@ public class SwapOfferCrudControllerTest {
     public void whenUpdateSwapOffer_thenChangeSwapOffer() throws Exception {
         Group fromGroup = Group.builder()
                 .id(1L)
-                .groupChar('Y');
+                .groupChar('Y')
+                .build();;
 
         Group toGroup = Group.builder()
                 .id(2L)
-                .groupChar('Z');
+                .groupChar('Z')
+                .build();;
+
+        Student student = Student.builder()
+                .enrolementNumber(1001337)
+                .mail("kwama.botschafter@schwibbl.com")
+                .build();
 
         SwapOffer swapOffer = SwapOffer.builder()
                 .id(33L)
-                .date("29.10.1985")
-                .student("Kwama Botschafter")
+                .date(new Timestamp(454454121))
+                .student(student)
                 .fromGroup(fromGroup)
                 .toGroup(toGroup)
                 .build();
@@ -125,7 +148,7 @@ public class SwapOfferCrudControllerTest {
                 .andExpect(MockMvcResultMatchers.jsonPath("$.swapOffer/update").exists());
 
         assertThat(swapOfferRepository.findByFromGroup(fromGroup), hasProperty("id",is(33L)));
-        assertThat(swapOfferRepository.findByToGroup(toGroup), hasProperty("id",is(33L)));
+        assertThat(swapOfferRepository.findByToGroup(toGroup), hasProperty("id",is(34L)));
     }
 
     @Test
@@ -134,7 +157,7 @@ public class SwapOfferCrudControllerTest {
                 .accept(MediaType.APPLICATION_JSON)).andDo(print())
                 .andExpect(status().isOk());
         
-        assertThat(swapOfferRepository.findById(33), is(null)); //TODO: geht das mit is(null)?
+        assertThat(swapOfferRepository.findById(33), is(null));
     }
 
     private static String asJsonString(final Object obj) {
