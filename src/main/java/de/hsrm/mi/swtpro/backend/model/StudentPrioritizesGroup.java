@@ -15,7 +15,7 @@ import javax.persistence.*;
 @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
 @AllArgsConstructor
 @Builder
-public class StudentPriorizesGroup {
+public class StudentPrioritizesGroup {
 
     @Id
     @Getter @Setter
