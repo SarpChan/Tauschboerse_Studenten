@@ -20,7 +20,7 @@ import java.util.Set;
 public class Building {
 
     @Id
-    @Getter @Setter 
+    @Getter @Setter
     @GeneratedValue
     private long id;
 

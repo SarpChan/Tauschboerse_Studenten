@@ -8,13 +8,11 @@ import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.test.context.junit4.SpringRunner;
-import static org.hamcrest.Matchers.*;
 
 import javax.persistence.EntityManager;
-import java.util.Collections;
-import java.util.HashSet;
 import java.util.List;
 
+import static org.hamcrest.Matchers.*;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertThat;
 
@@ -32,18 +30,17 @@ public class ModuleRepositoryTest {
     @Before
     public void setUp(){
 
-        course = Course.builder()
-                .title("Kurs")
-                .build();
-
         Module module = Module.builder()
                 .period(1)
                 .title("Analysis")
                 .creditPoints(55)
-                .courses(new HashSet<>(Collections.singletonList(course)))
                 .build();
-        //
-        //
+
+        course = Course.builder()
+                .title("Kurs")
+                .module(module)
+                .build();
+
         entityManager.persist(course);
         entityManager.persist(module);
     }
@@ -74,8 +71,9 @@ public class ModuleRepositoryTest {
 
     @Test
     public void findByCourses_theReturnModuleList(){
-        //TODO: Irgendwo ein doofer Denkfehler (vermutlich in der Verschachtelungsebene falsche abgebogen)
-       assertThat(moduleRepository.findByCourses(course), hasItem(hasProperty("title", is("Kurs"))));
+
+       assertThat(moduleRepository.findByCourses(course),
+               hasItem(hasProperty("title", is("Analysis"))));
 
     }
 

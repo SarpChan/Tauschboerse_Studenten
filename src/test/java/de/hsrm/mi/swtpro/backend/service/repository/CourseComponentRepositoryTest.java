@@ -12,9 +12,10 @@ import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import javax.persistence.EntityManager;
-import java.util.HashSet;
 
+import static org.hamcrest.Matchers.*;
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertThat;
 
 @RunWith(SpringRunner.class)
 @DataJpaTest
@@ -26,6 +27,7 @@ public class CourseComponentRepositoryTest {
     CourseComponentRepository courseComponentRepository;
 
     private Group group;
+    private long id;
 
     @Before
     public void setUp(){
@@ -34,23 +36,21 @@ public class CourseComponentRepositoryTest {
                 .build();
 
         CourseComponent courseComponent = CourseComponent.builder()
-                .id(17L)
                 .course(course)
                 .type(CourseType.LECTURE)
                 .exam("Test")
-                .groups(new HashSet<>()) //TODO: das sollt eigentlich der Builder machen
                 .creditPoints(10)
                 .build();
 
         group = Group.builder()
-                .courseComponent(courseComponent)
                 .groupChar('D')
+                .courseComponent(courseComponent)
                 .build();
-        courseComponent.addGroup(group);
 
         entityManager.persist(course);
-        entityManager.persist(courseComponent);
         entityManager.persist(group);
+        entityManager.persist(courseComponent);
+        id = courseComponent.getId();
     }
 
     @Test
@@ -60,26 +60,29 @@ public class CourseComponentRepositoryTest {
 
     @Test
     public void whenFindById_theReturnCourseComponent(){
-        assertEquals("Test",courseComponentRepository.findById(17).getExam());
+        assertEquals("Test",courseComponentRepository.findById(id).getExam());
     }
 
     @Test
     public void whenFindByType_thenReturnCourseComponentList(){
-        assertEquals(17,courseComponentRepository.findByType(CourseType.LECTURE).get(0).getId());
+        assertEquals(id,courseComponentRepository.findByType(CourseType.LECTURE).get(0).getId());
     }
 
     @Test
     public void whenFindByCreditPoints_thenReturnCourseComponentList(){
-        assertEquals(17,courseComponentRepository.findByCreditPoints(10).get(0).getId());
+        assertThat(courseComponentRepository.findByCreditPoints(10),
+                hasItem(hasProperty("exam",is("Test"))));
     }
 
     @Test
     public void whenFindByGroup_thenReturnCourseComponentList(){
-        assertEquals(17,courseComponentRepository.findByGroups(group).get(0).getId());
+        assertThat(courseComponentRepository.findByGroups(group),
+                hasItem(hasProperty("creditPoints",is(10))));
     }
 
     @Test
     public void whenFindByExam_thenReturnCourseComponentList(){
-        assertEquals(17,courseComponentRepository.findByExam("Test").get(0).getId());
+        assertThat(courseComponentRepository.findByExam("Test"),
+                hasItem(hasProperty("creditPoints",is(10))));
     }
 }

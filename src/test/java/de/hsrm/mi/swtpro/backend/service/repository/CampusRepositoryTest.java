@@ -26,6 +26,8 @@ public class CampusRepositoryTest {
     @Autowired
     CampusRepository campusRepository;
 
+    private long id;
+
     private static final Logger logger = LoggerFactory.getLogger(CampusRepositoryTest.class);
 
     @Before
@@ -37,7 +39,6 @@ public class CampusRepositoryTest {
                 .build();
 
         Campus campus = Campus.builder()
-                .id(17L)
                 .name("unter den Eichen")
                 .university(university)
                 .address("Unter den Eichen 5, 12389 Wiesbaden")
@@ -46,17 +47,7 @@ public class CampusRepositoryTest {
 
         entityManager.persist(university);
         entityManager.persist(campus);
-        selectAll();
-    }
-
-    private void selectAll(){
-        logger.info("CAMPUS TABLE CONTENT");
-        for(Campus c : campusRepository.findAll()){
-            logger.info("| ID :" +c.getId()
-                    +"| NAME : " +c.getName()
-                    +"| ADDRESS : "+c.getAddress()
-            );
-        }
+        id = campus.getId();
     }
 
     @Test
@@ -66,9 +57,8 @@ public class CampusRepositoryTest {
 
     @Test
     public void whenFindById_thenReturnCampus(){
-        selectAll();
-        assertTrue(campusRepository.findById(17L).isPresent());
-        assertThat(campusRepository.findById(17L).get(),hasProperty("name",is("unter den Eichen")));
+        assertTrue(campusRepository.findById(id).isPresent());
+        assertThat(campusRepository.findById(id).get(),hasProperty("name",is("unter den Eichen")));
     }
 
     @Test

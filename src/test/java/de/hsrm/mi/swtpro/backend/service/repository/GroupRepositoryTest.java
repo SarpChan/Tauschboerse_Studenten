@@ -25,6 +25,7 @@ public class GroupRepositoryTest {
     GroupRepository groupRepository;
 
     private Room room;
+    private long id;
 
     @Before
     public void setUp(){
@@ -67,56 +68,54 @@ public class GroupRepositoryTest {
         entityManager.persist(user);
         entityManager.persist(room);
         entityManager.persist(group);
-        entityManager.persist(group);
+        id = group.getId();
     }
 
     @Test
     public void whenFindAll_thenReturnGroupList(){
         assertThat(groupRepository.findAll(),hasItem(
-                hasProperty("id",is(17))
+                hasProperty("slots",is(17))
         ));
     }
 
     @Test
     public void whenFindById_thenReturnGroup(){
-        assertThat(groupRepository.findById(17),
+        assertThat(groupRepository.findById(id),
                 hasProperty("slots",is(17)
         ));
     }
 
-    //TODO: Lecture Test
-
     @Test
     public void whenFindBySlots_thenReturnGroupList(){
-        assertThat(groupRepository.findBySlots(17),
-                hasProperty("id",is(17)
-                ));
+        assertThat(groupRepository.findBySlots(17),hasItem(
+                hasProperty("id",is(id)
+                )));
     }
 
     @Test
     public void whenFindByDayOfWeek_thenReturnGroupList(){
         assertThat(groupRepository.findByDayOfWeek(DayOfWeek.MONDAY),
-                hasItem(hasProperty("id",is(17))));
+                hasItem(hasProperty("slots",is(17))));
     }
 
     @Test
     public void whenFindByStartTime_thenReturnGroupList(){
         assertThat(groupRepository.findByStartTime(LocalTime.of(14,0)),hasItem(
-                hasProperty("id",is(17))
+                hasProperty("slots",is(17))
         ));
     }
 
     @Test
     public void whenFindByEndTime_thenReturnGroupList(){
         assertThat(groupRepository.findByEndTime(LocalTime.of(15,0)),hasItem(
-                hasProperty("id",is(17))
+                hasProperty("slots",is(17))
         ));
     }
 
     @Test
     public void whenFindByRoom_thenReturnGroupList(){
         assertThat(groupRepository.findByRoom(room),
-                hasItem(hasProperty("id",is(17))));
+                hasItem(hasProperty("slots",is(17))));
     }
 
 }

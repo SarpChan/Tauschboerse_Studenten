@@ -12,8 +12,6 @@ import org.springframework.test.context.junit4.SpringRunner;
 import javax.persistence.EntityManager;
 import java.sql.Date;
 import java.time.LocalDate;
-import java.util.Collections;
-import java.util.HashSet;
 
 import static org.hamcrest.Matchers.*;
 import static org.junit.Assert.*;
@@ -32,6 +30,8 @@ public class CourseRepositoryTest {
     private Term term;
     private CourseComponent courseComponent;
 
+
+    private long id;
     @Before
     public void setUp(){
         user = User.builder()
@@ -42,22 +42,20 @@ public class CourseRepositoryTest {
                 .build();
 
         term = Term.builder()
-                .id(17)
                 .period(2)
                 .startDate(Date.valueOf(LocalDate.of(2017,10,11)))
                 .endDate(Date.valueOf(LocalDate.of(2016,10,11)))
                 .build();
 
-        Course course = Course.builder()
-                .id(42L)
-                .title("Netter Kurs")
-                .owner(user)
-                .terms(new HashSet<>(Collections.singletonList(term)))
-                .build();
-
         module = Module.builder()
                 .title("Nettes Module ")
-                .courses(new HashSet<>(Collections.singleton(course)))
+                .build();
+
+        Course course = Course.builder()
+                .title("Netter Kurs")
+                .owner(user)
+                .module(module)
+                .term(term)
                 .build();
 
         courseComponent = CourseComponent.builder()
@@ -70,9 +68,7 @@ public class CourseRepositoryTest {
         entityManager.persist(course);
         entityManager.persist(module);
         entityManager.persist(courseComponent);
-
-        //course.addCourseComponent(courseComponent); (NULLPOINTER EX.)
-        //TODO: Builder sollten eine leere Liste generieren wenn kein inhalt angeben ist
+        id = course.getId();
     }
 
     @Test
@@ -84,8 +80,8 @@ public class CourseRepositoryTest {
 
     @Test
     public void whenFindById_thenReturnCourse(){
-        assertTrue(courseRepository.findById(42L).isPresent());
-        assertEquals(courseRepository.findById(42L).get().getTitle(),"Netter Kurs");
+        assertTrue(courseRepository.findById(id).isPresent());
+        assertEquals(courseRepository.findById(id).get().getTitle(),"Netter Kurs");
     }
 
     @Test

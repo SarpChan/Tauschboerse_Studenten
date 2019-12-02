@@ -9,7 +9,7 @@ import static org.junit.Assert.assertEquals;
 @SpringBootTest
 public class StudentPriorizesGroupTest {
 
-    private StudentPriorizesGroup studentPriorizesGroup;
+    private StudentPrioritizesGroup studentPrioritizesGroup;
 
     @Before
     public void setUp(){
@@ -22,7 +22,7 @@ public class StudentPriorizesGroupTest {
                 .enrolementNumber(65253)
                 .build();
 
-        studentPriorizesGroup = StudentPriorizesGroup.builder()
+        studentPrioritizesGroup = StudentPrioritizesGroup.builder()
                 .id(17)
                 .student(student)
                 .group(group)
@@ -32,28 +32,28 @@ public class StudentPriorizesGroupTest {
 
     @Test
     public void whenGetId_thenReturnId(){
-        assertEquals(17,studentPriorizesGroup.getId());
+        assertEquals(17, studentPrioritizesGroup.getId());
     }
 
     @Test
     public void whenGetStudent_thenReturnStudent(){
-        assertEquals(65253,studentPriorizesGroup.getStudent().getEnrolementNumber());
+        assertEquals(65253, studentPrioritizesGroup.getStudent().getEnrolementNumber());
     }
 
     @Test
     public void whenGetGroup_thenReturnGroup(){
-        assertEquals(46465,studentPriorizesGroup.getGroup().getId());
+        assertEquals(46465, studentPrioritizesGroup.getGroup().getId());
     }
 
     @Test
     public void whenGetPriority_thenReturnPriority(){
-        assertEquals(1,studentPriorizesGroup.getPriority());
+        assertEquals(1, studentPrioritizesGroup.getPriority());
     }
 
     @Test
     public void whenSetId_thenSaveId(){
-        studentPriorizesGroup.setId(65);
-        assertEquals(65,studentPriorizesGroup.getId());
+        studentPrioritizesGroup.setId(65);
+        assertEquals(65, studentPrioritizesGroup.getId());
     }
 
     @Test
@@ -61,9 +61,9 @@ public class StudentPriorizesGroupTest {
         Student student = Student.builder()
                 .enrolementNumber(1711717)
                 .build();
-        studentPriorizesGroup.setStudent(student);
+        studentPrioritizesGroup.setStudent(student);
 
-        assertEquals(1711717,studentPriorizesGroup.getStudent().getEnrolementNumber());
+        assertEquals(1711717, studentPrioritizesGroup.getStudent().getEnrolementNumber());
     }
 
     @Test
@@ -71,14 +71,14 @@ public class StudentPriorizesGroupTest {
         Group group = Group.builder()
                 .id(77777)
                 .build();
-        studentPriorizesGroup.setGroup(group);
+        studentPrioritizesGroup.setGroup(group);
 
-        assertEquals(77777,studentPriorizesGroup.getGroup().getId());
+        assertEquals(77777, studentPrioritizesGroup.getGroup().getId());
     }
 
     @Test
     public void whenSetPriority_thenSavePriority(){
-       studentPriorizesGroup.setPriority(2);
-       assertEquals(2, studentPriorizesGroup.getPriority());
+       studentPrioritizesGroup.setPriority(2);
+       assertEquals(2, studentPrioritizesGroup.getPriority());
     }
 }

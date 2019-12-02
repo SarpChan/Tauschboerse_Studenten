@@ -28,41 +28,44 @@ public class ExamRegulationRepositoryTest {
 
     private Curriculum curriculum;
     private StudyProgram studyProgram;
+    private long id;
 
     @Before
     public void setUp(){
-        curriculum = Curriculum.builder()
-                .id(42)
-                .build();
 
         studyProgram = StudyProgram.builder()
                 .title("Heinrich")
                 .build();
 
-
         ExamRegulation examRegulation = ExamRegulation.builder()
-                .id(17)
                 .date(Date.valueOf(LocalDate.of(2019,4,17)))
                 .rule(17)
-                .curriculum(curriculum)
                 .studyProgram(studyProgram)
                 .build();
+
+        curriculum = Curriculum.builder()
+                .termPeriod(1)
+                .examRegulation(examRegulation)
+                .build();
+
 
         entityManager.persist(curriculum);
         entityManager.persist(studyProgram);
         entityManager.persist(examRegulation);
+
+        id = examRegulation.getId();
     }
 
     @Test
     public void whenFindAll_thenReturnExamRegulationList(){
         assertThat(examRegulationRepository.findAll(),hasItem(
-                hasProperty("id",is(17))
+                hasProperty("rule",is(17))
         ));
     }
 
     @Test
     public void whenFindById_thenReturnExamRegulation(){
-        assertThat(examRegulationRepository.findById(17),hasProperty(
+        assertThat(examRegulationRepository.findById(id),hasProperty(
                 "rule",is(17)
         ));
     }
@@ -70,26 +73,26 @@ public class ExamRegulationRepositoryTest {
     @Test
     public void whenFindByRule_thenReturnExamRegulation(){
         assertThat(examRegulationRepository.findByRule(17),
-                hasItem(hasProperty("id",is(17)))
+                hasItem(hasProperty("id",is(id)))
         );
     }
 
     @Test
     public void whenFindByDate_thenReturnExamRegulationList(){
         assertThat(examRegulationRepository.findByDate(Date.valueOf(LocalDate.of(2019,4,17))),
-                        hasItem(hasProperty("id",is(17)))
+                        hasItem(hasProperty("rule",is(17)))
         );
     }
 
     @Test
     public void whenFindByCurricula_thenReturnExamRegulationList(){
         assertThat(examRegulationRepository.findByCurriculums(curriculum),
-                hasItem(hasProperty("id",is(17))));
+                hasItem(hasProperty("rule",is(17))));
     }
 
     @Test
     public void whenFindByStudyProgram_thenReturnExamRegulationList(){
         assertThat(examRegulationRepository.findByStudyProgram(studyProgram),
-                hasItem(hasProperty("id",is(17))));
+                hasItem(hasProperty("rule",is(17))));
     }
 }

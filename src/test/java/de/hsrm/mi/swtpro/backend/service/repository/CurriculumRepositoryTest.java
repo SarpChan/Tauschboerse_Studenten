@@ -29,63 +29,68 @@ public class CurriculumRepositoryTest {
     private ModuleInCurriculum moduleInCurriculum;
     private ExamRegulation examRegulation;
 
+    private long id;
+
     @Before
     public void setUp(){
 
         module = Module.builder()
-                .id(42)
+                .title("cooles Module")
                 .build();
 
-        moduleInCurriculum = ModuleInCurriculum.builder()
-                .id(82)
-                .build();
 
         examRegulation = ExamRegulation.builder()
-                .id(72)
+                .rule(17)
                 .build();
 
         Curriculum curriculum = Curriculum.builder()
-                .id(17)
                 .examRegulation(examRegulation)
                 .termPeriod(1)
-                .moduleInCurriculum(moduleInCurriculum)
+                .build();
+
+        moduleInCurriculum = ModuleInCurriculum.builder()
+                .termPeriod(10)
+                .curriculum(curriculum)
+                .module(module)
                 .build();
 
         entityManager.persist(module);
+        entityManager.persist(moduleInCurriculum);
         entityManager.persist(examRegulation);
         entityManager.persist(curriculum);
+        id = curriculum.getId();
     }
 
     @Test
     public void whenFindAll_thenReturnCurriculumList(){
         assertThat(curriculumRepository.findAll(),hasItem(
-                hasProperty("id",is(17))
+                hasProperty("termPeriod",is(1))
         ));
     }
 
     @Test
     public void whenFindById_thenReturnCurriculumList(){
-        assertThat(curriculumRepository.findById(17), hasProperty("term",is(1)));
+        assertThat(curriculumRepository.findById(id), hasProperty("termPeriod",is(1)));
     }
 
     @Test
     public void whenFindByPeriod_thenReturnCurriculumList(){
         assertThat(curriculumRepository.findByTermPeriod(1),hasItem(
-                hasProperty("id",is(17))
+                hasProperty("id",is(id))
         ));
     }
 
     @Test
     public void whenFindByModules_thenReturnCurriculumList(){
         assertThat(curriculumRepository.findByModulesInCurriculum(moduleInCurriculum),hasItem(
-                hasProperty("id",is(82))
+                hasProperty("termPeriod",is(1))
         ));
     }
 
     @Test
     public void whenFindByExamRegulation_thenReturnCurriculumList(){
         assertThat(curriculumRepository.findByExamRegulation(examRegulation),
-                hasItem(hasProperty("id",is(17)))
+                hasItem(hasProperty("termPeriod",is(1)))
         );
     }
 }

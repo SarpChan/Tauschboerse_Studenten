@@ -35,6 +35,7 @@ public class FieldOfStudyRepositoryTest {
 
     private University university;
     private StudyProgram studyProgram;
+    private long id;
 
     @Before
     public void setUp(){
@@ -49,7 +50,6 @@ public class FieldOfStudyRepositoryTest {
                 .build();
 
         FieldOfStudy fieldOfStudy = FieldOfStudy.builder()
-                .id(17)
                 .title("Faulenzen")
                 .studyPrograms(new HashSet<>(Collections.singleton(studyProgram)))
                 .university(university)
@@ -59,33 +59,40 @@ public class FieldOfStudyRepositoryTest {
         entityManager.persist(university);
         entityManager.persist(studyProgram);
         entityManager.persist(fieldOfStudy);
-
+        id = fieldOfStudy.getId();
     }
 
     @Test
     public void whenFindAll_thenReturnFieldOfStudyList(){
         assertThat(fieldOfStudyRepository.findAll(),hasItem(
-                hasProperty("id",is(17L))
+                hasProperty("title",is("Faulenzen"))
         ));
     }
 
     @Test
     public void whenFindById_thenReturnFieldOfStudyList(){
-        assertThat(fieldOfStudyRepository.findById(17L),
+        assertThat(fieldOfStudyRepository.findById(id),
                 hasProperty("title",is("Faulenzen")));
     }
 
     @Test
     public void whenFindByStudyProgram_thenReturnFieldOfStudyList(){
         assertThat(fieldOfStudyRepository.findByStudyPrograms(studyProgram),hasItem(
-                hasProperty("id",is(17L))
+                hasProperty("title",is("Faulenzen"))
         ));
     }
 
     @Test
     public void whenFindByUniversity_thenReturnFieldOfStudyList(){
         assertThat(fieldOfStudyRepository.findByUniversity(university),hasItem(
-                hasProperty("id",is(17))
+                hasProperty("title",is("Faulenzen"))
+        ));
+    }
+
+    @Test
+    public void whenFindByName_thenReturnFieldOfStudyList(){
+        assertThat(fieldOfStudyRepository.findByTitle("Faulenzen"),hasItem(
+                hasProperty("id",is(id))
         ));
     }
 }
