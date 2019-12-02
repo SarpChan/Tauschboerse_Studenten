@@ -36,28 +36,28 @@ public class Term {
     @Getter @Setter
     private int period;
 
-
+    @Singular("course")
     @Getter @Setter
     @ManyToMany(mappedBy = "terms")
-    private Set<Course> courses = new HashSet<>();
+    private Set<Course> courses ;
 
-
+    @Singular("group")
     @Getter @Setter
     @OneToMany(mappedBy = "term")
-    private Set<Group> groups = new HashSet<>();
+    private Set<Group> groups ;
 
-
+    @Singular("studentAttendsCourse")
     @Getter @Setter
     @OneToMany(mappedBy = "term")
-    private Set<StudentAttendsCourse> studentAttendsCourses = new HashSet<>();
+    private Set<StudentAttendsCourse> studentAttendsCourses ;
 
-
+    @Singular("enrolledStudent")
     @Getter @Setter
     @OneToMany(mappedBy = "enrolmentTerm")
-    private Set<Student> enroledStudents = new HashSet<>();
-    
+    private Set<Student> enrolledStudents;
+
     /**
-     * Adds course to the collection of courses offered this term 
+     * Adds course to the collection of courses offered this term
      * @param course
      */
     public void addCourse(Course course) {
@@ -87,5 +87,5 @@ public class Term {
     public boolean containsCourse(Course course) {
         return this.courses.contains(course);
     }
-    
+
 }

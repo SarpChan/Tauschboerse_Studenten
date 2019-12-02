@@ -18,7 +18,7 @@ import java.util.Set;
 @AllArgsConstructor
 @Builder
 public class Campus {
-    
+
     @Id
     @Getter @Setter
     @GeneratedValue
@@ -35,9 +35,9 @@ public class Campus {
     @JoinColumn(name = "university_id")
     private University university;
 
-
+    @Singular("building")
     @Getter @Setter
     @OneToMany(mappedBy = "campus")
-    private Set<Building> buildings = new HashSet<>();;
+    private Set<Building> buildings ;
 
 }

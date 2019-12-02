@@ -35,9 +35,9 @@ public class Room {
     @JoinColumn(name = "building_id")
     private Building building;
 
-
+    @Singular("group")
     @Getter @Setter
     @OneToMany(mappedBy = "room")
-    private Set<Group> groups = new HashSet<>();
-  
+    private Set<Group> groups ;
+
 }

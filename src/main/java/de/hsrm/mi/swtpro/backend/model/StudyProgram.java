@@ -29,18 +29,18 @@ public class StudyProgram {
     @Getter @Setter
     private String degree;
 
-
+    @Singular("examRegulation")
     @Getter @Setter
     @OneToMany(mappedBy = "studyProgram")
-    private Set<ExamRegulation> examRegulations = new HashSet<>();
+    private Set<ExamRegulation> examRegulations ;
 
-
+    @Singular("fieldOfStudy")
     @Getter @Setter
     @ManyToMany(mappedBy = "studyPrograms")
-    private Set<FieldOfStudy> fieldsOfStudy = new HashSet<>();
+    private Set<FieldOfStudy> fieldsOfStudy ;
 
     /**
-     * Adds exam regulation to the collection of exam regulations applicable for this study program 
+     * Adds exam regulation to the collection of exam regulations applicable for this study program
      * @param examRegulation
      */
     public void addExamRegulation(ExamRegulation examRegulation) {

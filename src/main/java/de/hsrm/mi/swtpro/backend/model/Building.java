@@ -21,21 +21,21 @@ import java.util.Set;
 public class Building {
 
     @Id
-    @Getter @Setter 
+    @Getter @Setter
     @GeneratedValue
     private long id;
 
-    @Getter @Setter 
+    @Getter @Setter
     private String name;
 
-    @Getter @Setter 
+    @Getter @Setter
     @ManyToOne
     @JoinColumn(name = "campus_id")
     private Campus campus;
 
-
+    @Singular("room")
     @Getter @Setter
     @OneToMany(mappedBy = "building")
-    private Set<Room> rooms= new HashSet<>();;
+    private Set<Room> rooms;
 
 }

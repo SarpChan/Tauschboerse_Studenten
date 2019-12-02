@@ -34,33 +34,34 @@ public class Course {
     private User owner;
 
 
+    @Singular("module")
     @Getter @Setter
     @ManyToMany
     @JoinTable(name = "course_module",
             joinColumns = @JoinColumn(name = "course_id", referencedColumnName = "id"),
             inverseJoinColumns = @JoinColumn(name = "module_id", referencedColumnName = "id"))
-    private Set<Module> modules = new HashSet<>();
+    private Set<Module> modules;
 
-
+    @Singular("term")
     @Getter @Setter
     @ManyToMany
     @JoinTable(name = "course_term",
             joinColumns = @JoinColumn(name = "course_id", referencedColumnName = "id"),
             inverseJoinColumns = @JoinColumn(name = "term_id", referencedColumnName = "id"))
-    private Set<Term> terms = new HashSet<>();
+    private Set<Term> terms;
 
-
+    @Singular("courseComponent")
     @Getter @Setter
     @OneToMany(mappedBy = "course")
-    private Set<CourseComponent> courseComponents = new HashSet<>();
+    private Set<CourseComponent> courseComponents;
 
-
+    @Singular("studentAttendsCourse")
     @Getter @Setter
     @OneToMany(mappedBy = "course")
-    private Set<StudentAttendsCourse> studentAttendsCourses = new HashSet<>();
+    private Set<StudentAttendsCourse> studentAttendsCourses;
 
     /**
-     * Adds course component to the collection of course components, which belong to this course 
+     * Adds course component to the collection of course components, which belong to this course
      * @param courseComponent
      */
     public void addCourseComponent(CourseComponent courseComponent) {
@@ -68,7 +69,7 @@ public class Course {
     }
 
     /**
-     * Removes course component from the collection of course components, which belong to this course 
+     * Removes course component from the collection of course components, which belong to this course
      * @param courseComponent
      */
     public void removeCourseComponent(CourseComponent courseComponent) {

@@ -20,7 +20,7 @@ import java.util.Set;
 @AllArgsConstructor
 @Builder
 public class ExamRegulation {
-    
+
     @Id
     @Getter @Setter
     @GeneratedValue
@@ -36,14 +36,14 @@ public class ExamRegulation {
     @ManyToOne
     private StudyProgram studyProgram;
 
-
+    @Singular("curriculum")
     @Getter @Setter
     @OneToMany(mappedBy = "examRegulation")
-    private Set<Curriculum> curriculums = new HashSet<>();
+    private Set<Curriculum> curriculums ;
 
-
+    @Singular("student")
     @Getter @Setter
     @OneToMany(mappedBy = "examRegulation")
-    private Set<Student> students = new HashSet<>();
+    private Set<Student> students ;
 
 }

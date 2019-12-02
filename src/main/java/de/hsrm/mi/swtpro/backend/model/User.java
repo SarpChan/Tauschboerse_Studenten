@@ -23,25 +23,25 @@ import java.util.Set;
 public class User {
 
     @Id
-    @Getter @Setter 
+    @Getter @Setter
     @GeneratedValue
     private long id;
 
-    @Getter @Setter 
+    @Getter @Setter
     private String firstName;
 
-    @Getter @Setter 
+    @Getter @Setter
     private String lastName;
 
-    @Getter @Setter 
+    @Getter @Setter
     private String loginName;
 
-    @Getter @Setter 
+    @Getter @Setter
     private String password;
 
-
-    @Getter @Setter 
+    @Singular("role")
+    @Getter @Setter
     @OneToMany(mappedBy = "user")
-    private Set<Role> roles = new HashSet<>();
-    
+    private Set<Role> roles ;
+
 }

@@ -22,7 +22,7 @@ import java.util.Set;
 @Builder
 @Table(name =  "group_table")
 public class Group {
-    
+
     @Id
     @Getter @Setter
     @GeneratedValue
@@ -77,7 +77,7 @@ public class Group {
     private Set<StudentPrioritizesGroup> prioritizeGroups;
 
     /**
-     * Adds student to the collection of students attending this group 
+     * Adds student to the collection of students attending this group
      * @param student
      */
     public void addStudent(Student student) {
@@ -85,7 +85,7 @@ public class Group {
     }
 
     /**
-     * Removes student from the collection of students attending this group 
+     * Removes student from the collection of students attending this group
      * @param student
      */
     public void removeStudent(Student student) {

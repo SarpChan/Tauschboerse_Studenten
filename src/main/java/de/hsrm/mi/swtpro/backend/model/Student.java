@@ -12,7 +12,7 @@ import javax.persistence.OneToMany;
 import java.util.Set;
 
 /**
- * A student is a user 
+ * A student is a user
  * Each student has an enrolment number and an email adress
  * as well as a exam regulation and their enrolment term
  */

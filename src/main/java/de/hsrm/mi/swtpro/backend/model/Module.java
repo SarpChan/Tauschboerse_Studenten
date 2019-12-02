@@ -20,7 +20,7 @@ import java.util.Set;
 @AllArgsConstructor
 @Builder
 public class Module {
-    
+
     @Id
     @Getter @Setter
     @GeneratedValue
@@ -35,18 +35,18 @@ public class Module {
     @Getter @Setter
     private int period;
 
-
+    @Singular("moduleInCurriculum")
     @Getter @Setter
     @OneToMany(mappedBy = "module")
-    private Set<ModuleInCurriculum> modulesInCurriculum = new HashSet<>();
+    private Set<ModuleInCurriculum> modulesInCurriculum ;
 
-
+    @Singular("course")
     @Getter @Setter
     @ManyToMany(mappedBy = "modules")
-    private Set<Course> courses = new HashSet<>();
-    
+    private Set<Course> courses ;
+
     /**
-     * Adds course to the collection of courses fitting this module 
+     * Adds course to the collection of courses fitting this module
      * @param course
      *
      */

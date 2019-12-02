@@ -22,30 +22,36 @@ import java.util.Set;
 public class CourseComponent {
 
     @Id
-    @Getter @Setter
+    @Getter
+    @Setter
     @GeneratedValue
     private long id;
 
-    @Getter @Setter
+    @Getter
+    @Setter
     private CourseType type;
 
-    @Getter @Setter
+    @Getter
+    @Setter
     private int creditPoints;
 
     @Getter
     @Setter
     private String exam;
 
-    @Getter @Setter
+    @Getter
+    @Setter
     @ManyToOne
     private Course course;
 
-
-    @Getter @Setter
+    @Singular("group")
+    @Getter
+    @Setter
     @OneToMany(mappedBy = "courseComponent")
-    private Set<Group> groups = new HashSet<>();
+    private Set<Group> groups;
 
-    @Getter @Setter
+    @Getter
+    @Setter
     @OneToOne(mappedBy = "courseComponent")
     private StudentPassedExam studentPassedExam;
 

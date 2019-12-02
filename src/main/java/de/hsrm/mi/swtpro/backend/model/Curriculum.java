@@ -14,7 +14,7 @@ import java.util.Set;
 @AllArgsConstructor
 @Builder
 public class Curriculum {
-    
+
     @Id
     @Getter @Setter
     @GeneratedValue
@@ -27,7 +27,8 @@ public class Curriculum {
     @ManyToOne
     private ExamRegulation examRegulation;
 
+    @Singular("moduleInCurriculum")
     @Getter @Setter
     @OneToMany(mappedBy = "curriculum")
-    private Set<ModuleInCurriculum> modulesInCurriculum = new HashSet<>();
+    private Set<ModuleInCurriculum> modulesInCurriculum ;
 }

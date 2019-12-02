@@ -21,7 +21,7 @@ import java.util.Set;
 @AllArgsConstructor
 @Builder
 public class University {
-    
+
     @Id
     @Getter @Setter
     @GeneratedValue
@@ -33,14 +33,14 @@ public class University {
     @Getter @Setter
     private String address;
 
-    @Getter @Setter
-
-    @OneToMany(mappedBy = "university")
-    private Set<Campus> campuses = new HashSet<>();
-
-
+    @Singular("campus")
     @Getter @Setter
     @OneToMany(mappedBy = "university")
-    private Set<FieldOfStudy> fieldsOfStudy = new HashSet<>();;
+    private Set<Campus> campuses ;
+
+    @Singular("fieldOfStudy")
+    @Getter @Setter
+    @OneToMany(mappedBy = "university")
+    private Set<FieldOfStudy> fieldsOfStudy ;
 
 }
