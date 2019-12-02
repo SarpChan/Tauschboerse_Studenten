@@ -15,6 +15,8 @@ public class CourseComponentTest {
 
     @Before
     public void setUp(){
+
+
         course = Course.builder()
                 .title("SuperCourse")
                 .build();

@@ -51,7 +51,6 @@ public class GroupRepositoryTest {
         Term term = Term.builder().build();
 
         Group group = Group.builder()
-                .id(17)
                 .dayOfWeek(DayOfWeek.MONDAY)
                 .startTime(LocalTime.of(14,0))
                 .endTime(LocalTime.of(15,0))
@@ -62,6 +61,7 @@ public class GroupRepositoryTest {
                 .groupChar('A')
                 .build();
 
+        entityManager.persist(term);
         entityManager.persist(course);
         entityManager.persist(courseComponent);
         entityManager.persist(user);

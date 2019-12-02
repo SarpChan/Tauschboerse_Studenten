@@ -5,8 +5,6 @@ import org.junit.Before;
 import org.junit.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
-import java.sql.Date;
-import java.time.LocalDate;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -20,7 +18,6 @@ public class FieldOfStudyTest {
     private FieldOfStudy fieldOfStudy;
     private StudyProgram studyProgram;
     private University university;
-    private Term term;
 
     @Before
     public void setUp(){
@@ -34,11 +31,11 @@ public class FieldOfStudyTest {
                 .degree("Master")
                 .build();
 
-        term = Term.builder()
-                .endDate(Date.valueOf(LocalDate.MIN))
-                .build();
         fieldOfStudy = FieldOfStudy.builder()
+                .id(17)
                 .title("Informatik")
+                .university(university)
+                .studyProgram(studyProgram)
                 .build();
     }
 
@@ -46,6 +43,8 @@ public class FieldOfStudyTest {
     public void whenGetTitle_thenReturnTitle(){
         assertEquals("Informatik",fieldOfStudy.getTitle());
     }
+
+
 
     @Test
     public void whenSetTitle_thenSaveTitle(){
