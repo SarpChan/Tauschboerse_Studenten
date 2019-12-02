@@ -57,9 +57,4 @@ public class Student extends Role {
     @ManyToMany(mappedBy = "students")
     private Set<Group> groups = new HashSet<>();
 
-    @Builder.Default
-    @Getter @Setter
-    @OneToMany(mappedBy = "student")
-    private Set<SwapOffer> swapOffers = new HashSet<>();
-
 }

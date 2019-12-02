@@ -77,16 +77,6 @@ public class Group {
     @OneToMany(mappedBy = "group")
     private Set<StudentPriorizesGroup> prioritizeGroups = new HashSet<>();
 
-    @Builder.Default
-    @Getter @Setter
-    @OneToMany(mappedBy = "toGroup")
-    private Set<SwapOffer> swapTos = new HashSet<>();
-
-    @Builder.Default
-    @Getter @Setter
-    @OneToMany(mappedBy = "fromGroup")
-    private Set<SwapOffer> swapFroms = new HashSet<>();
-
     /**
      * Adds student to the collection of students attending this group 
      * @param student
