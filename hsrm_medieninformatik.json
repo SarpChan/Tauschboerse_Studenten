@@ -1,25 +1,25 @@
 {
-  "id": 443,
+  "id": 507,
   "name": "Hochschule RheinMain",
   "address": "Kurt-Schuhmacher-Ring 18",
   "campuses": [
     {
-      "id": 444,
+      "id": 508,
       "name": "Unter den Eichen",
       "address": "Unter den Eichen 6",
-      "university": 443,
+      "university": 507,
       "buildings": [
         {
-          "id": 445,
+          "id": 509,
           "name": "Gebäude D",
-          "campus": 444,
+          "campus": 508,
           "rooms": [
             {
-              "id": 446,
+              "id": 510,
               "number": 14,
               "seats": 60,
-              "building": 445,
-              "groups": null
+              "building": 509,
+              "groups": []
             }
           ]
         }
@@ -28,207 +28,77 @@
   ],
   "fieldsOfStudy": [
     {
-      "id": 453,
+      "id": 517,
       "title": "DCSM",
-      "university": 443,
+      "university": 507,
       "studyPrograms": [
         {
-          "id": 452,
+          "id": 516,
           "title": "Medieninformatik",
           "degree": "Bachlor",
           "examRegulations": [
             {
-              "id": 448,
+              "id": 512,
               "date": 1506808800000,
               "rule": 0,
-              "studyProgram": 452,
+              "studyProgram": 516,
               "curriculums": [
                 {
-                  "id": 454,
+                  "id": 518,
                   "termPeriod": 1,
-                  "examRegulation": 448,
+                  "examRegulation": 512,
                   "modulesInCurriculum": [
                     {
-                      "id": 456,
+                      "id": 520,
                       "termPeriod": 1,
-                      "curriculum": 454,
+                      "curriculum": 518,
                       "module": {
-                        "id": 455,
+                        "id": 519,
                         "title": "Programmieren 3",
                         "creditPoints": 5,
                         "period": 1,
                         "modulesInCurriculum": [
-                          456
+                          520
                         ],
                         "courses": [
                           {
-                            "id": 457,
+                            "id": 521,
                             "title": "Programmieren 3",
                             "owner": {
-                              "id": 449,
+                              "id": 513,
                               "firstName": "Test",
                               "lastName": "User",
                               "loginName": "testUser",
                               "password": "test",
-                              "roles": null
+                              "roles": []
                             },
                             "modules": [
-                              455
+                              519
                             ],
                             "terms": [
                               {
-                                "id": 447,
+                                "id": 511,
                                 "startDate": 1569880800000,
                                 "endDate": 1585605600000,
                                 "period": 1,
                                 "courses": [
-                                  457
+                                  521
                                 ],
-                                "groups": null,
-                                "studentAttendsCourses": null,
-                                "enroledStudents": null
+                                "groups": [],
+                                "studentAttendsCourses": [],
+                                "enrolledStudents": []
                               }
                             ],
                             "courseComponents": [
                               {
-                                "id": 459,
-                                "type": "PRACTICE",
-                                "creditPoints": 0,
-                                "exam": "Praktische Tätigkeit",
-                                "course": 457,
-                                "groups": [
-                                  {
-                                    "id": 464,
-                                    "groupChar": "D",
-                                    "slots": 20,
-                                    "dayOfWeek": "FRIDAY",
-                                    "startTime": {
-                                      "hour": 10,
-                                      "minute": 0,
-                                      "second": 0,
-                                      "nano": 0
-                                    },
-                                    "endTime": {
-                                      "hour": 11,
-                                      "minute": 30,
-                                      "second": 0,
-                                      "nano": 0
-                                    },
-                                    "term": 447,
-                                    "courseComponent": 459,
-                                    "lecturer": {
-                                      "id": 451,
-                                      "user": 449,
-                                      "priviledge": 1,
-                                      "groups": null
-                                    },
-                                    "room": 446,
-                                    "students": [
-                                      {
-                                        "id": 450,
-                                        "user": 449,
-                                        "enrolementNumber": 123456,
-                                        "mail": "test@test.com",
-                                        "examRegulation": 448,
-                                        "enrolmentTerm": 447,
-                                        "attendCourses": [],
-                                        "prioritizeGroups": [],
-                                        "passedExams": [],
-                                        "groups": []
-                                      }
-                                    ],
-                                    "prioritizeGroups": []
-                                  },
-                                  {
-                                    "id": 461,
-                                    "groupChar": "A",
-                                    "slots": 20,
-                                    "dayOfWeek": "TUESDAY",
-                                    "startTime": {
-                                      "hour": 10,
-                                      "minute": 0,
-                                      "second": 0,
-                                      "nano": 0
-                                    },
-                                    "endTime": {
-                                      "hour": 11,
-                                      "minute": 30,
-                                      "second": 0,
-                                      "nano": 0
-                                    },
-                                    "term": 447,
-                                    "courseComponent": 459,
-                                    "lecturer": 451,
-                                    "room": 446,
-                                    "students": [
-                                      450
-                                    ],
-                                    "prioritizeGroups": []
-                                  },
-                                  {
-                                    "id": 463,
-                                    "groupChar": "C",
-                                    "slots": 20,
-                                    "dayOfWeek": "THURSDAY",
-                                    "startTime": {
-                                      "hour": 10,
-                                      "minute": 0,
-                                      "second": 0,
-                                      "nano": 0
-                                    },
-                                    "endTime": {
-                                      "hour": 11,
-                                      "minute": 30,
-                                      "second": 0,
-                                      "nano": 0
-                                    },
-                                    "term": 447,
-                                    "courseComponent": 459,
-                                    "lecturer": 451,
-                                    "room": 446,
-                                    "students": [
-                                      450
-                                    ],
-                                    "prioritizeGroups": []
-                                  },
-                                  {
-                                    "id": 462,
-                                    "groupChar": "B",
-                                    "slots": 20,
-                                    "dayOfWeek": "WEDNESDAY",
-                                    "startTime": {
-                                      "hour": 10,
-                                      "minute": 0,
-                                      "second": 0,
-                                      "nano": 0
-                                    },
-                                    "endTime": {
-                                      "hour": 11,
-                                      "minute": 30,
-                                      "second": 0,
-                                      "nano": 0
-                                    },
-                                    "term": 447,
-                                    "courseComponent": 459,
-                                    "lecturer": 451,
-                                    "room": 446,
-                                    "students": [
-                                      450
-                                    ],
-                                    "prioritizeGroups": []
-                                  }
-                                ],
-                                "studentPassedExam": null
-                              },
-                              {
-                                "id": 458,
+                                "id": 522,
                                 "type": "LECTURE",
                                 "creditPoints": 5,
                                 "exam": "Klausur",
-                                "course": 457,
+                                "course": 521,
                                 "groups": [
                                   {
-                                    "id": 460,
+                                    "id": 524,
                                     "groupChar": "A",
                                     "slots": 100,
                                     "dayOfWeek": "MONDAY",
@@ -244,12 +114,142 @@
                                       "second": 0,
                                       "nano": 0
                                     },
-                                    "term": 447,
-                                    "courseComponent": 458,
-                                    "lecturer": 451,
-                                    "room": 446,
+                                    "term": 511,
+                                    "courseComponent": 522,
+                                    "lecturer": {
+                                      "id": 515,
+                                      "user": 513,
+                                      "priviledge": 1,
+                                      "groups": []
+                                    },
+                                    "room": 510,
                                     "students": [
-                                      450
+                                      {
+                                        "id": 514,
+                                        "user": 513,
+                                        "enrolementNumber": 123456,
+                                        "mail": "test@test.com",
+                                        "examRegulation": 512,
+                                        "enrolmentTerm": 511,
+                                        "attendCourses": [],
+                                        "prioritizeGroups": [],
+                                        "passedExams": [],
+                                        "groups": []
+                                      }
+                                    ],
+                                    "prioritizeGroups": []
+                                  }
+                                ],
+                                "studentPassedExam": null
+                              },
+                              {
+                                "id": 523,
+                                "type": "PRACTICE",
+                                "creditPoints": 0,
+                                "exam": "Praktische Tätigkeit",
+                                "course": 521,
+                                "groups": [
+                                  {
+                                    "id": 525,
+                                    "groupChar": "A",
+                                    "slots": 20,
+                                    "dayOfWeek": "TUESDAY",
+                                    "startTime": {
+                                      "hour": 10,
+                                      "minute": 0,
+                                      "second": 0,
+                                      "nano": 0
+                                    },
+                                    "endTime": {
+                                      "hour": 11,
+                                      "minute": 30,
+                                      "second": 0,
+                                      "nano": 0
+                                    },
+                                    "term": 511,
+                                    "courseComponent": 523,
+                                    "lecturer": 515,
+                                    "room": 510,
+                                    "students": [
+                                      514
+                                    ],
+                                    "prioritizeGroups": []
+                                  },
+                                  {
+                                    "id": 528,
+                                    "groupChar": "D",
+                                    "slots": 20,
+                                    "dayOfWeek": "FRIDAY",
+                                    "startTime": {
+                                      "hour": 10,
+                                      "minute": 0,
+                                      "second": 0,
+                                      "nano": 0
+                                    },
+                                    "endTime": {
+                                      "hour": 11,
+                                      "minute": 30,
+                                      "second": 0,
+                                      "nano": 0
+                                    },
+                                    "term": 511,
+                                    "courseComponent": 523,
+                                    "lecturer": 515,
+                                    "room": 510,
+                                    "students": [
+                                      514
+                                    ],
+                                    "prioritizeGroups": []
+                                  },
+                                  {
+                                    "id": 527,
+                                    "groupChar": "C",
+                                    "slots": 20,
+                                    "dayOfWeek": "THURSDAY",
+                                    "startTime": {
+                                      "hour": 10,
+                                      "minute": 0,
+                                      "second": 0,
+                                      "nano": 0
+                                    },
+                                    "endTime": {
+                                      "hour": 11,
+                                      "minute": 30,
+                                      "second": 0,
+                                      "nano": 0
+                                    },
+                                    "term": 511,
+                                    "courseComponent": 523,
+                                    "lecturer": 515,
+                                    "room": 510,
+                                    "students": [
+                                      514
+                                    ],
+                                    "prioritizeGroups": []
+                                  },
+                                  {
+                                    "id": 526,
+                                    "groupChar": "B",
+                                    "slots": 20,
+                                    "dayOfWeek": "WEDNESDAY",
+                                    "startTime": {
+                                      "hour": 10,
+                                      "minute": 0,
+                                      "second": 0,
+                                      "nano": 0
+                                    },
+                                    "endTime": {
+                                      "hour": 11,
+                                      "minute": 30,
+                                      "second": 0,
+                                      "nano": 0
+                                    },
+                                    "term": 511,
+                                    "courseComponent": 523,
+                                    "lecturer": 515,
+                                    "room": 510,
+                                    "students": [
+                                      514
                                     ],
                                     "prioritizeGroups": []
                                   }
@@ -257,7 +257,7 @@
                                 "studentPassedExam": null
                               }
                             ],
-                            "studentAttendsCourses": null
+                            "studentAttendsCourses": []
                           }
                         ]
                       }
@@ -266,12 +266,12 @@
                 }
               ],
               "students": [
-                450
+                514
               ]
             }
           ],
           "fieldsOfStudy": [
-            453
+            517
           ]
         }
       ]
