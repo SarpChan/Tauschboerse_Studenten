@@ -29,7 +29,7 @@ public class Building {
     private String name;
 
     @Getter @Setter 
-    @ManyToOne(targetEntity = Campus.class, fetch = FetchType.LAZY)
+    @ManyToOne
     @JoinColumn(name = "campus_id")
     private Campus campus;
 

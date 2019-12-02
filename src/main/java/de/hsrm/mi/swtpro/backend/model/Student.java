@@ -9,7 +9,6 @@ import javax.persistence.Entity;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
-import java.util.HashSet;
 import java.util.Set;
 
 /**
@@ -37,24 +36,29 @@ public class Student extends Role {
     @ManyToOne
     private Term enrolmentTerm;
 
-    @Builder.Default
+    @Singular("attendCourse")
     @Getter @Setter
     @OneToMany(mappedBy = "student")
-    private Set<StudentAttendsCourse> attendCourses = new HashSet<>();
+    private Set<StudentAttendsCourse> attendCourses;
 
-    @Builder.Default
+    @Singular("prioritizeGroup")
     @Getter @Setter
     @OneToMany(mappedBy = "student")
-    private Set<StudentPriorizesGroup> prioritizeGroups = new HashSet<>();
+    private Set<StudentPrioritizesGroup> prioritizeGroups;
 
-    @Builder.Default
+    @Singular("passedExam")
     @Getter @Setter
     @OneToMany(mappedBy = "student")
-    private Set<StudentPassedExam> passedExams = new HashSet<>();
+    private Set<StudentPassedExam> passedExams;
 
-    @Builder.Default
+    @Singular("group")
     @Getter @Setter
     @ManyToMany(mappedBy = "students")
-    private Set<Group> groups = new HashSet<>();
+    private Set<Group> groups;
+
+    @Singular("swapOffer")
+    @Getter @Setter
+    @OneToMany(mappedBy = "student")
+    private Set<SwapOffer> swapOffers;
 
 }

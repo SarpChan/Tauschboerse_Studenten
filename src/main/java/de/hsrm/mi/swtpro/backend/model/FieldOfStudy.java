@@ -22,7 +22,7 @@ public class FieldOfStudy {
     @Id
     @Getter @Setter
     @GeneratedValue
-    private int id;
+    private long id;
 
     @Getter @Setter
     private String title;
@@ -35,8 +35,8 @@ public class FieldOfStudy {
     @Builder.Default
     @Getter @Setter
     @ManyToMany
-    @JoinTable(name = "fieldofStudy_studyProgram",
-            joinColumns = @JoinColumn(name = "fieldofStudy_id", referencedColumnName = "id"),
+    @JoinTable(name = "fieldOfStudy_studyProgram",
+            joinColumns = @JoinColumn(name = "fieldOfStudy_id", referencedColumnName = "id"),
             inverseJoinColumns = @JoinColumn(name = "studyProgram_id", referencedColumnName = "id"))
     private Set<StudyProgram> studyPrograms = new HashSet<>();
 
