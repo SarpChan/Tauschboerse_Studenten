@@ -35,7 +35,7 @@ public class StudyProgramRepositoryTest {
 
     @Test
     public void whenFindById_thenReturnStudyProgram(){
-            //Id geht nocht nicht
+            //TODO: ID gehen noch nicht richtig. Test folgend implementieren
     }
 
     @Test

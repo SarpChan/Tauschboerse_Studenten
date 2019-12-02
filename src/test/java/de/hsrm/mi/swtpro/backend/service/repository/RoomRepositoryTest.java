@@ -31,15 +31,13 @@ public class RoomRepositoryTest {
     @Before
     public void setUp(){
 
-        Building building = Building.builder()
-                .id(12)
+        building = Building.builder()
                 .name("Haus D")
                 .build();
 
 
 
         Room room = Room.builder()
-                .id(42)
                 .seats(170)
                 .number(28)
                 .building(building)
@@ -64,12 +62,12 @@ public class RoomRepositoryTest {
 
     @Test
     public void whenFindBySeats_thanReturnRoomList(){
-        assertThat(roomRepository.findBySeats(28), hasItem(hasProperty("seats", is(28))));
+        assertThat(roomRepository.findBySeats(170), hasItem(hasProperty("seats", is(170))));
     }
 
     @Test
     public void whenFindByBuilding_thanReturnRoomList(){
-
+        assertThat(roomRepository.findByBuilding(building), hasItem(hasProperty("number", is(28))));
     }
 
 

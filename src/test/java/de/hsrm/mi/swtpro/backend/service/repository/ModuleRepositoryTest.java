@@ -40,9 +40,10 @@ public class ModuleRepositoryTest {
                 .period(1)
                 .title("Analysis")
                 .creditPoints(55)
+                .courses(new HashSet<>(Collections.singletonList(course)))
                 .build();
         //
-        // .courses(new HashSet<>(Collections.singletonList(course)))
+        //
         entityManager.persist(course);
         entityManager.persist(module);
     }
@@ -70,10 +71,12 @@ public class ModuleRepositoryTest {
                 hasItem(hasProperty("creditPoints", is(55))));
     }
 
-    //:TODO Test geht nicht, ebenso die Persistenz einfuegen
+
     @Test
     public void findByCourses_theReturnModuleList(){
-        assertThat(moduleRepository.findByCourses(course), hasItem(hasProperty("title", is("Kurs"))));
+        //TODO: Irgendwo ein doofer Denkfehler (vermutlich in der Verschachtelungsebene falsche abgebogen)
+       assertThat(moduleRepository.findByCourses(course), hasItem(hasProperty("title", is("Kurs"))));
+
     }
 
 }

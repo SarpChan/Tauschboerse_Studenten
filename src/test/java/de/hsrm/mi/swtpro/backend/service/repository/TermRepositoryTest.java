@@ -57,17 +57,20 @@ public class TermRepositoryTest {
 
     @Test
     public void whenFindByCourses_thenReturnTermList(){
-        assertThat(termRepository.findByCourses(course), hasItem(hasProperty("title", is("Mathe"))));
+        //TODO: Bitte nochmal nachschauen
+        assertThat(termRepository.findByCourses(course), hasItem(hasProperty("period", is(2))));
     }
 
     @Test
     public void whenFindByStartDate_thenReturnTermList(){
-
+        assertThat(termRepository.findByStartDate(Date.valueOf(LocalDate.MIN)),
+                hasItem(hasProperty("startDate", is(Date.valueOf(LocalDate.MIN)))));
     }
 
     @Test
     public void whenFindByEndDate_thenReturnTermList(){
-
+        assertThat(termRepository.findByEndDate(Date.valueOf(LocalDate.MAX)),
+                hasItem(hasProperty("endDate", is(Date.valueOf(LocalDate.MAX)))));
     }
 
 }
