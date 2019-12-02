@@ -21,10 +21,12 @@ public class StudentRepositoryTest {
     @Autowired
     StudentRepository studentRepository;
 
+    private Student student;
+
     @Before
     public void setUp(){
 
-        Student student = Student.builder()
+        student = Student.builder()
                 .enrolementNumber(1742).build();
 
         entityManager.persist(student);
@@ -39,9 +41,8 @@ public class StudentRepositoryTest {
 
     @Test
     public void whenDeleteStudent_thanRemoveStudent(){
-        Student student = Student.builder().enrolementNumber(1717).build();
-        entityManager.persist(student);
-        assertThat(studentRepository.findByEnrolementNumber(1742), hasProperty("enrolementNumber", is(1717)));
+        studentRepository.delete(student);
+        assertEquals(studentRepository.findAll().size(), 0);
     }
 
 }
