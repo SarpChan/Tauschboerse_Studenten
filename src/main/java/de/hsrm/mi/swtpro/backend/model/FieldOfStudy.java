@@ -21,7 +21,7 @@ public class FieldOfStudy {
     @Id
     @Getter @Setter
     @GeneratedValue
-    private int id;
+    private long id;
 
     @Getter @Setter
     private String title;

@@ -74,19 +74,8 @@ public class Group {
     @Singular("prioritezeGroup")
     @Getter @Setter
     @OneToMany(mappedBy = "group")
-    private Set<StudentPriorizesGroup> prioritizeGroups;
+    private Set<StudentPrioritizesGroup> prioritizeGroups;
 
-    /*
-    @Singular("swapTo")
-    @Getter @Setter
-    @OneToMany(mappedBy = "toGroup")
-    private Set<SwapOffer> swapTos;
-
-    @Singular("swapFrom")
-    @Getter @Setter
-    @OneToMany(mappedBy = "fromGroup")
-    private Set<SwapOffer> swapFroms;
-    */
 
     /**
      * Adds student to the collection of students attending this group 

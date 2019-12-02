@@ -29,6 +29,7 @@ public class Room {
     private int seats;
 
     @Getter @Setter
+
     @ManyToOne
     @JoinColumn(name = "building_id")
     private Building building;
