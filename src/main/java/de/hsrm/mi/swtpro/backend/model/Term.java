@@ -36,22 +36,22 @@ public class Term {
     @Getter @Setter
     private int period;
 
-    @Builder.Default
+
     @Getter @Setter
     @ManyToMany(mappedBy = "terms")
     private Set<Course> courses = new HashSet<>();
 
-    @Builder.Default
+
     @Getter @Setter
     @OneToMany(mappedBy = "term")
     private Set<Group> groups = new HashSet<>();
 
-    @Builder.Default
+
     @Getter @Setter
     @OneToMany(mappedBy = "term")
     private Set<StudentAttendsCourse> studentAttendsCourses = new HashSet<>();
 
-    @Builder.Default
+
     @Getter @Setter
     @OneToMany(mappedBy = "enrolmentTerm")
     private Set<Student> enroledStudents = new HashSet<>();

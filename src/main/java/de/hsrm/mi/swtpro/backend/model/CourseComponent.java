@@ -40,7 +40,7 @@ public class CourseComponent {
     @ManyToOne
     private Course course;
 
-    @Builder.Default
+
     @Getter @Setter
     @OneToMany(mappedBy = "courseComponent")
     private Set<Group> groups = new HashSet<>();

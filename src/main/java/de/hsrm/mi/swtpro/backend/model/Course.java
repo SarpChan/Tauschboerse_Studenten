@@ -33,7 +33,7 @@ public class Course {
     @ManyToOne
     private User owner;
 
-    @Builder.Default
+
     @Getter @Setter
     @ManyToMany
     @JoinTable(name = "course_module",
@@ -41,7 +41,7 @@ public class Course {
             inverseJoinColumns = @JoinColumn(name = "module_id", referencedColumnName = "id"))
     private Set<Module> modules = new HashSet<>();
 
-    @Builder.Default
+
     @Getter @Setter
     @ManyToMany
     @JoinTable(name = "course_term",
@@ -49,12 +49,12 @@ public class Course {
             inverseJoinColumns = @JoinColumn(name = "term_id", referencedColumnName = "id"))
     private Set<Term> terms = new HashSet<>();
 
-    @Builder.Default
+
     @Getter @Setter
     @OneToMany(mappedBy = "course")
     private Set<CourseComponent> courseComponents = new HashSet<>();
 
-    @Builder.Default
+
     @Getter @Setter
     @OneToMany(mappedBy = "course")
     private Set<StudentAttendsCourse> studentAttendsCourses = new HashSet<>();

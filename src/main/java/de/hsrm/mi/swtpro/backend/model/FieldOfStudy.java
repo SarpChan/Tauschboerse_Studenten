@@ -32,7 +32,7 @@ public class FieldOfStudy {
     @JoinColumn(name="university_id")
     private University university;
 
-    @Builder.Default
+
     @Getter @Setter
     @ManyToMany
     @JoinTable(name = "fieldOfStudy_studyProgram",

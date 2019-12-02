@@ -39,7 +39,7 @@ public class User {
     @Getter @Setter 
     private String password;
 
-    @Builder.Default
+
     @Getter @Setter 
     @OneToMany(mappedBy = "user")
     private Set<Role> roles = new HashSet<>();

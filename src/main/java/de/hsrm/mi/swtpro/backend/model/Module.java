@@ -35,12 +35,12 @@ public class Module {
     @Getter @Setter
     private int period;
 
-    @Builder.Default
+
     @Getter @Setter
     @OneToMany(mappedBy = "module")
     private Set<ModuleInCurriculum> modulesInCurriculum = new HashSet<>();
 
-    @Builder.Default
+
     @Getter @Setter
     @ManyToMany(mappedBy = "modules")
     private Set<Course> courses = new HashSet<>();

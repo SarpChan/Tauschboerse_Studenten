@@ -36,12 +36,12 @@ public class ExamRegulation {
     @ManyToOne
     private StudyProgram studyProgram;
 
-    @Builder.Default
+
     @Getter @Setter
     @OneToMany(mappedBy = "examRegulation")
     private Set<Curriculum> curriculums = new HashSet<>();
 
-    @Builder.Default
+
     @Getter @Setter
     @OneToMany(mappedBy = "examRegulation")
     private Set<Student> students = new HashSet<>();

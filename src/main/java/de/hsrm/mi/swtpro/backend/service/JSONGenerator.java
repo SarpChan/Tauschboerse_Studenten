@@ -16,6 +16,7 @@ import java.io.IOException;
 import java.sql.Date;
 import java.time.DayOfWeek;
 import java.time.LocalTime;
+import java.util.HashSet;
 
 import org.springframework.transaction.annotation.Transactional;
 
@@ -42,17 +43,12 @@ public class JSONGenerator {
         entityManager.persist(ude);
         Building dBuilding = Building.builder().name("Gebäude D").campus(ude).build();
         entityManager.persist(dBuilding);
-
-
         Room r14 = Room.builder().number(14).seats(60).building(dBuilding).build();
         entityManager.persist(r14);
-
-
         Term ws1920 = Term.builder().startDate(Date.valueOf("2019-10-01")).endDate(Date.valueOf("2020-03-31")).period(1).build();
         entityManager.persist(ws1920);
         ExamRegulation po2017 = ExamRegulation.builder().date(Date.valueOf("2017-10-01")).build();
         entityManager.persist(po2017);
-
         User testUser = User.builder().firstName("Test").lastName("User").loginName("testUser").password("test").build();
         entityManager.persist(testUser);
         Student testStudent = Student.builder().user(testUser).enrolementNumber(123456)
@@ -60,9 +56,6 @@ public class JSONGenerator {
         entityManager.persist(testStudent);
         Lecturer testLecturer = Lecturer.builder().priviledge(1).user(testUser).build();
         entityManager.persist(testLecturer);
-
-
-
         StudyProgram medieninformatik = StudyProgram.builder().title("Medieninformatik").degree("Bachlor").build();
         entityManager.persist(medieninformatik);
         FieldOfStudy dcsm = FieldOfStudy.builder().title("DCSM").build();
@@ -97,52 +90,76 @@ public class JSONGenerator {
         StudentAttendsCourse studentAttendsCourse = StudentAttendsCourse.builder().student(testStudent).course(cProgrammieren3).term(ws1920).build();
         entityManager.persist(studentAttendsCourse);
 
+        uni.setCampuses(new HashSet<>());
+        uni.setFieldsOfStudy(new HashSet<>());
+        ude.setBuildings(new HashSet<>());
+        dcsm.setStudyPrograms(new HashSet<>());
+        dBuilding.setRooms(new HashSet<>());
+        medieninformatik.setExamRegulations(new HashSet<>());
+        medieninformatik.setFieldsOfStudy(new HashSet<>());
+        po2017.setCurriculums(new HashSet<>());
+        po2017.setStudents(new HashSet<>());
+        ws1920.setCourses(new HashSet<>());
+        curriculum.setModulesInCurriculum(new HashSet<>());
+        mProgrammieren3.setCourses(new HashSet<>());
+        mProgrammieren3.setModulesInCurriculum(new HashSet<>());
+        cProgrammieren3.setModules(new HashSet<>());
+        cProgrammieren3.setTerms(new HashSet<>());
+        cProgrammieren3.setCourseComponents(new HashSet<>());
+        prog3V.setGroups(new HashSet<>());
+        prog3P.setGroups(new HashSet<>());
+        prog3Vgroup.setStudents(new HashSet<>());
+        prog3PgroupA.setStudents(new HashSet<>());
+        prog3PgroupB.setStudents(new HashSet<>());
+        prog3PgroupC.setStudents(new HashSet<>());
+        prog3PgroupD.setStudents(new HashSet<>());
+
         uni.getCampuses().add(ude);
         uni.getFieldsOfStudy().add(dcsm);
-        ude.getBuildings().add(dBuilding);
-        dBuilding.getRooms().add(r14);
-        /*r14.getGroups().add(prog3Vgroup);
-        r14.getGroups().add(prog3PgroupA);
-        r14.getGroups().add(prog3PgroupB);
-        r14.getGroups().add(prog3PgroupC);
-        r14.getGroups().add(prog3PgroupD);*/
 
+        ude.getBuildings().add(dBuilding);
+
+        dBuilding.getRooms().add(r14);
 
         dcsm.setUniversity(uni);
         dcsm.getStudyPrograms().add(medieninformatik);
+
         medieninformatik.getExamRegulations().add(po2017);
         medieninformatik.getFieldsOfStudy().add(dcsm);
+
+        ws1920.addCourse(cProgrammieren3);
+
         po2017.getCurriculums().add(curriculum);
         po2017.getStudents().add(testStudent);
+        po2017.setStudyProgram(medieninformatik);
+
         curriculum.getModulesInCurriculum().add(moduleInCurriculum);
         curriculum.setExamRegulation(po2017);
+
         mProgrammieren3.addCourse(cProgrammieren3);
         mProgrammieren3.getModulesInCurriculum().add(moduleInCurriculum);
-        //mProgrammieren3.addCurriuculum(curriculum);
+
         cProgrammieren3.addCourseComponent(prog3V);
         cProgrammieren3.addCourseComponent(prog3P);
         cProgrammieren3.getModules().add(mProgrammieren3);
         cProgrammieren3.getTerms().add(ws1920);
+
         prog3V.addGroup(prog3Vgroup);
         prog3P.addGroup(prog3PgroupA);
         prog3P.addGroup(prog3PgroupB);
         prog3P.addGroup(prog3PgroupC);
         prog3P.addGroup(prog3PgroupD);
+
         prog3V.setExam("Klausur");
         prog3P.setExam("Praktische Tätigkeit");
+
         prog3Vgroup.addStudent(testStudent);
         prog3PgroupA.addStudent(testStudent);
         prog3PgroupB.addStudent(testStudent);
         prog3PgroupC.addStudent(testStudent);
         prog3PgroupD.addStudent(testStudent);
 
-        ws1920.addCourse(cProgrammieren3);
-        po2017.setStudyProgram(medieninformatik);
 
-        //entityManager.persist(uni);
-
-        //entityManager.close();
-        //entityManager.flush();
 
         ObjectMapper objectMapper = new ObjectMapper();
         try {

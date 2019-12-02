@@ -27,7 +27,6 @@ public class Curriculum {
     @ManyToOne
     private ExamRegulation examRegulation;
 
-    @Builder.Default
     @Getter @Setter
     @OneToMany(mappedBy = "curriculum")
     private Set<ModuleInCurriculum> modulesInCurriculum = new HashSet<>();

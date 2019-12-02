@@ -34,11 +34,11 @@ public class University {
     private String address;
 
     @Getter @Setter
-    @Builder.Default
+
     @OneToMany(mappedBy = "university")
     private Set<Campus> campuses = new HashSet<>();
 
-    @Builder.Default
+
     @Getter @Setter
     @OneToMany(mappedBy = "university")
     private Set<FieldOfStudy> fieldsOfStudy = new HashSet<>();;

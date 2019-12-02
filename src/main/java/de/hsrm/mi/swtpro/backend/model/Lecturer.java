@@ -19,7 +19,7 @@ public class Lecturer extends Role {
     @Getter @Setter
     private int priviledge;
 
-    @Builder.Default
+
     @Getter @Setter
     @OneToMany(mappedBy = "lecturer")
     private Set<Group> groups = new HashSet<>();

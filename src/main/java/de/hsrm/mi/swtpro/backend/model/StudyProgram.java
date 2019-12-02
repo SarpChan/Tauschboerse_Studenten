@@ -29,12 +29,12 @@ public class StudyProgram {
     @Getter @Setter
     private String degree;
 
-    @Builder.Default
+
     @Getter @Setter
     @OneToMany(mappedBy = "studyProgram")
     private Set<ExamRegulation> examRegulations = new HashSet<>();
 
-    @Builder.Default
+
     @Getter @Setter
     @ManyToMany(mappedBy = "studyPrograms")
     private Set<FieldOfStudy> fieldsOfStudy = new HashSet<>();
