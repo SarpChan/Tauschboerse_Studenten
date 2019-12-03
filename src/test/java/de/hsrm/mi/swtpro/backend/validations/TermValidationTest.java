@@ -25,14 +25,12 @@ public class TermValidationTest {
     public void setUp() {
         ValidatorFactory factory = Validation.buildDefaultValidatorFactory();
         validator = factory.getValidator();
-        long millis=System.currentTimeMillis();
-        startDate = new Date(millis);
-        endDate = new Date(millis);
+        startDate = new Date(System.currentTimeMillis());
+        endDate = new Date(System.currentTimeMillis());
     }
 
     @Test
     public void whenStartDateNotNull_thenNoConstraintViolation() {
-
         term = Term.builder()
         .id(17)
         .startDate(startDate)
@@ -46,7 +44,6 @@ public class TermValidationTest {
     }
     @Test
     public void whenStartDateNull_thenConstraintViolation() {
-
         term = Term.builder()
         .id(17)
         .startDate(null)
@@ -60,7 +57,6 @@ public class TermValidationTest {
     }
     @Test
     public void whenEndDateNotNull_thenNoConstraintViolation() {
-
         term = Term.builder()
         .id(17)
         .startDate(startDate)
@@ -74,7 +70,6 @@ public class TermValidationTest {
     }
     @Test
     public void whenEndDateNull_thenConstraintViolation() {
-
         term = Term.builder()
         .id(17)
         .startDate(startDate)
@@ -88,7 +83,6 @@ public class TermValidationTest {
     }
     @Test
     public void whenPeriodNotNull_thenNoConstraintViolation() {
-
         term = Term.builder()
         .id(17)
         .startDate(startDate)

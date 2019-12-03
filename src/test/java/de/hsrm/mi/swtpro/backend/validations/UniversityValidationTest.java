@@ -58,7 +58,6 @@ public class UniversityValidationTest {
         Set<ConstraintViolation<University>> violations = validator.validate(university);
  
         Assert.assertEquals(0, violations.size());
-        assertFalse(violations.)
     }
     @Test
     public void whenAddressmpty_thenConstraintViolation() {
