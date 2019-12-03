@@ -13,7 +13,7 @@ import org.junit.Test;
 
 import de.hsrm.mi.swtpro.backend.model.Curriculum;
 import de.hsrm.mi.swtpro.backend.model.Module;
-import de.hsrm.mi.swtpro.backend.model.ModuleInCurriculum;;
+import de.hsrm.mi.swtpro.backend.model.ModuleInCurriculum;
 
 
 
