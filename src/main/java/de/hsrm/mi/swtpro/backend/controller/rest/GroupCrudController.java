@@ -53,8 +53,8 @@ public class GroupCrudController {
      */
     @GetMapping(path = "/group/read", produces = MediaType.APPLICATION_JSON_VALUE)
     public Group findGroup(@RequestParam("groupID") long groupID) throws GroupNotFoundException {
-        if (groupRepository.findById(groupID) != null) {
-            return groupRepository.findById(groupID);
+        if (groupRepository.findById(groupID).isPresent()) {
+            return groupRepository.findById(groupID).get();
         } else {
             throw new GroupNotFoundException("Group not found");
         }
@@ -68,7 +68,7 @@ public class GroupCrudController {
      */
     @DeleteMapping(path = "/group/delete", consumes = "application/json")
     public void deleteGroup(@RequestBody Group group) throws GroupNotFoundException {
-        if (groupRepository.findById(group.getId()) != null) {
+        if (groupRepository.findById(group.getId()).isPresent()) {
             groupRepository.delete(group);
         } else {
             throw new GroupNotFoundException("Group not found");

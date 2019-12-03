@@ -9,7 +9,6 @@ import java.util.List;
 
 @Repository
 public interface ModuleRepository extends JpaRepository<Module,Long> {
-    public Module findById(long id);
     public List<Module> findByTitle(String title);
     public List<Module> findByCreditPoints(int creditPoints);
     public List<Module> findByCourses(Course course);

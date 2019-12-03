@@ -53,8 +53,8 @@ public class CurriculumCrudController {
      */
     @GetMapping(path = "/curriculum/read", produces = MediaType.APPLICATION_JSON_VALUE)
     public Curriculum findCurriculum(@RequestParam("curriculumID") long curriculumID) throws CurriculumNotFoundException {
-        if (curriculumRepository.findById(curriculumID) != null) {
-            return curriculumRepository.findById(curriculumID);
+        if (curriculumRepository.findById(curriculumID).isPresent()) {
+            return curriculumRepository.findById(curriculumID).get();
         } else {
             throw new CurriculumNotFoundException("Curriculum not found");
         }
@@ -68,7 +68,7 @@ public class CurriculumCrudController {
      */
     @DeleteMapping(path = "/curriculum/delete", consumes = "application/json")
     public void deleteCurriculum(@RequestBody Curriculum curriculum) throws CurriculumNotFoundException {
-        if (curriculumRepository.findById(curriculum.getId()) != null) {
+        if (curriculumRepository.findById(curriculum.getId()).isPresent()) {
             curriculumRepository.delete(curriculum);
         } else {
             throw new CurriculumNotFoundException("Curriculum not found");

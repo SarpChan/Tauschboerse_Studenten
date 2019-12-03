@@ -53,8 +53,8 @@ public class BuildingCrudController {
      */
     @GetMapping(path = "/building/read", produces = MediaType.APPLICATION_JSON_VALUE)
     public Building findBuilding(@RequestParam("buildingID") long buildingID) throws BuildingNotFoundException {
-        if (buildingRepository.findById(buildingID) != null) {
-            return buildingRepository.findById(buildingID);
+        if (buildingRepository.findById(buildingID).isPresent()) {
+            return buildingRepository.findById(buildingID).get();
         } else {
             throw new BuildingNotFoundException("Building not found");
         }
@@ -68,7 +68,7 @@ public class BuildingCrudController {
      */
     @DeleteMapping(path = "/building/delete", consumes = "application/json")
     public void deleteBuilding(@RequestBody Building building) throws BuildingNotFoundException {
-        if (buildingRepository.findById(building.getId()) != null) {
+        if (buildingRepository.findById(building.getId()).isPresent()) {
             buildingRepository.delete(building);
         } else {
             throw new BuildingNotFoundException("Building not found");

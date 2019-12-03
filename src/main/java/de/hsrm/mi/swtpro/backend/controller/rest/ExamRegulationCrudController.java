@@ -53,8 +53,8 @@ public class ExamRegulationCrudController {
      */
     @GetMapping(path = "/examregulation/read", produces = MediaType.APPLICATION_JSON_VALUE)
     public ExamRegulation findExamRegulation(@RequestParam("examregulationID") long examregulationID) throws ExamRegulationNotFoundException {
-        if (examregulationRepository.findById(examregulationID) != null) {
-            return examregulationRepository.findById(examregulationID);
+        if (examregulationRepository.findById(examregulationID).isPresent()) {
+            return examregulationRepository.findById(examregulationID).get();
         } else {
             throw new ExamRegulationNotFoundException("ExamRegulation not found");
         }
@@ -68,7 +68,7 @@ public class ExamRegulationCrudController {
      */
     @DeleteMapping(path = "/examregulation/delete", consumes = "application/json")
     public void deleteExamRegulation(@RequestBody ExamRegulation examregulation) throws ExamRegulationNotFoundException {
-        if (examregulationRepository.findById(examregulation.getId()) != null) {
+        if (examregulationRepository.findById(examregulation.getId()).isPresent()) {
             examregulationRepository.delete(examregulation);
         } else {
             throw new ExamRegulationNotFoundException("ExamRegulation not found");

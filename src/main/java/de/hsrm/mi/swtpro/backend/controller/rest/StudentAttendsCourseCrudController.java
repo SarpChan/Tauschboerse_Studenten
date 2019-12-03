@@ -55,8 +55,8 @@ public class StudentAttendsCourseCrudController {
      */
     @GetMapping(path = "/studentAttendsCourse/read", produces = MediaType.APPLICATION_JSON_VALUE)
     public StudentAttendsCourse findStudentAttendsCourse(@RequestParam("studentAttendsCourseID") long studentAttendsCourseID) throws StudentAttendsCourseNotFoundException {
-        if (studentAttendsCourseRepository.findById(studentAttendsCourseID) != null) {
-            return studentAttendsCourseRepository.findById(studentAttendsCourseID);
+        if (studentAttendsCourseRepository.findById(studentAttendsCourseID).isPresent()) {
+            return studentAttendsCourseRepository.findById(studentAttendsCourseID).get();
         } else {
             throw new StudentAttendsCourseNotFoundException("StudentAttendsCourse not found");
         }
@@ -71,7 +71,7 @@ public class StudentAttendsCourseCrudController {
      */
     @DeleteMapping(path = "/studentAttendsCourse/delete", consumes = "application/json")
     public void deleteStudentAttendsCourse(@RequestBody StudentAttendsCourse studentAttendsCourse) throws StudentAttendsCourseNotFoundException {
-        if (studentAttendsCourseRepository.findById(studentAttendsCourse.getId()) != null) {
+        if (studentAttendsCourseRepository.findById(studentAttendsCourse.getId()).isPresent()) {
             studentAttendsCourseRepository.delete(studentAttendsCourse);
         } else {
             throw new StudentAttendsCourseNotFoundException("StudentAttendsCourse not found");

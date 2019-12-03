@@ -53,8 +53,8 @@ public class RoomCrudController {
      */
     @GetMapping(path = "/room/read", produces = MediaType.APPLICATION_JSON_VALUE)
     public Room findRoom(@RequestParam("roomID") long roomID) throws RoomNotFoundException {
-        if (roomRepository.findById(roomID) != null) {
-            return roomRepository.findById(roomID);
+        if (roomRepository.findById(roomID).isPresent()) {
+            return roomRepository.findById(roomID).get();
         } else {
             throw new RoomNotFoundException("Room not found");
         }
@@ -68,7 +68,7 @@ public class RoomCrudController {
      */
     @DeleteMapping(path = "/room/delete", consumes = "application/json")
     public void deleteRoom(@RequestBody Room room) throws RoomNotFoundException {
-        if (roomRepository.findById(room.getId()) != null) {
+        if (roomRepository.findById(room.getId()).isPresent()) {
             roomRepository.delete(room);
         } else {
             throw new RoomNotFoundException("Room not found");

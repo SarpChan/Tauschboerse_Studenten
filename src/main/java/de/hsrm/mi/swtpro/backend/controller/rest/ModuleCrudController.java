@@ -53,8 +53,8 @@ public class ModuleCrudController {
      */
     @GetMapping(path = "/module/read", produces = MediaType.APPLICATION_JSON_VALUE)
     public Module findModule(@RequestParam("moduleID") long moduleID) throws ModuleNotFoundException {
-        if (moduleRepository.findById(moduleID) != null) {
-            return moduleRepository.findById(moduleID);
+        if (moduleRepository.findById(moduleID).isPresent()) {
+            return moduleRepository.findById(moduleID).get();
         } else {
             throw new ModuleNotFoundException("Module not found");
         }
@@ -68,7 +68,7 @@ public class ModuleCrudController {
      */
     @DeleteMapping(path = "/module/delete", consumes = "application/json")
     public void deleteModule(@RequestBody Module module) throws ModuleNotFoundException {
-        if (moduleRepository.findById(module.getId()) != null) {
+        if (moduleRepository.findById(module.getId()).isPresent()) {
             moduleRepository.delete(module);
         } else {
             throw new ModuleNotFoundException("Module not found");

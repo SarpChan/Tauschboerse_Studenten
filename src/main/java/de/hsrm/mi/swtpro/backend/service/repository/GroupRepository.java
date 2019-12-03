@@ -12,7 +12,6 @@ import java.util.List;
 
 @Repository
 public interface GroupRepository extends JpaRepository<Group,Long> {
-    public Group findById(long term);
     public List<Group> findByTerm(Term term);
     public List<Group> findByCourseComponent(CourseComponent courseComponent);
     public List<Group> findByDayOfWeek(DayOfWeek dayOfWeek);

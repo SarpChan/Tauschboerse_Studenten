@@ -8,7 +8,6 @@ import java.util.Date;
 import java.util.List;
 
 public interface TermRepository extends JpaRepository<Term,Long> {
-    public Term findById(long id);
     public List<Term> findByPeriod(int period);
     public  List<Term> findByCourses(Course course);
     public  List<Term> findByStartDate(Date date);

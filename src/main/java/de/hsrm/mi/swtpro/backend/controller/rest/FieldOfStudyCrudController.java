@@ -53,8 +53,8 @@ public class FieldOfStudyCrudController {
      */
     @GetMapping(path = "/fieldofstudy/read", produces = MediaType.APPLICATION_JSON_VALUE)
     public FieldOfStudy findFieldOfStudy(@RequestParam("fieldofstudyID") long fieldofstudyID) throws FieldOfStudyNotFoundException {
-        if (fieldofstudyRepository.findById(fieldofstudyID) != null) {
-            return fieldofstudyRepository.findById(fieldofstudyID);
+        if (fieldofstudyRepository.findById(fieldofstudyID).isPresent()) {
+            return fieldofstudyRepository.findById(fieldofstudyID).get();
         } else {
             throw new FieldOfStudyNotFoundException("FieldOfStudy not found");
         }
@@ -68,7 +68,7 @@ public class FieldOfStudyCrudController {
      */
     @DeleteMapping(path = "/fieldofstudy/delete", consumes = "application/json")
     public void deleteFieldOfStudy(@RequestBody FieldOfStudy fieldofstudy) throws FieldOfStudyNotFoundException {
-        if (fieldofstudyRepository.findById(fieldofstudy.getId()) != null) {
+        if (fieldofstudyRepository.findById(fieldofstudy.getId()).isPresent()) {
             fieldofstudyRepository.delete(fieldofstudy);
         } else {
             throw new FieldOfStudyNotFoundException("FieldOfStudy not found");

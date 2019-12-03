@@ -10,7 +10,5 @@ import java.util.List;
 public interface CampusRepository extends JpaRepository<Campus,String> {
     public List<Campus> findByName(String name);
 
-    public Campus findByAddress(String adress);
-
-    public Campus findById(long id);
+    public Campus findByAddress(String address);
 }

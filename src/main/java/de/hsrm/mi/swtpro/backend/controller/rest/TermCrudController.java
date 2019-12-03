@@ -53,8 +53,8 @@ public class TermCrudController {
      */
     @GetMapping(path = "/term/read", produces = MediaType.APPLICATION_JSON_VALUE)
     public Term findTerm(@RequestParam("termID") long termID) throws TermNotFoundException {
-        if (termRepository.findById(termID) != null) {
-            return termRepository.findById(termID);
+        if (termRepository.findById(termID).isPresent()) {
+            return termRepository.findById(termID).get();
         } else {
             throw new TermNotFoundException("Term not found");
         }
@@ -68,7 +68,7 @@ public class TermCrudController {
      */
     @DeleteMapping(path = "/term/delete", consumes = "application/json")
     public void deleteTerm(@RequestBody Term term) throws TermNotFoundException {
-        if (termRepository.findById(term.getId()) != null) {
+        if (termRepository.findById(term.getId()).isPresent()) {
             termRepository.delete(term);
         } else {
             throw new TermNotFoundException("Term not found");

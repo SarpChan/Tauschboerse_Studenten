@@ -8,7 +8,6 @@ import java.util.List;
 
 @Repository
 public interface StudyProgramRepository extends JpaRepository<StudyProgram,Long>{
-    public StudyProgram findById(long id);
     public List<StudyProgram> findByTitle(String title);
     public List<StudyProgram> findByDegree(String degree);
 }

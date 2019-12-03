@@ -53,8 +53,8 @@ public class CourseComponentCrudController {
      */
     @GetMapping(path = "/coursecomponent/read", produces = MediaType.APPLICATION_JSON_VALUE)
     public CourseComponent findCourseComponent(@RequestParam("coursecomponentID") long coursecomponentID) throws CourseComponentNotFoundException {
-        if (courseComponentRepository.findById(coursecomponentID) != null) {
-            return courseComponentRepository.findById(coursecomponentID);
+        if (courseComponentRepository.findById(coursecomponentID).isPresent()) {
+            return courseComponentRepository.findById(coursecomponentID).get();
         } else {
             throw new CourseComponentNotFoundException("CourseComponent not found");
         }

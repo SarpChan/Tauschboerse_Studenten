@@ -55,8 +55,8 @@ public class LecturerCrudController {
      */
     @GetMapping(path = "/lecturer/read", produces = MediaType.APPLICATION_JSON_VALUE)
     public Lecturer findLecturer(@RequestParam("lecturerID") long lecturerID) throws LecturerNotFoundException {
-        if (lecturerRepository.findById(lecturerID) != null) {
-            return lecturerRepository.findById(lecturerID);
+        if (lecturerRepository.findById(lecturerID).isPresent()) {
+            return lecturerRepository.findById(lecturerID).get();
         } else {
             throw new LecturerNotFoundException("Lecturer not found");
         }
@@ -71,7 +71,7 @@ public class LecturerCrudController {
      */
     @DeleteMapping(path = "/lecturer/delete", consumes = "application/json")
     public void deleteLecturer(@RequestBody Lecturer lecturer) throws LecturerNotFoundException {
-        if (lecturerRepository.findById(lecturer.getId()) != null) {
+        if (lecturerRepository.findById((long) lecturer.getId()).isPresent()) {
             lecturerRepository.delete(lecturer);
         } else {
             throw new LecturerNotFoundException("Lecturer not found");

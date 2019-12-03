@@ -55,8 +55,8 @@ public class ModuleInCurriculumCrudController {
      */
     @GetMapping(path = "/moduleInCurriculum/read", produces = MediaType.APPLICATION_JSON_VALUE)
     public ModuleInCurriculum findModuleInCurriculum(@RequestParam("moduleInCurriculumID") long moduleInCurriculumID) throws ModuleInCurriculumNotFoundException {
-        if (moduleInCurriculumRepository.findById(moduleInCurriculumID) != null) {
-            return moduleInCurriculumRepository.findById(moduleInCurriculumID);
+        if (moduleInCurriculumRepository.findById(moduleInCurriculumID).isPresent()) {
+            return moduleInCurriculumRepository.findById(moduleInCurriculumID).get();
         } else {
             throw new ModuleInCurriculumNotFoundException("ModuleInCurriculum not found");
         }
@@ -71,7 +71,7 @@ public class ModuleInCurriculumCrudController {
      */
     @DeleteMapping(path = "/moduleInCurriculum/delete", consumes = "application/json")
     public void deleteModuleInCurriculum(@RequestBody ModuleInCurriculum moduleInCurriculum) throws ModuleInCurriculumNotFoundException {
-        if (moduleInCurriculumRepository.findById(moduleInCurriculum.getId()) != null) {
+        if (moduleInCurriculumRepository.findById(moduleInCurriculum.getId()).isPresent()) {
             moduleInCurriculumRepository.delete(moduleInCurriculum);
         } else {
             throw new ModuleInCurriculumNotFoundException("ModuleInCurriculum not found");

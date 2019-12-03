@@ -55,8 +55,8 @@ public class StudentPassedExamCrudController {
      */
     @GetMapping(path = "/studentPassedExam/read", produces = MediaType.APPLICATION_JSON_VALUE)
     public StudentPassedExam findStudentPassedExam(@RequestParam("studentPassedExamID") long studentPassedExamID) throws StudentPassedExamNotFoundException {
-        if (studentPassedExamRepository.findById(studentPassedExamID) != null) {
-            return studentPassedExamRepository.findById(studentPassedExamID);
+        if (studentPassedExamRepository.findById(studentPassedExamID).isPresent()) {
+            return studentPassedExamRepository.findById(studentPassedExamID).get();
         } else {
             throw new StudentPassedExamNotFoundException("StudentPassedExam not found");
         }
@@ -71,7 +71,7 @@ public class StudentPassedExamCrudController {
      */
     @DeleteMapping(path = "/studentPassedExam/delete", consumes = "application/json")
     public void deleteStudentPassedExam(@RequestBody StudentPassedExam studentPassedExam) throws StudentPassedExamNotFoundException {
-        if (studentPassedExamRepository.findById(studentPassedExam.getId()) != null) {
+        if (studentPassedExamRepository.findById(studentPassedExam.getId()).isPresent()) {
             studentPassedExamRepository.delete(studentPassedExam);
         } else {
             throw new StudentPassedExamNotFoundException("StudentPassedExam not found");

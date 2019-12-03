@@ -8,6 +8,5 @@ import java.util.List;
 
 @Repository
 public interface BuildingRepository extends JpaRepository<Building,Long>{
-    public Building findById(long id);
     public List<Building> findByName(String name);
 }

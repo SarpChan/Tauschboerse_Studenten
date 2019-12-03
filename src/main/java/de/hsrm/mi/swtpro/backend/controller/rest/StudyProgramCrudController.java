@@ -53,8 +53,8 @@ public class StudyProgramCrudController {
      */
     @GetMapping(path = "/studyprogram/read", produces = MediaType.APPLICATION_JSON_VALUE)
     public StudyProgram findStudyProgram(@RequestParam("studyprogramID") long studyprogramID) throws StudyProgramNotFoundException {
-        if (studyprogramRepository.findById(studyprogramID) != null) {
-            return studyprogramRepository.findById(studyprogramID);
+        if (studyprogramRepository.findById(studyprogramID).isPresent()) {
+            return studyprogramRepository.findById(studyprogramID).get();
         } else {
             throw new StudyProgramNotFoundException("StudyProgram not found");
         }
@@ -68,7 +68,7 @@ public class StudyProgramCrudController {
      */
     @DeleteMapping(path = "/studyprogram/delete", consumes = "application/json")
     public void deleteStudyProgram(@RequestBody StudyProgram studyprogram) throws StudyProgramNotFoundException {
-        if (studyprogramRepository.findById(studyprogram.getId()) != null) {
+        if (studyprogramRepository.findById(studyprogram.getId()).isPresent()) {
             studyprogramRepository.delete(studyprogram);
         } else {
             throw new StudyProgramNotFoundException("StudyProgram not found");
