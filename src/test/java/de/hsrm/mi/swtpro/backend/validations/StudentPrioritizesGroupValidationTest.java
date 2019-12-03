@@ -64,6 +64,7 @@ public class StudentPrioritizesGroupValidationTest {
         studentPriorizesGroup = StudentPriorizesGroup.builder()
         .id(17)
         .priority(17)
+        .student(null)
         .group(group)
         .build();
         
@@ -90,6 +91,7 @@ public class StudentPrioritizesGroupValidationTest {
         .id(17)
         .priority(17)
         .student(student)
+        .group(null)
         .build();
         
         Set<ConstraintViolation<StudentPriorizesGroup>> violations = validator.validate(studentPriorizesGroup);
