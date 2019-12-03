@@ -108,7 +108,7 @@ public class SwapOfferValidationTest {
         Assert.assertEquals(0, violations.size());
     }
     @Test
-    public void whenFromGroupNull_thenNoConstraintViolation() {
+    public void whenFromGroupNull_thenConstraintViolation() {
         swapOffer = SwapOffer.builder()
         .id(17)
         .date(date)
@@ -135,7 +135,7 @@ public class SwapOfferValidationTest {
         Assert.assertEquals(0, violations.size());
     }
     @Test
-    public void whenToGroupNull_thenNoConstraintViolation() {
+    public void whenToGroupNull_thenConstraintViolation() {
         swapOffer = SwapOffer.builder()
         .id(17)
         .date(date)

@@ -61,7 +61,7 @@ public class StudyProgramValidationTest {
         Assert.assertEquals(0, violations.size());
     }
     @Test
-    public void whenDegreeEmpty_thenNoConstraintViolation() {
+    public void whenDegreeEmpty_thenConstraintViolation() {
         studyProgram = StudyProgram.builder()
         .id(17)
         .title("Computer Science")
