@@ -1,5 +1,7 @@
 package de.hsrm.mi.swtpro.backend.service.repository;
 
+import de.hsrm.mi.swtpro.backend.model.ExamRegulation;
+import de.hsrm.mi.swtpro.backend.model.FieldOfStudy;
 import de.hsrm.mi.swtpro.backend.model.StudyProgram;
 import org.junit.Before;
 import org.junit.Test;
@@ -24,15 +26,28 @@ public class StudyProgramRepositoryTest {
     StudyProgramRepository studyProgramRepository;
 
     private long id;
+    private ExamRegulation examRegulation;
+    private FieldOfStudy fieldOfStudy;
 
     @Before
     public void setUp(){
+
+        fieldOfStudy = FieldOfStudy.builder()
+                .build();
+
         StudyProgram  studyProgram = StudyProgram.builder()
                 .degree("Bsc")
+                .fieldOfStudy(fieldOfStudy)
                 .title("Mind")
                 .build();
 
+        examRegulation = ExamRegulation.builder()
+                .studyProgram(studyProgram)
+                .build();
+
         entityManager.persist(studyProgram);
+        entityManager.persist(fieldOfStudy);
+        entityManager.persist(examRegulation);
         id = studyProgram.getId();
     }
 
@@ -51,5 +66,19 @@ public class StudyProgramRepositoryTest {
     @Test
     public void whenFindByDegree_thenReturnStudyProgramList(){
         assertThat(studyProgramRepository.findByDegree("Bsc"), hasItem(hasProperty("degree", is("Bsc"))));
+    }
+
+    @Test
+    public void whenFindByExamRegulation_thenReturnStudyProgramList(){
+        assertThat(studyProgramRepository.findByExamRegulations(examRegulation),hasItem(
+                hasProperty("degree", is("Bsc")))
+        );
+    }
+
+    @Test
+    public void whenFindByFieldOfStudy_thenReturnStudyProgramList(){
+        assertThat(studyProgramRepository.findByFieldsOfStudy(fieldOfStudy),hasItem(
+                hasProperty("degree", is("Bsc")))
+        );
     }
 }
