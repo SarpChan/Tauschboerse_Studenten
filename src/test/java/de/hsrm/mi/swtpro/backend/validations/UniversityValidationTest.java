@@ -60,7 +60,7 @@ public class UniversityValidationTest {
         Assert.assertEquals(0, violations.size());
     }
     @Test
-    public void whenAddressmpty_thenConstraintViolation() {
+    public void whenAddressEmpty_thenConstraintViolation() {
         university = University.builder()
         .id(17)
         .name("Hochschule RheinMain")
