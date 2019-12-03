@@ -1,67 +1,55 @@
+
 package de.hsrm.mi.swtpro.backend.validations;
 
 import static org.junit.Assert.assertFalse;
-import java.util.Set;
 
+import java.util.Set;
 import javax.validation.ConstraintViolation;
 import javax.validation.Validation;
 import javax.validation.Validator;
 import javax.validation.ValidatorFactory;
-
-
 import org.junit.Before;
 import org.junit.Test;
-
-import de.hsrm.mi.swtpro.backend.model.Building;
-import de.hsrm.mi.swtpro.backend.model.Campus;
+import de.hsrm.mi.swtpro.backend.model.FieldOfStudy;
 import de.hsrm.mi.swtpro.backend.model.University;
 
 
-public class BuildingValidationTest {
-
+public class FieldOfStudyValidationTest {
     private Validator validator;
-    private  Campus campus;
-
+    private University university;
 
     @Before
     public void setUp() {
         ValidatorFactory factory = Validation.buildDefaultValidatorFactory();
         validator = factory.getValidator();
 
-
-        University university = University.builder()
+         university = University.builder()
         .id(20)
         .name("Name")
         .address("55555 Wiesbaden Strasse 17")
         .build();
+        
+    }
 
-        campus =  Campus.builder()
+    @Test
+    public void whenTitleEmpty() {
+        FieldOfStudy fieldOfStudy = FieldOfStudy.builder()
         .id(10)
-        .name("name")
-        .address("55555 Wiesbaden Strasse 17")
         .university(university)
         .build();
-    }
-       
-    @Test
-    public void whenCampusNull() {
-        Building building =  Building.builder()
-        .id(10)
-        .name("Name")
-        .build();
-    
-        Set<ConstraintViolation<Building>> violations = validator.validate(building);
+
+        Set<ConstraintViolation<FieldOfStudy>> violations = validator.validate(fieldOfStudy);
         assertFalse(violations.isEmpty());
     }
 
     @Test
-    public void whenNameEmpty() {
-        Building building =  Building.builder()
+    public void whenUniversityNull() {
+        FieldOfStudy fieldOfStudy = FieldOfStudy.builder()
         .id(10)
-        .campus(campus)
+        .title("title")
         .build();
-    
-        Set<ConstraintViolation<Building>> violations = validator.validate(building);
+
+        Set<ConstraintViolation<FieldOfStudy>> violations = validator.validate(fieldOfStudy);
         assertFalse(violations.isEmpty());
     }
 }
