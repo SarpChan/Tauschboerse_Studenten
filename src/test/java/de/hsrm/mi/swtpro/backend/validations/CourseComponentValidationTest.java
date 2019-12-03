@@ -15,13 +15,10 @@ import de.hsrm.mi.swtpro.backend.model.CourseType;
 import de.hsrm.mi.swtpro.backend.model.User;
 
 public class CourseComponentValidationTest {
-
     private Validator validator;
-    
     private User owner;
     private Course course;
     private CourseType courseType;
-
 
     @Before
     public void setUp() {
@@ -45,7 +42,7 @@ public class CourseComponentValidationTest {
     }
 
     @Test
-    public void whenCourseTypeNull() {
+    public void whenCourseTypeNull_thenConstraintViolation() {
         CourseComponent courseComponent = CourseComponent.builder()
             .id(1)
             .creditPoints(5)
@@ -58,7 +55,7 @@ public class CourseComponentValidationTest {
     }
 
     @Test
-    public void whenCreditPointsSmallerThenZero() {
+    public void whenCreditPointsSmallerThenZero_thenConstraintViolation() {
         CourseComponent courseComponent = CourseComponent.builder()
             .id(1)
             .type(courseType)
@@ -72,7 +69,7 @@ public class CourseComponentValidationTest {
     }
 
     @Test
-    public void whenExamEmpty() {
+    public void whenExamEmpty_thenConstraintViolation() {
         CourseComponent courseComponent = CourseComponent.builder()
             .id(1)
             .type(courseType)
@@ -86,7 +83,7 @@ public class CourseComponentValidationTest {
     }
 
     @Test
-    public void whenCourseNull() {
+    public void whenCourseNull_thenConstraintViolation() {
         CourseComponent courseComponent = CourseComponent.builder()
             .id(1)
             .type(courseType)

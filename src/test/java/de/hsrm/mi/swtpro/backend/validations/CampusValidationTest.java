@@ -12,10 +12,8 @@ import de.hsrm.mi.swtpro.backend.model.Campus;
 import de.hsrm.mi.swtpro.backend.model.University;
 
 public class CampusValidationTest {
-
     private Validator validator;
     private  University university;
-
 
     @Before
     public void setUp() {
@@ -30,8 +28,7 @@ public class CampusValidationTest {
     }
 
     @Test
-    public void whenNameNull() {
-       
+    public void whenNameNull_thenConstraintViolation() {
         Campus campus =  Campus.builder()
         .id(10)
         .address("55555 Wiesbaden Strasse 17")
@@ -43,7 +40,7 @@ public class CampusValidationTest {
     }
 
     @Test
-    public void whenAdresseEmpty() {
+    public void whenAdresseEmpty_thenConstraintViolation() {
         Campus campus =  Campus.builder()
         .id(10)
         .name("Name")
@@ -54,7 +51,7 @@ public class CampusValidationTest {
         assertFalse(violations.isEmpty());
     }
 
-    public void whenUniversityNull() {
+    public void whenUniversityNull_thenConstraintViolation() {
         Campus campus =  Campus.builder()
         .id(10)
         .name("Name")

@@ -32,7 +32,7 @@ public class ExamRegulationValidationTest {
     }
 
     @Test
-    public void whenDateNull() {
+    public void whenDateNull_thenConstraintViolation() {
         ExamRegulation examRegulation = ExamRegulation.builder()
         .id(10)
         .rule(1)
@@ -44,7 +44,7 @@ public class ExamRegulationValidationTest {
     }
 
     @Test
-    public void whenStudyProgrammNull() {
+    public void whenStudyProgrammNull_thenConstraintViolation() {
         Date date = new Date(0);
         ExamRegulation examRegulation = ExamRegulation.builder()
         .id(10)

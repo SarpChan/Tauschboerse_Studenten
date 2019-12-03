@@ -13,10 +13,8 @@ import de.hsrm.mi.swtpro.backend.model.Course;
 import de.hsrm.mi.swtpro.backend.model.User;
 
 public class CourseValidationTest {
-
     private Validator validator;
     private  User user;
-
 
     @Before
     public void setUp() {
@@ -33,7 +31,7 @@ public class CourseValidationTest {
     }
 
     @Test
-    public void whenTitleEmpty() {
+    public void whenTitleEmpty_thenConstraintViolation() {
         Course course =  Course.builder()
         .id(10)
         .owner(user)
@@ -44,7 +42,7 @@ public class CourseValidationTest {
     }
 
     @Test
-    public void whenOwnerNull() {
+    public void whenOwnerNull_thenConstraintViolation() {
         Course course =  Course.builder()
         .id(10)
         .title("title")
@@ -54,7 +52,7 @@ public class CourseValidationTest {
         assertFalse(violations.isEmpty());
     }
 
-    public void whenUniversityNull() {
+    public void whenUniversityNull_thenConstraintViolation() {
         Campus campus =  Campus.builder()
         .id(10)
         .name("Name")

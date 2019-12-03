@@ -28,7 +28,6 @@ public class BuildingValidationTest {
         ValidatorFactory factory = Validation.buildDefaultValidatorFactory();
         validator = factory.getValidator();
 
-
         University university = University.builder()
         .id(20)
         .name("Name")
@@ -42,9 +41,9 @@ public class BuildingValidationTest {
         .university(university)
         .build();
     }
-       
+    
     @Test
-    public void whenCampusNull() {
+    public void whenCampusNull_thenConstraintViolation() {
         Building building =  Building.builder()
         .id(10)
         .name("Name")
@@ -55,7 +54,7 @@ public class BuildingValidationTest {
     }
 
     @Test
-    public void whenNameEmpty() {
+    public void whenNameEmpty_thenConstraintViolation() {
         Building building =  Building.builder()
         .id(10)
         .campus(campus)

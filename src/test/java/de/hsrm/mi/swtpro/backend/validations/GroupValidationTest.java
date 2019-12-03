@@ -2,7 +2,7 @@
 package de.hsrm.mi.swtpro.backend.validations;
 
 import static org.junit.Assert.assertFalse;
-
+import static org.junit.Assert.assertTrue;
 
 import java.sql.Date;
 import java.time.DayOfWeek;
@@ -97,12 +97,10 @@ public class GroupValidationTest {
             .exam("exam")
             .course(course)
             .build();
-
-
     }
 
     @Test
-    public void whenGroupCharNull() {
+    public void whenGroupCharNotNull_thenConstraintViolation() {
         LocalDate localDate = LocalDate.of(1947, Month.AUGUST, 15); 
         DayOfWeek dayOfWeek = DayOfWeek.from(localDate); 
         LocalTime startTime = LocalTime.now();;
@@ -120,11 +118,11 @@ public class GroupValidationTest {
         .build();
 
         Set<ConstraintViolation<Group>> violations = validator.validate(group);
-        assertFalse(violations.isEmpty());
+        assertTrue(violations.isEmpty());
     }
 
     @Test
-    public void whenSlotsNull() {
+    public void whenSlotsNotNull_thenConstraintViolation() {
         LocalDate localDate = LocalDate.of(1947, Month.AUGUST, 15); 
         DayOfWeek dayOfWeek = DayOfWeek.from(localDate); 
         LocalTime startTime = LocalTime.now();;
@@ -132,7 +130,7 @@ public class GroupValidationTest {
         Group group = Group.builder()
         .id(10)
         .groupChar('A')
-        
+        .slots(6)
         .dayOfWeek(dayOfWeek)
         .startTime(startTime)
         .endTime(startTime)
@@ -143,14 +141,12 @@ public class GroupValidationTest {
         .build();
 
         Set<ConstraintViolation<Group>> violations = validator.validate(group);
-        assertFalse(violations.isEmpty());
+        assertTrue(violations.isEmpty());
     }
 
     @Test
-    public void whenDayofWeekNull() {
-        
-        
-        LocalTime startTime = LocalTime.now();;
+    public void whenDayofWeekNull_thenConstraintViolation() {
+        LocalTime startTime = LocalTime.now();
         
         Group group = Group.builder()
         .id(10)
@@ -168,10 +164,9 @@ public class GroupValidationTest {
         assertFalse(violations.isEmpty());
     }
     @Test
-    public void whenStartTimeNull() {
+    public void whenStartTimeNull_thenConstraintViolation() {
         LocalDate localDate = LocalDate.of(1947, Month.AUGUST, 15); 
         DayOfWeek dayOfWeek = DayOfWeek.from(localDate); 
-        
         LocalTime startTime = LocalTime.now();;
         
         Group group = Group.builder()
@@ -190,11 +185,10 @@ public class GroupValidationTest {
         assertFalse(violations.isEmpty());
     }
     @Test
-    public void whenEndTimeNull() {
+    public void whenEndTimeNull_thenConstraintViolation() {
         LocalDate localDate = LocalDate.of(1947, Month.AUGUST, 15); 
         DayOfWeek dayOfWeek = DayOfWeek.from(localDate); 
-        
-        LocalTime startTime = LocalTime.now();;
+        LocalTime startTime = LocalTime.now();
         
         Group group = Group.builder()
         .id(10)
@@ -213,10 +207,9 @@ public class GroupValidationTest {
     }
 
     @Test
-    public void whenTermNull() {
+    public void whenTermNull_thenConstraintViolation() {
         LocalDate localDate = LocalDate.of(1947, Month.AUGUST, 15); 
-        DayOfWeek dayOfWeek = DayOfWeek.from(localDate); 
-        
+        DayOfWeek dayOfWeek = DayOfWeek.from(localDate);  
         LocalTime startTime = LocalTime.now();;
         
         Group group = Group.builder()
@@ -235,7 +228,7 @@ public class GroupValidationTest {
         assertFalse(violations.isEmpty());
     }
     @Test
-    public void whenCourseComponentNull() {
+    public void whenCourseComponentNull_thenConstraintViolation() {
         LocalDate localDate = LocalDate.of(1947, Month.AUGUST, 15); 
         DayOfWeek dayOfWeek = DayOfWeek.from(localDate); 
         LocalTime startTime = LocalTime.now();;
@@ -257,7 +250,7 @@ public class GroupValidationTest {
     }
 
     @Test
-    public void whenLectureNull() {
+    public void whenLectureNull_thenConstraintViolation() {
         LocalDate localDate = LocalDate.of(1947, Month.AUGUST, 15); 
         DayOfWeek dayOfWeek = DayOfWeek.from(localDate); 
         LocalTime startTime = LocalTime.now();;
@@ -279,7 +272,7 @@ public class GroupValidationTest {
     }
 
     @Test
-    public void whenRoomNull() {
+    public void whenRoomNull_thenConstraintViolation() {
         LocalDate localDate = LocalDate.of(1947, Month.AUGUST, 15); 
         DayOfWeek dayOfWeek = DayOfWeek.from(localDate); 
         LocalTime startTime = LocalTime.now();;
@@ -299,9 +292,4 @@ public class GroupValidationTest {
         Set<ConstraintViolation<Group>> violations = validator.validate(group);
         assertFalse(violations.isEmpty());
     }
-
-
-
-
-
 }

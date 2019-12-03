@@ -17,7 +17,6 @@ import de.hsrm.mi.swtpro.backend.model.StudyProgram;
 
 
 public class CurriculumValidationTest {
-
     private Validator validator;
     private ExamRegulation examRegulation;
     private StudyProgram studyProgram;
@@ -26,7 +25,6 @@ public class CurriculumValidationTest {
     public void setUp() {
         ValidatorFactory factory = Validation.buildDefaultValidatorFactory();
         validator = factory.getValidator();
-
         Date date = new Date(0);
         
         studyProgram = StudyProgram.builder()
@@ -41,11 +39,10 @@ public class CurriculumValidationTest {
         .studyProgram(studyProgram)
         .date(date)
         .build();
-      
     }
 
     @Test
-    public void whenTermPeriodeNull() {
+    public void whenTermPeriodeNull_thenConstraintViolation(){
         Curriculum curriculum =  Curriculum.builder()
         .id(10)
         
@@ -57,7 +54,7 @@ public class CurriculumValidationTest {
     }
 
     @Test
-    public void whenExamRegulationNull() {
+    public void whenExamRegulationNull_thenConstraintViolation() {
         Curriculum curriculum =  Curriculum.builder()
         .id(10)
         .termPeriod(1)

@@ -28,11 +28,10 @@ public class FieldOfStudyValidationTest {
         .name("Name")
         .address("55555 Wiesbaden Strasse 17")
         .build();
-        
     }
 
     @Test
-    public void whenTitleEmpty() {
+    public void whenTitleEmpty_thenConstraintViolation() {
         FieldOfStudy fieldOfStudy = FieldOfStudy.builder()
         .id(10)
         .university(university)
@@ -43,7 +42,7 @@ public class FieldOfStudyValidationTest {
     }
 
     @Test
-    public void whenUniversityNull() {
+    public void whenUniversityNull_thenConstraintViolation() {
         FieldOfStudy fieldOfStudy = FieldOfStudy.builder()
         .id(10)
         .title("title")
