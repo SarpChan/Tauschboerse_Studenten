@@ -16,6 +16,7 @@ import java.time.LocalDate;
 
 import static org.hamcrest.Matchers.*;
 import static org.junit.Assert.assertThat;
+import static org.junit.Assert.assertTrue;
 
 @RunWith(SpringRunner.class)
 @DataJpaTest
@@ -65,7 +66,8 @@ public class ExamRegulationRepositoryTest {
 
     @Test
     public void whenFindById_thenReturnExamRegulation(){
-        assertThat(examRegulationRepository.findById(id),hasProperty(
+        assertTrue(examRegulationRepository.findById(id).isPresent());
+        assertThat(examRegulationRepository.findById(id).get(),hasProperty(
                 "rule",is(17)
         ));
     }

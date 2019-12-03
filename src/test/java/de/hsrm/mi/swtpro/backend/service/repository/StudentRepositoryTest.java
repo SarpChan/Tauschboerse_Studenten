@@ -9,7 +9,9 @@ import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import javax.persistence.EntityManager;
-import static org.hamcrest.Matchers.*;
+
+import static org.hamcrest.Matchers.hasProperty;
+import static org.hamcrest.Matchers.is;
 import static org.junit.Assert.*;
 
 @RunWith(SpringRunner.class)
@@ -36,7 +38,8 @@ public class StudentRepositoryTest {
 
     @Test
     public void whenFindByEnrolementNumber_thanReturnStudent(){
-        assertThat(studentRepository.findByEnrolementNumber(1742), hasProperty("enrolementNumber", is(1742)));
+        assertTrue(studentRepository.findByEnrolementNumber(1742).isPresent());
+        assertThat(studentRepository.findByEnrolementNumber(1742).get(), hasProperty("enrolementNumber", is(1742)));
     }
 
     @Test

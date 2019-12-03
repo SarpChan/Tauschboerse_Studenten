@@ -1,7 +1,6 @@
 package de.hsrm.mi.swtpro.backend.service.repository;
 
-import de.hsrm.mi.swtpro.backend.model.Course;
-import de.hsrm.mi.swtpro.backend.model.Term;
+import de.hsrm.mi.swtpro.backend.model.*;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -9,15 +8,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
+import javax.persistence.EntityManager;
 import java.sql.Date;
 import java.time.LocalDate;
-import java.util.List;
 
-import static org.junit.Assert.assertEquals;
-import static  org.junit.Assert.assertThat;
 import static org.hamcrest.Matchers.*;
-
-import javax.persistence.EntityManager;
+import static org.junit.Assert.assertThat;
+import static org.junit.Assert.assertTrue;
 
 @RunWith(SpringRunner.class)
 @DataJpaTest
@@ -31,23 +28,59 @@ public class TermRepositoryTest {
     TermRepository termRepository;
 
     private Course course;
+    private Student student;
+    private Group group;
+    private StudentAttendsCourse studentAttendsCourse;
+    private long id;
 
     @Before
     public void setUp(){
-
-        Course course = Course.builder()
-                .title("Mathe")
-                .build();
 
         Term term = Term.builder()
                 .period(2)
                 .startDate(Date.valueOf(LocalDate.MIN))
                 .endDate(Date.valueOf(LocalDate.MAX))
-                .course(course)
                 .build();
+
+        course = Course.builder()
+                .title("Mathe")
+                .term(term)
+                .build();
+
+        student = Student.builder()
+                .enrolementNumber(152093)
+                .enrolmentTerm(term)
+                .build();
+
+        group = Group.builder()
+                .term(term)
+                .build();
+
+        studentAttendsCourse = StudentAttendsCourse.builder()
+                .term(term)
+                .build();
+
 
         entityManager.persist(course);
         entityManager.persist(term);
+        entityManager.persist(student);
+        entityManager.persist(group);
+        entityManager.persist(studentAttendsCourse);
+        id = term.getId();
+    }
+
+    @Test
+    public void whenFindById_thenReturnTerm(){
+        assertTrue(termRepository.findById(id).isPresent());
+        assertThat(termRepository.findById(id).get(),
+                hasProperty("period",is(2)));
+    }
+
+    @Test
+    public void whenFindAll_thenReturnTermList(){
+        assertThat(termRepository.findAll(),hasItem(
+                hasProperty("period",is(2))
+        ));
     }
 
     @Test
@@ -57,7 +90,6 @@ public class TermRepositoryTest {
 
     @Test
     public void whenFindByCourses_thenReturnTermList(){
-        //TODO: Bitte nochmal nachschauen
         assertThat(termRepository.findByCourses(course), hasItem(hasProperty("period", is(2))));
     }
 
@@ -73,4 +105,24 @@ public class TermRepositoryTest {
                 hasItem(hasProperty("endDate", is(Date.valueOf(LocalDate.MAX)))));
     }
 
+    @Test
+    public void whenFindByEnrolledStudent_thenReturnTerm(){
+            assertTrue(termRepository.findByEnroledStudents(student).isPresent());
+            assertThat(termRepository.findByEnroledStudents(student).get(),
+                    hasProperty("period", is(2)));
+    }
+
+    @Test
+    public void whenFindByGroup_thenReturnTermList(){
+        assertThat(termRepository.findByGroups(group),hasItem(
+                hasProperty("period",is(2))
+        ));
+    }
+
+    @Test
+    public void whenFindByStudentAttendsCourses_thenReturnTermList(){
+        assertThat(termRepository.findByStudentAttendsCourses(studentAttendsCourse),hasItem(
+                hasProperty("period",is(2))
+        ));
+    }
 }

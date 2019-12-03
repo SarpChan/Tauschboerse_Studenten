@@ -29,6 +29,7 @@ public class CourseRepositoryTest {
     private Module module;
     private Term term;
     private CourseComponent courseComponent;
+    private StudentAttendsCourse studentAttendsCourse;
 
 
     private long id;
@@ -51,11 +52,16 @@ public class CourseRepositoryTest {
                 .title("Nettes Module ")
                 .build();
 
+
         Course course = Course.builder()
                 .title("Netter Kurs")
                 .owner(user)
                 .module(module)
                 .term(term)
+                .build();
+
+        studentAttendsCourse = StudentAttendsCourse.builder()
+                .course(course)
                 .build();
 
         courseComponent = CourseComponent.builder()
@@ -68,6 +74,7 @@ public class CourseRepositoryTest {
         entityManager.persist(course);
         entityManager.persist(module);
         entityManager.persist(courseComponent);
+        entityManager.persist(studentAttendsCourse);
         id = course.getId();
     }
 
@@ -120,7 +127,11 @@ public class CourseRepositoryTest {
         ));
     }
 
-
-
+    @Test
+    public void whenFindByStudentAttendsCourse_thenReturnCourseList(){
+        assertThat(courseRepository.findByStudentAttendsCourses(studentAttendsCourse),hasItem(
+                hasProperty("title",is("Netter Kurs"))
+        ));
+    }
 
 }

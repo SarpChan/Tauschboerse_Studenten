@@ -2,6 +2,7 @@ package de.hsrm.mi.swtpro.backend.service.repository;
 
 import de.hsrm.mi.swtpro.backend.model.Course;
 import de.hsrm.mi.swtpro.backend.model.Module;
+import de.hsrm.mi.swtpro.backend.model.ModuleInCurriculum;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -13,8 +14,7 @@ import javax.persistence.EntityManager;
 import java.util.List;
 
 import static org.hamcrest.Matchers.*;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertThat;
+import static org.junit.Assert.*;
 
 @RunWith(SpringRunner.class)
 @DataJpaTest
@@ -26,6 +26,8 @@ public class ModuleRepositoryTest {
     ModuleRepository moduleRepository;
 
     private Course course;
+    private long id;
+    private ModuleInCurriculum moduleInCurriculum;
 
     @Before
     public void setUp(){
@@ -36,13 +38,27 @@ public class ModuleRepositoryTest {
                 .creditPoints(55)
                 .build();
 
+
         course = Course.builder()
                 .title("Kurs")
                 .module(module)
                 .build();
 
+        moduleInCurriculum = ModuleInCurriculum.builder()
+                .module(module)
+                .build();
+
         entityManager.persist(course);
         entityManager.persist(module);
+        entityManager.persist(moduleInCurriculum);
+        id = module.getId();
+    }
+
+    @Test
+    public void whenFindById_thenReturnModule(){
+        assertTrue(moduleRepository.findById(id).isPresent());
+        assertThat(moduleRepository.findById(id).get(),
+                hasProperty("title",is("Analysis")));
     }
 
     @Test
@@ -68,13 +84,20 @@ public class ModuleRepositoryTest {
                 hasItem(hasProperty("creditPoints", is(55))));
     }
 
-
     @Test
-    public void findByCourses_theReturnModuleList(){
+    public void whenFindByCourses_thenReturnModuleList(){
 
        assertThat(moduleRepository.findByCourses(course),
                hasItem(hasProperty("title", is("Analysis"))));
 
+    }
+
+    @Test
+    public  void whenFindByModulesInCurriculum_thenReturnModuleList(){
+
+        assertThat(moduleRepository.findByModulesInCurriculum(moduleInCurriculum),hasItem(
+                hasProperty("title", is("Analysis"))
+        ));
     }
 
 }

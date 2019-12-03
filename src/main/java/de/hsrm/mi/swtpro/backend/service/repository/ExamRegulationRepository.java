@@ -11,9 +11,8 @@ import java.util.List;
 
 @Repository
 public interface ExamRegulationRepository extends JpaRepository<ExamRegulation,Long> {
-    public ExamRegulation findById(long id);
-    public List<ExamRegulation> findByDate(Date date);
-    public List<ExamRegulation> findByRule(int rule);
-    public List<ExamRegulation> findByCurriculums(Curriculum curriculum);
-    public List<ExamRegulation> findByStudyProgram(StudyProgram studyProgram);
+    List<ExamRegulation> findByDate(Date date);
+    List<ExamRegulation> findByRule(int rule);
+    List<ExamRegulation> findByCurriculums(Curriculum curriculum);
+    List<ExamRegulation> findByStudyProgram(StudyProgram studyProgram);
 }

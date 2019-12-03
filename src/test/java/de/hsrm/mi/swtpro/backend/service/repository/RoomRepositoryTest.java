@@ -1,6 +1,7 @@
 package de.hsrm.mi.swtpro.backend.service.repository;
 
 import de.hsrm.mi.swtpro.backend.model.Building;
+import de.hsrm.mi.swtpro.backend.model.Group;
 import de.hsrm.mi.swtpro.backend.model.Room;
 import org.junit.Before;
 import org.junit.Test;
@@ -9,13 +10,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
-import static  org.junit.Assert.assertEquals;
-import static  org.junit.Assert.assertThat;
-import static org.hamcrest.Matchers.*;
-
-
 import javax.persistence.EntityManager;
 import java.util.List;
+
+import static org.hamcrest.Matchers.*;
+import static org.junit.Assert.*;
 
 @RunWith(SpringRunner.class)
 @DataJpaTest
@@ -27,6 +26,8 @@ public class RoomRepositoryTest {
     RoomRepository roomRepository;
 
     private Building building;
+    private Group group;
+    private long id;
 
     @Before
     public void setUp(){
@@ -43,16 +44,27 @@ public class RoomRepositoryTest {
                 .building(building)
                 .build();
 
-        //geht nicht
+        group = Group.builder()
+                .room(room)
+                .build();
+
         entityManager.persist(building);
         entityManager.persist(room);
-
+        entityManager.persist(group);
+        id = room.getId();
     }
 
     @Test
     public void whenFindAll_thanReturnRoomList(){
         List<Room> rooms = roomRepository.findAll();
         assertEquals(rooms.size(), 1);
+    }
+
+    @Test
+    public void whenFindById_thenReturnRoomL(){
+        assertTrue(roomRepository.findById(id).isPresent());
+        assertThat(roomRepository.findById(id).get(),
+                hasProperty("number", is(28)));
     }
 
     @Test
@@ -70,6 +82,11 @@ public class RoomRepositoryTest {
         assertThat(roomRepository.findByBuilding(building), hasItem(hasProperty("number", is(28))));
     }
 
-
+    @Test
+    public void whenFindByGroup_thenReturnRoomList(){
+        assertThat(roomRepository.findByGroups(group),hasItem(
+                hasProperty("number", is(28))
+        ));
+    }
 
 }

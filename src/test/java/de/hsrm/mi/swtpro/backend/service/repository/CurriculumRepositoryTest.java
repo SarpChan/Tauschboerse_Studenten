@@ -15,6 +15,7 @@ import javax.persistence.EntityManager;
 
 import static org.hamcrest.Matchers.*;
 import static org.junit.Assert.assertThat;
+import static org.junit.Assert.assertTrue;
 
 @RunWith(SpringRunner.class)
 @DataJpaTest
@@ -70,7 +71,8 @@ public class CurriculumRepositoryTest {
 
     @Test
     public void whenFindById_thenReturnCurriculumList(){
-        assertThat(curriculumRepository.findById(id), hasProperty("termPeriod",is(1)));
+        assertTrue(curriculumRepository.findById(id).isPresent());
+        assertThat(curriculumRepository.findById(id).get(), hasProperty("termPeriod",is(1)));
     }
 
     @Test

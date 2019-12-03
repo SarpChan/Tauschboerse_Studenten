@@ -16,6 +16,7 @@ import java.util.HashSet;
 
 import static org.hamcrest.Matchers.*;
 import static org.junit.Assert.assertThat;
+import static org.junit.Assert.assertTrue;
 
 @RunWith(SpringRunner.class)
 @DataJpaTest
@@ -71,7 +72,8 @@ public class FieldOfStudyRepositoryTest {
 
     @Test
     public void whenFindById_thenReturnFieldOfStudyList(){
-        assertThat(fieldOfStudyRepository.findById(id),
+        assertTrue(fieldOfStudyRepository.findById(id).isPresent());
+        assertThat(fieldOfStudyRepository.findById(id).get(),
                 hasProperty("title",is("Faulenzen")));
     }
 
@@ -90,7 +92,7 @@ public class FieldOfStudyRepositoryTest {
     }
 
     @Test
-    public void whenFindByName_thenReturnFieldOfStudyList(){
+    public void whenFindByTitle_thenReturnFieldOfStudyList(){
         assertThat(fieldOfStudyRepository.findByTitle("Faulenzen"),hasItem(
                 hasProperty("id",is(id))
         ));

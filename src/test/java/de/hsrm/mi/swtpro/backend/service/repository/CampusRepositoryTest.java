@@ -1,18 +1,18 @@
 package de.hsrm.mi.swtpro.backend.service.repository;
 
+import de.hsrm.mi.swtpro.backend.model.Building;
 import de.hsrm.mi.swtpro.backend.model.Campus;
 import de.hsrm.mi.swtpro.backend.model.University;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import javax.persistence.EntityManager;
 
+import static org.hamcrest.Matchers.hasItem;
 import static org.hamcrest.beans.HasPropertyWithValue.hasProperty;
 import static org.hamcrest.core.Is.is;
 import static org.junit.Assert.*;
@@ -27,13 +27,13 @@ public class CampusRepositoryTest {
     CampusRepository campusRepository;
 
     private long id;
-
-    private static final Logger logger = LoggerFactory.getLogger(CampusRepositoryTest.class);
+    private Building building;
+    private University university;
 
     @Before
     public void setUp(){
 
-        University university = University.builder()
+        university = University.builder()
                 .name("HSRM")
                 .address("KSR 4,91233 Wiesbaden")
                 .build();
@@ -44,9 +44,14 @@ public class CampusRepositoryTest {
                 .address("Unter den Eichen 5, 12389 Wiesbaden")
                 .build();
 
+        building= Building.builder()
+                .name("D Gebäude")
+                .campus(campus)
+                .build();
 
         entityManager.persist(university);
         entityManager.persist(campus);
+        entityManager.persist(building);
         id = campus.getId();
     }
 
@@ -69,7 +74,23 @@ public class CampusRepositoryTest {
 
     @Test
     public void whenFindByAddress_thenReturnCampus(){
+        assertTrue(campusRepository.findByAddress("Unter den Eichen 5, 12389 Wiesbaden").isPresent());
         assertEquals("unter den Eichen",
-                campusRepository.findByAddress("Unter den Eichen 5, 12389 Wiesbaden").getName());
+                campusRepository.findByAddress("Unter den Eichen 5, 12389 Wiesbaden").get().getName());
+    }
+
+    @Test
+    public void whenFindByBuildings_thenReturnCampusList(){
+        assertTrue(campusRepository.findByBuildings(building).isPresent());
+        assertThat(campusRepository.findByBuildings(building).get(),
+                hasProperty("address",is("Unter den Eichen 5, 12389 Wiesbaden"))
+        );
+    }
+
+    @Test
+    public void whenFindByUniversity_thenReturnCampusList(){
+        assertThat(campusRepository.findByUniversity(university),hasItem(
+                hasProperty("address",is("Unter den Eichen 5, 12389 Wiesbaden"))
+        ));
     }
 }

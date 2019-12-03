@@ -28,34 +28,34 @@ public class UniversityTest {
     }
 
     @Test
-    public void whenGetId_ReturnId(){assertEquals(university.getId(),17);}
+    public void whenGetId_thenReturnId(){assertEquals(university.getId(),17);}
 
     @Test
-    public void whenGetName_ReturnName(){assertEquals(university.getName(), "Hochschule Geisenheim");}
+    public void whenGetName_thenReturnName(){assertEquals(university.getName(), "Hochschule Geisenheim");}
 
     @Test
-    public void whenGetAdress_ReturnAdress(){assertEquals(university.getAddress(), "Von-Lade-Straße 1, 65366 Geisenheim");}
+    public void whenGetAddress_thenReturnAddress(){assertEquals(university.getAddress(), "Von-Lade-Straße 1, 65366 Geisenheim");}
 
     @Test
-    public void whenSetId_SaveId(){
+    public void whenSetId_thenSaveId(){
         university.setId(18);
         assertEquals(university.getId(), 18);
     }
 
     @Test
-    public void whenSetName_SaveName(){
+    public void whenSetName_thenSaveName(){
         university.setName("Goethe Universität");
         assertEquals(university.getName(), "Goethe Universität");
     }
 
     @Test
-    public void whenSetAdress_SaveAdress(){
+    public void whenSetAderess_thenSaveAdress(){
         university.setAddress("Flachwitzweg 17, 0815 Bielefeld");
         assertEquals(university.getAddress(),"Flachwitzweg 17, 0815 Bielefeld");
     }
 
     @Test
-    public void whenSetCampus_SaveCampus(){
+    public void whenSetCampus_thenSaveCampus(){
         Set<Campus> campi = new HashSet<>();
         campi.add(Campus.builder().name("Neben den Eichen").build());
         campi.add(Campus.builder().name("Über den Eichen").build());

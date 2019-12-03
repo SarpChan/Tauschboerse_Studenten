@@ -1,9 +1,6 @@
 package de.hsrm.mi.swtpro.backend.service.repository;
 
-import de.hsrm.mi.swtpro.backend.model.Course;
-import de.hsrm.mi.swtpro.backend.model.CourseComponent;
-import de.hsrm.mi.swtpro.backend.model.CourseType;
-import de.hsrm.mi.swtpro.backend.model.Group;
+import de.hsrm.mi.swtpro.backend.model.*;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -14,8 +11,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 import javax.persistence.EntityManager;
 
 import static org.hamcrest.Matchers.*;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertThat;
+import static org.junit.Assert.*;
 
 @RunWith(SpringRunner.class)
 @DataJpaTest
@@ -28,17 +24,24 @@ public class CourseComponentRepositoryTest {
 
     private Group group;
     private long id;
+    private Course course;
+    private StudentPassedExam passedExam;
 
     @Before
     public void setUp(){
-        Course course  = Course.builder()
+        course  = Course.builder()
                 .title("Analysis")
+                .build();
+
+        passedExam = StudentPassedExam.builder()
+                .grade(17f)
                 .build();
 
         CourseComponent courseComponent = CourseComponent.builder()
                 .course(course)
                 .type(CourseType.LECTURE)
                 .exam("Test")
+                .studentPassedExam(passedExam)
                 .creditPoints(10)
                 .build();
 
@@ -50,6 +53,7 @@ public class CourseComponentRepositoryTest {
         entityManager.persist(course);
         entityManager.persist(group);
         entityManager.persist(courseComponent);
+        entityManager.persist(passedExam);
         id = courseComponent.getId();
     }
 
@@ -60,7 +64,8 @@ public class CourseComponentRepositoryTest {
 
     @Test
     public void whenFindById_theReturnCourseComponent(){
-        assertEquals("Test",courseComponentRepository.findById(id).getExam());
+        assertTrue(courseComponentRepository.findById(id).isPresent());
+        assertEquals("Test",courseComponentRepository.findById(id).get().getExam());
     }
 
     @Test
@@ -84,5 +89,19 @@ public class CourseComponentRepositoryTest {
     public void whenFindByExam_thenReturnCourseComponentList(){
         assertThat(courseComponentRepository.findByExam("Test"),
                 hasItem(hasProperty("creditPoints",is(10))));
+    }
+
+    @Test
+    public void whenFindByCourse_thenReturnCourseComponentList(){
+        assertThat(courseComponentRepository.findByCourse(course),hasItem(
+                hasProperty("creditPoints",is(10))
+        ));
+    }
+
+    @Test
+    public void whenFindByStudentPassedExam_thenReturnCourseComponentList(){
+        assertThat(courseComponentRepository.findByStudentPassedExam(passedExam), hasItem(
+                hasProperty("creditPoints",is(10))
+        ));
     }
 }

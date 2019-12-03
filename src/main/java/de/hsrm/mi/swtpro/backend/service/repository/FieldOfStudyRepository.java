@@ -10,8 +10,7 @@ import java.util.List;
 
 @Repository
 public interface FieldOfStudyRepository extends JpaRepository<FieldOfStudy,Long> {
-    public FieldOfStudy findById(long id);
-    public List<FieldOfStudy> findByTitle(String title);
-    public List<FieldOfStudy> findByStudyPrograms(StudyProgram studyProgram);
-    public List<FieldOfStudy> findByUniversity(University university);
+    List<FieldOfStudy> findByTitle(String title);
+    List<FieldOfStudy> findByStudyPrograms(StudyProgram studyProgram);
+    List<FieldOfStudy> findByUniversity(University university);
 }

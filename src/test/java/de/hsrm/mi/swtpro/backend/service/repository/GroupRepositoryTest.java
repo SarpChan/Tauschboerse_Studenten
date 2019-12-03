@@ -14,6 +14,7 @@ import java.time.LocalTime;
 
 import static org.hamcrest.Matchers.*;
 import static org.junit.Assert.assertThat;
+import static org.junit.Assert.assertTrue;
 
 @RunWith(SpringRunner.class)
 @DataJpaTest
@@ -26,6 +27,11 @@ public class GroupRepositoryTest {
 
     private Room room;
     private long id;
+    private StudentPrioritizesGroup studentPrioritizesGroup;
+    private Student student;
+    private Term term;
+    private Lecturer lecturer;
+    private CourseComponent courseComponent;
 
     @Before
     public void setUp(){
@@ -33,7 +39,7 @@ public class GroupRepositoryTest {
                 .title("A")
                 .build();
 
-        CourseComponent courseComponent = CourseComponent.builder()
+        courseComponent = CourseComponent.builder()
                 .course(course)
                 .type(CourseType.LECTURE)
                 .build();
@@ -49,7 +55,15 @@ public class GroupRepositoryTest {
                 .number(17)
                 .build();
 
-        Term term = Term.builder().build();
+        student = Student.builder()
+                .mail("3@e.de")
+                .enrolementNumber(10)
+                .build();
+
+        lecturer = Lecturer.builder()
+                .build();
+
+        term = Term.builder().build();
 
         Group group = Group.builder()
                 .dayOfWeek(DayOfWeek.MONDAY)
@@ -58,13 +72,24 @@ public class GroupRepositoryTest {
                 .slots(17)
                 .room(room)
                 .term(term)
+                .lecturer(lecturer)
+                .student(student)
                 .courseComponent(courseComponent)
                 .groupChar('A')
                 .build();
 
+        studentPrioritizesGroup = StudentPrioritizesGroup.builder()
+                .priority(10)
+                .group(group)
+                .build();
+
+
         entityManager.persist(term);
         entityManager.persist(course);
         entityManager.persist(courseComponent);
+        entityManager.persist(studentPrioritizesGroup);
+        entityManager.persist(student);
+        entityManager.persist(lecturer);
         entityManager.persist(user);
         entityManager.persist(room);
         entityManager.persist(group);
@@ -80,7 +105,8 @@ public class GroupRepositoryTest {
 
     @Test
     public void whenFindById_thenReturnGroup(){
-        assertThat(groupRepository.findById(id),
+        assertTrue(groupRepository.findById(id).isPresent());
+        assertThat(groupRepository.findById(id).get(),
                 hasProperty("slots",is(17)
         ));
     }
@@ -116,6 +142,47 @@ public class GroupRepositoryTest {
     public void whenFindByRoom_thenReturnGroupList(){
         assertThat(groupRepository.findByRoom(room),
                 hasItem(hasProperty("slots",is(17))));
+    }
+
+    @Test
+    public void whenFindByStudents_thenReturnGroupList(){
+        assertThat(groupRepository.findByStudents(student),hasItem(
+                hasProperty("slots",is(17))
+        ));
+    }
+
+    @Test
+    public void whenFindByPrioritizeGroups_thenReturnGroupList(){
+        assertThat(groupRepository.findByPrioritizeGroups(studentPrioritizesGroup),hasItem(
+                hasProperty("slots",is(17))
+        ));
+    }
+    @Test
+    public void whenFindByTerms_thenReturnGroupList(){
+        assertThat(groupRepository.findByTerm(term),hasItem(
+                hasProperty("slots",is(17))
+        ));
+    }
+
+    @Test
+    public void whenFindByLecture_thenReturnGroupList(){
+        assertThat(groupRepository.findByLecturer(lecturer),hasItem(
+                hasProperty("slots",is(17))
+        ));
+    }
+
+    @Test
+    public void whenFindByCourseComponent_thenReturnGroupList(){
+        assertThat(groupRepository.findByCourseComponent(courseComponent),hasItem(
+                hasProperty("slots",is(17))
+        ));
+    }
+
+    @Test
+    public void whenFindByGroupChar_thenReturnGroupList(){
+        assertThat(groupRepository.findByGroupChar('A'),hasItem(
+                hasProperty("slots",is(17))
+        ));
     }
 
 }

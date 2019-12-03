@@ -14,7 +14,10 @@ import org.springframework.test.context.junit4.SpringRunner;
 import javax.persistence.EntityManager;
 import java.util.List;
 
-import static org.junit.Assert.assertEquals;
+import static org.hamcrest.Matchers.hasItem;
+import static org.hamcrest.Matchers.hasProperty;
+import static org.hamcrest.core.Is.is;
+import static org.junit.Assert.*;
 
 @RunWith(SpringRunner.class)
 @DataJpaTest
@@ -25,28 +28,34 @@ public class BuildingRepositoryTest {
     @Autowired
     BuildingRepository buildingRepository;
 
+    private Campus campus;
+    private Room room;
+
     @Before
     public void setUp(){
         University university = University.builder()
                 .name("Hochschule RheinMain")
                 .address("Kurt-Schumacher-Ring 18, 65197 Wiesbaden")
                 .build();
-        
-        Campus campus = Campus.builder()
+
+        campus = Campus.builder()
                 .name("Unter den Eichen")
                 .address("Kurt-Schumacher-Ring 18, 65197 Wiesbaden")
                 .university(university)
                 .build();
 
-        Room room = Room.builder()
-                .number(17)
-                .build();
 
         Building building= Building.builder()
                 .name("D Gebäude")
                 .campus(campus)
-                .room(room)
                 .build();
+
+        room = Room.builder()
+                .number(17)
+                .building(building)
+                .build();
+
+
 
         entityManager.persist(university);
         entityManager.persist(campus);
@@ -64,5 +73,20 @@ public class BuildingRepositoryTest {
     public void whenFindAll_thenReturnBuildingList(){
         List<Building> buildings = buildingRepository.findAll();
         assertEquals(buildings.size(),1);
+    }
+
+    @Test
+    public void whenFindByCampus_thenReturnBuildingList(){
+        assertTrue(buildingRepository.findByCampus(campus).isPresent());
+        assertThat(buildingRepository.findByCampus(campus).get(),
+                hasProperty("name", is("D Gebäude")
+        ));
+    }
+
+    @Test
+    public void whenFindByRooms_thenReturnBuildingList(){
+        assertThat(buildingRepository.findByRooms(room),hasItem(
+                hasProperty("name", is("D Gebäude"))
+        ));
     }
 }
