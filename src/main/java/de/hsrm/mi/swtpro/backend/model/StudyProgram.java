@@ -5,7 +5,6 @@ import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import lombok.*;
 
 import javax.persistence.*;
-import java.util.HashSet;
 import java.util.Set;
 
 /**
@@ -32,15 +31,20 @@ public class StudyProgram {
     @Singular("examRegulation")
     @Getter @Setter
     @OneToMany(mappedBy = "studyProgram")
-    private Set<ExamRegulation> examRegulations ;
+    private Set<ExamRegulation> examRegulations;
 
     @Singular("fieldOfStudy")
     @Getter @Setter
-    @ManyToMany(mappedBy = "studyPrograms")
-    private Set<FieldOfStudy> fieldsOfStudy ;
+    @ManyToMany(fetch = FetchType.LAZY)
+    @JoinTable(
+            name = "FieldOfStudy_StudyProgram",
+            joinColumns = { @JoinColumn(name = "studyProgram_id") },
+            inverseJoinColumns = { @JoinColumn(name = "fieldOfStudy_id") }
+    )
+    private Set<FieldOfStudy> fieldsOfStudy;
 
     /**
-     * Adds exam regulation to the collection of exam regulations applicable for this study program
+     * Adds exam regulation to the collection of exam regulations applicable for this study program 
      * @param examRegulation
      */
     public void addExamRegulation(ExamRegulation examRegulation) {

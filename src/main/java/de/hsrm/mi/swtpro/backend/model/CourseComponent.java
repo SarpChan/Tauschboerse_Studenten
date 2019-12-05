@@ -5,7 +5,6 @@ import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import lombok.*;
 
 import javax.persistence.*;
-import java.util.HashSet;
 import java.util.Set;
 
 /**
@@ -22,37 +21,31 @@ import java.util.Set;
 public class CourseComponent {
 
     @Id
-    @Getter
-    @Setter
+    @Getter @Setter
     @GeneratedValue
     private long id;
 
-    @Getter
-    @Setter
+    @Getter @Setter
     private CourseType type;
 
-    @Getter
-    @Setter
+    @Getter @Setter
     private int creditPoints;
 
     @Getter
     @Setter
     private String exam;
 
-    @Getter
-    @Setter
+    @Getter @Setter
     @ManyToOne
     private Course course;
 
     @Singular("group")
-    @Getter
-    @Setter
+    @Getter @Setter
     @OneToMany(mappedBy = "courseComponent")
     private Set<Group> groups;
 
-    @Getter
-    @Setter
-    @OneToOne(mappedBy = "courseComponent")
+    @Getter @Setter
+    @OneToOne
     private StudentPassedExam studentPassedExam;
 
     /**
