@@ -31,11 +31,29 @@ public class JSONGenerator {
     /*public  JSONGenerator(){
 
     }*/
-
     @PostConstruct
-    //@EventListener(ApplicationReadyEvent.class)
-    private void init() {
+    private void init(){
         entityManager = emf.createEntityManager();
+        //createJSON();
+        readJSON();
+    }
+
+    private void readJSON(){
+        File file = new File("C:\\Users\\Julius\\IdeaProjects\\SWT_Backend\\hsrm_medieninformatik.json");
+
+        try {
+            University university2
+                    = new ObjectMapper().readerFor(University.class).readValue(file);
+            System.out.println("Deserialisation complete");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+
+    //@EventListener(ApplicationReadyEvent.class)
+    private void createJSON() {
+
 
         University uni = University.builder().name("Hochschule RheinMain").address("Kurt-Schuhmacher-Ring 18").build();
         entityManager.persist(uni);
@@ -164,9 +182,22 @@ public class JSONGenerator {
         ObjectMapper objectMapper = new ObjectMapper();
         try {
             objectMapper.writeValue(new File("hsrm_medieninformatik.json"), uni);
+
         } catch (IOException e) {
             e.printStackTrace();
             //System.out.println("JSON new File Error");
         }
+        curriculum.getExamRegulation().setStudents(null);
+        curriculum.getExamRegulation().setStudyProgram(null);
+
+        try {
+
+            objectMapper.writeValue(new File("semesterplan_po2017.json"), curriculum);
+        } catch (IOException e) {
+            e.printStackTrace();
+            //System.out.println("JSON new File Error");
+        }
+
+
     }
 }

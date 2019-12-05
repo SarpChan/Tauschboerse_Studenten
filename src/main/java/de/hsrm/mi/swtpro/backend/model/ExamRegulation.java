@@ -39,11 +39,11 @@ public class ExamRegulation {
     @Singular("curriculum")
     @Getter @Setter
     @OneToMany(mappedBy = "examRegulation")
-    private Set<Curriculum> curriculums ;
+    private Set<Curriculum> curriculums;
 
     @Singular("student")
     @Getter @Setter
     @OneToMany(mappedBy = "examRegulation")
-    private Set<Student> students ;
+    private Set<Student> students;
 
 }
