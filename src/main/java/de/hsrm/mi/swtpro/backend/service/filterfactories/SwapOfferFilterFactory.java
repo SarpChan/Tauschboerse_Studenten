@@ -19,10 +19,19 @@ public class SwapOfferFilterFactory {
     }
 
     public List<SwapOffer> filterSwapOffers(List<SwapOffer> swapOffers) {
+        final List<SwapOffer> filterableSwapOffers = new ArrayList<>(swapOffers);
         if(isFiltersEmpty()) {
             return swapOffers;
         }
+        Arrays.stream(this.filters).forEach(filter -> {
+            if(filter.getAttribute().equals("examRegulationId")) {
+                List<SwapOffer> filterTmp = new ArrayList<>(filterableSwapOffer);
+                filterableSwapOffer.clear();
+                filterableSwapOffer.addAll(filterForExamRegulation(filterTmp,filter));
+            }
+        });
         return swapOffers;
     }
+   
 
 }
