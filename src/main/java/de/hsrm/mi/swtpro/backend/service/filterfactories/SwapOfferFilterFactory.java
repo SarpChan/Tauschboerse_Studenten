@@ -28,16 +28,15 @@ public class SwapOfferFilterFactory {
                 List<SwapOffer> filterTmp = new ArrayList<>(filterableSwapOffer);
                 filterableSwapOffer.clear();
                 filterableSwapOffer.addAll(filterForToGroup(filterTmp,filter),filterForFromGroup(filterTmp,filter));
-                filterableSwapOffer.addAll()
             }
         });
         return filterableSwapOffers;
     }
     private List<Course> filterForToGroup(List<Course> swapOffers, Filter forToGroupFilter) {
-        return swapOffers.stream().filter(swapOffer -> swapOffer.getToGroup().stream().anyMatch(group -> {
+        return swapOffers.filter(swapOffer -> swapOffer.getToGroup().anyMatch(group -> {
             
                 if (forToGroupFilter.getComparator().getComparatorType() == ComparatorType.EQUALS) {
-                    return swapOffer.getToGroup() == (long) forToGroupFilter.getComparator().getComparatorValue();
+                    return swapOffer.getToGroup() ==  forToGroupFilter.getComparator().getComparatorValue();
                 }
                 return false;
             );
@@ -45,10 +44,10 @@ public class SwapOfferFilterFactory {
     }
     
     private List<Course> filterForFromGroup(List<Course> swapOffers, Filter forFromGroupFilter) {
-        return swapOffers.stream().filter(swapOffer -> swapOffer.getFromGroup().stream().anyMatch(group -> {
+        return swapOffers.filter(swapOffer -> swapOffer.getFromGroup().anyMatch(group -> {
             
                 if (forFromGroupFilter.getComparator().getComparatorType() == ComparatorType.EQUALS) {
-                    return swapOffer.getFromGroup() == (long) forFromGroupFilter.getComparator().getComparatorValue();
+                    return swapOffer.getFromGroup() ==  forFromGroupFilter.getComparator().getComparatorValue();
                 }
                 return false;
             );
