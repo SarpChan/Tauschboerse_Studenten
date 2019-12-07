@@ -27,12 +27,12 @@ public class SwapOfferFilterFactory {
             if(filter.getAttribute().equals("toGroupId")) {
                 List<SwapOffer> filterTmp = new ArrayList<>(filterableSwapOffer);
                 filterableSwapOffer.clear();
-                filterableSwapOffer.addAll(filterForToGroup(filterTmp,filter),filterForFromGroup(filterTmp,filter));
+                filterableSwapOffer.addAll(filterForToGroup(filterTmp,filter),filterForFromGroup(filterTmp,filter),filterForOwner(filterTmp,filter));
             }
         });
         return filterableSwapOffers;
     }
-    private List<Course> filterForToGroup(List<Course> swapOffers, Filter forToGroupFilter) {
+    private List<SwapOffer> filterForToGroup(List<SwapOffer> swapOffers, Filter forToGroupFilter) {
         return swapOffers.filter(swapOffer -> swapOffer.getToGroup().anyMatch(group -> {
             
                 if (forToGroupFilter.getComparator().getComparatorType() == ComparatorType.EQUALS) {
@@ -43,7 +43,7 @@ public class SwapOfferFilterFactory {
         })).collect(Collectors.toList());
     }
     
-    private List<Course> filterForFromGroup(List<Course> swapOffers, Filter forFromGroupFilter) {
+    private List<SwapOffer> filterForFromGroup(List<SwapOffer> swapOffers, Filter forFromGroupFilter) {
         return swapOffers.filter(swapOffer -> swapOffer.getFromGroup().anyMatch(group -> {
             
                 if (forFromGroupFilter.getComparator().getComparatorType() == ComparatorType.EQUALS) {
@@ -53,5 +53,28 @@ public class SwapOfferFilterFactory {
             );
         })).collect(Collectors.toList());
     }
+
+    private List<SwapOffer> filterForOwner(List<SwapOffer> swapOffers, Filter forOwnerFilter) {
+        return swapOffers.filter(swapOffer -> swapOffer.getStudent().anyMatch(group -> {
+            
+                if (forOwnerFilter.getComparator().getComparatorType() == ComparatorType.EQUALS) {
+                    return swapOffer.getStudent() ==  forOwnerFilter.getComparator().getComparatorValue();
+                }
+                return false;
+            );
+        })).collect(Collectors.toList());
+    }
+/*
+    private List<SwapOffer> filterForCourse(List<SwapOffer> swapOffers, Filter forCourseFilter) {
+        return swapOffers.stream().filter(swapOffers -> swapOffers.getModules().stream().anyMatch(module -> {
+            return module.getModulesInCurriculum().stream().anyMatch(moduleInCurriculum -> {
+                if (forCourseFilter.getComparator().getComparatorType() == ComparatorType.EQUALS) {
+                    return moduleInCurriculum.getCurriculum().getExamRegulation().getId() == (long) forCourseFilter.getComparator().getComparatorValue();
+                }
+                return false;
+            });
+        })).collect(Collectors.toList());
+    }
+    */
 
 }
