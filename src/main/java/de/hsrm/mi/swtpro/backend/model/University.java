@@ -4,10 +4,7 @@ import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import lombok.*;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.OneToMany;
+import javax.persistence.*;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -35,12 +32,12 @@ public class University {
 
     @Singular("campus")
     @Getter @Setter
-    @OneToMany(mappedBy = "university")
+    @OneToMany(mappedBy = "university",cascade= CascadeType.ALL)
     private Set<Campus> campuses ;
 
     @Singular("fieldOfStudy")
     @Getter @Setter
-    @OneToMany(mappedBy = "university")
+    @OneToMany(mappedBy = "university",cascade= CascadeType.ALL)
     private Set<FieldOfStudy> fieldsOfStudy ;
 
 }

@@ -35,7 +35,7 @@ public class Building {
 
     @Singular("room")
     @Getter @Setter
-    @OneToMany(mappedBy = "building")
+    @OneToMany(mappedBy = "building",cascade= CascadeType.ALL)
     private Set<Room> rooms;
 
 }

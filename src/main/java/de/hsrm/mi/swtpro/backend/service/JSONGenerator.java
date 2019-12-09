@@ -3,6 +3,7 @@ package de.hsrm.mi.swtpro.backend.service;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import de.hsrm.mi.swtpro.backend.model.*;
 import de.hsrm.mi.swtpro.backend.model.Module;
+import de.hsrm.mi.swtpro.backend.service.repository.UniversityRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.context.event.ApplicationReadyEvent;
 import org.springframework.context.annotation.Bean;
@@ -27,6 +28,8 @@ public class JSONGenerator {
     @Autowired
     EntityManagerFactory emf;
     private EntityManager entityManager;
+    @Autowired
+    UniversityRepository universityRepository;
 
     /*public  JSONGenerator(){
 
@@ -44,7 +47,9 @@ public class JSONGenerator {
         try {
             University university2
                     = new ObjectMapper().readerFor(University.class).readValue(file);
-            System.out.println("Deserialisation complete");
+            universityRepository.saveAndFlush(university2);
+
+
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -69,9 +74,14 @@ public class JSONGenerator {
         entityManager.persist(po2017);
         User testUser = User.builder().firstName("Test").lastName("User").loginName("testUser").password("test").build();
         entityManager.persist(testUser);
+        User passedUser = User.builder().firstName("Passed").lastName("Student").loginName("passedUser").password("test").build();
+        entityManager.persist(passedUser);
         Student testStudent = Student.builder().user(testUser).enrolementNumber(123456)
                 .enrolmentTerm(ws1920).mail("test@test.com").examRegulation(po2017).build();
         entityManager.persist(testStudent);
+        Student passedStudent = Student.builder().user(passedUser).enrolementNumber(987654)
+                .enrolmentTerm(ws1920).mail("passed@test.com").examRegulation(po2017).build();
+        entityManager.persist(passedStudent);
         Lecturer testLecturer = Lecturer.builder().priviledge(1).user(testUser).build();
         entityManager.persist(testLecturer);
         StudyProgram medieninformatik = StudyProgram.builder().title("Medieninformatik").degree("Bachlor").build();
@@ -107,6 +117,9 @@ public class JSONGenerator {
         entityManager.persist(prog3PgroupD);
         StudentAttendsCourse studentAttendsCourse = StudentAttendsCourse.builder().student(testStudent).course(cProgrammieren3).term(ws1920).build();
         entityManager.persist(studentAttendsCourse);
+        StudentPassedExam studentPassedExam = StudentPassedExam.builder().courseComponent(prog3P).student(passedStudent).grade(4.0f).build();
+        StudentPassedExam studentPassedExam2 = StudentPassedExam.builder().courseComponent(prog3V).student(passedStudent).grade(4.0f).build();
+        StudentPrioritizesGroup studentPrioritizesGroup = StudentPrioritizesGroup.builder().group(prog3PgroupA).student(testStudent).priority(1).build();
 
         uni.setCampuses(new HashSet<>());
         uni.setFieldsOfStudy(new HashSet<>());
@@ -131,6 +144,15 @@ public class JSONGenerator {
         prog3PgroupB.setStudents(new HashSet<>());
         prog3PgroupC.setStudents(new HashSet<>());
         prog3PgroupD.setStudents(new HashSet<>());
+
+        testStudent.setAttendCourses(new HashSet<>());
+        testStudent.getAttendCourses().add(studentAttendsCourse);
+        testStudent.setPrioritizeGroups(new HashSet<>());
+        testStudent.getPrioritizeGroups().add(studentPrioritizesGroup);
+
+        passedStudent.setPassedExams(new HashSet<>());
+        passedStudent.getPassedExams().add(studentPassedExam);
+        passedStudent.getPassedExams().add(studentPassedExam2);
 
         uni.getCampuses().add(ude);
         uni.getFieldsOfStudy().add(dcsm);

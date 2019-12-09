@@ -1,1 +1,274 @@
-{"id":757,"name":"Hochschule RheinMain","address":"Kurt-Schuhmacher-Ring 18","campuses":[{"id":0,"name":"Unter den Eichen","address":"Unter den Eichen 6","university":757,"buildings":[{"id":0,"name":"Gebäude D","campus":0,"rooms":[{"id":0,"number":14,"seats":60,"building":0,"groups":[]}]}]}],"fieldsOfStudy":[{"id":0,"title":"DCSM","university":757,"studyPrograms":[{"id":0,"title":"Medieninformatik","degree":"Bachlor","examRegulations":[{"id":0,"date":1506808800000,"rule":0,"studyProgram":0,"curriculums":[{"id":0,"termPeriod":1,"examRegulation":0,"modulesInCurriculum":[{"id":0,"termPeriod":1,"curriculum":0,"module":{"id":0,"title":"Programmieren 3","creditPoints":5,"period":1,"modulesInCurriculum":[0],"courses":[{"id":0,"title":"Programmieren 3","owner":{"id":0,"firstName":"Test","lastName":"User","loginName":"testUser","password":"test","roles":[]},"modules":[0],"terms":[{"id":0,"startDate":1569880800000,"endDate":1585605600000,"period":1,"courses":[0],"groups":[],"studentAttendsCourses":[],"enrolledStudents":[]}],"courseComponents":[{"id":0,"type":"LECTURE","creditPoints":5,"exam":"Klausur","course":0,"groups":[{"id":0,"groupChar":"A","slots":100,"dayOfWeek":"MONDAY","startTime":[10,0],"endTime":[11,30],"term":0,"courseComponent":0,"lecturer":{"id":0,"user":0,"priviledge":1,"groups":[]},"room":0,"students":[{"id":0,"user":0,"enrolementNumber":123456,"mail":"test@test.com","examRegulation":0,"enrolmentTerm":0,"attendCourses":[],"prioritizeGroups":[],"passedExams":[],"groups":[]}],"prioritizeGroups":[]}],"studentPassedExam":null},{"id":0,"type":"PRACTICE","creditPoints":0,"exam":"Praktische Tätigkeit","course":0,"groups":[{"id":0,"groupChar":"D","slots":20,"dayOfWeek":"FRIDAY","startTime":[10,0],"endTime":[11,30],"term":0,"courseComponent":0,"lecturer":0,"room":0,"students":[0],"prioritizeGroups":[]},{"id":0,"groupChar":"B","slots":20,"dayOfWeek":"WEDNESDAY","startTime":[10,0],"endTime":[11,30],"term":0,"courseComponent":0,"lecturer":0,"room":0,"students":[0],"prioritizeGroups":[]},{"id":0,"groupChar":"A","slots":20,"dayOfWeek":"TUESDAY","startTime":[10,0],"endTime":[11,30],"term":0,"courseComponent":0,"lecturer":0,"room":0,"students":[0],"prioritizeGroups":[]},{"id":0,"groupChar":"C","slots":20,"dayOfWeek":"THURSDAY","startTime":[10,0],"endTime":[11,30],"term":0,"courseComponent":0,"lecturer":0,"room":0,"students":[0],"prioritizeGroups":[]}],"studentPassedExam":null}],"studentAttendsCourses":[]}]}}]}],"students":[0]}],"fieldsOfStudy":[0]}]}]}
+{
+  "id": 119,
+  "name": "Hochschule RheinMain",
+  "address": "Kurt-Schuhmacher-Ring 18",
+  "campuses": [
+    {
+      "id": 120,
+      "name": "Unter den Eichen",
+      "address": "Unter den Eichen 6",
+      "university": 119,
+      "buildings": [
+        {
+          "id": 121,
+          "name": "Gebäude D",
+          "campus": 120,
+          "rooms": [
+            {
+              "id": 122,
+              "number": 14,
+              "seats": 60,
+              "building": 121,
+              "groups": []
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "fieldsOfStudy": [
+    {
+      "id": 131,
+      "title": "DCSM",
+      "university": 119,
+      "studyPrograms": [
+        {
+          "id": 130,
+          "title": "Medieninformatik",
+          "degree": "Bachlor",
+          "examRegulations": [
+            {
+              "id": 124,
+              "date": 1506808800000,
+              "rule": 0,
+              "studyProgram": 130,
+              "curriculums": [
+                {
+                  "id": 132,
+                  "termPeriod": 1,
+                  "examRegulation": 124,
+                  "modulesInCurriculum": [
+                    {
+                      "id": 134,
+                      "termPeriod": 1,
+                      "curriculum": 132,
+                      "module": {
+                        "id": 133,
+                        "title": "Programmieren 3",
+                        "creditPoints": 5,
+                        "period": 1,
+                        "modulesInCurriculum": [
+                          134
+                        ],
+                        "courses": [
+                          {
+                            "id": 135,
+                            "title": "Programmieren 3",
+                            "owner": {
+                              "id": 125,
+                              "firstName": "Test",
+                              "lastName": "User",
+                              "loginName": "testUser",
+                              "password": "test",
+                              "roles": []
+                            },
+                            "modules": [
+                              133
+                            ],
+                            "terms": [
+                              {
+                                "id": 123,
+                                "startDate": 1569880800000,
+                                "endDate": 1585605600000,
+                                "period": 1,
+                                "courses": [
+                                  135
+                                ],
+                                "groups": [],
+                                "studentAttendsCourses": [],
+                                "enrolledStudents": []
+                              }
+                            ],
+                            "courseComponents": [
+                              {
+                                "id": 136,
+                                "type": "LECTURE",
+                                "creditPoints": 5,
+                                "exam": "Klausur",
+                                "course": 135,
+                                "groups": [
+                                  {
+                                    "id": 138,
+                                    "groupChar": "A",
+                                    "slots": 100,
+                                    "dayOfWeek": "MONDAY",
+                                    "startTime": [
+                                      10,
+                                      0
+                                    ],
+                                    "endTime": [
+                                      11,
+                                      30
+                                    ],
+                                    "term": 123,
+                                    "courseComponent": 136,
+                                    "lecturer": {
+                                      "id": 129,
+                                      "user": 125,
+                                      "priviledge": 1,
+                                      "groups": []
+                                    },
+                                    "room": 122,
+                                    "students": [
+                                      {
+                                        "id": 127,
+                                        "user": 125,
+                                        "enrolementNumber": 123456,
+                                        "mail": "test@test.com",
+                                        "examRegulation": 124,
+                                        "enrolmentTerm": 123,
+                                        "attendCourses": [
+                                          {
+                                            "id": 143,
+                                            "student": 127,
+                                            "course": 135,
+                                            "term": 123
+                                          }
+                                        ],
+                                        "prioritizeGroups": [
+                                          {
+                                            "id": 0,
+                                            "priority": 1,
+                                            "student": 127,
+                                            "group": {
+                                              "id": 139,
+                                              "groupChar": "A",
+                                              "slots": 20,
+                                              "dayOfWeek": "TUESDAY",
+                                              "startTime": [
+                                                10,
+                                                0
+                                              ],
+                                              "endTime": [
+                                                11,
+                                                30
+                                              ],
+                                              "term": 123,
+                                              "courseComponent": {
+                                                "id": 137,
+                                                "type": "PRACTICE",
+                                                "creditPoints": 0,
+                                                "exam": "Praktische Tätigkeit",
+                                                "course": 135,
+                                                "groups": [
+                                                  139,
+                                                  {
+                                                    "id": 142,
+                                                    "groupChar": "D",
+                                                    "slots": 20,
+                                                    "dayOfWeek": "FRIDAY",
+                                                    "startTime": [
+                                                      10,
+                                                      0
+                                                    ],
+                                                    "endTime": [
+                                                      11,
+                                                      30
+                                                    ],
+                                                    "term": 123,
+                                                    "courseComponent": 137,
+                                                    "lecturer": 129,
+                                                    "room": 122,
+                                                    "students": [
+                                                      127
+                                                    ],
+                                                    "prioritizeGroups": []
+                                                  },
+                                                  {
+                                                    "id": 140,
+                                                    "groupChar": "B",
+                                                    "slots": 20,
+                                                    "dayOfWeek": "WEDNESDAY",
+                                                    "startTime": [
+                                                      10,
+                                                      0
+                                                    ],
+                                                    "endTime": [
+                                                      11,
+                                                      30
+                                                    ],
+                                                    "term": 123,
+                                                    "courseComponent": 137,
+                                                    "lecturer": 129,
+                                                    "room": 122,
+                                                    "students": [
+                                                      127
+                                                    ],
+                                                    "prioritizeGroups": []
+                                                  },
+                                                  {
+                                                    "id": 141,
+                                                    "groupChar": "C",
+                                                    "slots": 20,
+                                                    "dayOfWeek": "THURSDAY",
+                                                    "startTime": [
+                                                      10,
+                                                      0
+                                                    ],
+                                                    "endTime": [
+                                                      11,
+                                                      30
+                                                    ],
+                                                    "term": 123,
+                                                    "courseComponent": 137,
+                                                    "lecturer": 129,
+                                                    "room": 122,
+                                                    "students": [
+                                                      127
+                                                    ],
+                                                    "prioritizeGroups": []
+                                                  }
+                                                ],
+                                                "studentPassedExam": null
+                                              },
+                                              "lecturer": 129,
+                                              "room": 122,
+                                              "students": [
+                                                127
+                                              ],
+                                              "prioritizeGroups": []
+                                            }
+                                          }
+                                        ],
+                                        "passedExams": [],
+                                        "groups": []
+                                      }
+                                    ],
+                                    "prioritizeGroups": []
+                                  }
+                                ],
+                                "studentPassedExam": null
+                              },
+                              137
+                            ],
+                            "studentAttendsCourses": []
+                          }
+                        ]
+                      }
+                    }
+                  ]
+                }
+              ],
+              "students": [
+                127
+              ]
+            }
+          ],
+          "fieldsOfStudy": [
+            131
+          ]
+        }
+      ]
+    }
+  ]
+}

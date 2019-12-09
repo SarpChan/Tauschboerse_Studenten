@@ -54,7 +54,7 @@ public class Group {
     private LocalTime endTime;
 
     @Getter @Setter
-    @ManyToOne
+    @ManyToOne(cascade= CascadeType.ALL)
     @JoinColumn(name="term_id")
     private Term term;
 
@@ -64,7 +64,7 @@ public class Group {
     private CourseComponent courseComponent;
 
     @Getter @Setter
-    @ManyToOne
+    @ManyToOne(cascade= CascadeType.ALL)
     @JoinColumn(name="lecturer_id")
     private Lecturer lecturer;
 
@@ -75,7 +75,7 @@ public class Group {
 
     @Singular("student")
     @Getter @Setter
-    @ManyToMany
+    @ManyToMany(cascade= CascadeType.ALL)
     @JoinTable(name = "group_student",
             joinColumns = @JoinColumn(name = "group_id", referencedColumnName = "id"),
             inverseJoinColumns = @JoinColumn(name = "student_id", referencedColumnName = "id"))
@@ -83,7 +83,7 @@ public class Group {
 
     @Singular("prioritezeGroup")
     @Getter @Setter
-    @OneToMany(mappedBy = "group")
+    @OneToMany(mappedBy = "group",cascade= CascadeType.ALL)
     private Set<StudentPrioritizesGroup> prioritizeGroups;
 
     /**

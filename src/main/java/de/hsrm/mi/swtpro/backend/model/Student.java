@@ -5,10 +5,7 @@ import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
 
-import javax.persistence.Entity;
-import javax.persistence.ManyToMany;
-import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
+import javax.persistence.*;
 import java.util.Set;
 
 /**
@@ -38,7 +35,7 @@ public class Student extends Role {
 
     @Singular("attendCourse")
     @Getter @Setter
-    @OneToMany(mappedBy = "student")
+    @OneToMany(mappedBy = "student",cascade= CascadeType.ALL)
     private Set<StudentAttendsCourse> attendCourses;
 
     @Singular("prioritizeGroup")
@@ -48,12 +45,12 @@ public class Student extends Role {
 
     @Singular("passedExam")
     @Getter @Setter
-    @OneToMany(mappedBy = "student")
+    @OneToMany(mappedBy = "student",cascade= CascadeType.ALL)
     private Set<StudentPassedExam> passedExams;
 
     @Singular("group")
     @Getter @Setter
-    @ManyToMany(mappedBy = "students")
+    @ManyToMany(mappedBy = "students",cascade= CascadeType.ALL)
     private Set<Group> groups;
 
 

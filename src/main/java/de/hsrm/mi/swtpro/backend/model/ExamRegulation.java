@@ -38,7 +38,7 @@ public class ExamRegulation {
 
     @Singular("curriculum")
     @Getter @Setter
-    @OneToMany(mappedBy = "examRegulation")
+    @OneToMany(mappedBy = "examRegulation",cascade= CascadeType.ALL)
     private Set<Curriculum> curriculums;
 
     @Singular("student")

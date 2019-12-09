@@ -41,7 +41,7 @@ public class CourseComponent {
 
     @Singular("group")
     @Getter @Setter
-    @OneToMany(mappedBy = "courseComponent")
+    @OneToMany(mappedBy = "courseComponent",cascade= CascadeType.ALL)
     private Set<Group> groups;
 
     @Getter @Setter

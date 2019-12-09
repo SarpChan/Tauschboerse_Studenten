@@ -34,10 +34,7 @@ public class FieldOfStudy {
 
     @Singular("studyProgram")
     @Getter @Setter
-    @ManyToMany
-    @JoinTable(name = "fieldOfStudy_studyProgram",
-            joinColumns = @JoinColumn(name = "fieldOfStudy_id", referencedColumnName = "id"),
-            inverseJoinColumns = @JoinColumn(name = "studyProgram_id", referencedColumnName = "id"))
+    @ManyToMany(cascade= CascadeType.ALL)
     private Set<StudyProgram> studyPrograms ;
 
 }

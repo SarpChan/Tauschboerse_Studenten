@@ -30,7 +30,7 @@ public class Course {
     private String title;
 
     @Getter @Setter
-    @ManyToOne
+    @ManyToOne(cascade= CascadeType.ALL)
     private User owner;
 
 
@@ -52,7 +52,7 @@ public class Course {
 
     @Singular("courseComponent")
     @Getter @Setter
-    @OneToMany(mappedBy = "course")
+    @OneToMany(mappedBy = "course",cascade= CascadeType.ALL)
     private Set<CourseComponent> courseComponents;
 
     @Singular("studentAttendsCourse")

@@ -29,6 +29,6 @@ public class Curriculum {
 
     @Singular("moduleInCurriculum")
     @Getter @Setter
-    @OneToMany(mappedBy = "curriculum")
+    @OneToMany(mappedBy = "curriculum",cascade= CascadeType.ALL)
     private Set<ModuleInCurriculum> modulesInCurriculum ;
 }
