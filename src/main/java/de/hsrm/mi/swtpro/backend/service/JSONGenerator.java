@@ -44,7 +44,7 @@ public class JSONGenerator {
     /**
      * CAUTION!!! DELETES WHOLE DATABASE
      */
-    private void readJSONAndDELETE_WHOLE_DATABASE(){
+    private void readJSON_And_DELETE_WHOLE_DATABASE(){
         File file = new File("C:\\Users\\Julius\\IdeaProjects\\SWT_Backend\\hsrm_medieninformatik.json");
 
         try {
