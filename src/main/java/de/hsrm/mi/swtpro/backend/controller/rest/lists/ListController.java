@@ -31,11 +31,19 @@ public class ListController {
         allCourses = filterFactory.filterCourses(allCourses);
         return allCourses;
     }*/
-    @GetMapping(path = "/timetable", consumes = "application/json", produces = MediaType.APPLICATION_JSON_VALUE)
+
+    /*@GetMapping(path = "/timetable", consumes = "application/json", produces = MediaType.APPLICATION_JSON_VALUE)
     public List<Module> getModules(@RequestBody Filter[] filters) {
         List<Module> allModules = moduleRepository.findAll();
         ModuleFilterFactory filterFactory = ModuleFilterFactory.builder().filters(filters).build();
         allModules = filterFactory.filterModules(allModules);
+        return allModules;
+    }*/
+    @GetMapping(path = "/timetable", produces = MediaType.APPLICATION_JSON_VALUE)
+    public List<Module> getModules() {
+        List<Module> allModules = moduleRepository.findAll();
+        //ModuleFilterFactory filterFactory = ModuleFilterFactory.builder().filters(filters).build();
+        //allModules = filterFactory.filterModules(allModules);
         return allModules;
     }
 

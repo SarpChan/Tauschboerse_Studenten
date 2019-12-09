@@ -38,13 +38,17 @@ public class JSONGenerator {
     private void init(){
         entityManager = emf.createEntityManager();
         //createJSON();
-        readJSON();
+        //readJSON();
     }
 
-    private void readJSON(){
+    /**
+     * CAUTION!!! DELETES WHOLE DATABASE
+     */
+    private void readJSONAndDELETE_WHOLE_DATABASE(){
         File file = new File("C:\\Users\\Julius\\IdeaProjects\\SWT_Backend\\hsrm_medieninformatik.json");
 
         try {
+            universityRepository.deleteAll();
             University university2
                     = new ObjectMapper().readerFor(University.class).readValue(file);
             universityRepository.saveAndFlush(university2);
