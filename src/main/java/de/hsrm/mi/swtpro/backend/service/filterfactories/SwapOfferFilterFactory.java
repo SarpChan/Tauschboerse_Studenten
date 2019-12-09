@@ -4,7 +4,10 @@ import de.hsrm.mi.swtpro.backend.model.SwapOffer;
 import de.hsrm.mi.swtpro.backend.model.filter.Filter;
 import lombok.*;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @NoArgsConstructor
 @AllArgsConstructor
@@ -25,9 +28,12 @@ public class SwapOfferFilterFactory {
         }
         Arrays.stream(this.filters).forEach(filter -> {
             if(filter.getAttribute().equals("toGroupId")) {
-                List<SwapOffer> filterTmp = new ArrayList<>(filterableSwapOffer);
-                filterableSwapOffer.clear();
-                filterableSwapOffer.addAll(filterForToGroup(filterTmp,filter),filterForFromGroup(filterTmp,filter),filterForOwner(filterTmp,filter));
+                List<SwapOffer> filterTmp = new ArrayList<>(filterableSwapOffers);
+                filterableSwapOffers.clear();
+                filterableSwapOffers.addAll(filterForToGroup(filterTmp,filter));
+                filterableSwapOffers.addAll(filterForFromGroup(filterTmp,filter));
+                filterableSwapOffers.addAll(filterForOwner(filterTmp,filter));
+                //filterableSwapOffers.addAll(
             }
         });
         return filterableSwapOffers;
@@ -39,10 +45,9 @@ public class SwapOfferFilterFactory {
                     return swapOffer.getToGroup() ==  forToGroupFilter.getComparator().getComparatorValue();
                 }
                 return false;
-            );
         })).collect(Collectors.toList());
     }
-    
+
     private List<SwapOffer> filterForFromGroup(List<SwapOffer> swapOffers, Filter forFromGroupFilter) {
         return swapOffers.filter(swapOffer -> swapOffer.getFromGroup().anyMatch(group -> {
             
@@ -50,7 +55,6 @@ public class SwapOfferFilterFactory {
                     return swapOffer.getFromGroup() ==  forFromGroupFilter.getComparator().getComparatorValue();
                 }
                 return false;
-            );
         })).collect(Collectors.toList());
     }
 
@@ -61,9 +65,10 @@ public class SwapOfferFilterFactory {
                     return swapOffer.getStudent() ==  forOwnerFilter.getComparator().getComparatorValue();
                 }
                 return false;
-            );
         })).collect(Collectors.toList());
     }
+
+    
 /*
     private List<SwapOffer> filterForCourse(List<SwapOffer> swapOffers, Filter forCourseFilter) {
         return swapOffers.stream().filter(swapOffers -> swapOffers.getModules().stream().anyMatch(module -> {
