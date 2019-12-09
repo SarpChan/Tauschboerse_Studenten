@@ -1,6 +1,7 @@
 package de.hsrm.mi.swtpro.backend.service.filterfactories;
 
 import de.hsrm.mi.swtpro.backend.model.Course;
+import de.hsrm.mi.swtpro.backend.model.Module;
 import de.hsrm.mi.swtpro.backend.model.filter.ComparatorType;
 import de.hsrm.mi.swtpro.backend.model.filter.Filter;
 import lombok.*;
@@ -22,22 +23,22 @@ public class ModuleFilterFactory {
             return filters.length == 0;
         }
 
-        public List<Course> filterCourses(List<Course> courses) {
-            final List<Course> filterableCourses = new ArrayList<>(courses);
+        public List<Module> filterModules(List<Module> courses) {
+            final List<Module> filterableModules = new ArrayList<>(courses);
             if (isFiltersEmpty()) {
                 return courses;
             }
             Arrays.stream(this.filters).forEach(filter -> {
-                if(filter.getAttribute().equals("examRegulationId")) {
-                    List<Course> filterTmp = new ArrayList<>(filterableCourses);
-                    filterableCourses.clear();
-                    filterableCourses.addAll(filterForExamRegulation(filterTmp,filter));
+                if(filter.getAttribute().equals("curriculumId")) {
+                    List<Module> filterTmp = new ArrayList<>(filterableModules);
+                    filterableModules.clear();
+                    filterableModules.addAll(filterForCurriculum(filterTmp,filter));
                 }
             });
-            return filterableCourses;
+            return filterableModules;
         }
 
-        private List<Course> filterForExamRegulation(List<Course> courses, Filter forExamRegulationFilter) {
+        /*private List<Course> filterForExamRegulation(List<Course> courses, Filter forExamRegulationFilter) {
             return courses.stream().filter(course -> course.getModules().stream().anyMatch(module -> {
                 return module.getModulesInCurriculum().stream().anyMatch(moduleInCurriculum -> {
                     if (forExamRegulationFilter.getComparator().getComparatorType() == ComparatorType.EQUALS) {
@@ -45,6 +46,15 @@ public class ModuleFilterFactory {
                     }
                     return false;
                 });
+            })).collect(Collectors.toList());
+        }*/
+
+        private List<Module> filterForCurriculum(List<Module> modules, Filter forCurriculumFilter){
+            return modules.stream().filter(module -> module.getModulesInCurriculum().stream().anyMatch(moduleInCurriculum -> {
+                if(forCurriculumFilter.getComparator().getComparatorType() == ComparatorType.EQUALS) {
+                    return moduleInCurriculum.getCurriculum().getId() == (long) forCurriculumFilter.getComparator().getComparatorValue();
+                }
+                return false;
             })).collect(Collectors.toList());
         }
     }
