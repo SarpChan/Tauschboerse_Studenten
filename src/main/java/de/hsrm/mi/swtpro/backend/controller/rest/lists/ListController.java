@@ -59,9 +59,9 @@ public class ListController {
                     for(Group group:courseComponent.getGroups()){
                         group.setStudents(null);
                         //TODO
-                        group.setLecturer(null);
+                        //group.setLecturer(null);
                         //TODO
-                        group.setRoom(null);
+                        //group.setRoom(null);
                         group.setPrioritizeGroups(null);
                         group.setTerm(null);
                         group.setCourseComponent(null);
