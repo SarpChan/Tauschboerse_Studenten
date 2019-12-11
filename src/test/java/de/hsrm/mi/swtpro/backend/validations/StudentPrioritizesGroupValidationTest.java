@@ -13,12 +13,12 @@ import org.junit.Test;
 
 import de.hsrm.mi.swtpro.backend.model.Group;
 import de.hsrm.mi.swtpro.backend.model.Student;
-import de.hsrm.mi.swtpro.backend.model.StudentPriorizesGroup;
+import de.hsrm.mi.swtpro.backend.model.StudentPrioritizesGroup;
 
 public class StudentPrioritizesGroupValidationTest {
 
     private Validator validator;
-    private  StudentPriorizesGroup studentPriorizesGroup;
+    private  StudentPrioritizesGroup studentPriorizesGroup;
     private Student student;
     private Group group;
 
@@ -35,66 +35,66 @@ public class StudentPrioritizesGroupValidationTest {
 
     @Test
     public void whenPriorityNotNull_thenNoConstraintViolation() {
-        studentPriorizesGroup = StudentPriorizesGroup.builder()
+        studentPriorizesGroup = StudentPrioritizesGroup.builder()
         .id(17)
         .priority(17)
         .student(student)
         .group(group)
         .build();
         
-        Set<ConstraintViolation<StudentPriorizesGroup>> violations = validator.validate(studentPriorizesGroup);
+        Set<ConstraintViolation<StudentPrioritizesGroup>> violations = validator.validate(studentPriorizesGroup);
  
         Assert.assertEquals(0, violations.size());
     }
     @Test
     public void whenStudentNotNull_thenNoConstraintViolation() {
-        studentPriorizesGroup = StudentPriorizesGroup.builder()
+        studentPriorizesGroup = StudentPrioritizesGroup.builder()
         .id(17)
         .priority(17)
         .student(student)
         .group(group)
         .build();
         
-        Set<ConstraintViolation<StudentPriorizesGroup>> violations = validator.validate(studentPriorizesGroup);
+        Set<ConstraintViolation<StudentPrioritizesGroup>> violations = validator.validate(studentPriorizesGroup);
  
         Assert.assertEquals(0, violations.size());
     }
     @Test
     public void whenStudentNull_thenConstraintViolation() {
-        studentPriorizesGroup = StudentPriorizesGroup.builder()
+        studentPriorizesGroup = StudentPrioritizesGroup.builder()
         .id(17)
         .priority(17)
         .student(null)
         .group(group)
         .build();
         
-        Set<ConstraintViolation<StudentPriorizesGroup>> violations = validator.validate(studentPriorizesGroup);
+        Set<ConstraintViolation<StudentPrioritizesGroup>> violations = validator.validate(studentPriorizesGroup);
  
         Assert.assertEquals(1, violations.size());
     }
     @Test
     public void whenGroupNotNull_thenNoConstraintViolation() {
-        studentPriorizesGroup = StudentPriorizesGroup.builder()
+        studentPriorizesGroup = StudentPrioritizesGroup.builder()
         .id(17)
         .priority(17)
         .student(student)
         .group(group)
         .build();
         
-        Set<ConstraintViolation<StudentPriorizesGroup>> violations = validator.validate(studentPriorizesGroup);
+        Set<ConstraintViolation<StudentPrioritizesGroup>> violations = validator.validate(studentPriorizesGroup);
  
         Assert.assertEquals(0, violations.size());
     }
     @Test
     public void whenGroupNull_thenConstraintViolation() {
-        studentPriorizesGroup = StudentPriorizesGroup.builder()
+        studentPriorizesGroup = StudentPrioritizesGroup.builder()
         .id(17)
         .priority(17)
         .student(student)
         .group(null)
         .build();
         
-        Set<ConstraintViolation<StudentPriorizesGroup>> violations = validator.validate(studentPriorizesGroup);
+        Set<ConstraintViolation<StudentPrioritizesGroup>> violations = validator.validate(studentPriorizesGroup);
  
         Assert.assertEquals(1, violations.size());
     }
