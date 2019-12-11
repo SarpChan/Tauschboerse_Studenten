@@ -5,6 +5,7 @@ import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import lombok.*;
 
 import javax.persistence.*;
+import javax.validation.constraints.*;
 
 @Entity
 @NoArgsConstructor
@@ -16,17 +17,21 @@ public class StudentPassedExam {
     @Id
     @Getter @Setter
     @GeneratedValue
+    @NotNull
     private long id;
 
     @Getter @Setter
+    @NotNull
     private float grade;
 
     @Getter @Setter
     @ManyToOne
+    @NotNull
     private Student student;
 
     @Getter @Setter
     @OneToOne
+    @NotNull
     private CourseComponent courseComponent;
 
 }

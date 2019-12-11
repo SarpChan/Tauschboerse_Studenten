@@ -5,6 +5,7 @@ import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import lombok.*;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 
 /** 
     Relationship between a student and a group 
@@ -20,19 +21,23 @@ public class StudentPrioritizesGroup {
     @Id
     @Getter @Setter
     @GeneratedValue
+    @NotNull
     private long id;
 
     @Getter @Setter
+    @NotNull
     private int priority;
 
     @Getter @Setter
     @ManyToOne
     @JoinColumn(name="student_id")
+    @NotNull
     private Student student;
 
     @Getter @Setter
     @ManyToOne
     @JoinColumn(name="group_id")
+    @NotNull
     private Group group;
 
 }
