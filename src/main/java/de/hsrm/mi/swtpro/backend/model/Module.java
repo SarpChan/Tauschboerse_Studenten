@@ -51,7 +51,7 @@ public class Module {
     private Set<Course> courses;
     
     /**
-     * Adds course to the collection of courses fitting this module 
+     * Adds course to the collection of courses fitting this module
      * @param course
      *
      */

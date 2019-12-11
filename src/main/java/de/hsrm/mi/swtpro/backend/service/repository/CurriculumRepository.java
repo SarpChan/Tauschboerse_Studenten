@@ -9,8 +9,10 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 @Repository
-public interface CurriculumRepository extends JpaRepository<Curriculum,Long> {
-    List<Curriculum>findByTermPeriod(int period);
-    List<Curriculum>findByModulesInCurriculum(ModuleInCurriculum module);
-    List<Curriculum>findByExamRegulation(ExamRegulation examRegulation);
+public interface CurriculumRepository extends JpaRepository<Curriculum, Long> {
+    List<Curriculum> findByTermPeriod(int period);
+
+    List<Curriculum> findByModulesInCurriculum(ModuleInCurriculum module);
+
+    List<Curriculum> findByExamRegulation(ExamRegulation examRegulation);
 }

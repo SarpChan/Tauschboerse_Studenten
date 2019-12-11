@@ -9,7 +9,7 @@ import java.util.Optional;
 
 @Repository
 public interface StudentRepository extends JpaRepository<Student,Long> {
-    Optional<Student> findByEnrolementNumber(int enrolementNumber);
+    Optional<Student> findByEnrollmentNumber(int enrollmentNumber);
     Optional<Student> findByUser(User user);
     List<Student> findByMail(String mail);
     List<Student> findByEnrolmentTerm(Term term);

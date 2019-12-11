@@ -59,9 +59,9 @@ public class Term {
     @Getter @Setter
     @OneToMany(mappedBy = "enrolmentTerm")
     private Set<Student> enroledStudents;
-    
+
     /**
-     * Adds course to the collection of courses offered this term 
+     * Adds course to the collection of courses offered this term
      * @param course
      */
     public void addCourse(Course course) {
