@@ -1,6 +1,7 @@
 package de.hsrm.mi.swtpro.backend.service.filterfactories;
 
 import de.hsrm.mi.swtpro.backend.model.SwapOffer;
+import de.hsrm.mi.swtpro.backend.model.filter.ComparatorType;
 import de.hsrm.mi.swtpro.backend.model.filter.Filter;
 import lombok.*;
 
