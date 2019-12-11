@@ -38,14 +38,19 @@ public class ListController {
                 course.setModules(null);
                 course.setTerms(null);
                 course.setStudentAttendsCourses(null);
-                course.setOwner(null);
+                course.getOwner().setRoles(null);
                 for(CourseComponent courseComponent:course.getCourseComponents()){
                     courseComponent.setCourse(null);
+                    courseComponent.setStudentPassedExam(null);
                     for(Group group:courseComponent.getGroups()){
                         group.setStudents(null);
                         group.setPrioritizeGroups(null);
                         group.setTerm(null);
                         group.setCourseComponent(null);
+                        group.getRoom().setBuilding(null);
+                        group.getRoom().setGroups(null);
+                        group.getLecturer().setGroups(null);
+                        group.getLecturer().getUser().setRoles(null);
                     }
                 }
             }
