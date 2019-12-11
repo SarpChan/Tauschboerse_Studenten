@@ -22,6 +22,11 @@ public class SwapOfferFilterFactory {
         return filters.length == 0;
     }
 
+    /**
+     * This list has all filters for swap offers. 
+     * @param swapOffers the list of swap offers that we want to filter
+     * @return returns a list of the filtered swap offers, if no filter exists, it returns the swap offers unfiltered.
+     */
     public List<SwapOffer> filterSwapOffers(List<SwapOffer> swapOffers) {
         final List<SwapOffer> filterableSwapOffers = new ArrayList<>(swapOffers);
         if(isFiltersEmpty()) {
@@ -48,6 +53,12 @@ public class SwapOfferFilterFactory {
         });
         return filterableSwapOffers;
     }
+    /**
+     * This is the method, that filters the "ToGroup" attribute with the "forToGroupFilter".
+     * @param swapOffers the list of swap offers that we want to filter
+     * @param forToGroupFilter the filter we are using
+     * @return returns the filtered list.
+     */
     private List<SwapOffer> filterForToGroup(List<SwapOffer> swapOffers, Filter forToGroupFilter) {
         return swapOffers.stream().filter(swapOffer -> {
             if (forToGroupFilter.getComparator().getComparatorType() == ComparatorType.EQUALS) {
@@ -57,6 +68,12 @@ public class SwapOfferFilterFactory {
         }).collect(Collectors.toList());
     }
 
+    /**
+     * This is the method, that filters the "FromGroup" attribute with the "forFromGroupFilter".
+     * @param swapOffers the list of swap offers that we want to filter
+     * @param forFromGroupFilter the filter we are using
+     * @return returns the filtered list.
+     */
     private List<SwapOffer> filterForFromGroup(List<SwapOffer> swapOffers, Filter forFromGroupFilter) {
         return swapOffers.stream().filter(swapOffer -> {
             
@@ -66,7 +83,12 @@ public class SwapOfferFilterFactory {
                 return false;
         }).collect(Collectors.toList());
     }
-
+    /**
+     * This is the method, that filters the "Owner" attribute with the "forOwnerFilter".
+     * @param swapOffers the list of swap offers that we want to filter
+     * @param forOwnerFilter the filter we are using
+     * @return returns the filtered list.
+     */
     private List<SwapOffer> filterForOwner(List<SwapOffer> swapOffers, Filter forOwnerFilter) {
         return swapOffers.stream().filter(swapOffer -> {
             
@@ -76,7 +98,12 @@ public class SwapOfferFilterFactory {
                 return false;
         }).collect(Collectors.toList());
     }
-
+    /**
+     * This is the method, that filters the "Course" attribute with the "forCourseFilter".
+     * @param swapOffers the list of swap offers that we want to filter
+     * @param forCourseFilter the filter we are using
+     * @return returns the filtered list.
+     */
     private List<SwapOffer> filterForCourse(List<SwapOffer> swapOffers, Filter forCourseFilter) {
         return swapOffers.stream().filter(swapOffer -> {
             if (forCourseFilter.getComparator().getComparatorType() == ComparatorType.EQUALS) {
