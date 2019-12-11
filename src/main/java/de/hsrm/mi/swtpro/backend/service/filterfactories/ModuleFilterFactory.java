@@ -23,40 +23,30 @@ public class ModuleFilterFactory {
             return filters.length == 0;
         }
 
-        public List<Module> filterModules(List<Module> courses) {
-            final List<Module> filterableModules = new ArrayList<>(courses);
+        public List<Module> filterModules(List<Module> modules) {
+            final List<Module> filterableModules = new ArrayList<>(modules);
             if (isFiltersEmpty()) {
-                return courses;
+                return modules;
             }
             Arrays.stream(this.filters).forEach(filter -> {
-                if(filter.getAttribute().equals("curriculumId")) {
-                    List<Module> filterTmp = new ArrayList<>(filterableModules);
+                if(filter.getAttribute().equals("examRegulationId")) {
+                    List<Module> moduleFilter = new ArrayList<>(filterableModules);
                     filterableModules.clear();
-                    filterableModules.addAll(filterForCurriculum(filterTmp,filter));
+                    filterableModules.addAll(filterForExamRegulation(moduleFilter,filter));
                 }
             });
             return filterableModules;
         }
 
-        /*private List<Course> filterForExamRegulation(List<Course> courses, Filter forExamRegulationFilter) {
-            return courses.stream().filter(course -> course.getModules().stream().anyMatch(module -> {
-                return module.getModulesInCurriculum().stream().anyMatch(moduleInCurriculum -> {
-                    if (forExamRegulationFilter.getComparator().getComparatorType() == ComparatorType.EQUALS) {
-                        return moduleInCurriculum.getCurriculum().getExamRegulation().getId() == (long) forExamRegulationFilter.getComparator().getComparatorValue();
-                    }
-                    return false;
-                });
-            })).collect(Collectors.toList());
-        }*/
-
-        private List<Module> filterForCurriculum(List<Module> modules, Filter forCurriculumFilter){
+        private List<Module> filterForExamRegulation(List<Module> modules, Filter forExamRegulationFilter){
             return modules.stream().filter(module -> module.getModulesInCurriculum().stream().anyMatch(moduleInCurriculum -> {
-                if(forCurriculumFilter.getComparator().getComparatorType() == ComparatorType.EQUALS) {
-                    return moduleInCurriculum.getCurriculum().getId() == (long) forCurriculumFilter.getComparator().getComparatorValue();
+                if(forExamRegulationFilter.getComparator().getComparatorType() == ComparatorType.EQUALS) {
+                    return moduleInCurriculum.getCurriculum().getExamRegulation().getId() ==  new Long(forExamRegulationFilter.getComparator().getComparatorValue().toString());
                 }
                 return false;
             })).collect(Collectors.toList());
         }
     }
+    
 
 
