@@ -39,10 +39,10 @@ public class UniversityCrudController {
 
     }
 
-    @GetMapping(path = "/university/read", produces = MediaType.APPLICATION_JSON_VALUE)
-    public University findUniversity(@RequestParam("universityName") String universityName) throws UniversityNotFoundException {
-        if (universityRepository.findByName(universityName) != null) {
-            return universityRepository.findByName(universityName);
+    @GetMapping(path = "/university/read/{universityID}", produces = MediaType.APPLICATION_JSON_VALUE)
+    public University findUniversity(@PathVariable long universityID) throws UniversityNotFoundException {
+        if (universityRepository.findById(universityID).isPresent()) {
+            return universityRepository.findById(universityID).get();
         } else {
             throw new UniversityNotFoundException("University not found");
         }
@@ -50,14 +50,15 @@ public class UniversityCrudController {
 
     /**
      * Remove a University object from the Model
-     * @param university recieves a University class via POST request
-     * @return University object or
+     *
+     * @param universityID recieves a University class via DELETE request
+     * @return void
      * @throws UniversityNotFoundException
      */
-    @DeleteMapping(path = "/university/delete", consumes = "application/json")
-    public void deleteUniversity(@RequestBody University university) throws UniversityNotFoundException {
-        if (universityRepository.findByName(university.getName()) != null) {
-            universityRepository.delete(university);
+    @DeleteMapping(path = "/university/delete/{universityID}", consumes = "application/json")
+    public void deleteUniversity(@PathVariable long universityID) throws UniversityNotFoundException {
+        if (universityRepository.findById(universityID).isPresent()) {
+            universityRepository.deleteById(universityID);
         } else {
             throw new UniversityNotFoundException("University not found");
         }

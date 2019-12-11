@@ -53,8 +53,8 @@ public class StudentPrioritizesGroupCrudController {
      * @return StudentPrioritizesGroup object
      * @throws StudentPrioritizesGroupNotFoundException
      */
-    @GetMapping(path = "/studentPrioritizesGroup/read", produces = MediaType.APPLICATION_JSON_VALUE)
-    public StudentPrioritizesGroup findStudentPrioritizesGroup(@RequestParam("studentPrioritizesGroupID") long studentPrioritizesGroupID) throws StudentPrioritizesGroupNotFoundException {
+    @GetMapping(path = "/studentPrioritizesGroup/read/{studentPrioritizesGroupID}", produces = MediaType.APPLICATION_JSON_VALUE)
+    public StudentPrioritizesGroup findStudentPrioritizesGroup(@PathVariable long studentPrioritizesGroupID) throws StudentPrioritizesGroupNotFoundException {
         if (studentPrioritizesGroupRepository.findById(studentPrioritizesGroupID).isPresent()) {
             return studentPrioritizesGroupRepository.findById(studentPrioritizesGroupID).get();
         } else {
@@ -65,14 +65,14 @@ public class StudentPrioritizesGroupCrudController {
     /**
      * Remove a StudentPrioritizesGroup object from the Model
      *
-     * @param studentPrioritizesGroup recieves a StudentPrioritizesGroup class via POST request
-     * @return StudentPrioritizesGroup object or
+     * @param studentPrioritizesGroupID recieves a StudentPrioritizesGroup class via DELETE request
+     * @return void
      * @throws StudentPrioritizesGroupNotFoundException
      */
-    @DeleteMapping(path = "/studentPrioritizesGroup/delete", consumes = "application/json")
-    public void deleteStudentPrioritizesGroup(@RequestBody StudentPrioritizesGroup studentPrioritizesGroup) throws StudentPrioritizesGroupNotFoundException {
-        if (studentPrioritizesGroupRepository.findById(studentPrioritizesGroup.getId()).isPresent()) {
-            studentPrioritizesGroupRepository.delete(studentPrioritizesGroup);
+    @DeleteMapping(path = "/studentPrioritizesGroup/delete/{studentPrioritizesGroupID}", consumes = "application/json")
+    public void deleteStudentPrioritizesGroup(@PathVariable long studentPrioritizesGroupID) throws StudentPrioritizesGroupNotFoundException {
+        if (studentPrioritizesGroupRepository.findById(studentPrioritizesGroupID).isPresent()) {
+            studentPrioritizesGroupRepository.deleteById(studentPrioritizesGroupID);
         } else {
             throw new StudentPrioritizesGroupNotFoundException("StudentPrioritizesGroup not found");
         }

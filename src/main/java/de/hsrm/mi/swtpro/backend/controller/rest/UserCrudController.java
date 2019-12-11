@@ -47,14 +47,15 @@ public class UserCrudController {
 
     /**
      * Find a User object from the Model
-     * @param loginName recieves key from user
+     *
+     * @param userID recieves key from user
      * @return User object
      * @throws UserNotFoundException
      */
-    @GetMapping(path = "/user/read", produces = MediaType.APPLICATION_JSON_VALUE)
-    public User findUser(@RequestParam("loginName") String loginName) throws UserNotFoundException {
-        if (userRepository.findByLoginName(loginName) != null) {
-            return userRepository.findByLoginName(loginName);
+    @GetMapping(path = "/user/read/{userID}", produces = MediaType.APPLICATION_JSON_VALUE)
+    public User findUser(@PathVariable long userID) throws UserNotFoundException {
+        if (userRepository.findById(userID).isPresent()) {
+            return userRepository.findById(userID).get();
         } else {
             throw new UserNotFoundException("User not found");
         }
@@ -62,14 +63,15 @@ public class UserCrudController {
 
     /**
      * Remove a User object from the Model
-     * @param user recieves a User class via POST request
-     * @return User object or
+     *
+     * @param userID recieves a User id via DELETE request
+     * @return void
      * @throws UserNotFoundException
      */
-    @DeleteMapping(path = "/user/delete", consumes = "application/json")
-    public void deleteUser(@RequestBody User user) throws UserNotFoundException {
-        if (userRepository.findByLoginName(user.getLoginName()) != null) {
-            userRepository.delete(user);
+    @DeleteMapping(path = "/user/delete/{userID}", consumes = "application/json")
+    public void deleteUser(@PathVariable long userID) throws UserNotFoundException {
+        if (userRepository.findById(userID).isPresent()) {
+            userRepository.deleteById(userID);
         } else {
             throw new UserNotFoundException("User not found");
         }

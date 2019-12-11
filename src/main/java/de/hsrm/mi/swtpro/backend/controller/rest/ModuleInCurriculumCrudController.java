@@ -53,8 +53,8 @@ public class ModuleInCurriculumCrudController {
      * @return ModuleInCurriculum object
      * @throws ModuleInCurriculumNotFoundException
      */
-    @GetMapping(path = "/moduleInCurriculum/read", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ModuleInCurriculum findModuleInCurriculum(@RequestParam("moduleInCurriculumID") long moduleInCurriculumID) throws ModuleInCurriculumNotFoundException {
+    @GetMapping(path = "/moduleInCurriculum/read/{moduleInCurriculumID}", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ModuleInCurriculum findModuleInCurriculum(@PathVariable long moduleInCurriculumID) throws ModuleInCurriculumNotFoundException {
         if (moduleInCurriculumRepository.findById(moduleInCurriculumID).isPresent()) {
             return moduleInCurriculumRepository.findById(moduleInCurriculumID).get();
         } else {
@@ -65,14 +65,14 @@ public class ModuleInCurriculumCrudController {
     /**
      * Remove a ModuleInCurriculum object from the Model
      *
-     * @param moduleInCurriculum recieves a ModuleInCurriculum class via POST request
-     * @return ModuleInCurriculum object or
+     * @param moduleInCurriculumID recieves a ModuleInCurriculum class via DELETE request
+     * @return void
      * @throws ModuleInCurriculumNotFoundException
      */
-    @DeleteMapping(path = "/moduleInCurriculum/delete", consumes = "application/json")
-    public void deleteModuleInCurriculum(@RequestBody ModuleInCurriculum moduleInCurriculum) throws ModuleInCurriculumNotFoundException {
-        if (moduleInCurriculumRepository.findById(moduleInCurriculum.getId()).isPresent()) {
-            moduleInCurriculumRepository.delete(moduleInCurriculum);
+    @DeleteMapping(path = "/moduleInCurriculum/delete/{moduleInCurriculumID}", consumes = "application/json")
+    public void deleteModuleInCurriculum(@PathVariable long moduleInCurriculumID) throws ModuleInCurriculumNotFoundException {
+        if (moduleInCurriculumRepository.findById(moduleInCurriculumID).isPresent()) {
+            moduleInCurriculumRepository.deleteById(moduleInCurriculumID);
         } else {
             throw new ModuleInCurriculumNotFoundException("ModuleInCurriculum not found");
         }

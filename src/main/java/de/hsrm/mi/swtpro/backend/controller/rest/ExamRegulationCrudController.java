@@ -47,12 +47,13 @@ public class ExamRegulationCrudController {
 
     /**
      * Find a ExamRegulation object from the Model
+     *
      * @param examregulationID recieves key from examregulation
      * @return ExamRegulation object
      * @throws ExamRegulationNotFoundException
      */
-    @GetMapping(path = "/examregulation/read", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ExamRegulation findExamRegulation(@RequestParam("examregulationID") long examregulationID) throws ExamRegulationNotFoundException {
+    @GetMapping(path = "/examregulation/read/{examregulationID}", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ExamRegulation findExamRegulation(@PathVariable long examregulationID) throws ExamRegulationNotFoundException {
         if (examregulationRepository.findById(examregulationID).isPresent()) {
             return examregulationRepository.findById(examregulationID).get();
         } else {
@@ -62,14 +63,15 @@ public class ExamRegulationCrudController {
 
     /**
      * Remove a ExamRegulation object from the Model
-     * @param examregulation recieves a ExamRegulation class via POST request
-     * @return ExamRegulation object or
+     *
+     * @param examregulationID recieves a ExamRegulation class via DELETE request
+     * @return void
      * @throws ExamRegulationNotFoundException
      */
-    @DeleteMapping(path = "/examregulation/delete", consumes = "application/json")
-    public void deleteExamRegulation(@RequestBody ExamRegulation examregulation) throws ExamRegulationNotFoundException {
-        if (examregulationRepository.findById(examregulation.getId()).isPresent()) {
-            examregulationRepository.delete(examregulation);
+    @DeleteMapping(path = "/examregulation/delete/{examregulationID}", consumes = "application/json")
+    public void deleteExamRegulation(@PathVariable long examregulationID) throws ExamRegulationNotFoundException {
+        if (examregulationRepository.findById(examregulationID).isPresent()) {
+            examregulationRepository.deleteById(examregulationID);
         } else {
             throw new ExamRegulationNotFoundException("ExamRegulation not found");
         }

@@ -47,12 +47,13 @@ public class CourseComponentCrudController {
 
     /**
      * Find a CourseComponent object from the Model
+     *
      * @param coursecomponentID recieves key from coursecomponent
      * @return CourseComponent object
      * @throws CourseComponentNotFoundException
      */
-    @GetMapping(path = "/coursecomponent/read", produces = MediaType.APPLICATION_JSON_VALUE)
-    public CourseComponent findCourseComponent(@RequestParam("coursecomponentID") long coursecomponentID) throws CourseComponentNotFoundException {
+    @GetMapping(path = "/coursecomponent/read/{coursecomponentID}", produces = MediaType.APPLICATION_JSON_VALUE)
+    public CourseComponent findCourseComponent(@PathVariable long coursecomponentID) throws CourseComponentNotFoundException {
         if (courseComponentRepository.findById(coursecomponentID).isPresent()) {
             return courseComponentRepository.findById(coursecomponentID).get();
         } else {
@@ -62,14 +63,15 @@ public class CourseComponentCrudController {
 
     /**
      * Remove a CourseComponent object from the Model
-     * @param coursecomponent recieves a CourseComponent class via POST request
-     * @return CourseComponent object or
+     *
+     * @param coursecomponentID recieves a CourseComponent id via DELETE request
+     * @return void
      * @throws CourseComponentNotFoundException
      */
-    @DeleteMapping(path = "/coursecomponent/delete", consumes = "application/json")
-    public void deleteCourseComponent(@RequestBody CourseComponent coursecomponent) throws CourseComponentNotFoundException {
-        if (courseComponentRepository.findById(coursecomponent.getId()) != null) {
-            courseComponentRepository.delete(coursecomponent);
+    @DeleteMapping(path = "/coursecomponent/delete/{coursecomponentID}", consumes = "application/json")
+    public void deleteCourseComponent(@PathVariable long coursecomponentID) throws CourseComponentNotFoundException {
+        if (courseComponentRepository.findById(coursecomponentID).isPresent()) {
+            courseComponentRepository.deleteById(coursecomponentID);
         } else {
             throw new CourseComponentNotFoundException("CourseComponent not found");
         }

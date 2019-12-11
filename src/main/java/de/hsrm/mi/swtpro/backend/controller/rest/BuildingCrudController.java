@@ -47,12 +47,13 @@ public class BuildingCrudController {
 
     /**
      * Find a Building object from the Model
+     *
      * @param buildingID recieves key from building
      * @return Building object
      * @throws BuildingNotFoundException
      */
-    @GetMapping(path = "/building/read", produces = MediaType.APPLICATION_JSON_VALUE)
-    public Building findBuilding(@RequestParam("buildingID") long buildingID) throws BuildingNotFoundException {
+    @GetMapping(path = "/building/read/{buildingID}", produces = MediaType.APPLICATION_JSON_VALUE)
+    public Building findBuilding(@PathVariable("buildingID") long buildingID) throws BuildingNotFoundException {
         if (buildingRepository.findById(buildingID).isPresent()) {
             return buildingRepository.findById(buildingID).get();
         } else {
@@ -62,14 +63,15 @@ public class BuildingCrudController {
 
     /**
      * Remove a Building object from the Model
-     * @param building recieves a Building class via POST request
-     * @return Building object or
+     *
+     * @param building recieves a Building id via DELETE request
+     * @return void
      * @throws BuildingNotFoundException
      */
-    @DeleteMapping(path = "/building/delete", consumes = "application/json")
-    public void deleteBuilding(@RequestBody Building building) throws BuildingNotFoundException {
-        if (buildingRepository.findById(building.getId()).isPresent()) {
-            buildingRepository.delete(building);
+    @DeleteMapping(path = "/building/delete/{buildingID}", consumes = "application/json")
+    public void deleteBuilding(@PathVariable long building) throws BuildingNotFoundException {
+        if (buildingRepository.findById(building).isPresent()) {
+            buildingRepository.deleteById(building);
         } else {
             throw new BuildingNotFoundException("Building not found");
         }

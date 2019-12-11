@@ -25,8 +25,9 @@ import java.util.Set;
 @SuperBuilder
 public class Student extends Role {
 
-    @Getter @Setter
-    private int enrolementNumber;
+    @Getter
+    @Setter
+    private int enrollmentNumber;
 
     @Getter @Setter
     private String mail;

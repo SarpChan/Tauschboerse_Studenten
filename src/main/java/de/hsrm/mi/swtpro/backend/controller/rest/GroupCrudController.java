@@ -47,12 +47,13 @@ public class GroupCrudController {
 
     /**
      * Find a Group object from the Model
+     *
      * @param groupID recieves key from group
      * @return Group object
      * @throws GroupNotFoundException
      */
-    @GetMapping(path = "/group/read", produces = MediaType.APPLICATION_JSON_VALUE)
-    public Group findGroup(@RequestParam("groupID") long groupID) throws GroupNotFoundException {
+    @GetMapping(path = "/group/read/{groupID}", produces = MediaType.APPLICATION_JSON_VALUE)
+    public Group findGroup(@PathVariable long groupID) throws GroupNotFoundException {
         if (groupRepository.findById(groupID).isPresent()) {
             return groupRepository.findById(groupID).get();
         } else {
@@ -62,14 +63,15 @@ public class GroupCrudController {
 
     /**
      * Remove a Group object from the Model
-     * @param group recieves a Group class via POST request
-     * @return Group object or
+     *
+     * @param group recieves a Group class via DELETE request
+     * @return void
      * @throws GroupNotFoundException
      */
     @DeleteMapping(path = "/group/delete", consumes = "application/json")
-    public void deleteGroup(@RequestBody Group group) throws GroupNotFoundException {
-        if (groupRepository.findById(group.getId()).isPresent()) {
-            groupRepository.delete(group);
+    public void deleteGroup(@PathVariable long group) throws GroupNotFoundException {
+        if (groupRepository.findById(group).isPresent()) {
+            groupRepository.deleteById(group);
         } else {
             throw new GroupNotFoundException("Group not found");
         }

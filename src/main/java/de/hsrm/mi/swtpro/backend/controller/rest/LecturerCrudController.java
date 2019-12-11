@@ -49,14 +49,14 @@ public class LecturerCrudController {
     /**
      * Find a Lecturer object from the Model
      *
-     * @param lecturerID recieves key from lecturer
+     * @param lecturer recieves key from lecturer
      * @return Lecturer object
      * @throws LecturerNotFoundException
      */
-    @GetMapping(path = "/lecturer/read", produces = MediaType.APPLICATION_JSON_VALUE)
-    public Lecturer findLecturer(@RequestParam("lecturerID") long lecturerID) throws LecturerNotFoundException {
-        if (lecturerRepository.findById(lecturerID).isPresent()) {
-            return lecturerRepository.findById(lecturerID).get();
+    @GetMapping(path = "/lecturer/read/{lecturer}", produces = MediaType.APPLICATION_JSON_VALUE)
+    public Lecturer findLecturer(@PathVariable long lecturer) throws LecturerNotFoundException {
+        if (lecturerRepository.findById(lecturer).isPresent()) {
+            return lecturerRepository.findById(lecturer).get();
         } else {
             throw new LecturerNotFoundException("Lecturer not found");
         }
@@ -65,14 +65,14 @@ public class LecturerCrudController {
     /**
      * Remove a Lecturer object from the Model
      *
-     * @param lecturer recieves a Lecturer class via POST request
-     * @return Lecturer object or
+     * @param lecturer recieves a Lecturer class via DELETE request
+     * @return void
      * @throws LecturerNotFoundException
      */
-    @DeleteMapping(path = "/lecturer/delete", consumes = "application/json")
-    public void deleteLecturer(@RequestBody Lecturer lecturer) throws LecturerNotFoundException {
-        if (lecturerRepository.findById((long) lecturer.getId()).isPresent()) {
-            lecturerRepository.delete(lecturer);
+    @DeleteMapping(path = "/lecturer/delete/{lecturer}", consumes = "application/json")
+    public void deleteLecturer(@PathVariable long lecturer) throws LecturerNotFoundException {
+        if (lecturerRepository.findById(lecturer).isPresent()) {
+            lecturerRepository.deleteById(lecturer);
         } else {
             throw new LecturerNotFoundException("Lecturer not found");
         }

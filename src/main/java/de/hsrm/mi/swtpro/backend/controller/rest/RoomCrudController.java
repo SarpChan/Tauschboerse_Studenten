@@ -47,12 +47,13 @@ public class RoomCrudController {
 
     /**
      * Find a Room object from the Model
+     *
      * @param roomID recieves key from room
      * @return Room object
      * @throws RoomNotFoundException
      */
-    @GetMapping(path = "/room/read", produces = MediaType.APPLICATION_JSON_VALUE)
-    public Room findRoom(@RequestParam("roomID") long roomID) throws RoomNotFoundException {
+    @GetMapping(path = "/room/read/{roomID}", produces = MediaType.APPLICATION_JSON_VALUE)
+    public Room findRoom(@PathVariable long roomID) throws RoomNotFoundException {
         if (roomRepository.findById(roomID).isPresent()) {
             return roomRepository.findById(roomID).get();
         } else {
@@ -62,14 +63,15 @@ public class RoomCrudController {
 
     /**
      * Remove a Room object from the Model
-     * @param room recieves a Room class via POST request
-     * @return Room object or
+     *
+     * @param roomID recieves a Room class via DELETE request
+     * @return void
      * @throws RoomNotFoundException
      */
     @DeleteMapping(path = "/room/delete", consumes = "application/json")
-    public void deleteRoom(@RequestBody Room room) throws RoomNotFoundException {
-        if (roomRepository.findById(room.getId()).isPresent()) {
-            roomRepository.delete(room);
+    public void deleteRoom(@PathVariable long roomID) throws RoomNotFoundException {
+        if (roomRepository.findById(roomID).isPresent()) {
+            roomRepository.deleteById(roomID);
         } else {
             throw new RoomNotFoundException("Room not found");
         }

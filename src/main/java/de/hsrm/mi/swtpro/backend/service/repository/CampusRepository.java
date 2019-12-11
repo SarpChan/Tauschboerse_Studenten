@@ -7,7 +7,7 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 @Repository
-public interface CampusRepository extends JpaRepository<Campus,String> {
+public interface CampusRepository extends JpaRepository<Campus, Long> {
     public List<Campus> findByName(String name);
 
     public Campus findByAddress(String address);

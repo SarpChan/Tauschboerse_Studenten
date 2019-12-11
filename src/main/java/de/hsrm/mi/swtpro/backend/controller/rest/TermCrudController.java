@@ -47,12 +47,13 @@ public class TermCrudController {
 
     /**
      * Find a Term object from the Model
+     *
      * @param termID recieves key from term
      * @return Term object
      * @throws TermNotFoundException
      */
-    @GetMapping(path = "/term/read", produces = MediaType.APPLICATION_JSON_VALUE)
-    public Term findTerm(@RequestParam("termID") long termID) throws TermNotFoundException {
+    @GetMapping(path = "/term/read/{termID}", produces = MediaType.APPLICATION_JSON_VALUE)
+    public Term findTerm(@PathVariable long termID) throws TermNotFoundException {
         if (termRepository.findById(termID).isPresent()) {
             return termRepository.findById(termID).get();
         } else {
@@ -62,14 +63,15 @@ public class TermCrudController {
 
     /**
      * Remove a Term object from the Model
-     * @param term recieves a Term class via POST request
-     * @return Term object or
+     *
+     * @param termID recieves a Term class via DELETE request
+     * @return void
      * @throws TermNotFoundException
      */
-    @DeleteMapping(path = "/term/delete", consumes = "application/json")
-    public void deleteTerm(@RequestBody Term term) throws TermNotFoundException {
-        if (termRepository.findById(term.getId()).isPresent()) {
-            termRepository.delete(term);
+    @DeleteMapping(path = "/term/delete/{termID}", consumes = "application/json")
+    public void deleteTerm(@PathVariable long termID) throws TermNotFoundException {
+        if (termRepository.findById(termID).isPresent()) {
+            termRepository.deleteById(termID);
         } else {
             throw new TermNotFoundException("Term not found");
         }

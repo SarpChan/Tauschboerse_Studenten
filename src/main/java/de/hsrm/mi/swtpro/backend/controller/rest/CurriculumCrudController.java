@@ -47,12 +47,13 @@ public class CurriculumCrudController {
 
     /**
      * Find a Curriculum object from the Model
+     *
      * @param curriculumID recieves key from curriculum
      * @return Curriculum object
      * @throws CurriculumNotFoundException
      */
-    @GetMapping(path = "/curriculum/read", produces = MediaType.APPLICATION_JSON_VALUE)
-    public Curriculum findCurriculum(@RequestParam("curriculumID") long curriculumID) throws CurriculumNotFoundException {
+    @GetMapping(path = "/curriculum/read/{curriculumID}", produces = MediaType.APPLICATION_JSON_VALUE)
+    public Curriculum findCurriculum(@PathVariable long curriculumID) throws CurriculumNotFoundException {
         if (curriculumRepository.findById(curriculumID).isPresent()) {
             return curriculumRepository.findById(curriculumID).get();
         } else {
@@ -62,14 +63,15 @@ public class CurriculumCrudController {
 
     /**
      * Remove a Curriculum object from the Model
-     * @param curriculum recieves a Curriculum class via POST request
-     * @return Curriculum object or
+     *
+     * @param curriculumID recieves a Curriculum class via DELETE request
+     * @return void
      * @throws CurriculumNotFoundException
      */
-    @DeleteMapping(path = "/curriculum/delete", consumes = "application/json")
-    public void deleteCurriculum(@RequestBody Curriculum curriculum) throws CurriculumNotFoundException {
-        if (curriculumRepository.findById(curriculum.getId()).isPresent()) {
-            curriculumRepository.delete(curriculum);
+    @DeleteMapping(path = "/curriculum/delete/{curriculumID}", consumes = "application/json")
+    public void deleteCurriculum(@PathVariable long curriculumID) throws CurriculumNotFoundException {
+        if (curriculumRepository.findById(curriculumID).isPresent()) {
+            curriculumRepository.deleteById(curriculumID);
         } else {
             throw new CurriculumNotFoundException("Curriculum not found");
         }

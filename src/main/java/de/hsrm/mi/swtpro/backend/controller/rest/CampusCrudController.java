@@ -47,14 +47,15 @@ public class CampusCrudController {
 
     /**
      * Find a Campus object from the Model
-     * @param campusAddress recieves key from campus
+     *
+     * @param campusID recieves key from campus
      * @return Campus object
      * @throws CampusNotFoundException
      */
-    @GetMapping(path = "/campus/read", produces = MediaType.APPLICATION_JSON_VALUE)
-    public Campus findCampus(@RequestParam("campusAddress") String campusAddress) throws CampusNotFoundException {
-        if (campusRepository.findByAddress(campusAddress) != null) {
-            return campusRepository.findByAddress(campusAddress);
+    @GetMapping(path = "/campus/read/{campusID}", produces = MediaType.APPLICATION_JSON_VALUE)
+    public Campus findCampus(@PathVariable long campusID) throws CampusNotFoundException {
+        if (campusRepository.findById(campusID).isPresent()) {
+            return campusRepository.findById(campusID).get();
         } else {
             throw new CampusNotFoundException("Campus not found");
         }
@@ -62,14 +63,15 @@ public class CampusCrudController {
 
     /**
      * Remove a Campus object from the Model
-     * @param campus recieves a Campus class via POST request
-     * @return Campus object or
+     *
+     * @param campus recieves a Campus id via DELETE request
+     * @return void
      * @throws CampusNotFoundException
      */
-    @DeleteMapping(path = "/campus/delete", consumes = "application/json")
-    public void deleteCampus(@RequestBody Campus campus) throws CampusNotFoundException {
-        if (campusRepository.findByAddress(campus.getAddress()) != null) {
-            campusRepository.delete(campus);
+    @DeleteMapping(path = "/campus/delete/{campus}", consumes = "application/json")
+    public void deleteCampus(@PathVariable long campus) throws CampusNotFoundException {
+        if (campusRepository.findById(campus).isPresent()) {
+            campusRepository.deleteById(campus);
         } else {
             throw new CampusNotFoundException("Campus not found");
         }

@@ -47,12 +47,13 @@ public class ModuleCrudController {
 
     /**
      * Find a Module object from the Model
+     *
      * @param moduleID recieves key from module
      * @return Module object
      * @throws ModuleNotFoundException
      */
-    @GetMapping(path = "/module/read", produces = MediaType.APPLICATION_JSON_VALUE)
-    public Module findModule(@RequestParam("moduleID") long moduleID) throws ModuleNotFoundException {
+    @GetMapping(path = "/module/read/{moduleID}", produces = MediaType.APPLICATION_JSON_VALUE)
+    public Module findModule(@PathVariable long moduleID) throws ModuleNotFoundException {
         if (moduleRepository.findById(moduleID).isPresent()) {
             return moduleRepository.findById(moduleID).get();
         } else {
@@ -62,14 +63,15 @@ public class ModuleCrudController {
 
     /**
      * Remove a Module object from the Model
-     * @param module recieves a Module class via POST request
-     * @return Module object or
+     *
+     * @param moduleID recieves a Module class via DELETE request
+     * @return void
      * @throws ModuleNotFoundException
      */
-    @DeleteMapping(path = "/module/delete", consumes = "application/json")
-    public void deleteModule(@RequestBody Module module) throws ModuleNotFoundException {
-        if (moduleRepository.findById(module.getId()).isPresent()) {
-            moduleRepository.delete(module);
+    @DeleteMapping(path = "/module/delete/{moduleID}", consumes = "application/json")
+    public void deleteModule(@PathVariable long moduleID) throws ModuleNotFoundException {
+        if (moduleRepository.findById(moduleID).isPresent()) {
+            moduleRepository.deleteById(moduleID);
         } else {
             throw new ModuleNotFoundException("Module not found");
         }

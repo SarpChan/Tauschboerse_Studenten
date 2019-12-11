@@ -47,12 +47,13 @@ public class FieldOfStudyCrudController {
 
     /**
      * Find a FieldOfStudy object from the Model
+     *
      * @param fieldofstudyID recieves key from fieldofstudy
      * @return FieldOfStudy object
      * @throws FieldOfStudyNotFoundException
      */
-    @GetMapping(path = "/fieldofstudy/read", produces = MediaType.APPLICATION_JSON_VALUE)
-    public FieldOfStudy findFieldOfStudy(@RequestParam("fieldofstudyID") long fieldofstudyID) throws FieldOfStudyNotFoundException {
+    @GetMapping(path = "/fieldofstudy/read/{fieldofstudyID}", produces = MediaType.APPLICATION_JSON_VALUE)
+    public FieldOfStudy findFieldOfStudy(@PathVariable long fieldofstudyID) throws FieldOfStudyNotFoundException {
         if (fieldofstudyRepository.findById(fieldofstudyID).isPresent()) {
             return fieldofstudyRepository.findById(fieldofstudyID).get();
         } else {
@@ -62,14 +63,15 @@ public class FieldOfStudyCrudController {
 
     /**
      * Remove a FieldOfStudy object from the Model
-     * @param fieldofstudy recieves a FieldOfStudy class via POST request
-     * @return FieldOfStudy object or
+     *
+     * @param fieldofstudyID recieves a FieldOfStudy class via DELETE request
+     * @return void
      * @throws FieldOfStudyNotFoundException
      */
-    @DeleteMapping(path = "/fieldofstudy/delete", consumes = "application/json")
-    public void deleteFieldOfStudy(@RequestBody FieldOfStudy fieldofstudy) throws FieldOfStudyNotFoundException {
-        if (fieldofstudyRepository.findById(fieldofstudy.getId()).isPresent()) {
-            fieldofstudyRepository.delete(fieldofstudy);
+    @DeleteMapping(path = "/fieldofstudy/delete/{fieldofstudyID}", consumes = "application/json")
+    public void deleteFieldOfStudy(@PathVariable long fieldofstudyID) throws FieldOfStudyNotFoundException {
+        if (fieldofstudyRepository.findById(fieldofstudyID).isPresent()) {
+            fieldofstudyRepository.deleteById(fieldofstudyID);
         } else {
             throw new FieldOfStudyNotFoundException("FieldOfStudy not found");
         }

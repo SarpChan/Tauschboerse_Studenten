@@ -53,8 +53,8 @@ public class StudentAttendsCourseCrudController {
      * @return StudentAttendsCourse object
      * @throws StudentAttendsCourseNotFoundException
      */
-    @GetMapping(path = "/studentAttendsCourse/read", produces = MediaType.APPLICATION_JSON_VALUE)
-    public StudentAttendsCourse findStudentAttendsCourse(@RequestParam("studentAttendsCourseID") long studentAttendsCourseID) throws StudentAttendsCourseNotFoundException {
+    @GetMapping(path = "/studentAttendsCourse/read/{studentAttendsCourseID}", produces = MediaType.APPLICATION_JSON_VALUE)
+    public StudentAttendsCourse findStudentAttendsCourse(@PathVariable long studentAttendsCourseID) throws StudentAttendsCourseNotFoundException {
         if (studentAttendsCourseRepository.findById(studentAttendsCourseID).isPresent()) {
             return studentAttendsCourseRepository.findById(studentAttendsCourseID).get();
         } else {
@@ -65,14 +65,14 @@ public class StudentAttendsCourseCrudController {
     /**
      * Remove a StudentAttendsCourse object from the Model
      *
-     * @param studentAttendsCourse recieves a StudentAttendsCourse class via POST request
-     * @return StudentAttendsCourse object or
+     * @param studentAttendsCourseID recieves a StudentAttendsCourse class via DELETE request
+     * @return void
      * @throws StudentAttendsCourseNotFoundException
      */
-    @DeleteMapping(path = "/studentAttendsCourse/delete", consumes = "application/json")
-    public void deleteStudentAttendsCourse(@RequestBody StudentAttendsCourse studentAttendsCourse) throws StudentAttendsCourseNotFoundException {
-        if (studentAttendsCourseRepository.findById(studentAttendsCourse.getId()).isPresent()) {
-            studentAttendsCourseRepository.delete(studentAttendsCourse);
+    @DeleteMapping(path = "/studentAttendsCourse/delete/{studentAttendsCourseID}", consumes = "application/json")
+    public void deleteStudentAttendsCourse(@PathVariable long studentAttendsCourseID) throws StudentAttendsCourseNotFoundException {
+        if (studentAttendsCourseRepository.findById(studentAttendsCourseID).isPresent()) {
+            studentAttendsCourseRepository.deleteById(studentAttendsCourseID);
         } else {
             throw new StudentAttendsCourseNotFoundException("StudentAttendsCourse not found");
         }

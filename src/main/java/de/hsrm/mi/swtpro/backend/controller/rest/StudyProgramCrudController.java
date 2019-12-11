@@ -47,12 +47,13 @@ public class StudyProgramCrudController {
 
     /**
      * Find a StudyProgram object from the Model
+     *
      * @param studyprogramID recieves key from studyprogram
      * @return StudyProgram object
      * @throws StudyProgramNotFoundException
      */
-    @GetMapping(path = "/studyprogram/read", produces = MediaType.APPLICATION_JSON_VALUE)
-    public StudyProgram findStudyProgram(@RequestParam("studyprogramID") long studyprogramID) throws StudyProgramNotFoundException {
+    @GetMapping(path = "/studyprogram/read/{studyprogramID}", produces = MediaType.APPLICATION_JSON_VALUE)
+    public StudyProgram findStudyProgram(@PathVariable long studyprogramID) throws StudyProgramNotFoundException {
         if (studyprogramRepository.findById(studyprogramID).isPresent()) {
             return studyprogramRepository.findById(studyprogramID).get();
         } else {
@@ -62,14 +63,15 @@ public class StudyProgramCrudController {
 
     /**
      * Remove a StudyProgram object from the Model
-     * @param studyprogram recieves a StudyProgram class via POST request
-     * @return StudyProgram object or
+     *
+     * @param studyprogramID recieves a StudyProgram class via DELETE request
+     * @return void
      * @throws StudyProgramNotFoundException
      */
-    @DeleteMapping(path = "/studyprogram/delete", consumes = "application/json")
-    public void deleteStudyProgram(@RequestBody StudyProgram studyprogram) throws StudyProgramNotFoundException {
-        if (studyprogramRepository.findById(studyprogram.getId()).isPresent()) {
-            studyprogramRepository.delete(studyprogram);
+    @DeleteMapping(path = "/studyprogram/delete/{studyprogramID}", consumes = "application/json")
+    public void deleteStudyProgram(@PathVariable long studyprogramID) throws StudyProgramNotFoundException {
+        if (studyprogramRepository.findById(studyprogramID).isPresent()) {
+            studyprogramRepository.deleteById(studyprogramID);
         } else {
             throw new StudyProgramNotFoundException("StudyProgram not found");
         }
