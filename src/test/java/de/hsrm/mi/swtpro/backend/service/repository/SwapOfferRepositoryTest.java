@@ -1,9 +1,14 @@
 package de.hsrm.mi.swtpro.backend.service.repository;
 
-import de.hsrm.mi.swtpro.backend.model.Group;
-import de.hsrm.mi.swtpro.backend.model.Student;
-import de.hsrm.mi.swtpro.backend.model.StudentPrioritizesGroup;
-import de.hsrm.mi.swtpro.backend.model.SwapOffer;
+import static org.hamcrest.Matchers.hasItem;
+import static org.hamcrest.Matchers.hasProperty;
+import static org.hamcrest.Matchers.is;
+import static org.junit.Assert.assertThat;
+import static org.junit.Assert.assertTrue;
+
+import java.sql.Timestamp;
+
+import javax.persistence.EntityManager;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -12,13 +17,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
-import javax.persistence.EntityManager;
-
-import static junit.framework.TestCase.assertTrue;
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.*;
-
-import java.sql.Timestamp;
+import de.hsrm.mi.swtpro.backend.model.Group;
+import de.hsrm.mi.swtpro.backend.model.Student;
+import de.hsrm.mi.swtpro.backend.model.SwapOffer;
 
 @RunWith(SpringRunner.class)
 @DataJpaTest
@@ -45,7 +46,6 @@ public class SwapOfferRepositoryTest {
                 .fromGroup(fromGroup)
                 .student(student)
                 .date(new Timestamp(564738))
-                .id(id)
                 .build();
 
         entityManager.persist(student);
@@ -58,8 +58,34 @@ public class SwapOfferRepositoryTest {
     @Test
     public void whenFindAll_thenReturnSwapOfferList(){
         assertThat(swapOfferRepository.findAll(),hasItem(
-               hasProperty("date",is(564738))
+               hasProperty("date",is(new Timestamp(564738)))
         ));
     }
 
+    @Test
+    public void whenFindById_thenReturnSwapOffer(){
+        assertTrue(swapOfferRepository.findById(id).isPresent());
+        assertThat(swapOfferRepository.findById(id).get(),
+                hasProperty("date",is(new Timestamp(564738))));
+    }
+
+    @Test
+    public void whenFindByToGroup_thenReturnSwapOfferList(){
+        assertThat(swapOfferRepository.findByToGroup(toGroup),hasItem(
+                hasProperty("date",is(new Timestamp(564738)))
+        ));
+    }
+
+    @Test
+    public void whenFindByFromGroup_thenReturnSwapOfferList(){
+        assertThat(swapOfferRepository.findByFromGroup(fromGroup),hasItem(
+                hasProperty("date",is(new Timestamp(564738)))
+        ));
+    }
+
+    @Test
+    public void whenFindByDate_thenReturnSwapOfferList(){
+        assertThat(swapOfferRepository.findByDate(new Timestamp(564738)),
+                hasItem(hasProperty("date", is(new Timestamp(564738)))));
+    }
 }
