@@ -36,7 +36,6 @@ public class Campus {
 
     @Singular("building")
     @Getter @Setter
-
     @OneToMany(mappedBy = "campus")
     private Set<Building> buildings;
 

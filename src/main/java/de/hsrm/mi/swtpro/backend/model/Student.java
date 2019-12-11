@@ -47,7 +47,7 @@ public class Student extends Role {
     @Singular("prioritizeGroup")
     @Getter @Setter
     @OneToMany(mappedBy = "student")
-    private Set<StudentPriorizesGroup> prioritizeGroups;
+    private Set<StudentPrioritizesGroup> prioritizeGroups;
 
     @Singular("passedExam")
     @Getter @Setter
@@ -59,9 +59,5 @@ public class Student extends Role {
     @ManyToMany(mappedBy = "students")
     private Set<Group> groups;
 
-    @Singular("swapOffer")
-    @Getter @Setter
-    @OneToMany(mappedBy = "student")
-    private Set<SwapOffer> swapOffers;
 
 }

@@ -35,7 +35,12 @@ public class StudyProgram {
 
     @Singular("fieldOfStudy")
     @Getter @Setter
-    @ManyToMany(mappedBy = "studyPrograms")
+    @ManyToMany(fetch = FetchType.LAZY)
+    @JoinTable(
+            name = "FieldOfStudy_StudyProgram",
+            joinColumns = { @JoinColumn(name = "studyProgram_id") },
+            inverseJoinColumns = { @JoinColumn(name = "fieldOfStudy_id") }
+    )
     private Set<FieldOfStudy> fieldsOfStudy;
 
     /**

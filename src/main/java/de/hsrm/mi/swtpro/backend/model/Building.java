@@ -20,7 +20,7 @@ import java.util.Set;
 public class Building {
 
     @Id
-    @Getter @Setter 
+    @Getter @Setter
     @GeneratedValue
     private long id;
 
@@ -28,7 +28,7 @@ public class Building {
     private String name;
 
     @Getter @Setter 
-    @ManyToOne(targetEntity = Campus.class, fetch = FetchType.LAZY)
+    @ManyToOne
     @JoinColumn(name = "campus_id")
     private Campus campus;
 
