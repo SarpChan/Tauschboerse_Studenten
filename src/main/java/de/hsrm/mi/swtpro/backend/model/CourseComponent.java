@@ -45,7 +45,7 @@ public class CourseComponent {
     private Set<Group> groups;
 
     @Getter @Setter
-    @OneToOne(mappedBy = "courseComponent")
+    @OneToOne
     private StudentPassedExam studentPassedExam;
 
     /**
