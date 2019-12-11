@@ -8,6 +8,8 @@ import javax.persistence.*;
 import java.util.HashSet;
 import java.util.Set;
 
+import javax.validation.constraints.*;
+
 /**
  * Course offered at the University
  * Applicable to one or more modules of one or more study programs
@@ -24,13 +26,16 @@ public class Course {
     @Id
     @Getter @Setter
     @GeneratedValue
+    @NotNull
     private long id;
 
+    @NotEmpty
     @Getter @Setter
     private String title;
 
     @Getter @Setter
     @ManyToOne(cascade= CascadeType.ALL)
+    @NotNull
     private User owner;
 
 

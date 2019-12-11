@@ -7,6 +7,8 @@ import lombok.experimental.SuperBuilder;
 
 import javax.persistence.*;
 import java.util.Set;
+import javax.persistence.OneToOne;
+import javax.validation.constraints.*;
 
 /**
  * A student is a user
@@ -20,17 +22,23 @@ import java.util.Set;
 public class Student extends Role {
 
     @Getter @Setter
+    @Pattern(regexp = "[0-9]*")
+    @NotNull
     private int enrolementNumber;
 
     @Getter @Setter
+    @Pattern(regexp = "[a-zA-Z0-9-+_.]+@[a-z0-9-+_]+")
+    @NotEmpty
     private String mail;
 
     @Getter @Setter
     @ManyToOne
+    @NotNull
     private ExamRegulation examRegulation;
 
     @Getter @Setter
     @ManyToOne
+    @NotNull
     private Term enrolmentTerm;
 
     @Singular("attendCourse")

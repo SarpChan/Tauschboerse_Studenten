@@ -11,6 +11,7 @@ import com.fasterxml.jackson.datatype.jsr310.ser.LocalTimeSerializer;
 import lombok.*;
 
 import javax.persistence.*;
+import javax.validation.constraints.*;
 import java.time.DayOfWeek;
 import java.time.LocalTime;
 import java.util.Set;
@@ -32,45 +33,55 @@ public class Group {
     @Id
     @Getter @Setter
     @GeneratedValue
+    @NotNull
     private long id;
 
     @Getter @Setter
+    @NotNull
     private char groupChar;
 
     @Getter @Setter
+    @NotNull
     private int slots;
 
     @Getter @Setter
+    @NotNull
     private DayOfWeek dayOfWeek;
 
     @JsonDeserialize(using = LocalTimeDeserializer.class)
     @JsonSerialize(using = LocalTimeSerializer.class)
     @Getter @Setter
+    @NotNull
     private LocalTime startTime;
 
     @JsonDeserialize(using = LocalTimeDeserializer.class)
     @JsonSerialize(using = LocalTimeSerializer.class)
     @Getter @Setter
+    @NotNull
     private LocalTime endTime;
 
     @Getter @Setter
     @ManyToOne(cascade= CascadeType.ALL)
     @JoinColumn(name="term_id")
+    @NotNull
     private Term term;
 
     @Getter @Setter
     @ManyToOne
     @JoinColumn(name="courseComponent_id")
+    @NotNull
     private CourseComponent courseComponent;
 
     @Getter @Setter
     @ManyToOne(cascade= CascadeType.ALL)
     @JoinColumn(name="lecturer_id")
+    @NotNull
     private Lecturer lecturer;
 
     @Getter @Setter
     @ManyToOne
     @JoinColumn(name="room_id")
+    @NotNull
     private Room room;
 
     @Singular("student")

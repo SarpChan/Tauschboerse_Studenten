@@ -5,6 +5,8 @@ import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import lombok.*;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 import java.util.Set;
 
 /**
@@ -20,12 +22,15 @@ public class StudyProgram {
     @Id
     @Getter @Setter
     @GeneratedValue
+    @NotNull
     private long id;
 
     @Getter @Setter
+    @NotEmpty
     private String title;
 
     @Getter @Setter
+    @NotEmpty
     private String degree;
 
     @Singular("examRegulation")

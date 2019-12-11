@@ -5,7 +5,7 @@ import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import lombok.*;
 
 import javax.persistence.*;
-import java.util.HashSet;
+import javax.validation.constraints.*;
 import java.util.Set;
 
 
@@ -23,14 +23,17 @@ public class Building {
     @Id
     @Getter @Setter
     @GeneratedValue
+    @NotNull
     private long id;
 
     @Getter @Setter
+    @NotEmpty(message= "Name fehlt")
     private String name;
 
     @Getter @Setter
-    @ManyToOne
+    @ManyToOne(targetEntity = Campus.class, fetch = FetchType.LAZY)
     @JoinColumn(name = "campus_id")
+    @NotNull
     private Campus campus;
 
     @Singular("room")

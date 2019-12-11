@@ -8,6 +8,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
+import javax.validation.constraints.*;
 
 @Entity
 @NoArgsConstructor
@@ -19,18 +20,22 @@ public class StudentAttendsCourse {
     @Id
     @Getter @Setter
     @GeneratedValue
+    @NotNull
     private long id;
 
     @Getter @Setter
     @ManyToOne
+    @NotNull
     private Student student;
 
     @Getter @Setter
     @ManyToOne
+    @NotNull
     private Course course;
 
     @Getter @Setter
     @ManyToOne
+    @NotNull
     private Term term;
 
 }
