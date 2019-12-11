@@ -8,6 +8,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
+import javax.validation.constraints.*;
 
 @Entity
 @NoArgsConstructor
@@ -19,16 +20,20 @@ public class ModuleInCurriculum {
     @Id
     @Getter @Setter
     @GeneratedValue
+    @NotNull
     private long id;
 
     @Getter @Setter
+    @NotNull
     private int termPeriod;
 
     @Getter @Setter
     @ManyToOne
+    @NotNull
     private Curriculum curriculum;
 
     @Getter @Setter
     @ManyToOne
+    @NotNull
     private Module module;
 }

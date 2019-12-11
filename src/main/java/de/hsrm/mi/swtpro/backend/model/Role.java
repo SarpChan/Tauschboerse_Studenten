@@ -23,7 +23,7 @@ public abstract class Role {
     @Id
     @Getter @Setter
     @GeneratedValue
-    private int id;
+    private long id;
 
     @Getter @Setter
     @ManyToOne

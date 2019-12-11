@@ -6,6 +6,8 @@ import lombok.*;
 
 import javax.persistence.*;
 import java.util.Set;
+import javax.validation.constraints.*;
+import javax.validation.constraints.*;
 
 /**
  * Represents an element of the Curriculum
@@ -19,19 +21,23 @@ import java.util.Set;
 @AllArgsConstructor
 @Builder
 public class Module {
-    
+
     @Id
     @Getter @Setter
     @GeneratedValue
+    @NotNull
     private long id;
 
     @Getter @Setter
+    @NotEmpty(message = "Modulname fehlt")
     private String title;
 
     @Getter @Setter
+    @Min(value = 0)
     private int creditPoints;
 
     @Getter @Setter
+    @NotNull
     private int period;
 
     @Singular("moduleInCurriculum")
@@ -45,7 +51,7 @@ public class Module {
     private Set<Course> courses;
     
     /**
-     * Adds course to the collection of courses fitting this module 
+     * Adds course to the collection of courses fitting this module
      * @param course
      *
      */
