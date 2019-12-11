@@ -53,7 +53,7 @@ public class BuildingCrudController {
      * @throws BuildingNotFoundException
      */
     @GetMapping(path = "/building/read/{buildingID}", produces = MediaType.APPLICATION_JSON_VALUE)
-    public Building findBuilding(@PathVariable("buildingID") long buildingID) throws BuildingNotFoundException {
+    public Building findBuilding(@PathVariable long buildingID) throws BuildingNotFoundException {
         if (buildingRepository.findById(buildingID).isPresent()) {
             return buildingRepository.findById(buildingID).get();
         } else {
