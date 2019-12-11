@@ -14,7 +14,5 @@ public interface UniversityRepository extends JpaRepository<University,Long> {
     List<University> findByCampuses(Campus campus);
     Optional<University> findByName(String name);
 
-    public Optional<University> findById(long universityID);
 
-    void deleteById(long universityID);
 }

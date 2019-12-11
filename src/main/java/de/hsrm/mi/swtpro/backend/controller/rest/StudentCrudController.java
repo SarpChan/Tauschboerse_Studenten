@@ -72,7 +72,7 @@ public class StudentCrudController {
     @DeleteMapping(path = "/student/delete/{enrollmentNumber}", consumes = "application/json")
     public void deleteStudent(@PathVariable int enrollmentNumber) throws StudentNotFoundException {
         if (studentRepository.findByEnrollmentNumber(enrollmentNumber).isPresent()) {
-            studentRepository.deleteByEnrollmentNumber(enrollmentNumber);
+            studentRepository.findByEnrollmentNumber(enrollmentNumber);
         } else {
             throw new StudentNotFoundException("Student not found");
         }
