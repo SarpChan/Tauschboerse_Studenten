@@ -14,21 +14,15 @@ import java.util.stream.Collectors;
 @NoArgsConstructor
 @AllArgsConstructor
 @SuperBuilder
-public class SwapOfferFilterFactory {
-
-    @Getter @Setter
-    private Filter[] filters;
-
-    private boolean isFiltersEmpty() {
-        return filters.length == 0;
-    }
+public class SwapOfferFilterFactory extends FilterFactory<SwapOffer> {
 
     /**
      * This list has all filters for swap offers. 
      * @param swapOffers the list of swap offers that we want to filter
      * @return returns a list of the filtered swap offers, if no filter exists, it returns the swap offers unfiltered.
      */
-    public List<SwapOffer> filterSwapOffers(List<SwapOffer> swapOffers) {
+    @Override
+    public List<SwapOffer> filter(List<SwapOffer> swapOffers) {
         final List<SwapOffer> filterableSwapOffers = new ArrayList<>(swapOffers);
         if(isFiltersEmpty()) {
             return swapOffers;
