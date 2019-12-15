@@ -76,10 +76,10 @@ public class JSONGenerator {
         entityManager.persist(testUser);
         User passedUser = User.builder().firstName("Passed").lastName("Student").loginName("passedUser").password("test").build();
         entityManager.persist(passedUser);
-        Student testStudent = Student.builder().user(testUser).enrolementNumber(123456)
+        Student testStudent = Student.builder().user(testUser).enrollmentNumber(123456)
                 .enrolmentTerm(ws1920).mail("test@test.com").examRegulation(po2017).build();
         entityManager.persist(testStudent);
-        Student passedStudent = Student.builder().user(passedUser).enrolementNumber(987654)
+        Student passedStudent = Student.builder().user(passedUser).enrollmentNumber(987654)
                 .enrolmentTerm(ws1920).mail("passed@test.com").examRegulation(po2017).build();
         entityManager.persist(passedStudent);
         Lecturer testLecturer = Lecturer.builder().priviledge(1).user(testUser).build();
