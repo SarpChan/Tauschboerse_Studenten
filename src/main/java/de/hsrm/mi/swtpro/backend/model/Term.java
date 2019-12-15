@@ -5,6 +5,7 @@ import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import lombok.*;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import java.sql.Date;
 import java.util.Set;
 
@@ -24,15 +25,19 @@ public class Term {
     @Id
     @Getter @Setter
     @GeneratedValue
+    @NotNull
     private long id;
 
     @Getter @Setter
+    @NotNull
     private Date startDate;
 
     @Getter @Setter
+    @NotNull
     private Date endDate;
 
     @Getter @Setter
+    @NotNull
     private int period;
 
     @Singular("course")
@@ -54,9 +59,9 @@ public class Term {
     @Getter @Setter
     @OneToMany(mappedBy = "enrolmentTerm")
     private Set<Student> enroledStudents;
-    
+
     /**
-     * Adds course to the collection of courses offered this term 
+     * Adds course to the collection of courses offered this term
      * @param course
      */
     public void addCourse(Course course) {

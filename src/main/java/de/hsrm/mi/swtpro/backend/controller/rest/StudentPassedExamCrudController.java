@@ -53,10 +53,10 @@ public class StudentPassedExamCrudController {
      * @return StudentPassedExam object
      * @throws StudentPassedExamNotFoundException
      */
-    @GetMapping(path = "/studentPassedExam/read", produces = MediaType.APPLICATION_JSON_VALUE)
-    public StudentPassedExam findStudentPassedExam(@RequestParam("studentPassedExamID") long studentPassedExamID) throws StudentPassedExamNotFoundException {
-        if (studentPassedExamRepository.findById(studentPassedExamID) != null) {
-            return studentPassedExamRepository.findById(studentPassedExamID);
+    @GetMapping(path = "/studentPassedExam/read/{studentPassedExamID}", produces = MediaType.APPLICATION_JSON_VALUE)
+    public StudentPassedExam findStudentPassedExam(@PathVariable long studentPassedExamID) throws StudentPassedExamNotFoundException {
+        if (studentPassedExamRepository.findById(studentPassedExamID).isPresent()) {
+            return studentPassedExamRepository.findById(studentPassedExamID).get();
         } else {
             throw new StudentPassedExamNotFoundException("StudentPassedExam not found");
         }
@@ -65,14 +65,14 @@ public class StudentPassedExamCrudController {
     /**
      * Remove a StudentPassedExam object from the Model
      *
-     * @param studentPassedExam recieves a StudentPassedExam class via POST request
-     * @return StudentPassedExam object or
+     * @param studentPassedExamID recieves a StudentPassedExam id via DELETE request
+     * @return void
      * @throws StudentPassedExamNotFoundException
      */
-    @DeleteMapping(path = "/studentPassedExam/delete", consumes = "application/json")
-    public void deleteStudentPassedExam(@RequestBody StudentPassedExam studentPassedExam) throws StudentPassedExamNotFoundException {
-        if (studentPassedExamRepository.findById(studentPassedExam.getId()) != null) {
-            studentPassedExamRepository.delete(studentPassedExam);
+    @DeleteMapping(path = "/studentPassedExam/delete/{studentPassedExamID}", consumes = "application/json")
+    public void deleteStudentPassedExam(@PathVariable long studentPassedExamID) throws StudentPassedExamNotFoundException {
+        if (studentPassedExamRepository.findById(studentPassedExamID).isPresent()) {
+            studentPassedExamRepository.deleteById(studentPassedExamID);
         } else {
             throw new StudentPassedExamNotFoundException("StudentPassedExam not found");
         }

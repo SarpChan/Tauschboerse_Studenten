@@ -5,6 +5,7 @@ import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import lombok.*;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import java.sql.Timestamp;
 
 /**
@@ -16,26 +17,31 @@ import java.sql.Timestamp;
 @AllArgsConstructor
 @Builder
 public class SwapOffer {
-    
+
     @Id
     @Getter @Setter
     @GeneratedValue
+    @NotNull
     private long id;
 
     @Getter @Setter
     @GeneratedValue
+    @NotNull
     private Timestamp date;
 
     @Getter @Setter
     @ManyToOne(targetEntity = Student.class, fetch = FetchType.LAZY)
+    @NotNull
     private Student student;
 
     @Getter @Setter
     @ManyToOne(targetEntity = Group.class, fetch = FetchType.LAZY)
+    @NotNull
     private Group fromGroup;
 
     @Getter @Setter
     @ManyToOne(targetEntity = Group.class, fetch = FetchType.LAZY)
+    @NotNull
     private Group toGroup;
 
 }
