@@ -2,8 +2,11 @@ package de.hsrm.mi.swtpro.backend.controller.rest.lists;
 
 import de.hsrm.mi.swtpro.backend.model.Course;
 import de.hsrm.mi.swtpro.backend.model.CourseComponent;
+import de.hsrm.mi.swtpro.backend.model.ExamRegulation;
 import de.hsrm.mi.swtpro.backend.model.Group;
 import de.hsrm.mi.swtpro.backend.model.Module;
+import de.hsrm.mi.swtpro.backend.model.filter.Comparator;
+import de.hsrm.mi.swtpro.backend.model.filter.ComparatorType;
 import de.hsrm.mi.swtpro.backend.model.filter.Filter;
 import de.hsrm.mi.swtpro.backend.service.filterfactories.ModuleFilterFactory;
 import de.hsrm.mi.swtpro.backend.service.repository.CourseRepository;
@@ -28,8 +31,17 @@ public class ListController {
     ModuleRepository moduleRepository;
 
     @PostMapping(path = "/timetable", consumes = "application/json", produces = MediaType.APPLICATION_JSON_VALUE)
-    public List<Module> getModules(@RequestBody Filter[] filters) {
+    public List<Module> getModules(@RequestBody ExamRegulation examRegulation) {
         List<Module> allModules = moduleRepository.findAll();
+        Comparator comparator = Comparator.builder()
+        .comparatorType(ComparatorType.EQUALS)
+        .comparatorValue(examRegulation.getId())
+        .build();
+        Filter filter = Filter.builder()
+        .attribute("examRegulationId")
+        .comparator(comparator)
+        .build();
+        Filter [] filters = {filter};
         ModuleFilterFactory filterFactory = ModuleFilterFactory.builder().filters(filters).build();
         allModules = filterFactory.filterModules(allModules);
         for (Module module: allModules) {
