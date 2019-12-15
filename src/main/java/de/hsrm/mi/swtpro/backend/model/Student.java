@@ -24,7 +24,7 @@ public class Student extends Role {
     @Getter @Setter
     @Pattern(regexp = "[0-9]*")
     @NotNull
-    private int enrolementNumber;
+    private int enrollmentNumber;
 
     @Getter @Setter
     @Pattern(regexp = "[a-zA-Z0-9-+_.]+@[a-z0-9-+_]+")
