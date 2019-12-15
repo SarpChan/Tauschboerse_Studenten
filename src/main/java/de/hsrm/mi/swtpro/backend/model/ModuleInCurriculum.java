@@ -9,6 +9,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.validation.constraints.*;
+import javax.persistence.*;
 
 @Entity
 @NoArgsConstructor
@@ -33,7 +34,7 @@ public class ModuleInCurriculum {
     private Curriculum curriculum;
 
     @Getter @Setter
-    @ManyToOne
+    @ManyToOne(cascade= CascadeType.ALL)
     @NotNull
     private Module module;
 }

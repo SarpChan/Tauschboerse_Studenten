@@ -24,7 +24,7 @@ import java.util.Set;
 public class User {
 
     @Id
-    @Getter @Setter 
+    @Getter @Setter
     @GeneratedValue
     @NotNull
     private long id;
@@ -46,8 +46,8 @@ public class User {
     private String password;
 
     @Singular("role")
-    @Getter @Setter 
+    @Getter @Setter
     @OneToMany(mappedBy = "user")
-    private Set<Role> roles;
-    
+    private Set<Role> roles ;
+
 }

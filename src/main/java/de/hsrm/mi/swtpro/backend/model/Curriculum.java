@@ -14,7 +14,7 @@ import java.util.Set;
 @AllArgsConstructor
 @Builder
 public class Curriculum {
-    
+
     @Id
     @Getter @Setter
     @GeneratedValue
@@ -32,6 +32,6 @@ public class Curriculum {
 
     @Singular("moduleInCurriculum")
     @Getter @Setter
-    @OneToMany(mappedBy = "curriculum")
-    private Set<ModuleInCurriculum> modulesInCurriculum;
+    @OneToMany(mappedBy = "curriculum",cascade= CascadeType.ALL)
+    private Set<ModuleInCurriculum> modulesInCurriculum ;
 }

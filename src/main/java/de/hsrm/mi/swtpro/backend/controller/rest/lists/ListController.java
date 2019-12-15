@@ -1,6 +1,17 @@
 package de.hsrm.mi.swtpro.backend.controller.rest.lists;
 
 import de.hsrm.mi.swtpro.backend.model.Course;
+import de.hsrm.mi.swtpro.backend.model.CourseComponent;
+import de.hsrm.mi.swtpro.backend.model.Group;
+import de.hsrm.mi.swtpro.backend.model.Module;
+import de.hsrm.mi.swtpro.backend.model.filter.Filter;
+import de.hsrm.mi.swtpro.backend.service.filterfactories.ModuleFilterFactory;
+import de.hsrm.mi.swtpro.backend.service.repository.CourseRepository;
+import de.hsrm.mi.swtpro.backend.service.repository.ModuleRepository;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import de.hsrm.mi.swtpro.backend.model.SwapOffer;
 import de.hsrm.mi.swtpro.backend.model.filter.Filter;
 import de.hsrm.mi.swtpro.backend.service.filterfactories.CourseFilterFactory;

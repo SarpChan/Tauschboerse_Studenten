@@ -10,6 +10,7 @@ import javax.validation.constraints.*;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import java.sql.Date;
+import java.util.HashSet;
 import java.util.Set;
 
 /**
@@ -45,7 +46,7 @@ public class ExamRegulation {
 
     @Singular("curriculum")
     @Getter @Setter
-    @OneToMany(mappedBy = "examRegulation")
+    @OneToMany(mappedBy = "examRegulation",cascade= CascadeType.ALL)
     private Set<Curriculum> curriculums;
 
     @Singular("student")
