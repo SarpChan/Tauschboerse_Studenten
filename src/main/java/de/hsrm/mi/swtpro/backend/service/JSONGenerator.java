@@ -1,25 +1,21 @@
 package de.hsrm.mi.swtpro.backend.service;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import de.hsrm.mi.swtpro.backend.model.*;
 import de.hsrm.mi.swtpro.backend.model.Module;
+import de.hsrm.mi.swtpro.backend.model.*;
 import de.hsrm.mi.swtpro.backend.service.repository.UniversityRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.context.event.ApplicationReadyEvent;
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.event.EventListener;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.PostConstruct;
-import javax.persistence.*;
+import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
 import java.io.File;
 import java.io.IOException;
 import java.sql.Date;
 import java.time.DayOfWeek;
 import java.time.LocalTime;
 import java.util.HashSet;
-
-import org.springframework.transaction.annotation.Transactional;
 
 @Component
 //@Transactional
@@ -45,7 +41,7 @@ public class JSONGenerator {
      * CAUTION!!! DELETES WHOLE DATABASE
      */
     private void readJSON_And_DELETE_WHOLE_DATABASE(){
-        File file = new File("/Users/polly/Documents/SWPBackend/SWT_Backend/hsrm_medieninformatik.json");
+        File file = new File("../../../../../../../../../hsrm_medieninformatik.json");
 
         try {
             universityRepository.deleteAll();
