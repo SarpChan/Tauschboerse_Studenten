@@ -4,6 +4,7 @@ import de.hsrm.mi.swtpro.backend.model.SwapOffer;
 import de.hsrm.mi.swtpro.backend.model.filter.ComparatorType;
 import de.hsrm.mi.swtpro.backend.model.filter.Filter;
 import lombok.*;
+import lombok.experimental.SuperBuilder;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -12,7 +13,7 @@ import java.util.stream.Collectors;
 
 @NoArgsConstructor
 @AllArgsConstructor
-@Builder
+@SuperBuilder
 public class SwapOfferFilterFactory {
 
     @Getter @Setter
