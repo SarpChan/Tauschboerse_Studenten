@@ -28,7 +28,7 @@ public class ListController {
     public List<Course> getCourse(@RequestBody Filter[] filters) {
         List<Course> allCourses = courseRepository.findAll();
         CourseFilterFactory filterFactory = CourseFilterFactory.builder().filters(filters).build();
-        allCourses = filterFactory.filterCourses(allCourses);
+        allCourses = filterFactory.filter(allCourses);
         return allCourses;
     }
 
