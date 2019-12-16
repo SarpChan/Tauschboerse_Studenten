@@ -5,6 +5,7 @@ import de.hsrm.mi.swtpro.backend.controller.rest.crud.StudentCrudController;
 import de.hsrm.mi.swtpro.backend.model.Student;
 import de.hsrm.mi.swtpro.backend.model.SwapOffer;
 import de.hsrm.mi.swtpro.backend.model.requestModel.SwapOfferRequest;
+import de.hsrm.mi.swtpro.backend.service.repository.SwapOfferRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.PostMapping;
