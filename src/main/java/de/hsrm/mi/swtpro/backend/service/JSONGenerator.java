@@ -3,13 +3,18 @@ package de.hsrm.mi.swtpro.backend.service;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import de.hsrm.mi.swtpro.backend.model.Module;
 import de.hsrm.mi.swtpro.backend.model.*;
+import de.hsrm.mi.swtpro.backend.service.repository.StudyProgramRepository;
 import de.hsrm.mi.swtpro.backend.service.repository.UniversityRepository;
+import org.hibernate.Hibernate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.PostConstruct;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
+import javax.persistence.PersistenceContext;
+import javax.persistence.PersistenceContextType;
 import java.io.File;
 import java.io.IOException;
 import java.sql.Date;
@@ -18,7 +23,8 @@ import java.time.LocalTime;
 import java.util.HashSet;
 
 @Component
-//@Transactional
+@Transactional
+@PersistenceContext(type = PersistenceContextType.EXTENDED)
 public class JSONGenerator {
 
     @Autowired
@@ -26,7 +32,8 @@ public class JSONGenerator {
     private EntityManager entityManager;
     @Autowired
     UniversityRepository universityRepository;
-
+    @Autowired
+    StudyProgramRepository studyProgramRepository;
     /*public  JSONGenerator(){
 
     }*/
@@ -35,13 +42,38 @@ public class JSONGenerator {
         entityManager = emf.createEntityManager();
         //createJSON();
         //readJSON_And_DELETE_WHOLE_DATABASE();
+        //createJSON_newExamRegulationForExisitingUniversity();
+    }
+
+
+    public void createJSON_newExamRegulationForExisitingUniversity(){
+        University hsrm = universityRepository.findByName("Hochschule RheinMain").get();
+        StudyProgram studyProgram = studyProgramRepository.findByTitle("Medieninformatik").get(0);
+        ExamRegulation po2015 = ExamRegulation.builder().date(Date.valueOf("2015-10-01")).build();
+        Curriculum curriculum = Curriculum.builder().examRegulation(po2015).termPeriod(1).build();
+        po2015.setCurriculums(new HashSet<>());
+        ModuleInCurriculum moduleInCurriculum = ModuleInCurriculum.builder().curriculum(curriculum).termPeriod(1).build();
+        Module po2015Module = Module.builder().moduleInCurriculum(moduleInCurriculum).creditPoints(30).period(1).title("Das PO2015 Module").build();
+        moduleInCurriculum.setModule(po2015Module);
+
+        studyProgram.getExamRegulations().add(po2015);
+
+        ObjectMapper objectMapper = new ObjectMapper();
+        try {
+            objectMapper.writeValue(new File("newPO2015_HSRM.json"), hsrm);
+
+        } catch (IOException e) {
+            e.printStackTrace();
+            //System.out.println("JSON new File Error");
+        }
+
     }
 
     /**
      * CAUTION!!! DELETES WHOLE DATABASE
      */
     private void readJSON_And_DELETE_WHOLE_DATABASE(){
-        File file = new File("../../../../../../../../../hsrm_medieninformatik.json");
+        File file = new File("C:\\Users\\Julius\\IdeaProjects\\SWT_Backend\\hsrm_medieninformatik.json");
 
         try {
             universityRepository.deleteAll();
@@ -76,10 +108,10 @@ public class JSONGenerator {
         entityManager.persist(testUser);
         User passedUser = User.builder().firstName("Passed").lastName("Student").loginName("passedUser").password("test").build();
         entityManager.persist(passedUser);
-        Student testStudent = Student.builder().user(testUser).enrolementNumber(123456)
+        Student testStudent = Student.builder().user(testUser).enrollmentNumber(123456)
                 .enrolmentTerm(ws1920).mail("test@test.com").examRegulation(po2017).build();
         entityManager.persist(testStudent);
-        Student passedStudent = Student.builder().user(passedUser).enrolementNumber(987654)
+        Student passedStudent = Student.builder().user(passedUser).enrollmentNumber(987654)
                 .enrolmentTerm(ws1920).mail("passed@test.com").examRegulation(po2017).build();
         entityManager.persist(passedStudent);
         Lecturer testLecturer = Lecturer.builder().priviledge(1).user(testUser).build();
