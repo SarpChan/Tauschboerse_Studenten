@@ -1,7 +1,5 @@
 package de.hsrm.mi.swtpro.backend.validations;
 
-import java.sql.Date;
-import java.sql.Time;
 import java.sql.Timestamp;
 import java.util.Set;
 
@@ -10,18 +8,19 @@ import javax.validation.Validation;
 import javax.validation.Validator;
 import javax.validation.ValidatorFactory;
 
+import de.hsrm.mi.swtpro.backend.model.SwapOffer;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
 import de.hsrm.mi.swtpro.backend.model.Group;
 import de.hsrm.mi.swtpro.backend.model.Student;
-import de.hsrm.mi.swtpro.backend.model.SwapOffer;;
+;
 
 public class SwapOfferValidationTest {
 
     private Validator validator;
-    private  SwapOffer swapOffer;
+    private SwapOffer swapOffer;
     private Timestamp date;
     private Student student;
     private Group group;
@@ -32,7 +31,7 @@ public class SwapOfferValidationTest {
         validator = factory.getValidator();
         date = new Timestamp(System.currentTimeMillis());
         student = Student.builder()
-        .enrolementNumber(0)
+        .enrollmentNumber(0)
         .build();
         group = Group.builder()
         .build();

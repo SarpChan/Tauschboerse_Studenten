@@ -57,7 +57,7 @@ public class GroupRepositoryTest {
 
         student = Student.builder()
                 .mail("3@e.de")
-                .enrolementNumber(10)
+                .enrollmentNumber(10)
                 .build();
 
         lecturer = Lecturer.builder()

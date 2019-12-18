@@ -48,7 +48,7 @@ public class TermRepositoryTest {
                 .build();
 
         student = Student.builder()
-                .enrolementNumber(152093)
+                .enrollmentNumber(152093)
                 .enrolmentTerm(term)
                 .build();
 
