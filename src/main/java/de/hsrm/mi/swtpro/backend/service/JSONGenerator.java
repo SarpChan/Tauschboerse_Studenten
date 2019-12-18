@@ -22,9 +22,12 @@ import java.time.DayOfWeek;
 import java.time.LocalTime;
 import java.util.HashSet;
 
+
+/**
+ * The JSON Generator is used to generate a JSON file with sample entitys with all their relations for
+ * the whole model.
+ */
 @Component
-@Transactional
-@PersistenceContext(type = PersistenceContextType.EXTENDED)
 public class JSONGenerator {
 
     @Autowired
@@ -34,64 +37,10 @@ public class JSONGenerator {
     UniversityRepository universityRepository;
     @Autowired
     StudyProgramRepository studyProgramRepository;
-    /*public  JSONGenerator(){
 
-    }*/
-    @PostConstruct
-    private void init(){
+
+    public File createJSON() {
         entityManager = emf.createEntityManager();
-        //createJSON();
-        //readJSON_And_DELETE_WHOLE_DATABASE();
-        //createJSON_newExamRegulationForExisitingUniversity();
-    }
-
-
-    public void createJSON_newExamRegulationForExisitingUniversity(){
-        University hsrm = universityRepository.findByName("Hochschule RheinMain").get();
-        StudyProgram studyProgram = studyProgramRepository.findByTitle("Medieninformatik").get(0);
-        ExamRegulation po2015 = ExamRegulation.builder().date(Date.valueOf("2015-10-01")).build();
-        Curriculum curriculum = Curriculum.builder().examRegulation(po2015).termPeriod(1).build();
-        po2015.setCurriculums(new HashSet<>());
-        ModuleInCurriculum moduleInCurriculum = ModuleInCurriculum.builder().curriculum(curriculum).termPeriod(1).build();
-        Module po2015Module = Module.builder().moduleInCurriculum(moduleInCurriculum).creditPoints(30).period(1).title("Das PO2015 Module").build();
-        moduleInCurriculum.setModule(po2015Module);
-
-        studyProgram.getExamRegulations().add(po2015);
-
-        ObjectMapper objectMapper = new ObjectMapper();
-        try {
-            objectMapper.writeValue(new File("newPO2015_HSRM.json"), hsrm);
-
-        } catch (IOException e) {
-            e.printStackTrace();
-            //System.out.println("JSON new File Error");
-        }
-
-    }
-
-    /**
-     * CAUTION!!! DELETES WHOLE DATABASE
-     */
-    private void readJSON_And_DELETE_WHOLE_DATABASE(){
-        File file = new File("C:\\Users\\Julius\\IdeaProjects\\SWT_Backend\\hsrm_medieninformatik.json");
-
-        try {
-            universityRepository.deleteAll();
-            University university2
-                    = new ObjectMapper().readerFor(University.class).readValue(file);
-            universityRepository.saveAndFlush(university2);
-
-
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-
-
-    //@EventListener(ApplicationReadyEvent.class)
-    private void createJSON() {
-
-
         University uni = University.builder().name("Hochschule RheinMain").address("Kurt-Schuhmacher-Ring 18").build();
         entityManager.persist(uni);
         Campus ude = Campus.builder().name("Unter den Eichen").address("Unter den Eichen 6").university(uni).build();
@@ -234,23 +183,15 @@ public class JSONGenerator {
 
 
         ObjectMapper objectMapper = new ObjectMapper();
+        File file = new File("hsrm_medieninformatik.json");
         try {
-            objectMapper.writeValue(new File("hsrm_medieninformatik.json"), uni);
+            objectMapper.writeValue(file, uni);
 
         } catch (IOException e) {
             e.printStackTrace();
             //System.out.println("JSON new File Error");
         }
-        curriculum.getExamRegulation().setStudents(null);
-        curriculum.getExamRegulation().setStudyProgram(null);
-
-        try {
-
-            objectMapper.writeValue(new File("semesterplan_po2017.json"), curriculum);
-        } catch (IOException e) {
-            e.printStackTrace();
-            //System.out.println("JSON new File Error");
-        }
+        return file;
 
 
     }
