@@ -7,7 +7,7 @@ import lombok.*;
 
 @AllArgsConstructor
 @Builder
-public class Timetable {
+public class TimetableModule {
     @Getter @Setter
     private long courseComponentID;
     @Getter @Setter

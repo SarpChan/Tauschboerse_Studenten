@@ -5,6 +5,7 @@ import de.hsrm.mi.swtpro.backend.model.CourseComponent;
 import de.hsrm.mi.swtpro.backend.model.ExamRegulation;
 import de.hsrm.mi.swtpro.backend.model.Group;
 import de.hsrm.mi.swtpro.backend.model.Module;
+import de.hsrm.mi.swtpro.backend.model.TimetableModule;
 import de.hsrm.mi.swtpro.backend.model.filter.Comparator;
 import de.hsrm.mi.swtpro.backend.model.filter.ComparatorType;
 import de.hsrm.mi.swtpro.backend.model.filter.Filter;
@@ -19,11 +20,12 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @RestController
 @RequestMapping("/rest/lists")
-public class ListController {
+public class TimetableController {
 
     @Autowired
     CourseRepository courseRepository;
@@ -31,7 +33,7 @@ public class ListController {
     ModuleRepository moduleRepository;
 
     @PostMapping(path = "/timetable", consumes = "application/json", produces = MediaType.APPLICATION_JSON_VALUE)
-    public List<Module> getModules(@RequestBody ExamRegulation examRegulation) {
+    public List<TimetableModule> getModules(@RequestBody ExamRegulation examRegulation) {
         List<Module> allModules = moduleRepository.findAll();
         Comparator comparator = Comparator.builder()
         .comparatorType(ComparatorType.EQUALS)
@@ -44,7 +46,8 @@ public class ListController {
         Filter [] filters = {filter};
         ModuleFilterFactory filterFactory = ModuleFilterFactory.builder().filters(filters).build();
         allModules = filterFactory.filterModules(allModules);
-        for (Module module: allModules) {
+        List<TimetableModule> timetable = new ArrayList<TimetableModule>();
+        /* for (Module module: allModules) {
             module.setModulesInCurriculum(null);
             for (Course course:module.getCourses()) {
                 course.setModules(null);
@@ -66,8 +69,30 @@ public class ListController {
                     }
                 }
             }
+        } */
+        for(Module module: allModules){
+            for(Course course: module.getCourses()){
+                for(CourseComponent courseComponent : course.getCourseComponents()){
+                    for(Group group: courseComponent.getGroups()){
+                        TimetableModule timetableModule = TimetableModule.builder()
+                        .groupID(group.getId())
+                        .groupChar(group.getGroupChar())
+                        .dayOfWeek(group.getDayOfWeek())
+                        .startTime(group.getStartTime())
+                        .endTime(group.getEndTime())
+                        .lecturerName(group.getLecturer().getUser().getLastName())
+                        .lecturerNameAbbreviation("Placeholder Abbreviation")
+                        .courseComponentID(courseComponent.getId())
+                        .courseType(courseComponent.getType())
+                        .moduleTitle(module.getTitle())
+                        .moduleTitleAbbreviation("Placeholder Abbreviation")
+                        .build();
+                        timetable.add(timetableModule);
+                    }
+                }
+            }
         }
-        return allModules;
+        return timetable;
     }
 
 
