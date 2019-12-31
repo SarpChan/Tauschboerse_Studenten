@@ -48,6 +48,6 @@ public class User {
     @Singular("role")
     @Getter @Setter
     @OneToMany(mappedBy = "user")
-    private Set<Role> roles ;
+    private Set<Role> roles;
 
 }

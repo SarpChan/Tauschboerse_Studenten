@@ -7,7 +7,6 @@ import lombok.*;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.sql.Date;
-import java.util.HashSet;
 import java.util.Set;
 
 /**
@@ -44,22 +43,23 @@ public class Term {
     @Singular("course")
     @Getter @Setter
     @ManyToMany(mappedBy = "terms")
-    private Set<Course> courses ;
+    private Set<Course> courses;
 
     @Singular("group")
     @Getter @Setter
     @OneToMany(mappedBy = "term")
-    private Set<Group> groups ;
+    private Set<Group> groups;
 
     @Singular("studentAttendsCourse")
     @Getter @Setter
     @OneToMany(mappedBy = "term")
-    private Set<StudentAttendsCourse> studentAttendsCourses ;
+    private Set<StudentAttendsCourse> studentAttendsCourses;
 
-    @Singular("enrolledStudent")
+    @Singular("enroledStudent")
     @Getter @Setter
     @OneToMany(mappedBy = "enrolmentTerm")
-    private Set<Student> enrolledStudents;
+    private Set<Student> enroledStudents;
+
     /**
      * Adds course to the collection of courses offered this term
      * @param course
@@ -91,5 +91,5 @@ public class Term {
     public boolean containsCourse(Course course) {
         return this.courses.contains(course);
     }
-
+    
 }

@@ -3,13 +3,18 @@ package de.hsrm.mi.swtpro.backend.service;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import de.hsrm.mi.swtpro.backend.model.Module;
 import de.hsrm.mi.swtpro.backend.model.*;
+import de.hsrm.mi.swtpro.backend.service.repository.StudyProgramRepository;
 import de.hsrm.mi.swtpro.backend.service.repository.UniversityRepository;
+import org.hibernate.Hibernate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.PostConstruct;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
+import javax.persistence.PersistenceContext;
+import javax.persistence.PersistenceContextType;
 import java.io.File;
 import java.io.IOException;
 import java.sql.Date;
@@ -17,8 +22,12 @@ import java.time.DayOfWeek;
 import java.time.LocalTime;
 import java.util.HashSet;
 
+
+/**
+ * The JSON Generator is used to generate a JSON file with sample entitys with all their relations for
+ * the whole model.
+ */
 @Component
-//@Transactional
 public class JSONGenerator {
 
     @Autowired
@@ -26,40 +35,12 @@ public class JSONGenerator {
     private EntityManager entityManager;
     @Autowired
     UniversityRepository universityRepository;
+    @Autowired
+    StudyProgramRepository studyProgramRepository;
 
-    /*public  JSONGenerator(){
 
-    }*/
-    @PostConstruct
-    private void init(){
+    public File createJSON() {
         entityManager = emf.createEntityManager();
-        //createJSON();
-        //readJSON_And_DELETE_WHOLE_DATABASE();
-    }
-
-    /**
-     * CAUTION!!! DELETES WHOLE DATABASE
-     */
-    private void readJSON_And_DELETE_WHOLE_DATABASE(){
-        File file = new File("../../../../../../../../../hsrm_medieninformatik.json");
-
-        try {
-            universityRepository.deleteAll();
-            University university2
-                    = new ObjectMapper().readerFor(University.class).readValue(file);
-            universityRepository.saveAndFlush(university2);
-
-
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-
-
-    //@EventListener(ApplicationReadyEvent.class)
-    private void createJSON() {
-
-
         University uni = University.builder().name("Hochschule RheinMain").address("Kurt-Schuhmacher-Ring 18").build();
         entityManager.persist(uni);
         Campus ude = Campus.builder().name("Unter den Eichen").address("Unter den Eichen 6").university(uni).build();
@@ -202,23 +183,15 @@ public class JSONGenerator {
 
 
         ObjectMapper objectMapper = new ObjectMapper();
+        File file = new File("hsrm_medieninformatik.json");
         try {
-            objectMapper.writeValue(new File("hsrm_medieninformatik.json"), uni);
+            objectMapper.writeValue(file, uni);
 
         } catch (IOException e) {
             e.printStackTrace();
             //System.out.println("JSON new File Error");
         }
-        curriculum.getExamRegulation().setStudents(null);
-        curriculum.getExamRegulation().setStudyProgram(null);
-
-        try {
-
-            objectMapper.writeValue(new File("semesterplan_po2017.json"), curriculum);
-        } catch (IOException e) {
-            e.printStackTrace();
-            //System.out.println("JSON new File Error");
-        }
+        return file;
 
 
     }
