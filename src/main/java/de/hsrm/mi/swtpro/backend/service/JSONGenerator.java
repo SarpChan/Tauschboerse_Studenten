@@ -5,20 +5,17 @@ import de.hsrm.mi.swtpro.backend.model.Module;
 import de.hsrm.mi.swtpro.backend.model.*;
 import de.hsrm.mi.swtpro.backend.service.repository.StudyProgramRepository;
 import de.hsrm.mi.swtpro.backend.service.repository.UniversityRepository;
-import org.hibernate.Hibernate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import org.springframework.transaction.annotation.Transactional;
 
-import javax.annotation.PostConstruct;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
-import javax.persistence.PersistenceContext;
-import javax.persistence.PersistenceContextType;
 import java.io.File;
 import java.io.IOException;
 import java.sql.Date;
+import java.sql.Timestamp;
 import java.time.DayOfWeek;
+import java.time.Instant;
 import java.time.LocalTime;
 import java.util.HashSet;
 
@@ -101,6 +98,8 @@ public class JSONGenerator {
         StudentPassedExam studentPassedExam = StudentPassedExam.builder().courseComponent(prog3P).student(passedStudent).grade(4.0f).build();
         StudentPassedExam studentPassedExam2 = StudentPassedExam.builder().courseComponent(prog3V).student(passedStudent).grade(4.0f).build();
         StudentPrioritizesGroup studentPrioritizesGroup = StudentPrioritizesGroup.builder().group(prog3PgroupA).student(testStudent).priority(1).build();
+        SwapOffer swapOffer = SwapOffer.builder().student(testStudent).date(Timestamp.from(Instant.now())).fromGroup(prog3PgroupA).toGroup(prog3PgroupB).build();
+        entityManager.persist(swapOffer);
 
         uni.setCampuses(new HashSet<>());
         uni.setFieldsOfStudy(new HashSet<>());
