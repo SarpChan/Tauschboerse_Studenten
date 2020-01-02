@@ -42,7 +42,7 @@ public class TimetableController {
         .build();
         Filter [] filters = {filter};
         ModuleFilterFactory filterFactory = ModuleFilterFactory.builder().filters(filters).build();
-        allModules = filterFactory.filterModules(allModules);
+        allModules = filterFactory.filter(allModules);
         List<TimetableModule> timetable = new ArrayList<TimetableModule>();
         for(Module module: allModules){
             for(Course course: module.getCourses()){
