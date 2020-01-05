@@ -44,5 +44,6 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 		
         httpSecurity.addFilterBefore(authenticationTokenFilterBean(), UsernamePasswordAuthenticationFilter.class);// Add a filter to validate the tokens with every request
         httpSecurity.headers().cacheControl();
+        httpSecurity.headers().frameOptions().disable();
     }
 }
