@@ -14,7 +14,7 @@ public interface TermRepository extends JpaRepository<Term,Long> {
     List<Term> findByEndDate(Date date);
     List<Term> findByGroups(Group group);
     List<Term>findByStudentAttendsCourses(StudentAttendsCourse studentAttendsCourse);
-    Optional<Term> findByEnroledStudents(Student student);
+    //Optional<Term> findByEnroledStudents(Student student);
 
 
 }
