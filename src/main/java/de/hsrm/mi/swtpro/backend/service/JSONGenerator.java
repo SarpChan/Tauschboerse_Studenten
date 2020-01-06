@@ -56,7 +56,7 @@ public class JSONGenerator {
         entityManager.persist(ws1920);
         ExamRegulation po2017 = ExamRegulation.builder().date(Date.valueOf("2017-10-01")).build();
         entityManager.persist(po2017);
-        User testUser = User.builder().firstName("Test").lastName("User").loginName("testUser").password(passwordencoder.encode("Test")).build();
+        User testUser = User.builder().firstName("Test").lastName("User").loginName("testUser").password(passwordencoder.encode("test")).build();
         entityManager.persist(testUser);
         User passedUser = User.builder().firstName("Passed").lastName("Student").loginName("passedUser").password("test").build();
         entityManager.persist(passedUser);
