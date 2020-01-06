@@ -24,7 +24,6 @@ public class AuthenticationController {
     @PostMapping(path = "/login", consumes = "application/json", produces = MediaType.APPLICATION_JSON_VALUE)
     public String createAuthenticationToken(@RequestBody AuthenticationRequest authenticationRequest)  {
         return authenticationService.generateJWTToken(authenticationRequest.getUsername(), authenticationRequest.getPassword()).getToken();
-       
     }
 
     @ExceptionHandler(EntityNotFoundException.class)
