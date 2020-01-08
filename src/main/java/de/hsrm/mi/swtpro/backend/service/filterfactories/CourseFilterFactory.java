@@ -3,7 +3,8 @@ package de.hsrm.mi.swtpro.backend.service.filterfactories;
 import de.hsrm.mi.swtpro.backend.model.Course;
 import de.hsrm.mi.swtpro.backend.model.filter.ComparatorType;
 import de.hsrm.mi.swtpro.backend.model.filter.Filter;
-import lombok.*;
+import lombok.NoArgsConstructor;
+import lombok.experimental.SuperBuilder;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -11,22 +12,14 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @NoArgsConstructor
-@AllArgsConstructor
-@Builder
-public class CourseFilterFactory {
+@SuperBuilder
+public class CourseFilterFactory extends FilterFactory<Course> {
 
-    @Getter
-    @Setter
-    private Filter[] filters;
-
-    private boolean isFiltersEmpty() {
-        return filters.length == 0;
-    }
-
-    public List<Course> filterCourses(List<Course> courses) {
-        final List<Course> filterableCourses = new ArrayList<>(courses);
+    @Override
+    public List<Course> filter(List<Course> toFilter) {
+        final List<Course> filterableCourses = new ArrayList<>(toFilter);
         if (isFiltersEmpty()) {
-            return courses;
+            return toFilter;
         }
         Arrays.stream(this.filters).forEach(filter -> {
             if(filter.getAttribute().equals("examRegulationId")) {
