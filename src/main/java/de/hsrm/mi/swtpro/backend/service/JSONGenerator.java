@@ -723,25 +723,25 @@ public class JSONGenerator {
         stu_thiel.getPassedExams().add(thielPassMathe2P);
         stu_thiel.getPassedExams().add(thielPassMathe2V);
 
-        prog1P.setPassedExams(new HashSet<>());
-        prog1P.getPassedExams().add(ahlersPassProg1P);
+        prog1P.setStudentsPassedExam(new HashSet<>());
+        prog1P.getStudentsPassedExam().add(ahlersPassProg1P);
 
-        prog1V.setPassedExams(new HashSet<>());
-        prog1V.getPassedExams().add(ahlersPassProg1V);
+        prog1V.setStudentsPassedExam(new HashSet<>());
+        prog1V.getStudentsPassedExam().add(ahlersPassProg1V);
 
-        mathe1P.setPassedExams(new HashSet<>());
-        mathe1P.getPassedExams().add(esperPassMathe1P);
-        mathe1P.getPassedExams().add(ahlersPassMathe1P);
+        mathe1P.setStudentsPassedExam(new HashSet<>());
+        mathe1P.getStudentsPassedExam().add(esperPassMathe1P);
+        mathe1P.getStudentsPassedExam().add(ahlersPassMathe1P);
 
-        mathe1V.setPassedExams(new HashSet<>());
-        mathe1V.getPassedExams().add(esperPassMathe1V);
-        mathe1V.getPassedExams().add(ahlersPassMathe1V);
+        mathe1V.setStudentsPassedExam(new HashSet<>());
+        mathe1V.getStudentsPassedExam().add(esperPassMathe1V);
+        mathe1V.getStudentsPassedExam().add(ahlersPassMathe1V);
 
-        mathe2P.setPassedExams(new HashSet<>());
-        mathe2P.getPassedExams().add(thielPassMathe2P);
+        mathe2P.setStudentsPassedExam(new HashSet<>());
+        mathe2P.getStudentsPassedExam().add(thielPassMathe2P);
 
-        mathe2V.setPassedExams(new HashSet<>());
-        mathe2V.getPassedExams().add(thielPassMathe2V);
+        mathe2V.setStudentsPassedExam(new HashSet<>());
+        mathe2V.getStudentsPassedExam().add(thielPassMathe2V);
 
 
 

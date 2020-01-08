@@ -51,9 +51,10 @@ public class CourseComponent {
     @OneToMany(mappedBy = "courseComponent",cascade= CascadeType.ALL)
     private Set<Group> groups;
 
+    @Singular("studentPassedExam")
     @Getter @Setter
-    @OneToOne
-    private StudentPassedExam studentPassedExam;
+    @OneToMany(mappedBy = "courseComponent",cascade= CascadeType.ALL)
+    private Set<StudentPassedExam> studentsPassedExam;
 
     /**
      * Adds group to the collection of groups, which belong to this lesson
