@@ -45,8 +45,9 @@ public class StudentTimetableController {
                         .lecturerNameAbbreviation("Placeholder Abbreviation")
                         .courseComponentID(courseComponent.getId())
                         .courseType(courseComponent.getType())
-                        .moduleTitle(module.getTitle())
-                        .moduleTitleAbbreviation("Placeholder Abbreviation")
+                        .courseTitle(course.getTitle())
+                        .courseTitleAbbreviation("Placeholder Abbreviation")
+                        .roomNumber(group.getRoom().getNumber())
                         .build();
                         timetable.add(timetableModule);
                     }
