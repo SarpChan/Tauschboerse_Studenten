@@ -1,5 +1,8 @@
 package de.hsrm.mi.swtpro.backend.controller.login;
 
+/**
+ * contains the current token for responses
+ */
 public class JWTTokenResponse {
     private String token;
 

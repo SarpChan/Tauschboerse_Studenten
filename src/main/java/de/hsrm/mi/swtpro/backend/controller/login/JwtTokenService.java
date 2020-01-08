@@ -8,7 +8,10 @@ import io.jsonwebtoken.SignatureAlgorithm;
 
 import java.util.Date;
 import java.util.HashMap;
-
+/**
+ * the component generate
+ * the JWT token
+ */
 @Component
 public class JwtTokenService {
 
@@ -20,6 +23,11 @@ public class JwtTokenService {
         this.expiration = expiration;
     }
 
+    /**
+     * the methode generate the token
+     * @param username
+     * @return token
+     */
     public String generateToken(String username) {
         final Date createdDate = new Date();
         final Date expirationDate = calculateExpirationDate(createdDate);
@@ -33,6 +41,12 @@ public class JwtTokenService {
                 .compact();
     }
 
+    /**
+     * calculates the expiration date 
+     * from the token
+     * @param createdDate
+     * @return
+     */
     private Date calculateExpirationDate(Date createdDate) {
         return new Date(createdDate.getTime() + expiration * 10000);
     }

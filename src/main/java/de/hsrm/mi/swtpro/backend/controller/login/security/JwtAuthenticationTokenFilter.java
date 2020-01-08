@@ -11,6 +11,10 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
+/** 
+ * The component JwtAuthenticationTokenFilter is a servletFilter which extract 
+ * the token from a http request.
+ * */ 
 @Component
 public class JwtAuthenticationTokenFilter extends OncePerRequestFilter {
 

@@ -1,5 +1,9 @@
 
 package de.hsrm.mi.swtpro.backend.controller.login;
+/**
+ * contains the password and username 
+ * from a login request
+ */
 public class AuthenticationRequest {
 
     private String username;

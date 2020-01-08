@@ -6,6 +6,9 @@ import org.springframework.security.core.GrantedAuthority;
 import java.util.ArrayList;
 import java.util.Collection;
 
+/**
+ * JwtAuthenticatedProfile contains the logged in user
+ */
 public class JwtAuthenticatedProfile implements Authentication {
 
     private static final long serialVersionUID = 1L;

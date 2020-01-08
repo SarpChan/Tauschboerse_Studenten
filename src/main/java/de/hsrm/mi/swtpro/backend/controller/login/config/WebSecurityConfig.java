@@ -1,4 +1,4 @@
-package de.hsrm.mi.swtpro.backend.controller.login.security;
+package de.hsrm.mi.swtpro.backend.controller.login.config;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -10,9 +10,13 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
+import de.hsrm.mi.swtpro.backend.controller.login.security.JwtAuthenticationEntryPoint;
+import de.hsrm.mi.swtpro.backend.controller.login.security.JwtAuthenticationProvider;
+import de.hsrm.mi.swtpro.backend.controller.login.security.JwtAuthenticationTokenFilter;
 
-
-//@SuppressWarnings("SpringJavaAutowiringInspection")
+/**
+ * Web security config class for the security configurations
+ */
 @Configuration
 @EnableWebSecurity
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
@@ -37,12 +41,12 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity httpSecurity) throws Exception {
 
             httpSecurity.csrf().disable()
-                .authorizeRequests().antMatchers("/authentication/**", "/h2-console/**").permitAll() // all other requests need to be authenticated
+                .authorizeRequests().antMatchers("/authentication/**", "/h2-console/**").permitAll() 
                 .anyRequest().authenticated().and()
                 .exceptionHandling().authenticationEntryPoint(unauthorizedHandler).and()
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
 		
-        httpSecurity.addFilterBefore(authenticationTokenFilterBean(), UsernamePasswordAuthenticationFilter.class);// Add a filter to validate the tokens with every request
+        httpSecurity.addFilterBefore(authenticationTokenFilterBean(), UsernamePasswordAuthenticationFilter.class);
         httpSecurity.headers().cacheControl();
         httpSecurity.headers().frameOptions().disable();
     }

@@ -8,11 +8,10 @@ import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.stereotype.Component;
-//Hier wird der Token, den wir vorher in der JwtAuthenticationTokenFilter
-// Klasse extrahiert haben, ausgewertet.
-//Zusätzlich wird der Username aus dem Token extrahiert und, 
-//falls der Token valide ist, als JwtAuthenticatedProfile zurück gegeben.
 
+/**
+ * The class interpret the token 
+ */
 @Component
 public class JwtAuthenticationProvider implements AuthenticationProvider {
 
@@ -20,7 +19,6 @@ public class JwtAuthenticationProvider implements AuthenticationProvider {
 
     private final TokenService jwtService;
 
-    //@SuppressWarnings("unused")
     public JwtAuthenticationProvider() {
         this(null);
     }
