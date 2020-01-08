@@ -23,12 +23,14 @@ public class TimetableModule {
     @Getter @Setter
     private String lecturerNameAbbreviation;
     @Getter @Setter
-    private String moduleTitle;
+    private String courseTitle;
     @Getter @Setter
-    private String moduleTitleAbbreviation;
+    private String courseTitleAbbreviation;
     @Getter @Setter
     private char groupChar;
     @Getter @Setter
     private CourseType courseType;
+    @Getter @Setter
+    private int roomNumber;
 }
 

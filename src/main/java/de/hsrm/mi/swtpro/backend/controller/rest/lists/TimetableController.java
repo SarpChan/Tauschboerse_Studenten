@@ -42,7 +42,7 @@ public class TimetableController {
         .build();
         Filter [] filters = {filter};
         ModuleFilterFactory filterFactory = ModuleFilterFactory.builder().filters(filters).build();
-        allModules = filterFactory.filterModules(allModules);
+        allModules = filterFactory.filter(allModules);
         List<TimetableModule> timetable = new ArrayList<TimetableModule>();
         for(Module module: allModules){
             for(Course course: module.getCourses()){
@@ -58,8 +58,9 @@ public class TimetableController {
                         .lecturerNameAbbreviation("Placeholder Abbreviation")
                         .courseComponentID(courseComponent.getId())
                         .courseType(courseComponent.getType())
-                        .moduleTitle(module.getTitle())
-                        .moduleTitleAbbreviation("Placeholder Abbreviation")
+                        .courseTitle(course.getTitle())
+                        .courseTitleAbbreviation("Placeholder Abbreviation")
+                        .roomNumber(group.getRoom().getNumber())
                         .build();
                         timetable.add(timetableModule);
                     }
