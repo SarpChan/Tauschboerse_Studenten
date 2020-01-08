@@ -14,8 +14,7 @@ import java.util.List;
 @SuperBuilder
 public abstract class FilterFactory<T> {
 
-    @Getter
-    @Setter
+    @Getter @Setter
     protected Filter[] filters;
 
     protected boolean isFiltersEmpty() {

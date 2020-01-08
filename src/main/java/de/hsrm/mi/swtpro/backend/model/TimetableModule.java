@@ -33,8 +33,7 @@ public class TimetableModule {
     private char groupChar;
     @Getter @Setter
     private CourseType courseType;
-    @Getter
-    @Setter
+    @Getter @Setter
     private int roomNumber;
 }
 
