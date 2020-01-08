@@ -23,6 +23,11 @@ public class ModuleFilterFactory {
             return filters.length == 0;
         }
 
+        /**
+        * This list contains all filterable modules 
+        * @param modules the list of modules to be filtered
+        * @return returns a list of the filtered modules
+        */
         public List<Module> filterModules(List<Module> modules) {
             final List<Module> filterableModules = new ArrayList<>(modules);
             if (isFiltersEmpty()) {
@@ -38,6 +43,12 @@ public class ModuleFilterFactory {
             return filterableModules;
         }
 
+        /**
+        * This list contains all the modules for a given exam regulation. 
+        * @param modules the list of modules to be filtered
+        * @param forExamRegulationFilter the exam regulation filter
+        * @return returns a list of the filtered modules
+        */
         private List<Module> filterForExamRegulation(List<Module> modules, Filter forExamRegulationFilter){
             return modules.stream().filter(module -> module.getModulesInCurriculum().stream().anyMatch(moduleInCurriculum -> {
                 if(forExamRegulationFilter.getComparator().getComparatorType() == ComparatorType.EQUALS) {
