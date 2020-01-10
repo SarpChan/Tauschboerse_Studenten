@@ -13,5 +13,6 @@ public interface CourseComponentRepository extends JpaRepository<CourseComponent
     List<CourseComponent> findByExam(String exam);
     List<CourseComponent> findByGroups(Group group);
     List<CourseComponent> findByCourse(Course course);
-    List<CourseComponent> findByStudentPassedExam(StudentPassedExam studentPassedExam);
+
+    List<CourseComponent> findByStudentsPassedExam(StudentPassedExam studentPassedExam);
 }
