@@ -29,6 +29,14 @@ dependencies {
     testCompile group: 'org.springframework.boot', name: 'spring-boot-starter-test', version: '2.2.1.RELEASE'
     compile 'junit:junit:4.12'
 	implementation 'org.springframework.boot:spring-boot-starter-web'
+
+    implementation 'org.springframework.boot:spring-boot-starter-activemq'
+    // ActiveMQ-Implementierung
+	implementation 'org.apache.activemq:activemq-broker'
+	implementation 'org.apache.activemq:activemq-kahadb-store'
+	// Web-Konsole zur Überwachung des eingebetteten ActiveMQ-Brokers
+	implementation 'io.hawt:hawtio-springboot:2.8.0'
+    
 	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
 	developmentOnly 'org.springframework.boot:spring-boot-devtools'
 	testImplementation('org.springframework.boot:spring-boot-starter-test') {
