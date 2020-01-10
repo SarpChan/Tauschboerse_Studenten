@@ -13,7 +13,9 @@ import javax.persistence.EntityManagerFactory;
 import java.io.File;
 import java.io.IOException;
 import java.sql.Date;
+import java.sql.Timestamp;
 import java.time.DayOfWeek;
+import java.time.Instant;
 import java.time.LocalTime;
 import java.util.HashSet;
 
@@ -139,19 +141,19 @@ public class JSONGenerator {
         User ydeuster = User.builder().firstName("Yen").lastName("Deuster").loginName("ydeuster").password("ydeuster").build();
         entityManager.persist(ydeuster);
 
-        Student stu_esper = Student.builder().user(vesper).enrolementNumber(1076576)
+        Student stu_esper = Student.builder().user(vesper).enrollmentNumber(1076576)
                 .enrolmentTerm(ss2019).mail("esper@mail.com").examRegulation(po2017).build();
         entityManager.persist(stu_esper);
-        Student stu_ahlers = Student.builder().user(nahlers).enrolementNumber(1076688)
+        Student stu_ahlers = Student.builder().user(nahlers).enrollmentNumber(1076688)
                 .enrolmentTerm(ss2019).mail("ahlers@mail.com").examRegulation(po2017).build();
         entityManager.persist(stu_ahlers);
-        Student stu_deuster = Student.builder().user(ydeuster).enrolementNumber(1075577)
+        Student stu_deuster = Student.builder().user(ydeuster).enrollmentNumber(1075577)
                 .enrolmentTerm(ss2019).mail("deuster@mail.com").examRegulation(po2017).build();
         entityManager.persist(stu_deuster);
-        Student stu_wirt = Student.builder().user(jwirt).enrolementNumber(1078833)
+        Student stu_wirt = Student.builder().user(jwirt).enrollmentNumber(1078833)
                 .enrolmentTerm(ss2019).mail("wirt@mail.com").examRegulation(po2017).build();
         entityManager.persist(stu_wirt);
-        Student stu_thiel = Student.builder().user(tthiel).enrolementNumber(1074411)
+        Student stu_thiel = Student.builder().user(tthiel).enrollmentNumber(1074411)
                 .enrolmentTerm(ss2019).mail("thiel@mail.com").examRegulation(po2017).build();
         entityManager.persist(stu_thiel);
 
@@ -668,19 +670,19 @@ public class JSONGenerator {
         r17.getGroups().add(mathe3PgroupB);
 
 
-        SwapOffer esperMathe3P_B_to_A = SwapOffer.builder().student(stu_esper).timestamp(17).fromGroup(mathe3PgroupB).toGroup(mathe3PgroupA).build();
+        SwapOffer esperMathe3P_B_to_A = SwapOffer.builder().student(stu_esper).date(Timestamp.from(Instant.now())).fromGroup(mathe3PgroupB).toGroup(mathe3PgroupA).build();
         entityManager.persist(esperMathe3P_B_to_A);
-        SwapOffer esperProg3P_A_to_B = SwapOffer.builder().student(stu_esper).timestamp(35).fromGroup(prog3PgroupA).toGroup(prog3PgroupB).build();
+        SwapOffer esperProg3P_A_to_B = SwapOffer.builder().student(stu_esper).date(Timestamp.from(Instant.now())).fromGroup(prog3PgroupA).toGroup(prog3PgroupB).build();
         entityManager.persist(esperProg3P_A_to_B);
 
-        SwapOffer thielMathe3P_B_to_A = SwapOffer.builder().student(stu_thiel).timestamp(66).fromGroup(mathe3PgroupB).toGroup(mathe3PgroupA).build();
+        SwapOffer thielMathe3P_B_to_A = SwapOffer.builder().student(stu_thiel).date(Timestamp.from(Instant.now())).fromGroup(mathe3PgroupB).toGroup(mathe3PgroupA).build();
         entityManager.persist(thielMathe3P_B_to_A);
-        SwapOffer thielProg3P_B_to_A = SwapOffer.builder().student(stu_thiel).timestamp(99).fromGroup(prog3PgroupB).toGroup(prog3PgroupA).build();
+        SwapOffer thielProg3P_B_to_A = SwapOffer.builder().student(stu_thiel).date(Timestamp.from(Instant.now())).fromGroup(prog3PgroupB).toGroup(prog3PgroupA).build();
         entityManager.persist(thielProg3P_B_to_A);
 
-        SwapOffer ahlersMathe3P_A_to_B = SwapOffer.builder().student(stu_ahlers).timestamp(54).fromGroup(mathe3PgroupA).toGroup(mathe3PgroupB).build();
+        SwapOffer ahlersMathe3P_A_to_B = SwapOffer.builder().student(stu_ahlers).date(Timestamp.from(Instant.now())).fromGroup(mathe3PgroupA).toGroup(mathe3PgroupB).build();
         entityManager.persist(ahlersMathe3P_A_to_B);
-        SwapOffer ahlersProg3P_B_to_A = SwapOffer.builder().student(stu_ahlers).timestamp(1208).fromGroup(prog3PgroupB).toGroup(prog3PgroupA).build();
+        SwapOffer ahlersProg3P_B_to_A = SwapOffer.builder().student(stu_ahlers).date(Timestamp.from(Instant.now())).fromGroup(prog3PgroupB).toGroup(prog3PgroupA).build();
         entityManager.persist(ahlersProg3P_B_to_A);
 
 
@@ -718,25 +720,25 @@ public class JSONGenerator {
         stu_thiel.getPassedExams().add(thielPassMathe2P);
         stu_thiel.getPassedExams().add(thielPassMathe2V);
 
-        prog1P.setPassedExams(new HashSet<>());
-        prog1P.getPassedExams().add(ahlersPassProg1P);
+        prog1P.setStudentPassedExam(new HashSet<>());
+        prog1P.getStudentPassedExam().add(ahlersPassProg1P);
 
-        prog1V.setPassedExams(new HashSet<>());
-        prog1V.getPassedExams().add(ahlersPassProg1V);
+        prog1V.setStudentPassedExam(new HashSet<>());
+        prog1V.getStudentPassedExam().add(ahlersPassProg1V);
 
-        mathe1P.setPassedExams(new HashSet<>());
-        mathe1P.getPassedExams().add(esperPassMathe1P);
-        mathe1P.getPassedExams().add(ahlersPassMathe1P);
+        mathe1P.setStudentPassedExam(new HashSet<>());
+        mathe1P.getStudentPassedExam().add(esperPassMathe1P);
+        mathe1P.getStudentPassedExam().add(ahlersPassMathe1P);
 
-        mathe1V.setPassedExams(new HashSet<>());
-        mathe1V.getPassedExams().add(esperPassMathe1V);
-        mathe1V.getPassedExams().add(ahlersPassMathe1V);
+        mathe1V.setStudentPassedExam(new HashSet<>());
+        mathe1V.getStudentPassedExam().add(esperPassMathe1V);
+        mathe1V.getStudentPassedExam().add(ahlersPassMathe1V);
 
-        mathe2P.setPassedExams(new HashSet<>());
-        mathe2P.getPassedExams().add(thielPassMathe2P);
+        mathe2P.setStudentPassedExam(new HashSet<>());
+        mathe2P.getStudentPassedExam().add(thielPassMathe2P);
 
-        mathe2V.setPassedExams(new HashSet<>());
-        mathe2V.getPassedExams().add(thielPassMathe2V);
+        mathe2V.setStudentPassedExam(new HashSet<>());
+        mathe2V.getStudentPassedExam().add(thielPassMathe2V);
 
 
 

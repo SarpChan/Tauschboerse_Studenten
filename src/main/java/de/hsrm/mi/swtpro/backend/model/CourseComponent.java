@@ -5,9 +5,10 @@ import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import lombok.*;
 
 import javax.persistence.*;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 import java.util.Set;
-import javax.validation.constraints.*;
-import javax.validation.constraints.*;
 
 /**
  * Describes the type of lesson of a course

@@ -3,8 +3,6 @@ package de.hsrm.mi.swtpro.backend.service.filterfactories;
 import de.hsrm.mi.swtpro.backend.model.Course;
 import de.hsrm.mi.swtpro.backend.model.filter.ComparatorType;
 import de.hsrm.mi.swtpro.backend.model.filter.Filter;
-import lombok.*;
-import lombok.experimental.SuperBuilder;
 import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
 
@@ -14,7 +12,6 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @NoArgsConstructor
-@AllArgsConstructor
 @SuperBuilder
 public class CourseFilterFactory extends FilterFactory<Course> {
 
