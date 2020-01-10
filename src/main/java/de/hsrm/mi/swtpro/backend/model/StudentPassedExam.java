@@ -30,7 +30,7 @@ public class StudentPassedExam {
     private Student student;
 
     @Getter @Setter
-    @OneToOne
+    @ManyToOne
     @NotNull
     private CourseComponent courseComponent;
 

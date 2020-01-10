@@ -7,7 +7,6 @@ import lombok.experimental.SuperBuilder;
 
 import javax.persistence.*;
 import java.util.Set;
-import javax.persistence.OneToOne;
 import javax.validation.constraints.*;
 
 /**
