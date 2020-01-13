@@ -26,7 +26,6 @@ import java.util.concurrent.atomic.AtomicBoolean;
 @RequestMapping("/rest")
 public class SwapOfferInterface {
     Logger logger = LoggerFactory.getLogger(SwapOfferInterface.class);
-
     @Autowired
     StudentRepository studentRepository;
     @Autowired

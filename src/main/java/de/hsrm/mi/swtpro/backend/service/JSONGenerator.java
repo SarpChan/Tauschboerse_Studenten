@@ -79,7 +79,7 @@ public class JSONGenerator {
         dBuilding.getRooms().add(r14);
         dBuilding.getRooms().add(r17);
         cBuilding.getRooms().add(r23);
-        cBuilding.getRooms().add(r23);
+        cBuilding.getRooms().add(r25);
 
         Term ws1920 = Term.builder().startDate(Date.valueOf("2019-10-01")).endDate(Date.valueOf("2020-03-31")).period(1).build();
         entityManager.persist(ws1920);
