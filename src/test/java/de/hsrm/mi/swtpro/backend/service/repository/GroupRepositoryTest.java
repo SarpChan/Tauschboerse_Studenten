@@ -53,7 +53,9 @@ public class GroupRepositoryTest {
                 .course(course)
                 .type(CourseType.LECTURE)
                 .exam("Prüfung")
-                .build();        University university = University.builder()
+                .build();
+
+        University university = University.builder()
                 .name("Hochschule RheinMain")
                 .address("Kurt-Schumacher-Ring 18, 65197 Wiesbaden")
                 .build();
