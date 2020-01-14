@@ -12,7 +12,6 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @NoArgsConstructor
-@AllArgsConstructor
 @SuperBuilder
 public class SwapOfferFilterFactory extends FilterFactory<SwapOffer> {
 

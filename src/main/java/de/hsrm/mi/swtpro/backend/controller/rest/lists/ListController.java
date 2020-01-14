@@ -40,7 +40,7 @@ public class ListController {
     public List<SwapOffer> getSwapOffer(@RequestBody Filter[] filters) {
         List<SwapOffer> allSwapOffers = swapOfferRepository.findAll();
         SwapOfferFilterFactory filterFactory = SwapOfferFilterFactory.builder().filters(filters).build();
-        allSwapOffers = filterFactory.filterSwapOffers(allSwapOffers);
+        allSwapOffers = filterFactory.filter(allSwapOffers);
         return allSwapOffers;
     }
 
