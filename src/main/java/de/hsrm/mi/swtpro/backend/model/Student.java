@@ -28,12 +28,11 @@ import javax.validation.constraints.*;
 public class Student extends Role {
 
     @Getter @Setter
-    @Pattern(regexp = "[0-9]*")
     @NotNull
     private int enrollmentNumber;
 
     @Getter @Setter
-    @Pattern(regexp = "[a-zA-Z0-9-+_.]+@[a-z0-9-+_]+")
+    @Pattern(regexp = "[a-zA-Z0-9-+_.]+@[a-z0-9-+_.]+")
     @NotEmpty
     private String mail;
 
