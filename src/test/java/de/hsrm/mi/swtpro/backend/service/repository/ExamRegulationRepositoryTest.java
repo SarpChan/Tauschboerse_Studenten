@@ -36,6 +36,7 @@ public class ExamRegulationRepositoryTest {
 
         studyProgram = StudyProgram.builder()
                 .title("Heinrich")
+                .degree("Bachelor")
                 .build();
 
         ExamRegulation examRegulation = ExamRegulation.builder()
@@ -50,9 +51,9 @@ public class ExamRegulationRepositoryTest {
                 .build();
 
 
-        entityManager.persist(curriculum);
         entityManager.persist(studyProgram);
         entityManager.persist(examRegulation);
+        entityManager.persist(curriculum);
 
         id = examRegulation.getId();
     }
