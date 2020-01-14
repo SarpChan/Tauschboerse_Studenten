@@ -10,6 +10,7 @@ import java.sql.Timestamp;
 
 import javax.persistence.EntityManager;
 
+import de.hsrm.mi.swtpro.backend.model.SwapOffer;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -19,7 +20,6 @@ import org.springframework.test.context.junit4.SpringRunner;
 
 import de.hsrm.mi.swtpro.backend.model.Group;
 import de.hsrm.mi.swtpro.backend.model.Student;
-import de.hsrm.mi.swtpro.backend.model.SwapOffer;
 
 @RunWith(SpringRunner.class)
 @DataJpaTest
