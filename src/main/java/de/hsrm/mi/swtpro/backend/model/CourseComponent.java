@@ -65,16 +65,6 @@ public class CourseComponent {
     }
 
     /**
-     * Sets a StudentPassedExam relation
-     * Only used for testing
-     *
-     * @param exam
-     */
-    public void setStudentPassedExam(StudentPassedExam exam) {
-        this.studentPassedExam = exam;
-    }
-
-    /**
      * Removes group from the collection of groups, which belong to this lesson
      *
      * @param group
