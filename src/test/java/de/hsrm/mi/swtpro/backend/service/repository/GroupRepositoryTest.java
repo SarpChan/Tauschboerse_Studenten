@@ -87,7 +87,6 @@ public class GroupRepositoryTest {
                 .studyProgram(studyProg)
                 .build();
 
-
         term = Term.builder()
                 .startDate(new Date(System.currentTimeMillis()))
                 .endDate(new Date(System.currentTimeMillis()))
