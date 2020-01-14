@@ -1,8 +1,7 @@
 package de.hsrm.mi.swtpro.backend.service.repository;
 
-import de.hsrm.mi.swtpro.backend.model.Course;
+import de.hsrm.mi.swtpro.backend.model.*;
 import de.hsrm.mi.swtpro.backend.model.Module;
-import de.hsrm.mi.swtpro.backend.model.ModuleInCurriculum;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -11,6 +10,8 @@ import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import javax.persistence.EntityManager;
+import java.sql.Date;
+import java.time.LocalDate;
 import java.util.List;
 
 import static org.hamcrest.Matchers.*;
@@ -31,6 +32,12 @@ public class ModuleRepositoryTest {
 
     @Before
     public void setUp(){
+        User user = User.builder()
+                .firstName("Lukas")
+                .lastName("wede")
+                .loginName("w001")
+                .password("password")
+                .build();
 
         Module module = Module.builder()
                 .period(1)
@@ -41,13 +48,35 @@ public class ModuleRepositoryTest {
 
         course = Course.builder()
                 .title("Kurs")
+                .owner(user)
                 .module(module)
+                .build();
+
+        StudyProgram studyProgram = StudyProgram.builder()
+                .title("Heinrich")
+                .degree("Bachelor")
+                .build();
+
+        ExamRegulation examRegulation = ExamRegulation.builder()
+                .date(Date.valueOf(LocalDate.of(2019,4,17)))
+                .rule(17)
+                .studyProgram(studyProgram)
+                .build();
+
+        Curriculum curriculum = Curriculum.builder()
+                .termPeriod(1)
+                .examRegulation(examRegulation)
                 .build();
 
         moduleInCurriculum = ModuleInCurriculum.builder()
                 .module(module)
+                .curriculum(curriculum)
                 .build();
 
+        entityManager.persist(user);
+        entityManager.persist(studyProgram);
+        entityManager.persist(examRegulation);
+        entityManager.persist(curriculum);
         entityManager.persist(course);
         entityManager.persist(module);
         entityManager.persist(moduleInCurriculum);
