@@ -86,25 +86,6 @@ public class CourseComponentRepositoryTest {
                 .period(1)
                 .build();
 
-        CourseComponent courseComponent = CourseComponent.builder()
-                .course(course)
-                .type(CourseType.LECTURE)
-                .exam("Test")
-                .studentPassedExam(passedExam)
-                .creditPoints(10)
-                .build();
-
-        group = Group.builder()
-                .groupChar('D')
-                .lecturer(lecturer)
-                .dayOfWeek(DayOfWeek.MONDAY)
-                .startTime(LocalTime.now())
-                .endTime(LocalTime.now())
-                .room(room)
-                .term(term)
-                .courseComponent(courseComponent)
-                .build();
-
         StudyProgram studyProg = StudyProgram.builder()
                 .title("test")
                 .degree("E")
@@ -122,10 +103,30 @@ public class CourseComponentRepositoryTest {
                 .enrolmentTerm(term)
                 .build();
 
+        CourseComponent courseComponent = CourseComponent.builder()
+                .course(course)
+                .type(CourseType.LECTURE)
+                .exam("Test")
+                .creditPoints(10)
+                .build();
+
         passedExam = StudentPassedExam.builder()
                 .grade(17f)
                 .courseComponent(courseComponent)
                 .student(student)
+                .build();
+
+        courseComponent.setStudentPassedExam(passedExam);
+
+        group = Group.builder()
+                .groupChar('D')
+                .lecturer(lecturer)
+                .dayOfWeek(DayOfWeek.MONDAY)
+                .startTime(LocalTime.now())
+                .endTime(LocalTime.now())
+                .room(room)
+                .term(term)
+                .courseComponent(courseComponent)
                 .build();
 
 
@@ -141,8 +142,8 @@ public class CourseComponentRepositoryTest {
         entityManager.persist(lecturer);
         entityManager.persist(course);
         entityManager.persist(courseComponent);
-        entityManager.persist(group);
         entityManager.persist(passedExam);
+        entityManager.persist(group);
         id = courseComponent.getId();
     }
 
