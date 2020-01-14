@@ -48,6 +48,7 @@ public class FieldOfStudyRepositoryTest {
 
         studyProgram = StudyProgram.builder()
                 .title("Dongel")
+                .degree("Bachelor")
                 .build();
 
         FieldOfStudy fieldOfStudy = FieldOfStudy.builder()
