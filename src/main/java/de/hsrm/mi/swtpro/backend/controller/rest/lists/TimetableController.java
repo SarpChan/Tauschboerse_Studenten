@@ -68,4 +68,55 @@ public class TimetableController {
         }
         return timetable;
     }
+
+
+    @PostMapping(path = "/timetableUpdate", consumes = "application/json", produces = MediaType.APPLICATION_JSON_VALUE)
+    public List<TimetableModule> updateTimetable(@RequestBody TimetableModule timetableModuleList) {
+       // for(TimetableModule module : timetableModuleList){
+
+      //  }
+
+        return null;
+        /*List<Module> allModules = moduleRepository.findAll();
+
+        Comparator comparator = Comparator.builder()
+        .comparatorType(ComparatorType.EQUALS)
+        .comparatorValue(examRegulation.getId())
+        .build();
+        Filter filter = Filter.builder()
+        .attribute("examRegulationId")
+        .comparator(comparator)
+        .build();
+
+        Filter [] filters = {filter};
+        ModuleFilterFactory filterFactory = ModuleFilterFactory.builder().filters(filters).build();
+        allModules = filterFactory.filter(allModules);
+        List<TimetableModule> timetable = new ArrayList<TimetableModule>();
+        for(Module module: allModules){
+            for(Course course: module.getCourses()){
+                for(CourseComponent courseComponent : course.getCourseComponents()){
+                    for(Group group: courseComponent.getGroups()){
+            
+
+                        TimetableModule timetableModule = TimetableModule.builder()
+                        .groupID(group.getId())
+                        .groupChar(group.getGroupChar())
+                        .dayOfWeek(group.getDayOfWeek())
+                        .startTime(group.getStartTime())
+                        .endTime(group.getEndTime())
+                        .lecturerName(group.getLecturer().getUser().getLastName())
+                        .lecturerNameAbbreviation("Placeholder Abbreviation")
+                        .courseComponentID(courseComponent.getId())
+                        .courseType(courseComponent.getType())
+                        .moduleTitle(module.getTitle())
+                        .moduleTitleAbbreviation("Placeholder Abbreviation")
+                        .build();
+                        timetable.add(timetableModule);
+                    }
+                }
+            }
+        }
+        
+        return timetable;*/
+    }
 }
