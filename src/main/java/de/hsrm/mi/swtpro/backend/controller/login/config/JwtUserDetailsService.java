@@ -30,13 +30,12 @@ public class JwtUserDetailsService implements UserDetailsService {
         }
         User user = optionalUser.get();
 
-
-        //String u = ((user.getRole()).toString());
+        String userRights = user.getUserRights().toString();
         org.springframework.security.core.userdetails.User.UserBuilder builder = null;
         if (user != null) {
           builder = org.springframework.security.core.userdetails.User.withUsername(username);
           builder.password(encoder.encode(user.getPassword()));
-          builder.roles("USER");
+          builder.roles(userRights);
         }
         return builder.build();
     }

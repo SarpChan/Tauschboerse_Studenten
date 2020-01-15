@@ -35,14 +35,17 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     PasswordEncoder passwordEncoder;
 
     /**
-     * configure AuthenticationManager so that it knows from where to load
-     * user for matching credentials use PasswordEncoder
+     * configure AuthenticationManager so that it knows from where to load user for
+     * matching credentials use PasswordEncoder
+     * 
      * @param authenticationManagerBuilder
+     * @throws Exception
      */
-   @Autowired
-    public void configureAuthentication(AuthenticationManagerBuilder authenticationManagerBuilder) {
+    @Autowired
+    public void configureAuthentication(AuthenticationManagerBuilder authenticationManagerBuilder) throws Exception {
         authenticationManagerBuilder.authenticationProvider(jwtAuthenticationProvider);
-        //authenticationManagerBuilder.userDetailsService(jwtUserDetailsService).passwordEncoder(passwordEncoder);
+        authenticationManagerBuilder.userDetailsService(jwtUserDetailsService);
+
     }
 
     @Bean
@@ -51,19 +54,14 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     }
 
 
-    @Override
-	public void configure(AuthenticationManagerBuilder auth) throws Exception {
-		auth.inMemoryAuthentication().withUser("javainuse")
-				.password("javainuse").roles("USER");
-	}
-
 
     @Override
     protected void configure(HttpSecurity httpSecurity) throws Exception {
 
             httpSecurity.csrf().disable()
-                .authorizeRequests().antMatchers("/authentication/**", "/h2-console/**").permitAll()
-                .antMatchers("/user/**").hasRole("USER")			
+                .authorizeRequests().antMatchers("/authentication/**").permitAll()
+                .antMatchers("/user/**", "/h2-console/**").hasRole("ADMIN")		
+                .antMatchers("/**").hasRole("USER")			
                 .anyRequest().authenticated().and()
                 .exceptionHandling().authenticationEntryPoint(unauthorizedHandler).and()
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);

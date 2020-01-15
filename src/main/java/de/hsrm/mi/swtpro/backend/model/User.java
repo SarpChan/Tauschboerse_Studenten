@@ -2,6 +2,7 @@ package de.hsrm.mi.swtpro.backend.model;
 
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+
 import lombok.*;
 
 import javax.persistence.Entity;
@@ -45,9 +46,13 @@ public class User {
     @NotEmpty
     private String password;
 
+    @Getter @Setter
+    private UserRights userRights;
+
     @Singular("role")
     @Getter @Setter 
     @OneToMany(mappedBy = "user")
     private Set<Role> roles;
-    
+
+
 }
