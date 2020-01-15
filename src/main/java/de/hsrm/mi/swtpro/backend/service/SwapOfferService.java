@@ -33,7 +33,7 @@ public class SwapOfferService {
         Collections.sort(swapofferList, new Comparator<SwapOffer>() {
             @Override
             public int compare(SwapOffer a, SwapOffer b) {
-                return a.getDate().compareTo(b.getDate());
+                return a.getTimestamp().compareTo(b.getTimestamp());
             }
         });
         for(SwapOffer einzelnesSwapOffer: swapofferList){
@@ -69,7 +69,7 @@ public class SwapOfferService {
         List<SwapOffer> swapOfferList = new ArrayList<SwapOffer>();
         logger.warn("HEY: " + studentRepository.findByEnrollmentNumber(swapOfferRequest.getUserID()).get());
         for (long gID : swapOfferRequest.getToGroupsID()) {
-            SwapOffer offer = SwapOffer.builder().date(Timestamp.from(Instant.now()))
+            SwapOffer offer = SwapOffer.builder().timestamp(Timestamp.from(Instant.now()))
                     .fromGroup(groupRepository.findById(swapOfferRequest.getFromGroupsID()).get())
                     .student(studentRepository.findByEnrollmentNumber(swapOfferRequest.getUserID()).get())
                     .toGroup(groupRepository.findById(gID).get())

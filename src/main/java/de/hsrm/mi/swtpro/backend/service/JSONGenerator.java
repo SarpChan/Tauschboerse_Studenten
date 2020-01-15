@@ -73,13 +73,14 @@ public class JSONGenerator {
         entityManager.persist(r25);
 
         dBuilding.setRooms(new HashSet<>());
-        /*dBuilding.getRooms().add(r11);
+        dBuilding.getRooms().add(r11);
         dBuilding.getRooms().add(r12);
         dBuilding.getRooms().add(r13);
         dBuilding.getRooms().add(r14);
         dBuilding.getRooms().add(r17);
+        cBuilding.setRooms(new HashSet<>());
         cBuilding.getRooms().add(r23);
-        cBuilding.getRooms().add(r25);*/
+        cBuilding.getRooms().add(r25);
 
         Term ws1920 = Term.builder().startDate(Date.valueOf("2019-10-01")).endDate(Date.valueOf("2020-03-31")).period(1).build();
         entityManager.persist(ws1920);
@@ -513,13 +514,13 @@ public class JSONGenerator {
         entityManager.persist(mathe1PgroupB);
 
         Group mathe2Vgroup = Group.builder().lecturer(lec_reichenauer).slots(100).room(r11).term(ss2019).dayOfWeek((DayOfWeek.WEDNESDAY)).groupChar('A')
-                .courseComponent(mathe1V).startTime(LocalTime.of(10,00)).endTime(LocalTime.of(11,30)).build();
+                .courseComponent(mathe2V).startTime(LocalTime.of(10,00)).endTime(LocalTime.of(11,30)).build();
         entityManager.persist(mathe2Vgroup);
         Group mathe2PgroupA = Group.builder().lecturer(lec_reichenauer).slots(20).room(r11).term(ss2019).dayOfWeek((DayOfWeek.WEDNESDAY)).groupChar('A')
-                .courseComponent(mathe1P).startTime(LocalTime.of(10,00)).endTime(LocalTime.of(11,30)).build();
+                .courseComponent(mathe2P).startTime(LocalTime.of(10,00)).endTime(LocalTime.of(11,30)).build();
         entityManager.persist(mathe2PgroupA);
         Group mathe2PgroupB = Group.builder().lecturer(lec_reichenauer).slots(20).room(r11).term(ss2019).dayOfWeek((DayOfWeek.WEDNESDAY)).groupChar('B')
-                .courseComponent(mathe1P).startTime(LocalTime.of(11,45)).endTime(LocalTime.of(11,30)).build();
+                .courseComponent(mathe2P).startTime(LocalTime.of(11,45)).endTime(LocalTime.of(11,30)).build();
         entityManager.persist(mathe2PgroupB);
 
         Group mathe3Vgroup = Group.builder().lecturer(lec_schwaneke).slots(100).room(r14).term(ws1920).dayOfWeek((DayOfWeek.THURSDAY)).groupChar('A')
@@ -670,17 +671,17 @@ public class JSONGenerator {
         r17.getGroups().add(mathe3PgroupB);
 
 
-        SwapOffer esperMathe3P_B_to_A = SwapOffer.builder().student(stu_esper).date(Timestamp.from(Instant.now())).fromGroup(mathe3PgroupB).toGroup(mathe3PgroupA).build();
+        SwapOffer esperMathe3P_B_to_A = SwapOffer.builder().student(stu_esper).timestamp(Timestamp.from(Instant.now())).fromGroup(mathe3PgroupB).toGroup(mathe3PgroupA).build();
         entityManager.persist(esperMathe3P_B_to_A);
-        SwapOffer esperProg3P_A_to_B = SwapOffer.builder().student(stu_esper).date(Timestamp.from(Instant.now())).fromGroup(prog3PgroupA).toGroup(prog3PgroupB).build();
+        SwapOffer esperProg3P_A_to_B = SwapOffer.builder().student(stu_esper).timestamp(Timestamp.from(Instant.now())).fromGroup(prog3PgroupA).toGroup(prog3PgroupB).build();
         entityManager.persist(esperProg3P_A_to_B);
 
-        SwapOffer thielMathe3P_B_to_A = SwapOffer.builder().student(stu_thiel).date(Timestamp.from(Instant.now())).fromGroup(mathe3PgroupB).toGroup(mathe3PgroupA).build();
+        SwapOffer thielMathe3P_B_to_A = SwapOffer.builder().student(stu_thiel).timestamp(Timestamp.from(Instant.now())).fromGroup(mathe3PgroupB).toGroup(mathe3PgroupA).build();
         entityManager.persist(thielMathe3P_B_to_A);
 
-        SwapOffer ahlersMathe3P_A_to_B = SwapOffer.builder().student(stu_ahlers).date(Timestamp.from(Instant.now())).fromGroup(mathe3PgroupA).toGroup(mathe3PgroupB).build();
+        SwapOffer ahlersMathe3P_A_to_B = SwapOffer.builder().student(stu_ahlers).timestamp(Timestamp.from(Instant.now())).fromGroup(mathe3PgroupA).toGroup(mathe3PgroupB).build();
         entityManager.persist(ahlersMathe3P_A_to_B);
-        SwapOffer ahlersProg3P_B_to_A = SwapOffer.builder().student(stu_ahlers).date(Timestamp.from(Instant.now())).fromGroup(prog3PgroupB).toGroup(prog3PgroupA).build();
+        SwapOffer ahlersProg3P_B_to_A = SwapOffer.builder().student(stu_ahlers).timestamp(Timestamp.from(Instant.now())).fromGroup(prog3PgroupB).toGroup(prog3PgroupA).build();
         entityManager.persist(ahlersProg3P_B_to_A);
 
 

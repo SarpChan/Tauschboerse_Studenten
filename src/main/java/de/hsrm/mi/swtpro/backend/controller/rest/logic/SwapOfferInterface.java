@@ -54,7 +54,7 @@ public class SwapOfferInterface {
     public boolean checkAndInsertSwapOffer(@RequestBody SwapOfferRequest swapOfferRequest) {
         AtomicBoolean swapOfferExists = new AtomicBoolean(false);
         for (long swapOfferToGroupID : swapOfferRequest.getToGroupsID()) {
-            SwapOffer offer = SwapOffer.builder().date(Timestamp.from(Instant.now()))
+            SwapOffer offer = SwapOffer.builder().timestamp(Timestamp.from(Instant.now()))
                     .fromGroup(groupRepository.findById(swapOfferRequest.getFromGroupsID()).get())
                     .student(studentRepository.findByEnrollmentNumber(swapOfferRequest.getUserID()).get())
                     .toGroup(groupRepository.findById(swapOfferToGroupID).get())
