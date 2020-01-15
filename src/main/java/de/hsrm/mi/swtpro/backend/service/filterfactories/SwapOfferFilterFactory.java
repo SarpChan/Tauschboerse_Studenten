@@ -59,7 +59,7 @@ public class SwapOfferFilterFactory extends FilterFactory<SwapOffer> {
     private List<SwapOffer> filterForToGroup(List<SwapOffer> swapOffers, Filter forToGroupFilter) {
         return swapOffers.stream().filter(swapOffer -> {
             if (forToGroupFilter.getComparator().getComparatorType() == ComparatorType.EQUALS) {
-                return swapOffer.getToGroup().getId() == (long) forToGroupFilter.getComparator().getComparatorValue();
+                return swapOffer.getToGroup().getId() == Long.parseLong(forToGroupFilter.getComparator().getComparatorValue().toString());
             }
             return false;
         }).collect(Collectors.toList());
@@ -75,7 +75,7 @@ public class SwapOfferFilterFactory extends FilterFactory<SwapOffer> {
     private List<SwapOffer> filterForFromGroup(List<SwapOffer> swapOffers, Filter forFromGroupFilter) {
         return swapOffers.stream().filter(swapOffer -> {
             if (forFromGroupFilter.getComparator().getComparatorType() == ComparatorType.EQUALS) {
-                return swapOffer.getFromGroup().getId() == (long) forFromGroupFilter.getComparator().getComparatorValue();
+                return swapOffer.getFromGroup().getId() == Long.parseLong(forFromGroupFilter.getComparator().getComparatorValue().toString());
             }
             return false;
         }).collect(Collectors.toList());
@@ -91,7 +91,7 @@ public class SwapOfferFilterFactory extends FilterFactory<SwapOffer> {
     private List<SwapOffer> filterForOwner(List<SwapOffer> swapOffers, Filter forOwnerFilter) {
         return swapOffers.stream().filter(swapOffer -> {
             if (forOwnerFilter.getComparator().getComparatorType() == ComparatorType.EQUALS) {
-                return swapOffer.getStudent().getId() == (long) forOwnerFilter.getComparator().getComparatorValue();
+                return swapOffer.getStudent().getId() == Long.parseLong(forOwnerFilter.getComparator().getComparatorValue().toString());
             }
             return false;
         }).collect(Collectors.toList());
@@ -107,7 +107,7 @@ public class SwapOfferFilterFactory extends FilterFactory<SwapOffer> {
     private List<SwapOffer> filterForCourse(List<SwapOffer> swapOffers, Filter forCourseFilter) {
         return swapOffers.stream().filter(swapOffer -> {
             if (forCourseFilter.getComparator().getComparatorType() == ComparatorType.EQUALS) {
-                return swapOffer.getFromGroup().getCourseComponent().getCourse().getId() == (long) forCourseFilter.getComparator().getComparatorValue();
+                return swapOffer.getFromGroup().getCourseComponent().getCourse().getId() == Long.parseLong(forCourseFilter.getComparator().getComparatorValue().toString());
             }
             return false;
         }).collect(Collectors.toList());
