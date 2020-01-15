@@ -1,5 +1,9 @@
 package de.hsrm.mi.swtpro.backend.controller.rest.lists;
 
+import de.hsrm.mi.swtpro.backend.controller.rest.CampusCrudController;
+import de.hsrm.mi.swtpro.backend.controller.rest.CourseComponentCrudController;
+import de.hsrm.mi.swtpro.backend.controller.rest.GroupCrudController;
+import de.hsrm.mi.swtpro.backend.controller.rest.LecturerCrudController;
 import de.hsrm.mi.swtpro.backend.model.Course;
 import de.hsrm.mi.swtpro.backend.model.CourseComponent;
 import de.hsrm.mi.swtpro.backend.model.ExamRegulation;
@@ -11,6 +15,7 @@ import de.hsrm.mi.swtpro.backend.model.filter.ComparatorType;
 import de.hsrm.mi.swtpro.backend.model.filter.Filter;
 import de.hsrm.mi.swtpro.backend.service.filterfactories.ModuleFilterFactory;
 import de.hsrm.mi.swtpro.backend.service.repository.CourseRepository;
+import de.hsrm.mi.swtpro.backend.service.repository.GroupRepository;
 import de.hsrm.mi.swtpro.backend.service.repository.ModuleRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
@@ -21,6 +26,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/rest/lists")
@@ -28,6 +34,13 @@ public class TimetableController {
 
     @Autowired
     ModuleRepository moduleRepository;
+    @Autowired
+    GroupRepository groupRepository;
+    GroupCrudController groupCrudController;
+    LecturerCrudController lecturerCrudController;
+    CourseComponentCrudController courseComponentCrudController;
+    CourseCrudController courseCrudController;
+
 
     @PostMapping(path = "/timetable", consumes = "application/json", produces = MediaType.APPLICATION_JSON_VALUE)
     public List<TimetableModule> getModules(@RequestBody ExamRegulation examRegulation) {
@@ -71,10 +84,16 @@ public class TimetableController {
 
 
     @PostMapping(path = "/timetableUpdate", consumes = "application/json", produces = MediaType.APPLICATION_JSON_VALUE)
-    public List<TimetableModule> updateTimetable(@RequestBody TimetableModule timetableModuleList) {
-       // for(TimetableModule module : timetableModuleList){
+    public List<TimetableModule> updateTimetable(@RequestBody List<TimetableModule> timetableModuleList) {
+        for(TimetableModule module : timetableModuleList){
+            Optional<Group> group = groupRepository.findById(module.getGroupID());
+            groupCrudController.updateGroup(group.get());
+            lecturerCrudController.updateLecturer(group.get().getLecturer());
+            courseComponentCrudController.updateCourseComponent(group.get().getCourseComponent());
+            courseCrudController.updateCo
 
-      //  }
+
+        }
 
         return null;
         /*List<Module> allModules = moduleRepository.findAll();
