@@ -11,6 +11,7 @@ import de.hsrm.mi.swtpro.backend.model.filter.ComparatorType;
 import de.hsrm.mi.swtpro.backend.model.filter.Filter;
 import de.hsrm.mi.swtpro.backend.service.filterfactories.ModuleFilterFactory;
 import de.hsrm.mi.swtpro.backend.service.repository.CourseRepository;
+import de.hsrm.mi.swtpro.backend.service.repository.GroupRepository;
 import de.hsrm.mi.swtpro.backend.service.repository.ModuleRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
@@ -28,6 +29,8 @@ public class TimetableController {
 
     @Autowired
     ModuleRepository moduleRepository;
+    @Autowired 
+    GroupRepository groupRepository;
 
     @PostMapping(path = "/timetable", consumes = "application/json", produces = MediaType.APPLICATION_JSON_VALUE)
     public List<TimetableModule> getModules(@RequestBody ExamRegulation examRegulation) {
@@ -71,10 +74,12 @@ public class TimetableController {
 
 
     @PostMapping(path = "/timetableUpdate", consumes = "application/json", produces = MediaType.APPLICATION_JSON_VALUE)
-    public List<TimetableModule> updateTimetable(@RequestBody TimetableModule timetableModuleList) {
-       // for(TimetableModule module : timetableModuleList){
-
-      //  }
+    public List<TimetableModule> updateTimetable(@RequestBody List<TimetableModule> timetableModuleList) {
+     for(TimetableModule module : timetableModuleList){
+        
+        groupRepository.findById( module.getGroupID());
+       
+        }
 
         return null;
         /*List<Module> allModules = moduleRepository.findAll();
