@@ -67,7 +67,6 @@ public class StudentRepositoryTest {
                 .building(building)
                 .build();
 
-        studentAttendsCourse = StudentAttendsCourse.builder().build();
         StudyProgram studyProg = StudyProgram.builder()
                 .title("test")
                 .degree("E")
@@ -94,7 +93,6 @@ public class StudentRepositoryTest {
                 .prioritizeGroup(studentPrioritizesGroup)
                 .passedExam(passedExam)
                 .examRegulation(examRegulation)
-                .attendCourse(studentAttendsCourse)
                 .user(user)
                 .enrollmentNumber(1742).build();
 
