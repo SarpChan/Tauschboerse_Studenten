@@ -18,6 +18,7 @@ import javax.persistence.PersistenceContextType;
 import java.io.File;
 import java.io.IOException;
 import java.sql.Date;
+import java.sql.Timestamp;
 import java.time.DayOfWeek;
 import java.time.LocalTime;
 import java.util.HashSet;
@@ -48,17 +49,16 @@ public class JSONGenerator {
         Campus ude = Campus.builder().name("Unter den Eichen").address("Unter den Eichen 6").university(uni).build();
         entityManager.persist(ude);
 
-        uni.setCampuses(new HashSet<>());
-        uni.getCampuses().add(ude);
+
+        // Building
 
         Building dBuilding = Building.builder().name("D").campus(ude).build();
         entityManager.persist(dBuilding);
         Building cBuilding = Building.builder().name("C").campus(ude).build();
         entityManager.persist(cBuilding);
 
-        ude.setBuildings(new HashSet<>());
-        ude.getBuildings().add(dBuilding);
-        ude.getBuildings().add(cBuilding);
+
+        // Rooms
 
         Room r11 = Room.builder().number(11).seats(100).building(dBuilding).build();
         entityManager.persist(r11);
@@ -75,54 +75,38 @@ public class JSONGenerator {
         Room r25 = Room.builder().number(25).seats(40).building(cBuilding).build();
         entityManager.persist(r25);
 
-        dBuilding.setRooms(new HashSet<>());
-        dBuilding.getRooms().add(r11);
-        dBuilding.getRooms().add(r12);
-        dBuilding.getRooms().add(r13);
-        dBuilding.getRooms().add(r14);
-        dBuilding.getRooms().add(r17);
 
-        cBuilding.setRooms(new HashSet<>());
-        cBuilding.getRooms().add(r23);
-        cBuilding.getRooms().add(r25);
+        // Terms
 
         Term ws1920 = Term.builder().startDate(Date.valueOf("2019-10-01")).endDate(Date.valueOf("2020-03-31")).period(1).build();
         entityManager.persist(ws1920);
         Term ss2019 = Term.builder().startDate(Date.valueOf("2019-04-01")).endDate(Date.valueOf("2019-08-31")).period(2).build();
         entityManager.persist(ss2019);
 
+
+        // Fields of Study
+
         FieldOfStudy informatik = FieldOfStudy.builder().title("Informatik").university(uni).build();
         entityManager.persist(informatik);
 
-        uni.setFieldsOfStudy(new HashSet<>());
-        uni.getFieldsOfStudy().add(informatik);
+
+        // Study Program
 
         StudyProgram medieninformatik = StudyProgram.builder().title("Medieninformatik").degree("Bachelor").fieldOfStudy(informatik).build();
         entityManager.persist(medieninformatik);
         StudyProgram angewandteinformatik = StudyProgram.builder().title("Angewandte Informatik").degree("Bachelor").fieldOfStudy(informatik).build();
         entityManager.persist(angewandteinformatik);
 
-        informatik.setStudyPrograms(new HashSet<>());
-        informatik.getStudyPrograms().add(medieninformatik);
-        informatik.getStudyPrograms().add(angewandteinformatik);
 
-        medieninformatik.setFieldsOfStudy(new HashSet<>());
-        medieninformatik.getFieldsOfStudy().add(informatik);
-
-        angewandteinformatik.setFieldsOfStudy(new HashSet<>());
-        angewandteinformatik.getFieldsOfStudy().add(informatik);
+        // PO
 
         ExamRegulation po2017 = ExamRegulation.builder().date(Date.valueOf("2017-10-01")).studyProgram(medieninformatik).build();
         entityManager.persist(po2017);
         ExamRegulation po2016 = ExamRegulation.builder().date(Date.valueOf("2016-10-01")).studyProgram(angewandteinformatik).build();
         entityManager.persist(po2016);
 
-        medieninformatik.setExamRegulations(new HashSet<>());
-        medieninformatik.getExamRegulations().add(po2017);
 
-        angewandteinformatik.setExamRegulations(new HashSet<>());
-        angewandteinformatik.getExamRegulations().add(po2016);
-
+        // User
 
         User wweitz = User.builder().firstName("Wolfgang").lastName("Weitz").loginName("wweitz").password("wweitz").build();
         entityManager.persist(wweitz);
@@ -146,6 +130,9 @@ public class JSONGenerator {
         User ydeuster = User.builder().firstName("Yen").lastName("Deuster").loginName("ydeuster").password("ydeuster").build();
         entityManager.persist(ydeuster);
 
+
+        // Roles
+
         Student stu_esper = Student.builder().user(vesper).enrollmentNumber(1076576)
                 .enrolmentTerm(ss2019).mail("esper@mail.com").examRegulation(po2017).build();
         entityManager.persist(stu_esper);
@@ -162,14 +149,6 @@ public class JSONGenerator {
                 .enrolmentTerm(ss2019).mail("thiel@mail.com").examRegulation(po2017).build();
         entityManager.persist(stu_thiel);
 
-        po2016.setStudents(new HashSet<>());
-        po2017.setStudents(new HashSet<>());
-        po2017.getStudents().add(stu_ahlers);
-        po2017.getStudents().add(stu_esper);
-        po2017.getStudents().add(stu_wirt);
-        po2017.getStudents().add(stu_thiel);
-        po2017.getStudents().add(stu_deuster);
-
         Lecturer lec_weitz = Lecturer.builder().priviledge(1).user(wweitz).build();
         entityManager.persist(lec_weitz);
         Lecturer lec_berdux = Lecturer.builder().priviledge(1).user(jberdux).build();
@@ -183,17 +162,15 @@ public class JSONGenerator {
         entityManager.persist(adm_weitz);
 
 
+        // Curriculum
+
         Curriculum curriculumMi = Curriculum.builder().examRegulation(po2017).termPeriod(1).build();
         entityManager.persist(curriculumMi);
         Curriculum curriculumAi = Curriculum.builder().examRegulation(po2016).termPeriod(1).build();
         entityManager.persist(curriculumAi);
 
-        po2017.setCurriculums(new HashSet<>());
-        po2017.getCurriculums().add(curriculumMi);
 
-        po2016.setCurriculums(new HashSet<>());
-        po2016.getCurriculums().add(curriculumAi);
-
+        // Modules
 
         Module mProgrammieren1 = Module.builder().title("Programmieren 1").creditPoints(5).period(1).build();
         entityManager.persist(mProgrammieren1);
@@ -208,6 +185,8 @@ public class JSONGenerator {
         Module mMathe3 = Module.builder().title("Mathe 3").creditPoints(5).period(3).build();
         entityManager.persist(mMathe3);
 
+
+        // Module in Curriculum
 
         ModuleInCurriculum prog1inAi = ModuleInCurriculum.builder().curriculum(curriculumAi).module(mProgrammieren1).termPeriod(1).build();
         entityManager.persist(prog1inAi);
@@ -231,42 +210,7 @@ public class JSONGenerator {
         entityManager.persist(mathe2inMi);
 
 
-        curriculumAi.setModulesInCurriculum(new HashSet<>());
-        curriculumAi.getModulesInCurriculum().add(prog1inAi);
-        curriculumAi.getModulesInCurriculum().add(prog2inAi);
-        curriculumAi.getModulesInCurriculum().add(mathe1inAi);
-        curriculumAi.getModulesInCurriculum().add(mathe2inAi);
-        curriculumAi.getModulesInCurriculum().add(mathe3inAi);
-
-        curriculumMi.setModulesInCurriculum(new HashSet<>());
-        curriculumMi.getModulesInCurriculum().add(prog1inMi);
-        curriculumMi.getModulesInCurriculum().add(prog2inMi);
-        curriculumMi.getModulesInCurriculum().add(prog3inMi);
-        curriculumMi.getModulesInCurriculum().add(mathe1inMi);
-        curriculumMi.getModulesInCurriculum().add(mathe2inMi);
-
-        mProgrammieren1.setModulesInCurriculum(new HashSet<>());
-        mProgrammieren1.getModulesInCurriculum().add(prog1inAi);
-        mProgrammieren1.getModulesInCurriculum().add(prog1inMi);
-
-        mProgrammieren2.setModulesInCurriculum(new HashSet<>());
-        mProgrammieren2.getModulesInCurriculum().add(prog2inAi);
-        mProgrammieren2.getModulesInCurriculum().add(prog2inMi);
-
-        mProgrammieren3.setModulesInCurriculum(new HashSet<>());
-        mProgrammieren3.getModulesInCurriculum().add(prog3inMi);
-
-        mMathe1.setModulesInCurriculum(new HashSet<>());
-        mMathe1.getModulesInCurriculum().add(mathe1inAi);
-        mMathe1.getModulesInCurriculum().add(mathe1inMi);
-
-        mMathe2.setModulesInCurriculum(new HashSet<>());
-        mMathe2.getModulesInCurriculum().add(mathe2inAi);
-        mMathe2.getModulesInCurriculum().add(mathe2inMi);
-
-        mMathe3.setModulesInCurriculum(new HashSet<>());
-        mMathe3.getModulesInCurriculum().add(mathe3inAi);
-
+        // Courses
 
         Course cProgrammieren1 = Course.builder().title("Programmieren 1").owner(jberdux).build();
         entityManager.persist(cProgrammieren1);
@@ -281,70 +225,8 @@ public class JSONGenerator {
         Course cMathe3 = Course.builder().title("Mathe 3").owner(uschwaneke).build();
         entityManager.persist(cMathe3);
 
-        ws1920.setCourses(new HashSet<>());
-        ws1920.getCourses().add(cProgrammieren1);
-        ws1920.getCourses().add(cProgrammieren3);
-        ws1920.getCourses().add(cMathe1);
-        ws1920.getCourses().add(cMathe3);
 
-        ss2019.setCourses(new HashSet<>());
-        ss2019.getCourses().add(cProgrammieren2);
-        ss2019.getCourses().add(cMathe2);
-
-        cProgrammieren1.setTerms(new HashSet<>());
-        cProgrammieren1.getTerms().add(ws1920);
-
-        cProgrammieren2.setTerms(new HashSet<>());
-        cProgrammieren2.getTerms().add(ss2019);
-
-        cProgrammieren3.setTerms(new HashSet<>());
-        cProgrammieren3.getTerms().add(ws1920);
-
-        cMathe1.setTerms(new HashSet<>());
-        cMathe1.getTerms().add(ws1920);
-
-        cMathe2.setTerms(new HashSet<>());
-        cMathe2.getTerms().add(ss2019);
-
-        cMathe3.setTerms(new HashSet<>());
-        cMathe3.getTerms().add(ws1920);
-
-        mProgrammieren1.setCourses(new HashSet<>());
-        mProgrammieren1.getCourses().add(cProgrammieren1);
-
-        mProgrammieren2.setCourses(new HashSet<>());
-        mProgrammieren2.getCourses().add(cProgrammieren2);
-
-        mProgrammieren3.setCourses(new HashSet<>());
-        mProgrammieren3.getCourses().add(cProgrammieren3);
-
-        mMathe1.setCourses(new HashSet<>());
-        mMathe1.getCourses().add(cMathe1);
-
-        mMathe2.setCourses(new HashSet<>());
-        mMathe2.getCourses().add(cMathe2);
-
-        mMathe3.setCourses(new HashSet<>());
-        mMathe3.getCourses().add(cMathe3);
-
-        cProgrammieren1.setModules(new HashSet<>());
-        cProgrammieren1.getModules().add(mProgrammieren1);
-
-        cProgrammieren2.setModules(new HashSet<>());
-        cProgrammieren2.getModules().add(mProgrammieren2);
-
-        cProgrammieren3.setModules(new HashSet<>());
-        cProgrammieren3.getModules().add(mProgrammieren3);
-
-        cMathe1.setModules(new HashSet<>());
-        cMathe1.getModules().add(mMathe1);
-
-        cMathe2.setModules(new HashSet<>());
-        cMathe2.getModules().add(mMathe2);
-
-        cMathe3.setModules(new HashSet<>());
-        cMathe3.getModules().add(mMathe3);
-
+        // Course Component
 
         CourseComponent prog1V = CourseComponent.builder().course(cProgrammieren1).creditPoints(3).type(CourseType.LECTURE).exam("Klausur").build();
         entityManager.persist(prog1V);
@@ -377,31 +259,7 @@ public class JSONGenerator {
         entityManager.persist(mathe3P);
 
 
-        cProgrammieren1.setCourseComponents(new HashSet<>());
-        cProgrammieren1.getCourseComponents().add(prog1V);
-        cProgrammieren1.getCourseComponents().add(prog1P);
-
-        cProgrammieren2.setCourseComponents(new HashSet<>());
-        cProgrammieren2.getCourseComponents().add(prog2V);
-        cProgrammieren2.getCourseComponents().add(prog2P);
-
-        cProgrammieren3.setCourseComponents(new HashSet<>());
-        cProgrammieren3.getCourseComponents().add(prog3V);
-        cProgrammieren3.getCourseComponents().add(prog3P);
-
-
-        cMathe1.setCourseComponents(new HashSet<>());
-        cMathe1.getCourseComponents().add(mathe1V);
-        cMathe1.getCourseComponents().add(mathe1P);
-
-        cMathe2.setCourseComponents(new HashSet<>());
-        cMathe2.getCourseComponents().add(mathe2V);
-        cMathe2.getCourseComponents().add(mathe2P);
-
-        cMathe3.setCourseComponents(new HashSet<>());
-        cMathe3.getCourseComponents().add(mathe3V);
-        cMathe3.getCourseComponents().add(mathe3P);
-
+        // Student Attends Course
 
         StudentAttendsCourse esperProg2 = StudentAttendsCourse.builder().student(stu_esper).course(cProgrammieren2).term(ss2019).build();
         entityManager.persist(esperProg2);
@@ -424,52 +282,8 @@ public class JSONGenerator {
         StudentAttendsCourse thielProg3 = StudentAttendsCourse.builder().student(stu_thiel).course(cProgrammieren3).term(ws1920).build();
         entityManager.persist(thielProg3);
 
-        stu_ahlers.setAttendCourses(new HashSet<>());
-        stu_ahlers.getAttendCourses().add(ahlersMathe3);
-        stu_ahlers.getAttendCourses().add(ahlersProg3);
 
-        stu_esper.setAttendCourses(new HashSet<>());
-        stu_esper.getAttendCourses().add(esperMathe2);
-        stu_esper.getAttendCourses().add(esperProg2);
-        stu_esper.getAttendCourses().add(esperMathe3);
-        stu_esper.getAttendCourses().add(esperProg3);
-
-        stu_thiel.setAttendCourses(new HashSet<>());
-        stu_thiel.getAttendCourses().add(thielMathe1);
-        stu_thiel.getAttendCourses().add(thielMathe3);
-        stu_thiel.getAttendCourses().add(thielProg3);
-        
-        cProgrammieren2.setStudentAttendsCourses(new HashSet<>());
-        cProgrammieren2.getStudentAttendsCourses().add(esperProg2);
-
-        cProgrammieren3.setStudentAttendsCourses(new HashSet<>());
-        cProgrammieren3.getStudentAttendsCourses().add(esperProg3);
-        cProgrammieren3.getStudentAttendsCourses().add(ahlersProg3);
-
-        cMathe1.setStudentAttendsCourses(new HashSet<>());
-        cMathe1.getStudentAttendsCourses().add(thielMathe1);
-
-        cMathe2.setStudentAttendsCourses(new HashSet<>());
-        cMathe2.getStudentAttendsCourses().add(esperMathe2);
-
-        cMathe3.setStudentAttendsCourses(new HashSet<>());
-        cMathe3.getStudentAttendsCourses().add(ahlersMathe3);
-        cMathe3.getStudentAttendsCourses().add(esperMathe3);
-        cMathe3.getStudentAttendsCourses().add(thielMathe3);
-
-        ws1920.setStudentAttendsCourses(new HashSet<>());
-        ws1920.getStudentAttendsCourses().add(esperMathe3);
-        ws1920.getStudentAttendsCourses().add(esperProg3);
-        ws1920.getStudentAttendsCourses().add(ahlersMathe3);
-        ws1920.getStudentAttendsCourses().add(ahlersProg3);
-        ws1920.getStudentAttendsCourses().add(thielMathe1);
-        ws1920.getStudentAttendsCourses().add(thielMathe3);
-        ws1920.getStudentAttendsCourses().add(thielProg3);
-
-        ss2019.setStudentAttendsCourses(new HashSet<>());
-        ss2019.getStudentAttendsCourses().add(esperMathe2);
-        ss2019.getStudentAttendsCourses().add(esperProg2);
-
+        // Groups
 
         Group prog1Vgroup = Group.builder().lecturer(lec_berdux).slots(100).room(r11).term(ws1920).dayOfWeek((DayOfWeek.MONDAY)).groupChar('A')
                 .courseComponent(prog3V).startTime(LocalTime.of(10,00)).endTime(LocalTime.of(11,30)).build();
@@ -538,6 +352,309 @@ public class JSONGenerator {
         entityManager.persist(mathe3PgroupB);
 
 
+        // Swap Offer
+
+        SwapOffer esperMathe3P_B_to_A = SwapOffer.builder().student(stu_esper).timestamp(new Timestamp(System.currentTimeMillis())).fromGroup(mathe3PgroupB).toGroup(mathe3PgroupA).build();
+        entityManager.persist(esperMathe3P_B_to_A);
+        SwapOffer esperProg3P_A_to_B = SwapOffer.builder().student(stu_esper).timestamp(new Timestamp(System.currentTimeMillis())).fromGroup(prog3PgroupA).toGroup(prog3PgroupB).build();
+        entityManager.persist(esperProg3P_A_to_B);
+
+        SwapOffer thielMathe3P_B_to_A = SwapOffer.builder().student(stu_thiel).timestamp(new Timestamp(System.currentTimeMillis())).fromGroup(mathe3PgroupB).toGroup(mathe3PgroupA).build();
+        entityManager.persist(thielMathe3P_B_to_A);
+        SwapOffer thielProg3P_B_to_A = SwapOffer.builder().student(stu_thiel).timestamp(new Timestamp(System.currentTimeMillis())).fromGroup(prog3PgroupB).toGroup(prog3PgroupA).build();
+        entityManager.persist(thielProg3P_B_to_A);
+
+        SwapOffer ahlersMathe3P_A_to_B = SwapOffer.builder().student(stu_ahlers).timestamp(new Timestamp(System.currentTimeMillis())).fromGroup(mathe3PgroupA).toGroup(mathe3PgroupB).build();
+        entityManager.persist(ahlersMathe3P_A_to_B);
+        SwapOffer ahlersProg3P_B_to_A = SwapOffer.builder().student(stu_ahlers).timestamp(new Timestamp(System.currentTimeMillis())).fromGroup(prog3PgroupB).toGroup(prog3PgroupA).build();
+        entityManager.persist(ahlersProg3P_B_to_A);
+
+
+        // Student Passed Exam
+
+        StudentPassedExam ahlersPassMathe1V = StudentPassedExam.builder().student(stu_ahlers).courseComponent(mathe1V).grade(1.7f).build();
+        entityManager.persist(ahlersPassMathe1V);
+        StudentPassedExam ahlersPassMathe1P = StudentPassedExam.builder().student(stu_ahlers).courseComponent(mathe1P).build();
+        entityManager.persist(ahlersPassMathe1P);
+        StudentPassedExam ahlersPassProg1V = StudentPassedExam.builder().student(stu_ahlers).courseComponent(prog1V).grade(1.0f).build();
+        entityManager.persist(ahlersPassProg1V);
+        StudentPassedExam ahlersPassProg1P = StudentPassedExam.builder().student(stu_ahlers).courseComponent(prog1P).build();
+        entityManager.persist(ahlersPassProg1P);
+
+        StudentPassedExam thielPassMathe2V = StudentPassedExam.builder().student(stu_thiel).courseComponent(mathe2V).grade(1.3f).build();
+        entityManager.persist(thielPassMathe2V);
+        StudentPassedExam thielPassMathe2P = StudentPassedExam.builder().student(stu_thiel).courseComponent(mathe2P).build();
+        entityManager.persist(thielPassMathe2P);
+
+        StudentPassedExam esperPassMathe1V = StudentPassedExam.builder().student(stu_esper).courseComponent(mathe1V).grade(1.3f).build();
+        entityManager.persist(esperPassMathe1V);
+        StudentPassedExam esperPassMathe1P = StudentPassedExam.builder().student(stu_esper).courseComponent(mathe1P).build();
+        entityManager.persist(esperPassMathe1P);
+
+
+        // C O N N E C T I O N     T A B L E S
+
+
+        // Campus <-> University
+
+        uni.setCampuses(new HashSet<>());
+        uni.getCampuses().add(ude);
+
+
+        // Campus <-> Building
+
+        ude.setBuildings(new HashSet<>());
+        ude.getBuildings().add(dBuilding);
+        ude.getBuildings().add(cBuilding);
+
+
+        // Building <-> Rooms
+
+        dBuilding.setRooms(new HashSet<>());
+        dBuilding.getRooms().add(r11);
+        dBuilding.getRooms().add(r12);
+        dBuilding.getRooms().add(r13);
+        dBuilding.getRooms().add(r14);
+        dBuilding.getRooms().add(r17);
+
+        cBuilding.setRooms(new HashSet<>());
+        cBuilding.getRooms().add(r23);
+        cBuilding.getRooms().add(r25);
+
+
+        // University <-> Fields of Study
+
+        uni.setFieldsOfStudy(new HashSet<>());
+        uni.getFieldsOfStudy().add(informatik);
+
+
+        // Study Program <-> Field of Study
+
+        informatik.setStudyPrograms(new HashSet<>());
+        informatik.getStudyPrograms().add(medieninformatik);
+        informatik.getStudyPrograms().add(angewandteinformatik);
+
+        medieninformatik.setFieldsOfStudy(new HashSet<>());
+        medieninformatik.getFieldsOfStudy().add(informatik);
+
+        angewandteinformatik.setFieldsOfStudy(new HashSet<>());
+        angewandteinformatik.getFieldsOfStudy().add(informatik);
+
+
+        // PO <-> Study Program
+
+        medieninformatik.setExamRegulations(new HashSet<>());
+        medieninformatik.getExamRegulations().add(po2017);
+
+        angewandteinformatik.setExamRegulations(new HashSet<>());
+        angewandteinformatik.getExamRegulations().add(po2016);
+
+
+        // PO <-> Student
+
+        po2016.setStudents(new HashSet<>());
+        po2017.setStudents(new HashSet<>());
+        po2017.getStudents().add(stu_ahlers);
+        po2017.getStudents().add(stu_esper);
+        po2017.getStudents().add(stu_wirt);
+        po2017.getStudents().add(stu_thiel);
+        po2017.getStudents().add(stu_deuster);
+
+
+        // Connect PO <-> Curriculum
+
+        po2017.setCurriculums(new HashSet<>());
+        po2017.getCurriculums().add(curriculumMi);
+
+        po2016.setCurriculums(new HashSet<>());
+        po2016.getCurriculums().add(curriculumAi);
+
+
+        // Modules <-> Curriculum
+
+        curriculumAi.setModulesInCurriculum(new HashSet<>());
+        curriculumAi.getModulesInCurriculum().add(prog1inAi);
+        curriculumAi.getModulesInCurriculum().add(prog2inAi);
+        curriculumAi.getModulesInCurriculum().add(mathe1inAi);
+        curriculumAi.getModulesInCurriculum().add(mathe2inAi);
+        curriculumAi.getModulesInCurriculum().add(mathe3inAi);
+
+        curriculumMi.setModulesInCurriculum(new HashSet<>());
+        curriculumMi.getModulesInCurriculum().add(prog1inMi);
+        curriculumMi.getModulesInCurriculum().add(prog2inMi);
+        curriculumMi.getModulesInCurriculum().add(prog3inMi);
+        curriculumMi.getModulesInCurriculum().add(mathe1inMi);
+        curriculumMi.getModulesInCurriculum().add(mathe2inMi);
+
+        mProgrammieren1.setModulesInCurriculum(new HashSet<>());
+        mProgrammieren1.getModulesInCurriculum().add(prog1inAi);
+        mProgrammieren1.getModulesInCurriculum().add(prog1inMi);
+
+        mProgrammieren2.setModulesInCurriculum(new HashSet<>());
+        mProgrammieren2.getModulesInCurriculum().add(prog2inAi);
+        mProgrammieren2.getModulesInCurriculum().add(prog2inMi);
+
+        mProgrammieren3.setModulesInCurriculum(new HashSet<>());
+        mProgrammieren3.getModulesInCurriculum().add(prog3inMi);
+
+        mMathe1.setModulesInCurriculum(new HashSet<>());
+        mMathe1.getModulesInCurriculum().add(mathe1inAi);
+        mMathe1.getModulesInCurriculum().add(mathe1inMi);
+
+        mMathe2.setModulesInCurriculum(new HashSet<>());
+        mMathe2.getModulesInCurriculum().add(mathe2inAi);
+        mMathe2.getModulesInCurriculum().add(mathe2inMi);
+
+        mMathe3.setModulesInCurriculum(new HashSet<>());
+        mMathe3.getModulesInCurriculum().add(mathe3inAi);
+
+
+        // Connect Modules <-> Courses
+
+        ws1920.setCourses(new HashSet<>());
+        ws1920.getCourses().add(cProgrammieren1);
+        ws1920.getCourses().add(cProgrammieren3);
+        ws1920.getCourses().add(cMathe1);
+        ws1920.getCourses().add(cMathe3);
+
+        ss2019.setCourses(new HashSet<>());
+        ss2019.getCourses().add(cProgrammieren2);
+        ss2019.getCourses().add(cMathe2);
+
+        cProgrammieren1.setTerms(new HashSet<>());
+        cProgrammieren1.getTerms().add(ws1920);
+
+        cProgrammieren2.setTerms(new HashSet<>());
+        cProgrammieren2.getTerms().add(ss2019);
+
+        cProgrammieren3.setTerms(new HashSet<>());
+        cProgrammieren3.getTerms().add(ws1920);
+
+        cMathe1.setTerms(new HashSet<>());
+        cMathe1.getTerms().add(ws1920);
+
+        cMathe2.setTerms(new HashSet<>());
+        cMathe2.getTerms().add(ss2019);
+
+        cMathe3.setTerms(new HashSet<>());
+        cMathe3.getTerms().add(ws1920);
+
+        mProgrammieren1.setCourses(new HashSet<>());
+        mProgrammieren1.getCourses().add(cProgrammieren1);
+
+        mProgrammieren2.setCourses(new HashSet<>());
+        mProgrammieren2.getCourses().add(cProgrammieren2);
+
+        mProgrammieren3.setCourses(new HashSet<>());
+        mProgrammieren3.getCourses().add(cProgrammieren3);
+
+        mMathe1.setCourses(new HashSet<>());
+        mMathe1.getCourses().add(cMathe1);
+
+        mMathe2.setCourses(new HashSet<>());
+        mMathe2.getCourses().add(cMathe2);
+
+        mMathe3.setCourses(new HashSet<>());
+        mMathe3.getCourses().add(cMathe3);
+
+        cProgrammieren1.setModules(new HashSet<>());
+        cProgrammieren1.getModules().add(mProgrammieren1);
+
+        cProgrammieren2.setModules(new HashSet<>());
+        cProgrammieren2.getModules().add(mProgrammieren2);
+
+        cProgrammieren3.setModules(new HashSet<>());
+        cProgrammieren3.getModules().add(mProgrammieren3);
+
+        cMathe1.setModules(new HashSet<>());
+        cMathe1.getModules().add(mMathe1);
+
+        cMathe2.setModules(new HashSet<>());
+        cMathe2.getModules().add(mMathe2);
+
+        cMathe3.setModules(new HashSet<>());
+        cMathe3.getModules().add(mMathe3);
+
+
+        // Connect Course <-> CourseComponent
+
+        cProgrammieren1.setCourseComponents(new HashSet<>());
+        cProgrammieren1.getCourseComponents().add(prog1V);
+        cProgrammieren1.getCourseComponents().add(prog1P);
+
+        cProgrammieren2.setCourseComponents(new HashSet<>());
+        cProgrammieren2.getCourseComponents().add(prog2V);
+        cProgrammieren2.getCourseComponents().add(prog2P);
+
+        cProgrammieren3.setCourseComponents(new HashSet<>());
+        cProgrammieren3.getCourseComponents().add(prog3V);
+        cProgrammieren3.getCourseComponents().add(prog3P);
+
+
+        cMathe1.setCourseComponents(new HashSet<>());
+        cMathe1.getCourseComponents().add(mathe1V);
+        cMathe1.getCourseComponents().add(mathe1P);
+
+        cMathe2.setCourseComponents(new HashSet<>());
+        cMathe2.getCourseComponents().add(mathe2V);
+        cMathe2.getCourseComponents().add(mathe2P);
+
+        cMathe3.setCourseComponents(new HashSet<>());
+        cMathe3.getCourseComponents().add(mathe3V);
+        cMathe3.getCourseComponents().add(mathe3P);
+
+
+        // Connect Student <-> Attends Course
+
+        stu_ahlers.setAttendCourses(new HashSet<>());
+        stu_ahlers.getAttendCourses().add(ahlersMathe3);
+        stu_ahlers.getAttendCourses().add(ahlersProg3);
+
+        stu_esper.setAttendCourses(new HashSet<>());
+        stu_esper.getAttendCourses().add(esperMathe2);
+        stu_esper.getAttendCourses().add(esperProg2);
+        stu_esper.getAttendCourses().add(esperMathe3);
+        stu_esper.getAttendCourses().add(esperProg3);
+
+        stu_thiel.setAttendCourses(new HashSet<>());
+        stu_thiel.getAttendCourses().add(thielMathe1);
+        stu_thiel.getAttendCourses().add(thielMathe3);
+        stu_thiel.getAttendCourses().add(thielProg3);
+
+        cProgrammieren2.setStudentAttendsCourses(new HashSet<>());
+        cProgrammieren2.getStudentAttendsCourses().add(esperProg2);
+
+        cProgrammieren3.setStudentAttendsCourses(new HashSet<>());
+        cProgrammieren3.getStudentAttendsCourses().add(esperProg3);
+        cProgrammieren3.getStudentAttendsCourses().add(ahlersProg3);
+
+        cMathe1.setStudentAttendsCourses(new HashSet<>());
+        cMathe1.getStudentAttendsCourses().add(thielMathe1);
+
+        cMathe2.setStudentAttendsCourses(new HashSet<>());
+        cMathe2.getStudentAttendsCourses().add(esperMathe2);
+
+        cMathe3.setStudentAttendsCourses(new HashSet<>());
+        cMathe3.getStudentAttendsCourses().add(ahlersMathe3);
+        cMathe3.getStudentAttendsCourses().add(esperMathe3);
+        cMathe3.getStudentAttendsCourses().add(thielMathe3);
+
+        ws1920.setStudentAttendsCourses(new HashSet<>());
+        ws1920.getStudentAttendsCourses().add(esperMathe3);
+        ws1920.getStudentAttendsCourses().add(esperProg3);
+        ws1920.getStudentAttendsCourses().add(ahlersMathe3);
+        ws1920.getStudentAttendsCourses().add(ahlersProg3);
+        ws1920.getStudentAttendsCourses().add(thielMathe1);
+        ws1920.getStudentAttendsCourses().add(thielMathe3);
+        ws1920.getStudentAttendsCourses().add(thielProg3);
+
+        ss2019.setStudentAttendsCourses(new HashSet<>());
+        ss2019.getStudentAttendsCourses().add(esperMathe2);
+        ss2019.getStudentAttendsCourses().add(esperProg2);
+
+
+        // Connect Groups <-> CourseComponent
+
         prog1V.setGroups(new HashSet<>());
         prog1V.getGroups().add(prog1Vgroup);
 
@@ -582,6 +699,8 @@ public class JSONGenerator {
         mathe3P.getGroups().add(mathe3PgroupA);
         mathe3P.getGroups().add(mathe3PgroupB);
 
+
+        // Connect Student <-> Groups
 
         stu_ahlers.setGroups(new HashSet<>());
         stu_ahlers.getGroups().add(mathe3Vgroup);
@@ -644,6 +763,8 @@ public class JSONGenerator {
         prog3PgroupB.getStudents().add(stu_thiel);
 
 
+        // Connect Groups <-> Room
+
         r11.setGroups(new HashSet<>());
         r11.getGroups().add(prog1Vgroup);
         r11.getGroups().add(prog2Vgroup);
@@ -675,41 +796,7 @@ public class JSONGenerator {
         r17.getGroups().add(mathe3PgroupB);
 
 
-        SwapOffer esperMathe3P_B_to_A = SwapOffer.builder().student(stu_esper).timestamp(17).fromGroup(mathe3PgroupB).toGroup(mathe3PgroupA).build();
-        entityManager.persist(esperMathe3P_B_to_A);
-        SwapOffer esperProg3P_A_to_B = SwapOffer.builder().student(stu_esper).timestamp(35).fromGroup(prog3PgroupA).toGroup(prog3PgroupB).build();
-        entityManager.persist(esperProg3P_A_to_B);
-
-        SwapOffer thielMathe3P_B_to_A = SwapOffer.builder().student(stu_thiel).timestamp(66).fromGroup(mathe3PgroupB).toGroup(mathe3PgroupA).build();
-        entityManager.persist(thielMathe3P_B_to_A);
-        SwapOffer thielProg3P_B_to_A = SwapOffer.builder().student(stu_thiel).timestamp(99).fromGroup(prog3PgroupB).toGroup(prog3PgroupA).build();
-        entityManager.persist(thielProg3P_B_to_A);
-
-        SwapOffer ahlersMathe3P_A_to_B = SwapOffer.builder().student(stu_ahlers).timestamp(54).fromGroup(mathe3PgroupA).toGroup(mathe3PgroupB).build();
-        entityManager.persist(ahlersMathe3P_A_to_B);
-        SwapOffer ahlersProg3P_B_to_A = SwapOffer.builder().student(stu_ahlers).timestamp(1208).fromGroup(prog3PgroupB).toGroup(prog3PgroupA).build();
-        entityManager.persist(ahlersProg3P_B_to_A);
-
-
-        StudentPassedExam ahlersPassMathe1V = StudentPassedExam.builder().student(stu_ahlers).courseComponent(mathe1V).grade(1.7f).build();
-        entityManager.persist(ahlersPassMathe1V);
-        StudentPassedExam ahlersPassMathe1P = StudentPassedExam.builder().student(stu_ahlers).courseComponent(mathe1P).build();
-        entityManager.persist(ahlersPassMathe1P);
-        StudentPassedExam ahlersPassProg1V = StudentPassedExam.builder().student(stu_ahlers).courseComponent(prog1V).grade(1.0f).build();
-        entityManager.persist(ahlersPassProg1V);
-        StudentPassedExam ahlersPassProg1P = StudentPassedExam.builder().student(stu_ahlers).courseComponent(prog1P).build();
-        entityManager.persist(ahlersPassProg1P);
-
-        StudentPassedExam thielPassMathe2V = StudentPassedExam.builder().student(stu_thiel).courseComponent(mathe2V).grade(1.3f).build();
-        entityManager.persist(thielPassMathe2V);
-        StudentPassedExam thielPassMathe2P = StudentPassedExam.builder().student(stu_thiel).courseComponent(mathe2P).build();
-        entityManager.persist(thielPassMathe2P);
-
-        StudentPassedExam esperPassMathe1V = StudentPassedExam.builder().student(stu_esper).courseComponent(mathe1V).grade(1.3f).build();
-        entityManager.persist(esperPassMathe1V);
-        StudentPassedExam esperPassMathe1P = StudentPassedExam.builder().student(stu_esper).courseComponent(mathe1P).build();
-        entityManager.persist(esperPassMathe1P);
-
+        // Connect PassedExam <-> Student
 
         stu_ahlers.setPassedExams(new HashSet<>());
         stu_ahlers.getPassedExams().add(ahlersPassMathe1P);
@@ -757,7 +844,6 @@ public class JSONGenerator {
             //System.out.println("JSON new File Error");
         }
         return file;
-
-
+        
     }
 }
