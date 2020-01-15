@@ -4,6 +4,7 @@ import de.hsrm.mi.swtpro.backend.controller.rest.CampusCrudController;
 import de.hsrm.mi.swtpro.backend.controller.rest.CourseComponentCrudController;
 import de.hsrm.mi.swtpro.backend.controller.rest.GroupCrudController;
 import de.hsrm.mi.swtpro.backend.controller.rest.LecturerCrudController;
+import de.hsrm.mi.swtpro.backend.controller.rest.RoomCrudController;
 import de.hsrm.mi.swtpro.backend.model.Course;
 import de.hsrm.mi.swtpro.backend.model.CourseComponent;
 import de.hsrm.mi.swtpro.backend.model.ExamRegulation;
@@ -40,6 +41,8 @@ public class TimetableController {
     LecturerCrudController lecturerCrudController;
     CourseComponentCrudController courseComponentCrudController;
     CourseCrudController courseCrudController;
+    RoomCrudController roomCrudController;
+    
 
 
     @PostMapping(path = "/timetable", consumes = "application/json", produces = MediaType.APPLICATION_JSON_VALUE)
@@ -91,7 +94,8 @@ public class TimetableController {
             groupCrudController.updateGroup(group.get());
             lecturerCrudController.updateLecturer(group.get().getLecturer());
             courseComponentCrudController.updateCourseComponent(group.get().getCourseComponent());
-            courseCrudController.updateCo
+            roomCrudController.updateRoom(group.get().getRoom());
+            
 
 
         }
