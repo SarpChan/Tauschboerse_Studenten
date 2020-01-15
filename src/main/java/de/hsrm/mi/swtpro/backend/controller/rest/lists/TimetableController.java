@@ -98,6 +98,7 @@ public class TimetableController {
      */
     @PostMapping(path = "/timetableUpdate", consumes = "application/json", produces = MediaType.APPLICATION_JSON_VALUE)
     public  ResponseEntity<String> updateTimetable(@RequestBody List<TimetableModule> timetableModuleList) {
+        try{
         for(TimetableModule module : timetableModuleList){
             Optional<Group> group = groupRepository.findById(module.getGroupID());
             groupCrudController.updateGroup(group.get());
@@ -106,7 +107,12 @@ public class TimetableController {
             courseComponentCrudController.updateCourseComponent(group.get().getCourseComponent());
             roomCrudController.updateRoom(group.get().getRoom());
         }
+
         return new ResponseEntity<>("timetableUpdate Succses",HttpStatus.OK);
+    }catch(Exception e){
+        return new ResponseEntity<>(e.getMessage(),HttpStatus.CONFLICT);
+
+    }
         
     }
 }
