@@ -94,11 +94,9 @@ public class TimetableController {
             Optional<Group> group = groupRepository.findById(module.getGroupID());
             groupCrudController.updateGroup(group.get());
             lecturerCrudController.updateLecturer(group.get().getLecturer());
+            courseCrudController.updateCourse(group.get().getCourseComponent().getCourse());
             courseComponentCrudController.updateCourseComponent(group.get().getCourseComponent());
             roomCrudController.updateRoom(group.get().getRoom());
-            
-
-
         }
 
         return null;
