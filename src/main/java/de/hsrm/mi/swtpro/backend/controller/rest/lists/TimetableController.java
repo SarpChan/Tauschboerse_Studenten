@@ -20,7 +20,9 @@ import de.hsrm.mi.swtpro.backend.service.repository.CourseRepository;
 import de.hsrm.mi.swtpro.backend.service.repository.GroupRepository;
 import de.hsrm.mi.swtpro.backend.service.repository.ModuleRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -88,8 +90,14 @@ public class TimetableController {
     }
 
 
+    /**
+     * The methode handles the POST request
+     * to update the modules of a timetable
+     * @param timetableModuleList
+     * @return
+     */
     @PostMapping(path = "/timetableUpdate", consumes = "application/json", produces = MediaType.APPLICATION_JSON_VALUE)
-    public List<TimetableModule> updateTimetable(@RequestBody List<TimetableModule> timetableModuleList) {
+    public  ResponseEntity<String> updateTimetable(@RequestBody List<TimetableModule> timetableModuleList) {
         for(TimetableModule module : timetableModuleList){
             Optional<Group> group = groupRepository.findById(module.getGroupID());
             groupCrudController.updateGroup(group.get());
@@ -98,48 +106,7 @@ public class TimetableController {
             courseComponentCrudController.updateCourseComponent(group.get().getCourseComponent());
             roomCrudController.updateRoom(group.get().getRoom());
         }
-
-        return null;
-        /*List<Module> allModules = moduleRepository.findAll();
-
-        Comparator comparator = Comparator.builder()
-        .comparatorType(ComparatorType.EQUALS)
-        .comparatorValue(examRegulation.getId())
-        .build();
-        Filter filter = Filter.builder()
-        .attribute("examRegulationId")
-        .comparator(comparator)
-        .build();
-
-        Filter [] filters = {filter};
-        ModuleFilterFactory filterFactory = ModuleFilterFactory.builder().filters(filters).build();
-        allModules = filterFactory.filter(allModules);
-        List<TimetableModule> timetable = new ArrayList<TimetableModule>();
-        for(Module module: allModules){
-            for(Course course: module.getCourses()){
-                for(CourseComponent courseComponent : course.getCourseComponents()){
-                    for(Group group: courseComponent.getGroups()){
-            
-
-                        TimetableModule timetableModule = TimetableModule.builder()
-                        .groupID(group.getId())
-                        .groupChar(group.getGroupChar())
-                        .dayOfWeek(group.getDayOfWeek())
-                        .startTime(group.getStartTime())
-                        .endTime(group.getEndTime())
-                        .lecturerName(group.getLecturer().getUser().getLastName())
-                        .lecturerNameAbbreviation("Placeholder Abbreviation")
-                        .courseComponentID(courseComponent.getId())
-                        .courseType(courseComponent.getType())
-                        .moduleTitle(module.getTitle())
-                        .moduleTitleAbbreviation("Placeholder Abbreviation")
-                        .build();
-                        timetable.add(timetableModule);
-                    }
-                }
-            }
-        }
+        return new ResponseEntity<>("timetableUpdate Succses",HttpStatus.OK);
         
-        return timetable;*/
     }
 }
