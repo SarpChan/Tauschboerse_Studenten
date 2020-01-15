@@ -109,6 +109,7 @@ public class SwapOfferInterface {
     @GetMapping(path = "/swapoffer/all", produces = MediaType.APPLICATION_JSON_VALUE)
     public List<SwapOffer> selectAllSwapOffers(){
         //:TODO Hier sollen alle Tauschangebote an das Frontend gesendent werden
+        return null;
     }
 
 
