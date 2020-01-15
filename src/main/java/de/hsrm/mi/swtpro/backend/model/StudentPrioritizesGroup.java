@@ -7,8 +7,8 @@ import lombok.*;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 
-/** 
-    Relationship between a student and a group 
+/**
+    Relationship between a student and a group
     The priority indicates
 */
 @Entity

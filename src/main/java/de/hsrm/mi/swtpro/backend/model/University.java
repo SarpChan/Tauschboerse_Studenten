@@ -11,6 +11,7 @@ import javax.persistence.OneToMany;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import java.util.Set;
+import javax.persistence.*;
 
 /**
  * A university has a name and the adress of its headquarter
@@ -22,7 +23,7 @@ import java.util.Set;
 @AllArgsConstructor
 @Builder
 public class University {
-    
+
     @Id
     @Getter @Setter
     @GeneratedValue
@@ -39,12 +40,12 @@ public class University {
 
     @Singular("campus")
     @Getter @Setter
-    @OneToMany(mappedBy = "university")
-    private Set<Campus> campuses;
+    @OneToMany(mappedBy = "university",cascade= CascadeType.ALL)
+    private Set<Campus> campuses ;
 
     @Singular("fieldOfStudy")
     @Getter @Setter
-    @OneToMany(mappedBy = "university")
-    private Set<FieldOfStudy> fieldsOfStudy;
+    @OneToMany(mappedBy = "university",cascade= CascadeType.ALL)
+    private Set<FieldOfStudy> fieldsOfStudy ;
 
 }

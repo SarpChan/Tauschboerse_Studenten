@@ -2,6 +2,12 @@ package de.hsrm.mi.swtpro.backend.model;
 
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateDeserializer;
+import com.fasterxml.jackson.datatype.jsr310.deser.LocalTimeDeserializer;
+import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateSerializer;
+import com.fasterxml.jackson.datatype.jsr310.ser.LocalTimeSerializer;
 import lombok.*;
 
 import javax.persistence.*;
@@ -23,7 +29,7 @@ import java.util.Set;
 @Builder
 @Table(name =  "group_table")
 public class Group {
-    
+
     @Id
     @Getter @Setter
     @GeneratedValue
@@ -42,16 +48,20 @@ public class Group {
     @NotNull
     private DayOfWeek dayOfWeek;
 
+    @JsonDeserialize(using = LocalTimeDeserializer.class)
+    @JsonSerialize(using = LocalTimeSerializer.class)
     @Getter @Setter
     @NotNull
     private LocalTime startTime;
 
+    @JsonDeserialize(using = LocalTimeDeserializer.class)
+    @JsonSerialize(using = LocalTimeSerializer.class)
     @Getter @Setter
     @NotNull
     private LocalTime endTime;
 
     @Getter @Setter
-    @ManyToOne
+    @ManyToOne(cascade= CascadeType.ALL)
     @JoinColumn(name="term_id")
     @NotNull
     private Term term;
@@ -63,7 +73,7 @@ public class Group {
     private CourseComponent courseComponent;
 
     @Getter @Setter
-    @ManyToOne
+    @ManyToOne(cascade= CascadeType.ALL)
     @JoinColumn(name="lecturer_id")
     @NotNull
     private Lecturer lecturer;
@@ -76,7 +86,7 @@ public class Group {
 
     @Singular("student")
     @Getter @Setter
-    @ManyToMany
+    @ManyToMany(cascade= CascadeType.ALL)
     @JoinTable(name = "group_student",
             joinColumns = @JoinColumn(name = "group_id", referencedColumnName = "id"),
             inverseJoinColumns = @JoinColumn(name = "student_id", referencedColumnName = "id"))
@@ -84,12 +94,11 @@ public class Group {
 
     @Singular("prioritezeGroup")
     @Getter @Setter
-    @OneToMany(mappedBy = "group")
+    @OneToMany(mappedBy = "group",cascade= CascadeType.ALL)
     private Set<StudentPrioritizesGroup> prioritizeGroups;
 
-
     /**
-     * Adds student to the collection of students attending this group 
+     * Adds student to the collection of students attending this group
      * @param student
      */
     public void addStudent(Student student) {
@@ -97,7 +106,7 @@ public class Group {
     }
 
     /**
-     * Removes student from the collection of students attending this group 
+     * Removes student from the collection of students attending this group
      * @param student
      */
     public void removeStudent(Student student) {

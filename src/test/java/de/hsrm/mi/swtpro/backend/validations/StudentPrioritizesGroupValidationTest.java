@@ -1,5 +1,4 @@
 package de.hsrm.mi.swtpro.backend.validations;
-
 import java.util.Set;
 
 import javax.validation.ConstraintViolation;
@@ -14,7 +13,6 @@ import org.junit.Test;
 
 import de.hsrm.mi.swtpro.backend.model.Group;
 import de.hsrm.mi.swtpro.backend.model.Student;
-import de.hsrm.mi.swtpro.backend.model.StudentPrioritizesGroup;
 
 public class StudentPrioritizesGroupValidationTest {
 
