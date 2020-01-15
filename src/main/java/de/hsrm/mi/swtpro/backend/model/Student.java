@@ -67,5 +67,4 @@ public class Student extends Role {
     @ManyToMany(mappedBy = "students", cascade = CascadeType.ALL)
     private Set<Group> groups;
 
-
 }
