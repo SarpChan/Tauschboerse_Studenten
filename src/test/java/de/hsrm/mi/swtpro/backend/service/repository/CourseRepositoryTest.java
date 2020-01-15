@@ -48,6 +48,24 @@ public class CourseRepositoryTest {
                 .endDate(Date.valueOf(LocalDate.of(2016,10,11)))
                 .build();
 
+        StudyProgram studyProg = StudyProgram.builder()
+                .title("test")
+                .degree("E")
+                .build();
+
+        ExamRegulation examReg = ExamRegulation.builder()
+                .date(new Date(System.currentTimeMillis()))
+                .studyProgram(studyProg)
+                .build();
+
+        Student student = Student.builder()
+                .user(user)
+                .enrollmentNumber(691742)
+                .mail("ab@a.com")
+                .examRegulation(examReg)
+                .enrolmentTerm(term)
+                .build();
+
         module = Module.builder()
                 .title("Nettes Module ")
                 .build();
@@ -62,14 +80,21 @@ public class CourseRepositoryTest {
 
         studentAttendsCourse = StudentAttendsCourse.builder()
                 .course(course)
+                .term(term)
+                .student(student)
                 .build();
 
         courseComponent = CourseComponent.builder()
                 .course(course)
                 .type(CourseType.LECTURE)
+                .exam("Test")
                 .build();
 
+
+        entityManager.persist(studyProg);
+        entityManager.persist(examReg);
         entityManager.persist(user);
+        entityManager.persist(student);
         entityManager.persist(term);
         entityManager.persist(course);
         entityManager.persist(module);
