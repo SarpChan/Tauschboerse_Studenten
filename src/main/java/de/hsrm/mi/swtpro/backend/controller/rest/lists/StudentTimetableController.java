@@ -36,6 +36,7 @@ public class StudentTimetableController {
     UserRepository userRepository;
     TokenService tokenService;
     StudentRepository studentRepository;
+    Student student;
 
     @Value("${security.jwt.token.header:Authorization}")
     private String tokenHeader;
@@ -45,16 +46,22 @@ public class StudentTimetableController {
         final String requestHeader = request.getHeader(this.tokenHeader);
         if (requestHeader != null && requestHeader.startsWith("Bearer ")) {
             String  authenticationToken = requestHeader.substring(7);
+            System.out.println(authenticationToken);
             Optional<User> user = userRepository.findByLoginName(tokenService.getUsernameFromToken(authenticationToken));
-            List<Role> roles;
+            /* List<Role> roles = new ArrayList<Role>();
             user.get().getRoles().forEach(role -> roles.add(role));
-            Optional<Student> student = studentRepository.findById(id);
-            user.get().getRoles().forEach(role -> studentRepository.findById(role.getId()));
-            }
-            
+            for(Role role:roles){
+                Optional<Student> optionalStudent = studentRepository.findById(role.getId());
+                if (optionalStudent.isPresent()) {
+                    student = optionalStudent.get();
+                }
+            } */
+            user.get().getRoles().forEach(role -> { 
+                if(studentRepository.findById(role.getId()).isPresent()){
+                    student = studentRepository.findById(role.getId()).get();
+                }
+            });
         }
-
-        Student student = studentCrudController.findStudent((int)token);
         Set<StudentAttendsCourse> studentAttendsCourse = student.getAttendCourses();
         List<Module> allModules = new ArrayList<Module>();
         studentAttendsCourse.forEach(course -> course.getCourse().getModules().forEach(module -> allModules.add(module)));
@@ -81,9 +88,7 @@ public class StudentTimetableController {
                     }
                 }
             }
-        }
+        } 
         return timetable;
     }
-
-
 }
