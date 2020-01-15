@@ -5,6 +5,7 @@ import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import lombok.*;
 
 import javax.persistence.*;
+import java.util.HashSet;
 import java.util.Set;
 import javax.validation.constraints.*;
 import javax.validation.constraints.*;
@@ -43,13 +44,13 @@ public class Module {
     @Singular("moduleInCurriculum")
     @Getter @Setter
     @OneToMany(mappedBy = "module")
-    private Set<ModuleInCurriculum> modulesInCurriculum;
+    private Set<ModuleInCurriculum> modulesInCurriculum ;
 
     @Singular("course")
     @Getter @Setter
-    @ManyToMany(mappedBy = "modules")
-    private Set<Course> courses;
-    
+    @ManyToMany(mappedBy = "modules",cascade= CascadeType.ALL)
+    private Set<Course> courses ;
+
     /**
      * Adds course to the collection of courses fitting this module
      * @param course
