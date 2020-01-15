@@ -69,7 +69,7 @@ public class JSONGenerator {
         entityManager.persist(medieninformatik);
         FieldOfStudy dcsm = FieldOfStudy.builder().title("DCSM").build();
         entityManager.persist(dcsm);
-        Curriculum curriculum = Curriculum.builder().examRegulation(po2017).termPeriod(1).build();
+        Curriculum curriculum = Curriculum.builder().examRegulation(po2017).maxTerms(1).build();
         entityManager.persist(curriculum);
         Module mProgrammieren3 = Module.builder().title("Programmieren 3").creditPoints(5).period(1).build();
         entityManager.persist(mProgrammieren3);

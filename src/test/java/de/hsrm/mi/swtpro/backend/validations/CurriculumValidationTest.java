@@ -44,7 +44,7 @@ public class CurriculumValidationTest {
     @Test
     public void whenExamRegulationNull_thenConstraintViolation() {
         Curriculum curriculum =  Curriculum.builder()
-        .termPeriod(1)
+        .maxTerms(1)
         .build();
     
         Set<ConstraintViolation<Curriculum>> violations = validator.validate(curriculum);

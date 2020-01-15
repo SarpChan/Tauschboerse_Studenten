@@ -64,7 +64,7 @@ public class ModuleRepositoryTest {
                 .build();
 
         Curriculum curriculum = Curriculum.builder()
-                .termPeriod(1)
+                .maxTerms(1)
                 .examRegulation(examRegulation)
                 .build();
 
