@@ -8,6 +8,7 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.http.SessionCreationPolicy;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 import de.hsrm.mi.swtpro.backend.controller.login.security.JwtAuthenticationEntryPoint;
@@ -28,8 +29,20 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     private JwtAuthenticationProvider jwtAuthenticationProvider;
 
     @Autowired
+    private JwtUserDetailsService jwtUserDetailsService;
+
+    @Autowired
+    PasswordEncoder passwordEncoder;
+
+    /**
+     * configure AuthenticationManager so that it knows from where to load
+     * user for matching credentials use PasswordEncoder
+     * @param authenticationManagerBuilder
+     */
+   @Autowired
     public void configureAuthentication(AuthenticationManagerBuilder authenticationManagerBuilder) {
         authenticationManagerBuilder.authenticationProvider(jwtAuthenticationProvider);
+        //authenticationManagerBuilder.userDetailsService(jwtUserDetailsService).passwordEncoder(passwordEncoder);
     }
 
     @Bean
@@ -37,11 +50,20 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         return new JwtAuthenticationTokenFilter();
     }
 
+
+    @Override
+	public void configure(AuthenticationManagerBuilder auth) throws Exception {
+		auth.inMemoryAuthentication().withUser("javainuse")
+				.password("javainuse").roles("USER");
+	}
+
+
     @Override
     protected void configure(HttpSecurity httpSecurity) throws Exception {
 
             httpSecurity.csrf().disable()
-                .authorizeRequests().antMatchers("/authentication/**", "/h2-console/**").permitAll() 
+                .authorizeRequests().antMatchers("/authentication/**", "/h2-console/**").permitAll()
+                .antMatchers("/user/**").hasRole("USER")			
                 .anyRequest().authenticated().and()
                 .exceptionHandling().authenticationEntryPoint(unauthorizedHandler).and()
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);

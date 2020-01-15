@@ -8,6 +8,8 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.experimental.SuperBuilder;
 
+import java.util.Set;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
@@ -24,6 +26,9 @@ public abstract class Role {
     @Getter @Setter
     @GeneratedValue
     private long id;
+
+   /* @Getter @Setter 
+    private Role role;*/
 
     @Getter @Setter
     @ManyToOne
