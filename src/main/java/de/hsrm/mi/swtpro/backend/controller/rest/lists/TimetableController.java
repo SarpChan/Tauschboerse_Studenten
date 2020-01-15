@@ -1,5 +1,11 @@
 package de.hsrm.mi.swtpro.backend.controller.rest.lists;
 
+import de.hsrm.mi.swtpro.backend.controller.rest.CampusCrudController;
+import de.hsrm.mi.swtpro.backend.controller.rest.CourseComponentCrudController;
+import de.hsrm.mi.swtpro.backend.controller.rest.CourseCrudController;
+import de.hsrm.mi.swtpro.backend.controller.rest.GroupCrudController;
+import de.hsrm.mi.swtpro.backend.controller.rest.LecturerCrudController;
+import de.hsrm.mi.swtpro.backend.controller.rest.RoomCrudController;
 import de.hsrm.mi.swtpro.backend.model.Course;
 import de.hsrm.mi.swtpro.backend.model.CourseComponent;
 import de.hsrm.mi.swtpro.backend.model.ExamRegulation;
@@ -22,6 +28,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/rest/lists")
@@ -29,8 +36,15 @@ public class TimetableController {
 
     @Autowired
     ModuleRepository moduleRepository;
-    @Autowired 
+    @Autowired
     GroupRepository groupRepository;
+    GroupCrudController groupCrudController;
+    LecturerCrudController lecturerCrudController;
+    CourseComponentCrudController courseComponentCrudController;
+    CourseCrudController courseCrudController;
+    RoomCrudController roomCrudController;
+    
+
 
     @PostMapping(path = "/timetable", consumes = "application/json", produces = MediaType.APPLICATION_JSON_VALUE)
     public List<TimetableModule> getModules(@RequestBody ExamRegulation examRegulation) {
@@ -61,8 +75,9 @@ public class TimetableController {
                         .lecturerNameAbbreviation("Placeholder Abbreviation")
                         .courseComponentID(courseComponent.getId())
                         .courseType(courseComponent.getType())
-                        .moduleTitle(module.getTitle())
-                        .moduleTitleAbbreviation("Placeholder Abbreviation")
+                        .courseTitle(course.getTitle())
+                        .courseTitleAbbreviation("Placeholder Abbreviation")
+                        .roomNumber(group.getRoom().getNumber())
                         .build();
                         timetable.add(timetableModule);
                     }
@@ -75,10 +90,15 @@ public class TimetableController {
 
     @PostMapping(path = "/timetableUpdate", consumes = "application/json", produces = MediaType.APPLICATION_JSON_VALUE)
     public List<TimetableModule> updateTimetable(@RequestBody List<TimetableModule> timetableModuleList) {
-     for(TimetableModule module : timetableModuleList){
-        
-        groupRepository.findById( module.getGroupID());
-       
+        for(TimetableModule module : timetableModuleList){
+            Optional<Group> group = groupRepository.findById(module.getGroupID());
+            groupCrudController.updateGroup(group.get());
+            lecturerCrudController.updateLecturer(group.get().getLecturer());
+            courseComponentCrudController.updateCourseComponent(group.get().getCourseComponent());
+            roomCrudController.updateRoom(group.get().getRoom());
+            
+
+
         }
 
         return null;
