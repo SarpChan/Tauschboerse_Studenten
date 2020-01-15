@@ -16,6 +16,7 @@ import de.hsrm.mi.swtpro.backend.model.filter.Comparator;
 import de.hsrm.mi.swtpro.backend.model.filter.ComparatorType;
 import de.hsrm.mi.swtpro.backend.model.filter.Filter;
 import de.hsrm.mi.swtpro.backend.service.filterfactories.ModuleFilterFactory;
+import de.hsrm.mi.swtpro.backend.service.messagebroker.MessageSender;
 import de.hsrm.mi.swtpro.backend.service.repository.CourseRepository;
 import de.hsrm.mi.swtpro.backend.service.repository.GroupRepository;
 import de.hsrm.mi.swtpro.backend.service.repository.ModuleRepository;
@@ -45,6 +46,8 @@ public class TimetableController {
     CourseComponentCrudController courseComponentCrudController;
     CourseCrudController courseCrudController;
     RoomCrudController roomCrudController;
+    @Autowired
+    MessageSender ms;
     
 
 
@@ -106,7 +109,9 @@ public class TimetableController {
             courseCrudController.updateCourse(group.get().getCourseComponent().getCourse());
             courseComponentCrudController.updateCourseComponent(group.get().getCourseComponent());
             roomCrudController.updateRoom(group.get().getRoom());
-        }
+
+            ms.sendNewsMessage(module);
+        }   
 
         return new ResponseEntity<>("timetableUpdate Succses",HttpStatus.OK);
     }catch(Exception e){
