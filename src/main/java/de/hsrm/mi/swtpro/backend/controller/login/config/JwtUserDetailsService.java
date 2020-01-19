@@ -10,10 +10,12 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import de.hsrm.mi.swtpro.backend.model.User;
-import de.hsrm.mi.swtpro.backend.model.User.UserBuilder;
 import de.hsrm.mi.swtpro.backend.service.repository.UserRepository;
 
-
+/**
+ * JwtUserDetailsService is used to 
+ * load the role of a user for the web security
+ */
 @Service
 public class JwtUserDetailsService implements UserDetailsService {
     @Autowired

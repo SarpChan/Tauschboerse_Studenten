@@ -44,7 +44,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Autowired
     public void configureAuthentication(AuthenticationManagerBuilder authenticationManagerBuilder) throws Exception {
         authenticationManagerBuilder.authenticationProvider(jwtAuthenticationProvider);
-        authenticationManagerBuilder.userDetailsService(jwtUserDetailsService);
+        authenticationManagerBuilder.userDetailsService(jwtUserDetailsService).passwordEncoder(passwordEncoder);
 
     }
 
@@ -59,8 +59,9 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity httpSecurity) throws Exception {
 
             httpSecurity.csrf().disable()
-                .authorizeRequests().antMatchers("/authentication/**").permitAll()
-                .antMatchers("/user/**", "/h2-console/**").hasRole("ADMIN")		
+          
+                .authorizeRequests().antMatchers("/authentication/**", "/h2-console/**", "/").permitAll()
+                .antMatchers("/**" ).hasRole("ADMIN")		
                 .antMatchers("/**").hasRole("USER")			
                 .anyRequest().authenticated().and()
                 .exceptionHandling().authenticationEntryPoint(unauthorizedHandler).and()
