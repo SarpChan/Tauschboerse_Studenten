@@ -40,7 +40,7 @@ public class DatabaseFiller {
             if(args[i].equals("fillDatabase")){*/
         //readJSON(jsonGenerator.createJSON());
         File file = new File("hsrm_medieninformatik.json");
-        //readJSON(file);
+        readJSON(file);
             //}
         //}
     }
