@@ -34,7 +34,7 @@ public class StudentTest {
         student = Student.builder()
                 .mail("homer.simpson@springfield.de")
                 .user(user)
-                .enrolementNumber(5)
+                .enrolmentNumber(5)
                 .attendCourse(studentAttendsCourse)
                 .group(group)
                 .build();
@@ -47,7 +47,7 @@ public class StudentTest {
     public void whenGetUser_thanReturnUser(){assertEquals(student.getUser().getFirstName(), user.getFirstName());}
 
     @Test
-    public void whenGetEnrollmentNumber_thanReturnEnrollmentNumber(){assertEquals(student.getEnrolementNumber(), 5);}
+    public void whenGetEnrolmentNumber_thanReturnEnrolmentNumber(){assertEquals(student.getEnrolmentNumber(), 5);}
 
     @Test
     public void whenGetAttendsCourses_thanReturnAttendsCourse(){assertThat(student.getAttendCourses(), hasItem(studentAttendsCourse));}
@@ -73,9 +73,9 @@ public class StudentTest {
     }
 
     @Test
-    public void whenSetEnrollmentNumber_thanSaveEnrollmentNumber(){
-        student.setEnrolementNumber(29);
-        assertEquals(student.getEnrolementNumber(), 29);
+    public void whenSetEnrolmentNumber_thanSaveEnrolmentNumber(){
+        student.setEnrolmentNumber(29);
+        assertEquals(student.getEnrolmentNumber(), 29);
     }
 
     @Test
