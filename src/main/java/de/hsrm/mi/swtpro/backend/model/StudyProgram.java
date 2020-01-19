@@ -44,7 +44,7 @@ public class StudyProgram {
     @JoinTable(
             name = "FieldOfStudy_StudyProgram",
             joinColumns = { @JoinColumn(name = "studyProgram_id") },
-            inverseJoinColumns = { @JoinColumn(name = "fieldOfStudy_id") }
+            inverseJoinColumns = { @JoinColumn(name = "field_of_study_id") }
     )
     private Set<FieldOfStudy> fieldsOfStudy;
 

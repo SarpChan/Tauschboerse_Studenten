@@ -38,8 +38,8 @@ public class DatabaseFiller {
         /*String[] args = appArgs.getSourceArgs();
         for (int i = 0; i < args.length ; i++) {
             if(args[i].equals("fillDatabase")){*/
-        readJSON(jsonGenerator.createJSON());
-        //File file = new File("hsrm_medieninformatik.json");
+        //readJSON(jsonGenerator.createJSON());
+        File file = new File("hsrm_medieninformatik.json");
         //readJSON(file);
             //}
         //}
