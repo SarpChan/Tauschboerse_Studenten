@@ -133,19 +133,19 @@ public class JSONGenerator {
 
         // Roles
 
-        Student stu_esper = Student.builder().user(vesper).enrollmentNumber(1076576)
+        Student stu_esper = Student.builder().user(vesper).enrolmentNumber(1076576)
                 .enrolmentTerm(ss2019).mail("esper@mail.com").examRegulation(po2017).build();
         entityManager.persist(stu_esper);
-        Student stu_ahlers = Student.builder().user(nahlers).enrollmentNumber(1076688)
+        Student stu_ahlers = Student.builder().user(nahlers).enrolmentNumber(1076688)
                 .enrolmentTerm(ss2019).mail("ahlers@mail.com").examRegulation(po2017).build();
         entityManager.persist(stu_ahlers);
-        Student stu_deuster = Student.builder().user(ydeuster).enrollmentNumber(1075577)
+        Student stu_deuster = Student.builder().user(ydeuster).enrolmentNumber(1075577)
                 .enrolmentTerm(ss2019).mail("deuster@mail.com").examRegulation(po2017).build();
         entityManager.persist(stu_deuster);
-        Student stu_wirt = Student.builder().user(jwirt).enrollmentNumber(1078833)
+        Student stu_wirt = Student.builder().user(jwirt).enrolmentNumber(1078833)
                 .enrolmentTerm(ss2019).mail("wirt@mail.com").examRegulation(po2017).build();
         entityManager.persist(stu_wirt);
-        Student stu_thiel = Student.builder().user(tthiel).enrollmentNumber(1074411)
+        Student stu_thiel = Student.builder().user(tthiel).enrolmentNumber(1074411)
                 .enrolmentTerm(ss2019).mail("thiel@mail.com").examRegulation(po2017).build();
         entityManager.persist(stu_thiel);
 
@@ -831,6 +831,53 @@ public class JSONGenerator {
 
         mathe2V.setStudentsPassedExam(new HashSet<>());
         mathe2V.getStudentsPassedExam().add(thielPassMathe2V);
+
+
+        // Connect SwapOffer <-> Student
+
+        stu_esper.setSwapOffers(new HashSet<>());
+        stu_esper.getSwapOffers().add(esperMathe3P_B_to_A);
+        stu_esper.getSwapOffers().add(esperProg3P_A_to_B);
+
+        stu_thiel.setSwapOffers(new HashSet<>());
+        stu_thiel.getSwapOffers().add(thielMathe3P_B_to_A);
+        stu_thiel.getSwapOffers().add(thielProg3P_B_to_A);
+
+        stu_ahlers.setSwapOffers(new HashSet<>());
+        stu_ahlers.getSwapOffers().add(ahlersMathe3P_A_to_B);
+        stu_ahlers.getSwapOffers().add(ahlersProg3P_B_to_A);
+
+
+        mathe3PgroupA.setSwapOffers(new HashSet<>());
+        mathe3PgroupA.getSwapOffers().add(ahlersMathe3P_A_to_B);
+
+        mathe3PgroupA.setSwapRequests(new HashSet<>());
+        mathe3PgroupA.getSwapRequests().add(esperMathe3P_B_to_A);
+        mathe3PgroupA.getSwapRequests().add(thielProg3P_B_to_A);
+
+
+        mathe3PgroupB.setSwapOffers(new HashSet<>());
+        mathe3PgroupB.getSwapOffers().add(esperMathe3P_B_to_A);
+        mathe3PgroupB.getSwapOffers().add(thielMathe3P_B_to_A);
+
+        mathe3PgroupB.setSwapRequests(new HashSet<>());
+        mathe3PgroupB.getSwapRequests().add(ahlersMathe3P_A_to_B);
+
+
+        prog3PgroupA.setSwapOffers(new HashSet<>());
+        prog3PgroupA.getSwapOffers().add(esperProg3P_A_to_B);
+
+        prog3PgroupA.setSwapRequests(new HashSet<>());
+        prog3PgroupA.getSwapRequests().add(thielProg3P_B_to_A);
+        prog3PgroupA.getSwapRequests().add(ahlersProg3P_B_to_A);
+
+
+        prog3PgroupB.setSwapOffers(new HashSet<>());
+        prog3PgroupB.getSwapOffers().add(ahlersProg3P_B_to_A);
+        prog3PgroupB.getSwapOffers().add(thielProg3P_B_to_A);
+
+        prog3PgroupB.setSwapRequests(new HashSet<>());
+        prog3PgroupB.getSwapRequests().add(esperProg3P_A_to_B);
 
 
 

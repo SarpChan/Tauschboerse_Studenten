@@ -97,6 +97,16 @@ public class Group {
     @OneToMany(mappedBy = "group",cascade= CascadeType.ALL)
     private Set<StudentPrioritizesGroup> prioritizeGroups;
 
+    @Singular("swapOffer")
+    @Getter @Setter
+    @OneToMany(mappedBy = "fromGroup", cascade = CascadeType.ALL)
+    private Set<SwapOffer> swapOffers;
+
+    @Singular("swapRequest")
+    @Getter @Setter
+    @OneToMany(mappedBy = "toGroup", cascade = CascadeType.ALL)
+    private Set<SwapOffer> swapRequests;
+
     /**
      * Adds student to the collection of students attending this group
      * @param student
