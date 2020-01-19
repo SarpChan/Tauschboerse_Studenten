@@ -31,12 +31,12 @@ public class Student extends Role {
     private String mail;
 
     @Getter @Setter
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL)
     @NotNull
     private ExamRegulation examRegulation;
 
     @Getter @Setter
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL)
     @NotNull
     private Term enrolmentTerm;
 
@@ -47,7 +47,7 @@ public class Student extends Role {
 
     @Singular("prioritizeGroup")
     @Getter @Setter
-    @OneToMany(mappedBy = "student")
+    @OneToMany(mappedBy = "student",cascade= CascadeType.ALL)
     private Set<StudentPrioritizesGroup> prioritizeGroups;
 
     @Singular("passedExam")

@@ -26,7 +26,8 @@ public class Curriculum {
     private int termPeriod;
 
     @Getter @Setter
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name="examRegulation_id")
     @NotNull
     private ExamRegulation examRegulation;
 

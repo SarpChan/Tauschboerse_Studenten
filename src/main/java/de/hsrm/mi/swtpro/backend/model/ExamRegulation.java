@@ -40,7 +40,7 @@ public class ExamRegulation {
     private int rule;
 
     @Getter @Setter
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL)
     @NotNull
     private StudyProgram studyProgram;
 
@@ -51,7 +51,7 @@ public class ExamRegulation {
 
     @Singular("student")
     @Getter @Setter
-    @OneToMany(mappedBy = "examRegulation")
+    @OneToMany(mappedBy = "examRegulation",cascade = CascadeType.ALL)
     private Set<Student> students;
 
 }

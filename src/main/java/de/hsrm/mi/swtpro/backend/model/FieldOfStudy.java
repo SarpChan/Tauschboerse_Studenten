@@ -30,7 +30,7 @@ public class FieldOfStudy {
     private String title;
 
     @Getter @Setter
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name="university_id")
     @NotNull
     private University university;

@@ -29,7 +29,8 @@ public class ModuleInCurriculum {
     private int termPeriod;
 
     @Getter @Setter
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name="curriculum_id")
     @NotNull
     private Curriculum curriculum;
 

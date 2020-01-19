@@ -36,14 +36,14 @@ public class Room {
     private int seats;
 
     @Getter @Setter
-    @ManyToOne(targetEntity = Building.class, fetch = FetchType.LAZY)
+    @ManyToOne(targetEntity = Building.class, fetch = FetchType.LAZY,cascade = CascadeType.ALL)
     @JoinColumn(name = "building_id")
     @NotNull
     private Building building;
 
     @Singular("group")
     @Getter @Setter
-    @OneToMany(mappedBy = "room")
+    @OneToMany(mappedBy = "room",cascade= CascadeType.ALL)
     private Set<Group> groups;
 
 }
