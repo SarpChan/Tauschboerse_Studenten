@@ -60,5 +60,8 @@ public class Student extends Role {
     @ManyToMany(mappedBy = "students",cascade= CascadeType.ALL)
     private Set<Group> groups;
 
-
+    @Singular("swapOffer")
+    @Getter @Setter
+    @OneToMany(mappedBy = "student", cascade = CascadeType.ALL)
+    private Set<SwapOffer> swapOffers;
 }
