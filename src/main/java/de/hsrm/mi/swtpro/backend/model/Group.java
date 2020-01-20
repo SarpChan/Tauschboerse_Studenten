@@ -67,8 +67,8 @@ public class Group {
     private Term term;
 
     @Getter @Setter
-    @ManyToOne
-    @JoinColumn(name="courseComponent_id")
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name="course_component_id")
     @NotNull
     private CourseComponent courseComponent;
 
@@ -79,7 +79,7 @@ public class Group {
     private Lecturer lecturer;
 
     @Getter @Setter
-    @ManyToOne
+    @ManyToOne(cascade= CascadeType.ALL)
     @JoinColumn(name="room_id")
     @NotNull
     private Room room;
