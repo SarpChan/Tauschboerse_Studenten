@@ -11,7 +11,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
-//@NoArgsConstructor
+@NoArgsConstructor
 @AllArgsConstructor
 @SuperBuilder
 public class CourseFilterFactory extends FilterFactory<Course> {
