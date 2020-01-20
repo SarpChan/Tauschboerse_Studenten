@@ -164,9 +164,9 @@ public class JSONGenerator {
 
         // Curriculum
 
-        Curriculum curriculumMi = Curriculum.builder().examRegulation(po2017).termPeriod(1).build();
+        Curriculum curriculumMi = Curriculum.builder().examRegulation(po2017).maxTerms(1).build();
         //entityManager.persist(curriculumMi);
-        Curriculum curriculumAi = Curriculum.builder().examRegulation(po2016).termPeriod(1).build();
+        Curriculum curriculumAi = Curriculum.builder().examRegulation(po2016).maxTerms(1).build();
         //entityManager.persist(curriculumAi);
 
 
