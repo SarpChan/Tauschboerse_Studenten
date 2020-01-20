@@ -29,7 +29,7 @@ public class SwapOffer {
     @Getter @Setter
     @GeneratedValue
     @NotNull
-    private Timestamp timestamp;
+    private Timestamp date;
 
     @Getter @Setter
     @ManyToOne(targetEntity = Student.class, fetch = FetchType.LAZY, cascade = CascadeType.ALL)

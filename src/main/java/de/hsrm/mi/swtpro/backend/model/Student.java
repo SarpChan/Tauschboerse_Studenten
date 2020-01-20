@@ -27,6 +27,7 @@ public class Student extends Role {
 
     @Getter
     @Setter
+    @Pattern(regexp = "[a-zA-Z0-9-+_.]+@[a-z0-9-+_.]+")
     @NotEmpty
     private String mail;
 

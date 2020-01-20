@@ -14,6 +14,7 @@ import java.sql.Date;
 import java.time.DayOfWeek;
 import java.time.LocalTime;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 
 import static org.hamcrest.Matchers.*;
@@ -116,7 +117,9 @@ public class CourseComponentRepositoryTest {
                 .student(student)
                 .build();
 
-        courseComponent.setStudentPassedExam(passedExam);
+        HashSet<StudentPassedExam> studentPassedExams = new HashSet<>();
+        studentPassedExams.add(passedExam);
+        courseComponent.setStudentsPassedExam(studentPassedExams);
 
         group = Group.builder()
                 .groupChar('D')
@@ -190,7 +193,7 @@ public class CourseComponentRepositoryTest {
 
     @Test
     public void whenFindByStudentPassedExam_thenReturnCourseComponentList() {
-        assertThat(courseComponentRepository.findByStudentPassedExam(passedExam), hasItem(
+        assertThat(courseComponentRepository.findByStudentsPassedExam(passedExam), hasItem(
                 hasProperty("creditPoints", is(10))
         ));
     }

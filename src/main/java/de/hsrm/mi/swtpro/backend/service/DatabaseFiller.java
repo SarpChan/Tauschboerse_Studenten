@@ -1,10 +1,12 @@
 package de.hsrm.mi.swtpro.backend.service;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import de.hsrm.mi.swtpro.backend.controller.login.PasswordEncoderConfigure;
 import de.hsrm.mi.swtpro.backend.model.*;
 import de.hsrm.mi.swtpro.backend.model.Module;
 import de.hsrm.mi.swtpro.backend.service.repository.UniversityRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.boot.ApplicationArguments;
 import org.springframework.stereotype.Component;
 
@@ -28,10 +30,10 @@ public class DatabaseFiller {
     ApplicationArguments appArgs;
 
     @Autowired
-    JSONGenerator jsonGenerator;
+    UniversityRepository universityRepository;
 
     @Autowired
-    UniversityRepository universityRepository;
+    PasswordEncoder passwordEncoder;
 
     @PostConstruct
     public void fillDatabase(){
@@ -103,44 +105,44 @@ public class DatabaseFiller {
 
                 // User
 
-                User wweitz = User.builder().firstName("Wolfgang").lastName("Weitz").loginName("wweitz").password("wweitz").build();
+                User wweitz = User.builder().firstName("Wolfgang").lastName("Weitz").loginName("wweitz").password(passwordEncoder.encode("wweitz")).build();
                 //entityManager.persist(wweitz);
-                User jberdux = User.builder().firstName("Joerg").lastName("Berdux").loginName("jberdux").password("jberdux").build();
+                User jberdux = User.builder().firstName("Joerg").lastName("Berdux").loginName("jberdux").password(passwordEncoder.encode("jberdux")).build();
                 //entityManager.persist(jberdux);
-                User rreichenauer = User.builder().firstName("Roland").lastName("Reichenauer").loginName("rreichenauer").password("rreichenauer").build();
+                User rreichenauer = User.builder().firstName("Roland").lastName("Reichenauer").loginName("rreichenauer").password(passwordEncoder.encode("rreichenauer")).build();
                 //entityManager.persist(rreichenauer);
-                User uschwaneke = User.builder().firstName("Ulrich").lastName("Schwaneke").loginName("uschwaneke").password("uschwaneke").build();
+                User uschwaneke = User.builder().firstName("Ulrich").lastName("Schwaneke").loginName("uschwaneke").password(passwordEncoder.encode("uschwaneke")).build();
                 //entityManager.persist(uschwaneke);
 
-                User nahlers = User.builder().firstName("Nicklas").lastName("Ahlers").loginName("nahlers").password("nahlers").build();
+                User nahlers = User.builder().firstName("Nicklas").lastName("Ahlers").loginName("nahlers").password(passwordEncoder.encode("nahlers")).build();
                 //entityManager.persist(nahlers);
-                User vesper = User.builder().firstName("Vanessa").lastName("Esper").loginName("vesper").password("vesper").build();
+                User vesper = User.builder().firstName("Vanessa").lastName("Esper").loginName("vesper").password(passwordEncoder.encode("vesper")).build();
                 //entityManager.persist(vesper);
-                User tthiel = User.builder().firstName("Tobi").lastName("Thiel").loginName("tthiel").password("tthiel").build();
+                User tthiel = User.builder().firstName("Tobi").lastName("Thiel").loginName("tthiel").password(passwordEncoder.encode("tthiel")).build();
                 //entityManager.persist(tthiel);
-                User jwirt = User.builder().firstName("Julia").lastName("Wirt").loginName("jwirt").password("jwirt").build();
+                User jwirt = User.builder().firstName("Julia").lastName("Wirt").loginName("jwirt").password(passwordEncoder.encode("jwirt")).build();
                 //entityManager.persist(jwirt);
-                User jmuel = User.builder().firstName("Julius").lastName("Muel").loginName("jmuel").password("jmuel").build();
+                User jmuel = User.builder().firstName("Julius").lastName("Muel").loginName("jmuel").password(passwordEncoder.encode("jmuel")).build();
                 //entityManager.persist(jmuel);
-                User ydeuster = User.builder().firstName("Yen").lastName("Deuster").loginName("ydeuster").password("ydeuster").build();
+                User ydeuster = User.builder().firstName("Yen").lastName("Deuster").loginName("ydeuster").password(passwordEncoder.encode("ydeuster")).build();
                 //entityManager.persist(ydeuster);
 
 
                 // Roles
 
-                Student stu_esper = Student.builder().user(vesper).enrolmentNumber(1076576)
+                Student stu_esper = Student.builder().user(vesper).enrollmentNumber(1076576)
                         .enrolmentTerm(ss2019).mail("esper@mail.com").examRegulation(po2017).build();
                 //entityManager.persist(stu_esper);
-                Student stu_ahlers = Student.builder().user(nahlers).enrolmentNumber(1076688)
+                Student stu_ahlers = Student.builder().user(nahlers).enrollmentNumber(1076688)
                         .enrolmentTerm(ss2019).mail("ahlers@mail.com").examRegulation(po2017).build();
                 //entityManager.persist(stu_ahlers);
-                Student stu_deuster = Student.builder().user(ydeuster).enrolmentNumber(1075577)
+                Student stu_deuster = Student.builder().user(ydeuster).enrollmentNumber(1075577)
                         .enrolmentTerm(ss2019).mail("deuster@mail.com").examRegulation(po2017).build();
                 //entityManager.persist(stu_deuster);
-                Student stu_wirt = Student.builder().user(jwirt).enrolmentNumber(1078833)
+                Student stu_wirt = Student.builder().user(jwirt).enrollmentNumber(1078833)
                         .enrolmentTerm(ss2019).mail("wirt@mail.com").examRegulation(po2017).build();
                 //entityManager.persist(stu_wirt);
-                Student stu_thiel = Student.builder().user(tthiel).enrolmentNumber(1074411)
+                Student stu_thiel = Student.builder().user(tthiel).enrollmentNumber(1074411)
                         .enrolmentTerm(ss2019).mail("thiel@mail.com").examRegulation(po2017).build();
                 //entityManager.persist(stu_thiel);
 
@@ -159,9 +161,9 @@ public class DatabaseFiller {
 
                 // Curriculum
 
-                Curriculum curriculumMi = Curriculum.builder().examRegulation(po2017).termPeriod(1).build();
+                Curriculum curriculumMi = Curriculum.builder().examRegulation(po2017).maxTerms(1).build();
                 //entityManager.persist(curriculumMi);
-                Curriculum curriculumAi = Curriculum.builder().examRegulation(po2016).termPeriod(1).build();
+                Curriculum curriculumAi = Curriculum.builder().examRegulation(po2016).maxTerms(1).build();
                 //entityManager.persist(curriculumAi);
 
 
@@ -349,19 +351,19 @@ public class DatabaseFiller {
 
                 // Swap Offer
 
-                SwapOffer esperMathe3P_B_to_A = SwapOffer.builder().student(stu_esper).timestamp(new Timestamp(System.currentTimeMillis())).fromGroup(mathe3PgroupB).toGroup(mathe3PgroupA).build();
+                SwapOffer esperMathe3P_B_to_A = SwapOffer.builder().student(stu_esper).date(new Timestamp(System.currentTimeMillis())).fromGroup(mathe3PgroupB).toGroup(mathe3PgroupA).build();
                 //entityManager.persist(esperMathe3P_B_to_A);
-                SwapOffer esperProg3P_A_to_B = SwapOffer.builder().student(stu_esper).timestamp(new Timestamp(System.currentTimeMillis())).fromGroup(prog3PgroupA).toGroup(prog3PgroupB).build();
+                SwapOffer esperProg3P_A_to_B = SwapOffer.builder().student(stu_esper).date(new Timestamp(System.currentTimeMillis())).fromGroup(prog3PgroupA).toGroup(prog3PgroupB).build();
                 //entityManager.persist(esperProg3P_A_to_B);
 
-                SwapOffer thielMathe3P_B_to_A = SwapOffer.builder().student(stu_thiel).timestamp(new Timestamp(System.currentTimeMillis())).fromGroup(mathe3PgroupB).toGroup(mathe3PgroupA).build();
+                SwapOffer thielMathe3P_B_to_A = SwapOffer.builder().student(stu_thiel).date(new Timestamp(System.currentTimeMillis())).fromGroup(mathe3PgroupB).toGroup(mathe3PgroupA).build();
                 //entityManager.persist(thielMathe3P_B_to_A);
-                SwapOffer thielProg3P_B_to_A = SwapOffer.builder().student(stu_thiel).timestamp(new Timestamp(System.currentTimeMillis())).fromGroup(prog3PgroupB).toGroup(prog3PgroupA).build();
+                SwapOffer thielProg3P_B_to_A = SwapOffer.builder().student(stu_thiel).date(new Timestamp(System.currentTimeMillis())).fromGroup(prog3PgroupB).toGroup(prog3PgroupA).build();
                 //entityManager.persist(thielProg3P_B_to_A);
 
-                SwapOffer ahlersMathe3P_A_to_B = SwapOffer.builder().student(stu_ahlers).timestamp(new Timestamp(System.currentTimeMillis())).fromGroup(mathe3PgroupA).toGroup(mathe3PgroupB).build();
+                SwapOffer ahlersMathe3P_A_to_B = SwapOffer.builder().student(stu_ahlers).date(new Timestamp(System.currentTimeMillis())).fromGroup(mathe3PgroupA).toGroup(mathe3PgroupB).build();
                 //entityManager.persist(ahlersMathe3P_A_to_B);
-                SwapOffer ahlersProg3P_B_to_A = SwapOffer.builder().student(stu_ahlers).timestamp(new Timestamp(System.currentTimeMillis())).fromGroup(prog3PgroupB).toGroup(prog3PgroupA).build();
+                SwapOffer ahlersProg3P_B_to_A = SwapOffer.builder().student(stu_ahlers).date(new Timestamp(System.currentTimeMillis())).fromGroup(prog3PgroupB).toGroup(prog3PgroupA).build();
                 //entityManager.persist(ahlersProg3P_B_to_A);
 
 
