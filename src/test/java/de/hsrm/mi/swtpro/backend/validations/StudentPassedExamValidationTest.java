@@ -27,7 +27,7 @@ public class StudentPassedExamValidationTest {
         ValidatorFactory factory = Validation.buildDefaultValidatorFactory();
         validator = factory.getValidator();
         student = Student.builder()
-        .enrolmentNumber(0)
+        .enrollmentNumber(0)
         .build();
         courseComponent = CourseComponent.builder()
         .build();

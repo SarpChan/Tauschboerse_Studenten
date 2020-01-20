@@ -20,13 +20,13 @@ import javax.validation.constraints.*;
 @SuperBuilder
 public class Student extends Role {
 
-    @Getter @Setter
-    //@Pattern(regexp = "[0-9]*")
+    @Getter
+    @Setter
     @NotNull
-    private int enrolmentNumber;
+    private int enrollmentNumber;
 
-    @Getter @Setter
-    //@Pattern(regexp = "[a-zA-Z0-9-+_.]+@[a-z0-9-+_]+")
+    @Getter
+    @Setter
     @NotEmpty
     private String mail;
 

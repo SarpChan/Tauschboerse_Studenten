@@ -18,7 +18,7 @@ public class SwapOfferTest {
     @Before
     public void setup(){
         student = Student.builder()
-        .enrolmentNumber(17)
+        .enrollmentNumber(17)
         .mail("vorname.nachname@student.hs-rm.de")
         .build();
         
@@ -33,7 +33,7 @@ public class SwapOfferTest {
         .build();
 
         swapOffer = SwapOffer.builder()
-        .timestamp(new Timestamp(System.currentTimeMillis()))
+        .date(new Timestamp(System.currentTimeMillis()))
         .student(student)
         .fromGroup(fromGroup)
         .toGroup(toGroup)
@@ -47,7 +47,7 @@ public class SwapOfferTest {
     @Test
     public void whenSetStudent_thenSaveStudent(){
         Student newStudent = Student.builder()
-        .enrolmentNumber(20)
+        .enrollmentNumber(20)
         .mail("vorname.nachname@student.hs-rm.de")
         .build();
         swapOffer.setStudent(newStudent);

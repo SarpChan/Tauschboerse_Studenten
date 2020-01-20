@@ -7,7 +7,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import static org.junit.Assert.assertEquals;
 
 @SpringBootTest
-public class StudentPriorizesGroupTest {
+public class StudentPrioritizesGroupTest {
 
     private StudentPrioritizesGroup studentPrioritizesGroup;
 
@@ -19,7 +19,7 @@ public class StudentPriorizesGroupTest {
                 .build();
 
         Student student = Student.builder()
-                .enrolmentNumber(65253)
+                .enrollmentNumber(65253)
                 .build();
 
         studentPrioritizesGroup = StudentPrioritizesGroup.builder()
@@ -37,7 +37,7 @@ public class StudentPriorizesGroupTest {
 
     @Test
     public void whenGetStudent_thenReturnStudent(){
-        assertEquals(65253, studentPrioritizesGroup.getStudent().getEnrolmentNumber());
+        assertEquals(65253, studentPrioritizesGroup.getStudent().getEnrollmentNumber());
     }
 
     @Test
@@ -59,11 +59,11 @@ public class StudentPriorizesGroupTest {
     @Test
     public void whenSetStudent_thenReturnStudent(){
         Student student = Student.builder()
-                .enrolmentNumber(1711717)
+                .enrollmentNumber(1711717)
                 .build();
         studentPrioritizesGroup.setStudent(student);
 
-        assertEquals(1711717, studentPrioritizesGroup.getStudent().getEnrolmentNumber());
+        assertEquals(1711717, studentPrioritizesGroup.getStudent().getEnrollmentNumber());
     }
 
     @Test
