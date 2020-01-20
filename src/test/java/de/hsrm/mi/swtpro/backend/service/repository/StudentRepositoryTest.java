@@ -51,7 +51,7 @@ public class StudentRepositoryTest {
                 .examRegulation(examRegulation)
                 .attendCourse(studentAttendsCourse)
                 .user(user)
-                .enrolementNumber(1742).build();
+                .enrolmentNumber(1742).build();
 
         group = Group.builder()
                 .student(student)
@@ -155,8 +155,8 @@ public class StudentRepositoryTest {
 
     @Test
     public void whenFindByEnrolementNumber_thanReturnStudent(){
-        assertTrue(studentRepository.findByEnrolementNumber(1742).isPresent());
-        assertThat(studentRepository.findByEnrolementNumber(1742).get(), hasProperty("enrolementNumber", is(1742)));
+        assertTrue(studentRepository.findByEnrolmentNumber(1742).isPresent());
+        assertThat(studentRepository.findByEnrolmentNumber(1742).get(), hasProperty("enrolementNumber", is(1742)));
     }
 
 }

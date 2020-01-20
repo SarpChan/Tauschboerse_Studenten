@@ -100,7 +100,7 @@ public class CourseComponentRepositoryTest {
 
     @Test
     public void whenFindByStudentPassedExam_thenReturnCourseComponentList(){
-        assertThat(courseComponentRepository.findByStudentPassedExam(passedExam), hasItem(
+        assertThat(courseComponentRepository.findByStudentsPassedExam(passedExam), hasItem(
                 hasProperty("creditPoints",is(10))
         ));
     }

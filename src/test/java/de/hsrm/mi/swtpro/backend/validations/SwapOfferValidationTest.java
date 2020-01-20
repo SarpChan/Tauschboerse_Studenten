@@ -1,7 +1,5 @@
 package de.hsrm.mi.swtpro.backend.validations;
 
-import java.sql.Date;
-import java.sql.Time;
 import java.sql.Timestamp;
 import java.util.Set;
 
@@ -10,18 +8,18 @@ import javax.validation.Validation;
 import javax.validation.Validator;
 import javax.validation.ValidatorFactory;
 
+import de.hsrm.mi.swtpro.backend.model.SwapOffer;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
 import de.hsrm.mi.swtpro.backend.model.Group;
 import de.hsrm.mi.swtpro.backend.model.Student;
-import de.hsrm.mi.swtpro.backend.model.SwapOffer;;
 
 public class SwapOfferValidationTest {
 
     private Validator validator;
-    private  SwapOffer swapOffer;
+    private SwapOffer swapOffer;
     private Timestamp date;
     private Student student;
     private Group group;
@@ -32,7 +30,7 @@ public class SwapOfferValidationTest {
         validator = factory.getValidator();
         date = new Timestamp(System.currentTimeMillis());
         student = Student.builder()
-        .enrolementNumber(0)
+        .enrolmentNumber(0)
         .build();
         group = Group.builder()
         .build();
@@ -42,7 +40,7 @@ public class SwapOfferValidationTest {
     public void whenDateNotNull_thenNoConstraintViolation() {
         swapOffer = SwapOffer.builder()
         .id(17)
-        .date(date)
+        .timestamp(date)
         .student(student)
         .fromGroup(group)
         .toGroup(group)
@@ -56,7 +54,7 @@ public class SwapOfferValidationTest {
     public void whenDateNull_thenConstraintViolation() {
         swapOffer = SwapOffer.builder()
         .id(17)
-        .date(null)
+        .timestamp(null)
         .student(student)
         .fromGroup(group)
         .toGroup(group)
@@ -70,7 +68,7 @@ public class SwapOfferValidationTest {
     public void whenStudentNotNull_thenNoConstraintViolation() {
         swapOffer = SwapOffer.builder()
         .id(17)
-        .date(date)
+        .timestamp(date)
         .student(student)
         .fromGroup(group)
         .toGroup(group)
@@ -84,7 +82,7 @@ public class SwapOfferValidationTest {
     public void whenStudentNull_thenConstraintViolation() {
         swapOffer = SwapOffer.builder()
         .id(17)
-        .date(date)
+        .timestamp(date)
         .fromGroup(group)
         .toGroup(group)
         .build();
@@ -97,7 +95,7 @@ public class SwapOfferValidationTest {
     public void whenFromGroupNotNull_thenNoConstraintViolation() {
         swapOffer = SwapOffer.builder()
         .id(17)
-        .date(date)
+        .timestamp(date)
         .student(student)
         .fromGroup(group)
         .toGroup(group)
@@ -111,7 +109,7 @@ public class SwapOfferValidationTest {
     public void whenFromGroupNull_thenConstraintViolation() {
         swapOffer = SwapOffer.builder()
         .id(17)
-        .date(date)
+        .timestamp(date)
         .student(student)
         .toGroup(group)
         .build();
@@ -124,7 +122,7 @@ public class SwapOfferValidationTest {
     public void whenToGroupNotNull_thenNoConstraintViolation() {
         swapOffer = SwapOffer.builder()
         .id(17)
-        .date(date)
+        .timestamp(date)
         .student(student)
         .fromGroup(group)
         .toGroup(group)
@@ -138,7 +136,7 @@ public class SwapOfferValidationTest {
     public void whenToGroupNull_thenConstraintViolation() {
         swapOffer = SwapOffer.builder()
         .id(17)
-        .date(date)
+        .timestamp(date)
         .student(student)
         .fromGroup(group)
         .build();

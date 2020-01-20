@@ -27,7 +27,7 @@ public class StudentPrioritizesGroupValidationTest {
         ValidatorFactory factory = Validation.buildDefaultValidatorFactory();
         validator = factory.getValidator();
         student = Student.builder()
-        .enrolementNumber(0)
+        .enrolmentNumber(0)
         .build();
         group = Group.builder()
         .build();

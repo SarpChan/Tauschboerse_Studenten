@@ -10,6 +10,7 @@ import java.sql.Timestamp;
 
 import javax.persistence.EntityManager;
 
+import de.hsrm.mi.swtpro.backend.model.SwapOffer;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -19,7 +20,6 @@ import org.springframework.test.context.junit4.SpringRunner;
 
 import de.hsrm.mi.swtpro.backend.model.Group;
 import de.hsrm.mi.swtpro.backend.model.Student;
-import de.hsrm.mi.swtpro.backend.model.SwapOffer;
 
 @RunWith(SpringRunner.class)
 @DataJpaTest
@@ -45,7 +45,7 @@ public class SwapOfferRepositoryTest {
                 .toGroup(toGroup)
                 .fromGroup(fromGroup)
                 .student(student)
-                .date(new Timestamp(564738))
+                .timestamp(new Timestamp(564738))
                 .build();
 
         entityManager.persist(student);
@@ -85,7 +85,7 @@ public class SwapOfferRepositoryTest {
 
     @Test
     public void whenFindByDate_thenReturnSwapOfferList(){
-        assertThat(swapOfferRepository.findByDate(new Timestamp(564738)),
+        assertThat(swapOfferRepository.findByTimestamp(new Timestamp(564738)),
                 hasItem(hasProperty("date", is(new Timestamp(564738)))));
     }
 }

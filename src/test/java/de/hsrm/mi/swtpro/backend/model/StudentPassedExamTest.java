@@ -14,7 +14,7 @@ public class StudentPassedExamTest {
     @Before
     public void setUp(){
         Student student = Student.builder()
-                .enrolementNumber(178642)
+                .enrolmentNumber(178642)
                 .build();
 
         CourseComponent courseComponent = CourseComponent.builder()
@@ -36,7 +36,7 @@ public class StudentPassedExamTest {
 
     @Test
     public void whenGetStudent_thenReturnStudent(){
-        assertEquals(178642,studentPassedExam.getStudent().getEnrolementNumber());
+        assertEquals(178642,studentPassedExam.getStudent().getEnrolmentNumber());
     }
 
     @Test
@@ -53,11 +53,11 @@ public class StudentPassedExamTest {
     @Test
     public void whenSetStudent_thenSaveStudent(){
         Student student = Student.builder()
-                .enrolementNumber(222222)
+                .enrolmentNumber(222222)
                 .build();
         studentPassedExam.setStudent(student);
 
-        assertEquals(222222,studentPassedExam.getStudent().getEnrolementNumber());
+        assertEquals(222222,studentPassedExam.getStudent().getEnrolmentNumber());
     }
 
     @Test

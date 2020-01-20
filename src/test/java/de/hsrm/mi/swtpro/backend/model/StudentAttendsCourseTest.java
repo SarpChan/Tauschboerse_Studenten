@@ -22,7 +22,7 @@ public class StudentAttendsCourseTest {
                 .build();
 
         Student student = Student.builder()
-                .enrolementNumber(174217)
+                .enrolmentNumber(174217)
                 .build();
 
         Term term = Term.builder()
@@ -46,7 +46,7 @@ public class StudentAttendsCourseTest {
 
     @Test
     public void whenGetStudent_thenReturnStudent(){
-        assertEquals(174217,studentAttendsCourse.getStudent().getEnrolementNumber());
+        assertEquals(174217,studentAttendsCourse.getStudent().getEnrolmentNumber());
     }
 
     @Test
@@ -68,11 +68,11 @@ public class StudentAttendsCourseTest {
     @Test
     public void whenSetStudent_thenSaveStudent(){
         Student student = Student.builder()
-                .enrolementNumber(151578)
+                .enrolmentNumber(151578)
                 .build();
         studentAttendsCourse.setStudent(student);
 
-        assertEquals(151578,studentAttendsCourse.getStudent().getEnrolementNumber());
+        assertEquals(151578,studentAttendsCourse.getStudent().getEnrolmentNumber());
     }
 
     @Test

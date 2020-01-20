@@ -36,7 +36,7 @@ public class StudentValidationTest {
     @Test
     public void whenEnrolementNumberNotNullAndInRegex_thenNoConstraintViolation() {
         student = Student.builder()
-        .enrolementNumber(36)
+        .enrolmentNumber(36)
         .mail("vorname.nachname@student.hs-rm.de")
         .examRegulation(examRegulation)
         .enrolmentTerm(term)
@@ -48,7 +48,7 @@ public class StudentValidationTest {
     @Test
     public void whenMailNotNullAndInRegex_thenNoConstraintViolation() {
         student = Student.builder()
-        .enrolementNumber(13)
+        .enrolmentNumber(13)
         .mail("vorname.nachname@student.hs-rm.de")
         .examRegulation(examRegulation)
         .enrolmentTerm(term)
@@ -61,7 +61,7 @@ public class StudentValidationTest {
     @Test
     public void whenMailNull_thenConstraintViolation() {
         student = Student.builder()
-        .enrolementNumber(24)
+        .enrolmentNumber(24)
         .mail(null)
         .examRegulation(examRegulation)
         .enrolmentTerm(term)
@@ -74,7 +74,7 @@ public class StudentValidationTest {
     @Test
     public void whenMailNotInRegex_thenConstraintViolation() {
         student = Student.builder()
-        .enrolementNumber(0)
+        .enrolmentNumber(0)
         .mail("ibinkeinemail")
         .examRegulation(examRegulation)
         .enrolmentTerm(term)
@@ -87,7 +87,7 @@ public class StudentValidationTest {
     @Test
     public void whenExamRegulationNotNull_thenNoConstraintViolation() {
         student = Student.builder()
-        .enrolementNumber(12)
+        .enrolmentNumber(12)
         .mail("vorname.nachname@student.hs-rm.de")
         .examRegulation(examRegulation)
         .enrolmentTerm(term)
@@ -100,7 +100,7 @@ public class StudentValidationTest {
     @Test
     public void whenExamRegulationNull_thenConstraintViolation() {
         student = Student.builder()
-        .enrolementNumber(33)
+        .enrolmentNumber(33)
         .mail("vorname.nachname@student.hs-rm.de")
         .examRegulation(null)
         .enrolmentTerm(term)
@@ -113,7 +113,7 @@ public class StudentValidationTest {
     @Test
     public void whenTermNotNull_thenNoConstraintViolation() {
         student = Student.builder()
-        .enrolementNumber(55)
+        .enrolmentNumber(55)
         .mail("vorname.nachname@student.hs-rm.de")
         .examRegulation(examRegulation)
         .enrolmentTerm(term)
@@ -126,7 +126,7 @@ public class StudentValidationTest {
     @Test
     public void whenTermNull_thenConstraintViolation() {
         student = Student.builder()
-        .enrolementNumber(101)
+        .enrolmentNumber(101)
         .mail("vorname.nachname@student.hs-rm.de")
         .examRegulation(examRegulation)
         .enrolmentTerm(null)

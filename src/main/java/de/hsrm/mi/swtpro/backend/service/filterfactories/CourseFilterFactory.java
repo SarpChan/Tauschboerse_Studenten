@@ -12,7 +12,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @NoArgsConstructor
-@AllArgsConstructor
+//@AllArgsConstructor
 @SuperBuilder
 public class CourseFilterFactory extends FilterFactory<Course> {
 

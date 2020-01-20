@@ -19,7 +19,7 @@ public class StudentPriorizesGroupTest {
                 .build();
 
         Student student = Student.builder()
-                .enrolementNumber(65253)
+                .enrolmentNumber(65253)
                 .build();
 
         studentPrioritizesGroup = StudentPrioritizesGroup.builder()
@@ -37,7 +37,7 @@ public class StudentPriorizesGroupTest {
 
     @Test
     public void whenGetStudent_thenReturnStudent(){
-        assertEquals(65253, studentPrioritizesGroup.getStudent().getEnrolementNumber());
+        assertEquals(65253, studentPrioritizesGroup.getStudent().getEnrolmentNumber());
     }
 
     @Test
@@ -59,11 +59,11 @@ public class StudentPriorizesGroupTest {
     @Test
     public void whenSetStudent_thenReturnStudent(){
         Student student = Student.builder()
-                .enrolementNumber(1711717)
+                .enrolmentNumber(1711717)
                 .build();
         studentPrioritizesGroup.setStudent(student);
 
-        assertEquals(1711717, studentPrioritizesGroup.getStudent().getEnrolementNumber());
+        assertEquals(1711717, studentPrioritizesGroup.getStudent().getEnrolmentNumber());
     }
 
     @Test
