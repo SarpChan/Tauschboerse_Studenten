@@ -43,7 +43,7 @@ public class Room {
 
     @Singular("group")
     @Getter @Setter
-    @OneToMany(mappedBy = "room",cascade= CascadeType.ALL)
+    @OneToMany(mappedBy = "room")
     private Set<Group> groups;
 
 }

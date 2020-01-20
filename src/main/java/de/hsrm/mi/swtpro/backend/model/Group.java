@@ -68,7 +68,7 @@ public class Group {
 
     @Getter @Setter
     @ManyToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name="courseComponent_id")
+    @JoinColumn(name="course_component_id")
     @NotNull
     private CourseComponent courseComponent;
 

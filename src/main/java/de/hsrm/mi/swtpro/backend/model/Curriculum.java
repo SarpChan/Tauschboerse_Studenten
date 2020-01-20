@@ -27,8 +27,8 @@ public class Curriculum {
 
     @Getter @Setter
     @ManyToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name="examRegulation_id")
-    //@NotNull
+    @JoinColumn(name="exam_regulation_id")
+    @NotNull
     private ExamRegulation examRegulation;
 
     @Singular("moduleInCurriculum")

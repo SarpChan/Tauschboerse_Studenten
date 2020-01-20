@@ -44,352 +44,352 @@ public class JSONGenerator {
         entityManager = emf.createEntityManager();
         
         University uni = University.builder().name("Hochschule RheinMain").address("Kurt-Schuhmacher-Ring 18").build();
-        entityManager.persist(uni);
+        //entityManager.persist(uni);
 
         Campus ude = Campus.builder().name("Unter den Eichen").address("Unter den Eichen 6").university(uni).build();
-        entityManager.persist(ude);
+        //entityManager.persist(ude);
 
 
         // Building
 
         Building dBuilding = Building.builder().name("D").campus(ude).build();
-        entityManager.persist(dBuilding);
+        //entityManager.persist(dBuilding);
         Building cBuilding = Building.builder().name("C").campus(ude).build();
-        entityManager.persist(cBuilding);
+        //entityManager.persist(cBuilding);
 
 
         // Rooms
 
         Room r11 = Room.builder().number(11).seats(100).building(dBuilding).build();
-        entityManager.persist(r11);
+        //entityManager.persist(r11);
         Room r12 = Room.builder().number(12).seats(20).building(dBuilding).build();
-        entityManager.persist(r12);
+        //entityManager.persist(r12);
         Room r13 = Room.builder().number(13).seats(20).building(dBuilding).build();
-        entityManager.persist(r13);
+        //entityManager.persist(r13);
         Room r14 = Room.builder().number(14).seats(60).building(dBuilding).build();
-        entityManager.persist(r14);
+        //entityManager.persist(r14);
         Room r17 = Room.builder().number(17).seats(80).building(dBuilding).build();
-        entityManager.persist(r17);
+        //entityManager.persist(r17);
         Room r23 = Room.builder().number(23).seats(25).building(cBuilding).build();
-        entityManager.persist(r23);
+        //entityManager.persist(r23);
         Room r25 = Room.builder().number(25).seats(40).building(cBuilding).build();
-        entityManager.persist(r25);
+        //entityManager.persist(r25);
 
 
         // Terms
 
         Term ws1920 = Term.builder().startDate(Date.valueOf("2019-10-01")).endDate(Date.valueOf("2020-03-31")).period(1).build();
-        entityManager.persist(ws1920);
+        //entityManager.persist(ws1920);
         Term ss2019 = Term.builder().startDate(Date.valueOf("2019-04-01")).endDate(Date.valueOf("2019-08-31")).period(2).build();
-        entityManager.persist(ss2019);
+        //entityManager.persist(ss2019);
 
 
         // Fields of Study
 
         FieldOfStudy informatik = FieldOfStudy.builder().title("Informatik").university(uni).build();
-        entityManager.persist(informatik);
+        //entityManager.persist(informatik);
 
 
         // Study Program
 
         StudyProgram medieninformatik = StudyProgram.builder().title("Medieninformatik").degree("Bachelor").fieldOfStudy(informatik).build();
-        entityManager.persist(medieninformatik);
+        //entityManager.persist(medieninformatik);
         StudyProgram angewandteinformatik = StudyProgram.builder().title("Angewandte Informatik").degree("Bachelor").fieldOfStudy(informatik).build();
-        entityManager.persist(angewandteinformatik);
+        //entityManager.persist(angewandteinformatik);
 
 
         // PO
 
         ExamRegulation po2017 = ExamRegulation.builder().date(Date.valueOf("2017-10-01")).studyProgram(medieninformatik).build();
-        entityManager.persist(po2017);
+        //entityManager.persist(po2017);
         ExamRegulation po2016 = ExamRegulation.builder().date(Date.valueOf("2016-10-01")).studyProgram(angewandteinformatik).build();
-        entityManager.persist(po2016);
+        //entityManager.persist(po2016);
 
 
         // User
 
         User wweitz = User.builder().firstName("Wolfgang").lastName("Weitz").loginName("wweitz").password("wweitz").build();
-        entityManager.persist(wweitz);
+        //entityManager.persist(wweitz);
         User jberdux = User.builder().firstName("Joerg").lastName("Berdux").loginName("jberdux").password("jberdux").build();
-        entityManager.persist(jberdux);
+        //entityManager.persist(jberdux);
         User rreichenauer = User.builder().firstName("Roland").lastName("Reichenauer").loginName("rreichenauer").password("rreichenauer").build();
-        entityManager.persist(rreichenauer);
+        //entityManager.persist(rreichenauer);
         User uschwaneke = User.builder().firstName("Ulrich").lastName("Schwaneke").loginName("uschwaneke").password("uschwaneke").build();
-        entityManager.persist(uschwaneke);
+        //entityManager.persist(uschwaneke);
 
         User nahlers = User.builder().firstName("Nicklas").lastName("Ahlers").loginName("nahlers").password("nahlers").build();
-        entityManager.persist(nahlers);
+        //entityManager.persist(nahlers);
         User vesper = User.builder().firstName("Vanessa").lastName("Esper").loginName("vesper").password("vesper").build();
-        entityManager.persist(vesper);
+        //entityManager.persist(vesper);
         User tthiel = User.builder().firstName("Tobi").lastName("Thiel").loginName("tthiel").password("tthiel").build();
-        entityManager.persist(tthiel);
+        //entityManager.persist(tthiel);
         User jwirt = User.builder().firstName("Julia").lastName("Wirt").loginName("jwirt").password("jwirt").build();
-        entityManager.persist(jwirt);
+        //entityManager.persist(jwirt);
         User jmuel = User.builder().firstName("Julius").lastName("Muel").loginName("jmuel").password("jmuel").build();
-        entityManager.persist(jmuel);
+        //entityManager.persist(jmuel);
         User ydeuster = User.builder().firstName("Yen").lastName("Deuster").loginName("ydeuster").password("ydeuster").build();
-        entityManager.persist(ydeuster);
+        //entityManager.persist(ydeuster);
 
 
         // Roles
 
         Student stu_esper = Student.builder().user(vesper).enrolmentNumber(1076576)
                 .enrolmentTerm(ss2019).mail("esper@mail.com").examRegulation(po2017).build();
-        entityManager.persist(stu_esper);
+        //entityManager.persist(stu_esper);
         Student stu_ahlers = Student.builder().user(nahlers).enrolmentNumber(1076688)
                 .enrolmentTerm(ss2019).mail("ahlers@mail.com").examRegulation(po2017).build();
-        entityManager.persist(stu_ahlers);
+        //entityManager.persist(stu_ahlers);
         Student stu_deuster = Student.builder().user(ydeuster).enrolmentNumber(1075577)
                 .enrolmentTerm(ss2019).mail("deuster@mail.com").examRegulation(po2017).build();
-        entityManager.persist(stu_deuster);
+        //entityManager.persist(stu_deuster);
         Student stu_wirt = Student.builder().user(jwirt).enrolmentNumber(1078833)
                 .enrolmentTerm(ss2019).mail("wirt@mail.com").examRegulation(po2017).build();
-        entityManager.persist(stu_wirt);
+        //entityManager.persist(stu_wirt);
         Student stu_thiel = Student.builder().user(tthiel).enrolmentNumber(1074411)
                 .enrolmentTerm(ss2019).mail("thiel@mail.com").examRegulation(po2017).build();
-        entityManager.persist(stu_thiel);
+        //entityManager.persist(stu_thiel);
 
         Lecturer lec_weitz = Lecturer.builder().priviledge(1).user(wweitz).build();
-        entityManager.persist(lec_weitz);
+        //entityManager.persist(lec_weitz);
         Lecturer lec_berdux = Lecturer.builder().priviledge(1).user(jberdux).build();
-        entityManager.persist(lec_berdux);
+        //entityManager.persist(lec_berdux);
         Lecturer lec_reichenauer = Lecturer.builder().priviledge(1).user(rreichenauer).build();
-        entityManager.persist(lec_reichenauer);
+        //entityManager.persist(lec_reichenauer);
         Lecturer lec_schwaneke = Lecturer.builder().priviledge(1).user(uschwaneke).build();
-        entityManager.persist(lec_schwaneke);
+        //entityManager.persist(lec_schwaneke);
 
         Administrator adm_weitz = Administrator.builder().priviledge(1).user(wweitz).build();
-        entityManager.persist(adm_weitz);
+        //entityManager.persist(adm_weitz);
 
 
         // Curriculum
 
         Curriculum curriculumMi = Curriculum.builder().examRegulation(po2017).termPeriod(1).build();
-        entityManager.persist(curriculumMi);
+        //entityManager.persist(curriculumMi);
         Curriculum curriculumAi = Curriculum.builder().examRegulation(po2016).termPeriod(1).build();
-        entityManager.persist(curriculumAi);
+        //entityManager.persist(curriculumAi);
 
 
         // Modules
 
         Module mProgrammieren1 = Module.builder().title("Programmieren 1").creditPoints(5).period(1).build();
-        entityManager.persist(mProgrammieren1);
+        //entityManager.persist(mProgrammieren1);
         Module mProgrammieren2 = Module.builder().title("Programmieren 2").creditPoints(5).period(1).build();
-        entityManager.persist(mProgrammieren2);
+        //entityManager.persist(mProgrammieren2);
         Module mProgrammieren3 = Module.builder().title("Programmieren 3").creditPoints(5).period(1).build();
-        entityManager.persist(mProgrammieren3);
+        //entityManager.persist(mProgrammieren3);
         Module mMathe1 = Module.builder().title("Mathe 1").creditPoints(5).period(1).build();
-        entityManager.persist(mMathe1);
+        //entityManager.persist(mMathe1);
         Module mMathe2 = Module.builder().title("Mathe 2").creditPoints(5).period(2).build();
-        entityManager.persist(mMathe2);
+        //entityManager.persist(mMathe2);
         Module mMathe3 = Module.builder().title("Mathe 3").creditPoints(5).period(3).build();
-        entityManager.persist(mMathe3);
+        //entityManager.persist(mMathe3);
 
 
         // Module in Curriculum
 
         ModuleInCurriculum prog1inAi = ModuleInCurriculum.builder().curriculum(curriculumAi).module(mProgrammieren1).termPeriod(1).build();
-        entityManager.persist(prog1inAi);
+        //entityManager.persist(prog1inAi);
         ModuleInCurriculum prog2inAi = ModuleInCurriculum.builder().curriculum(curriculumAi).module(mProgrammieren2).termPeriod(2).build();
-        entityManager.persist(prog2inAi);
+        //entityManager.persist(prog2inAi);
         ModuleInCurriculum prog1inMi = ModuleInCurriculum.builder().curriculum(curriculumMi).module(mProgrammieren1).termPeriod(1).build();
-        entityManager.persist(prog1inMi);
+        //entityManager.persist(prog1inMi);
         ModuleInCurriculum prog2inMi = ModuleInCurriculum.builder().curriculum(curriculumMi).module(mProgrammieren2).termPeriod(2).build();
-        entityManager.persist(prog2inMi);
+        //entityManager.persist(prog2inMi);
         ModuleInCurriculum prog3inMi = ModuleInCurriculum.builder().curriculum(curriculumMi).module(mProgrammieren3).termPeriod(3).build();
-        entityManager.persist(prog3inMi);
+        //entityManager.persist(prog3inMi);
         ModuleInCurriculum mathe1inAi = ModuleInCurriculum.builder().curriculum(curriculumAi).module(mMathe1).termPeriod(1).build();
-        entityManager.persist(mathe1inAi);
+        //entityManager.persist(mathe1inAi);
         ModuleInCurriculum mathe2inAi = ModuleInCurriculum.builder().curriculum(curriculumAi).module(mMathe2).termPeriod(2).build();
-        entityManager.persist(mathe2inAi);
+        //entityManager.persist(mathe2inAi);
         ModuleInCurriculum mathe3inAi = ModuleInCurriculum.builder().curriculum(curriculumAi).module(mMathe3).termPeriod(3).build();
-        entityManager.persist(mathe3inAi);
+        //entityManager.persist(mathe3inAi);
         ModuleInCurriculum mathe1inMi = ModuleInCurriculum.builder().curriculum(curriculumMi).module(mMathe1).termPeriod(1).build();
-        entityManager.persist(mathe1inMi);
+        //entityManager.persist(mathe1inMi);
         ModuleInCurriculum mathe2inMi = ModuleInCurriculum.builder().curriculum(curriculumMi).module(mMathe2).termPeriod(2).build();
-        entityManager.persist(mathe2inMi);
+        //entityManager.persist(mathe2inMi);
 
 
         // Courses
 
         Course cProgrammieren1 = Course.builder().title("Programmieren 1").owner(jberdux).build();
-        entityManager.persist(cProgrammieren1);
+        //entityManager.persist(cProgrammieren1);
         Course cProgrammieren2 = Course.builder().title("Programmieren 2").owner(jberdux).build();
-        entityManager.persist(cProgrammieren2);
+        //entityManager.persist(cProgrammieren2);
         Course cProgrammieren3 = Course.builder().title("Programmieren 3").owner(wweitz).build();
-        entityManager.persist(cProgrammieren3);
+        //entityManager.persist(cProgrammieren3);
         Course cMathe1 = Course.builder().title("Lineare Algebra").owner(rreichenauer).build();
-        entityManager.persist(cMathe1);
+        //entityManager.persist(cMathe1);
         Course cMathe2 = Course.builder().title("Analysis").owner(rreichenauer).build();
-        entityManager.persist(cMathe2);
+        //entityManager.persist(cMathe2);
         Course cMathe3 = Course.builder().title("Mathe 3").owner(uschwaneke).build();
-        entityManager.persist(cMathe3);
+        //entityManager.persist(cMathe3);
 
 
         // Course Component
 
         CourseComponent prog1V = CourseComponent.builder().course(cProgrammieren1).creditPoints(3).type(CourseType.LECTURE).exam("Klausur").build();
-        entityManager.persist(prog1V);
+        //entityManager.persist(prog1V);
         CourseComponent prog1P = CourseComponent.builder().course(cProgrammieren1).exam("Praktische Tätigkeit").type(CourseType.PRACTICE).creditPoints(3).build();
-        entityManager.persist(prog1P);
+        //entityManager.persist(prog1P);
 
         CourseComponent prog2V = CourseComponent.builder().course(cProgrammieren2).creditPoints(3).type(CourseType.LECTURE).exam("Klausur").build();
-        entityManager.persist(prog2V);
+        //entityManager.persist(prog2V);
         CourseComponent prog2P = CourseComponent.builder().course(cProgrammieren2).exam("Praktische Tätigkeit").type(CourseType.PRACTICE).creditPoints(3).build();
-        entityManager.persist(prog2P);
+        //entityManager.persist(prog2P);
 
         CourseComponent prog3V = CourseComponent.builder().course(cProgrammieren3).creditPoints(3).type(CourseType.LECTURE).exam("Klausur").build();
-        entityManager.persist(prog3V);
+        //entityManager.persist(prog3V);
         CourseComponent prog3P = CourseComponent.builder().course(cProgrammieren3).exam("Praktische Tätigkeit").type(CourseType.PRACTICE).creditPoints(3).build();
-        entityManager.persist(prog3P);
+        //entityManager.persist(prog3P);
 
         CourseComponent mathe1V = CourseComponent.builder().course(cMathe1).creditPoints(5).type(CourseType.LECTURE).exam("Klausur").build();
-        entityManager.persist(mathe1V);
+        //entityManager.persist(mathe1V);
         CourseComponent mathe1P = CourseComponent.builder().course(cMathe1).exam("Praktische Tätigkeit").type(CourseType.PRACTICE).creditPoints(0).build();
-        entityManager.persist(mathe1P);
+        //entityManager.persist(mathe1P);
 
         CourseComponent mathe2V = CourseComponent.builder().course(cMathe2).creditPoints(5).type(CourseType.LECTURE).exam("Klausur").build();
-        entityManager.persist(mathe2V);
+        //entityManager.persist(mathe2V);
         CourseComponent mathe2P = CourseComponent.builder().course(cMathe2).exam("Praktische Tätigkeit").type(CourseType.PRACTICE).creditPoints(0).build();
-        entityManager.persist(mathe2P);
+        //entityManager.persist(mathe2P);
 
         CourseComponent mathe3V = CourseComponent.builder().course(cMathe3).creditPoints(5).type(CourseType.LECTURE).exam("Klausur").build();
-        entityManager.persist(mathe3V);
+        //entityManager.persist(mathe3V);
         CourseComponent mathe3P = CourseComponent.builder().course(cMathe3).exam("Praktische Tätigkeit").type(CourseType.PRACTICE).creditPoints(0).build();
-        entityManager.persist(mathe3P);
+        //entityManager.persist(mathe3P);
 
 
         // Student Attends Course
 
         StudentAttendsCourse esperProg2 = StudentAttendsCourse.builder().student(stu_esper).course(cProgrammieren2).term(ss2019).build();
-        entityManager.persist(esperProg2);
+        //entityManager.persist(esperProg2);
         StudentAttendsCourse esperMathe2 = StudentAttendsCourse.builder().student(stu_esper).course(cMathe2).term(ss2019).build();
-        entityManager.persist(esperMathe2);
+        //entityManager.persist(esperMathe2);
         StudentAttendsCourse esperProg3 = StudentAttendsCourse.builder().student(stu_esper).course(cProgrammieren3).term(ws1920).build();
-        entityManager.persist(esperProg3);
+        //entityManager.persist(esperProg3);
         StudentAttendsCourse esperMathe3 = StudentAttendsCourse.builder().student(stu_esper).course(cMathe3).term(ws1920).build();
-        entityManager.persist(esperMathe3);
+        //entityManager.persist(esperMathe3);
 
         StudentAttendsCourse ahlersMathe3 = StudentAttendsCourse.builder().student(stu_ahlers).course(cMathe3).term(ws1920).build();
-        entityManager.persist(ahlersMathe3);
+        //entityManager.persist(ahlersMathe3);
         StudentAttendsCourse ahlersProg3 = StudentAttendsCourse.builder().student(stu_ahlers).course(cProgrammieren3).term(ws1920).build();
-        entityManager.persist(ahlersProg3);
+        //entityManager.persist(ahlersProg3);
 
         StudentAttendsCourse thielMathe1 = StudentAttendsCourse.builder().student(stu_thiel).course(cMathe1).term(ws1920).build();
-        entityManager.persist(thielMathe1);
+        //entityManager.persist(thielMathe1);
         StudentAttendsCourse thielMathe3 = StudentAttendsCourse.builder().student(stu_thiel).course(cMathe3).term(ws1920).build();
-        entityManager.persist(thielMathe3);
+        //entityManager.persist(thielMathe3);
         StudentAttendsCourse thielProg3 = StudentAttendsCourse.builder().student(stu_thiel).course(cProgrammieren3).term(ws1920).build();
-        entityManager.persist(thielProg3);
+        //entityManager.persist(thielProg3);
 
 
         // Groups
 
-        Group prog1Vgroup = Group.builder().lecturer(lec_berdux).slots(100).room(r11).term(ws1920).dayOfWeek((DayOfWeek.MONDAY)).groupChar('A')
+        Group prog1Vgroup = Group.builder().lecturer(lec_berdux).slots(70).room(r11).term(ws1920).dayOfWeek((DayOfWeek.MONDAY)).groupChar('A')
                 .courseComponent(prog3V).startTime(LocalTime.of(10,00)).endTime(LocalTime.of(11,30)).build();
-        entityManager.persist(prog1Vgroup);
+        //entityManager.persist(prog1Vgroup);
         Group prog1PgroupA = Group.builder().lecturer(lec_berdux).slots(20).room(r12).term(ws1920).dayOfWeek((DayOfWeek.MONDAY)).groupChar('A')
                 .courseComponent(prog3P).startTime(LocalTime.of(10,00)).endTime(LocalTime.of(11,30)).build();
-        entityManager.persist(prog1PgroupA);
+        //entityManager.persist(prog1PgroupA);
         Group prog1PgroupB = Group.builder().lecturer(lec_berdux).slots(20).room(r12).term(ws1920).dayOfWeek((DayOfWeek.MONDAY)).groupChar('B')
                 .courseComponent(prog3P).startTime(LocalTime.of(11,45)).endTime(LocalTime.of(11,30)).build();
-        entityManager.persist(prog1PgroupB);
+        //entityManager.persist(prog1PgroupB);
 
-        Group prog2Vgroup = Group.builder().lecturer(lec_berdux).slots(100).room(r11).term(ss2019).dayOfWeek((DayOfWeek.MONDAY)).groupChar('A')
+        Group prog2Vgroup = Group.builder().lecturer(lec_berdux).slots(80).room(r11).term(ss2019).dayOfWeek((DayOfWeek.MONDAY)).groupChar('A')
                 .courseComponent(prog3V).startTime(LocalTime.of(10,00)).endTime(LocalTime.of(11,30)).build();
-        entityManager.persist(prog2Vgroup);
+        //entityManager.persist(prog2Vgroup);
         Group prog2PgroupA = Group.builder().lecturer(lec_berdux).slots(20).room(r13).term(ss2019).dayOfWeek((DayOfWeek.MONDAY)).groupChar('A')
                 .courseComponent(prog3P).startTime(LocalTime.of(10,00)).endTime(LocalTime.of(11,30)).build();
-        entityManager.persist(prog2PgroupA);
+        //entityManager.persist(prog2PgroupA);
         Group prog2PgroupB = Group.builder().lecturer(lec_berdux).slots(20).room(r13).term(ss2019).dayOfWeek((DayOfWeek.MONDAY)).groupChar('B')
                 .courseComponent(prog3P).startTime(LocalTime.of(11,45)).endTime(LocalTime.of(11,30)).build();
-        entityManager.persist(prog2PgroupB);
+        //entityManager.persist(prog2PgroupB);
 
-        Group prog3Vgroup = Group.builder().lecturer(lec_weitz).slots(100).room(r11).term(ws1920).dayOfWeek((DayOfWeek.TUESDAY)).groupChar('A')
+        Group prog3Vgroup = Group.builder().lecturer(lec_weitz).slots(90).room(r11).term(ws1920).dayOfWeek((DayOfWeek.TUESDAY)).groupChar('A')
                 .courseComponent(prog3V).startTime(LocalTime.of(8,15)).endTime(LocalTime.of(11,30)).build();
-        entityManager.persist(prog3Vgroup);
+        //entityManager.persist(prog3Vgroup);
         Group prog3PgroupA = Group.builder().lecturer(lec_weitz).slots(20).room(r12).term(ws1920).dayOfWeek((DayOfWeek.TUESDAY)).groupChar('A')
                 .courseComponent(prog3P).startTime(LocalTime.of(10,0)).endTime(LocalTime.of(11,30)).build();
-        entityManager.persist(prog3PgroupA);
+        //entityManager.persist(prog3PgroupA);
         Group prog3PgroupB = Group.builder().lecturer(lec_weitz).slots(20).room(r12).term(ws1920).dayOfWeek((DayOfWeek.TUESDAY)).groupChar('B')
                 .courseComponent(prog3P).startTime(LocalTime.of(11,45)).endTime(LocalTime.of(11,30)).build();
-        entityManager.persist(prog3PgroupB);
+        //entityManager.persist(prog3PgroupB);
         Group prog3PgroupC = Group.builder().lecturer(lec_weitz).slots(20).room(r13).term(ws1920).dayOfWeek((DayOfWeek.TUESDAY)).groupChar('C')
                 .courseComponent(prog3P).startTime(LocalTime.of(10,0)).endTime(LocalTime.of(11,30)).build();
-        entityManager.persist(prog3PgroupC);
+        //entityManager.persist(prog3PgroupC);
         Group prog3PgroupD = Group.builder().lecturer(lec_weitz).slots(20).room(r13).term(ws1920).dayOfWeek((DayOfWeek.TUESDAY)).groupChar('D')
                 .courseComponent(prog3P).startTime(LocalTime.of(11,45)).endTime(LocalTime.of(11,30)).build();
-        entityManager.persist(prog3PgroupD);
+        //entityManager.persist(prog3PgroupD);
 
         Group mathe1Vgroup = Group.builder().lecturer(lec_reichenauer).slots(100).room(r11).term(ws1920).dayOfWeek((DayOfWeek.WEDNESDAY)).groupChar('A')
                 .courseComponent(mathe1V).startTime(LocalTime.of(10,00)).endTime(LocalTime.of(11,30)).build();
-        entityManager.persist(mathe1Vgroup);
+        //entityManager.persist(mathe1Vgroup);
         Group mathe1PgroupA = Group.builder().lecturer(lec_reichenauer).slots(20).room(r11).term(ws1920).dayOfWeek((DayOfWeek.WEDNESDAY)).groupChar('A')
                 .courseComponent(mathe1P).startTime(LocalTime.of(10,00)).endTime(LocalTime.of(11,30)).build();
-        entityManager.persist(mathe1PgroupA);
+        //entityManager.persist(mathe1PgroupA);
         Group mathe1PgroupB = Group.builder().lecturer(lec_reichenauer).slots(20).room(r11).term(ws1920).dayOfWeek((DayOfWeek.WEDNESDAY)).groupChar('B')
                 .courseComponent(mathe1P).startTime(LocalTime.of(11,45)).endTime(LocalTime.of(11,30)).build();
-        entityManager.persist(mathe1PgroupB);
+        //entityManager.persist(mathe1PgroupB);
 
-        Group mathe2Vgroup = Group.builder().lecturer(lec_reichenauer).slots(100).room(r11).term(ss2019).dayOfWeek((DayOfWeek.WEDNESDAY)).groupChar('A')
+        Group mathe2Vgroup = Group.builder().lecturer(lec_reichenauer).slots(110).room(r11).term(ss2019).dayOfWeek((DayOfWeek.WEDNESDAY)).groupChar('A')
                 .courseComponent(mathe1V).startTime(LocalTime.of(10,00)).endTime(LocalTime.of(11,30)).build();
-        entityManager.persist(mathe2Vgroup);
+        //entityManager.persist(mathe2Vgroup);
         Group mathe2PgroupA = Group.builder().lecturer(lec_reichenauer).slots(20).room(r11).term(ss2019).dayOfWeek((DayOfWeek.WEDNESDAY)).groupChar('A')
                 .courseComponent(mathe1P).startTime(LocalTime.of(10,00)).endTime(LocalTime.of(11,30)).build();
-        entityManager.persist(mathe2PgroupA);
+        //entityManager.persist(mathe2PgroupA);
         Group mathe2PgroupB = Group.builder().lecturer(lec_reichenauer).slots(20).room(r11).term(ss2019).dayOfWeek((DayOfWeek.WEDNESDAY)).groupChar('B')
                 .courseComponent(mathe1P).startTime(LocalTime.of(11,45)).endTime(LocalTime.of(11,30)).build();
-        entityManager.persist(mathe2PgroupB);
+        //entityManager.persist(mathe2PgroupB);
 
-        Group mathe3Vgroup = Group.builder().lecturer(lec_schwaneke).slots(100).room(r14).term(ws1920).dayOfWeek((DayOfWeek.THURSDAY)).groupChar('A')
+        Group mathe3Vgroup = Group.builder().lecturer(lec_schwaneke).slots(120).room(r14).term(ws1920).dayOfWeek((DayOfWeek.THURSDAY)).groupChar('A')
                 .courseComponent(mathe3V).startTime(LocalTime.of(10,00)).endTime(LocalTime.of(11,30)).build();
-        entityManager.persist(mathe3Vgroup);
+        //entityManager.persist(mathe3Vgroup);
         Group mathe3PgroupA = Group.builder().lecturer(lec_schwaneke).slots(20).room(r17).term(ws1920).dayOfWeek((DayOfWeek.THURSDAY)).groupChar('A')
                 .courseComponent(mathe3P).startTime(LocalTime.of(10,00)).endTime(LocalTime.of(11,30)).build();
-        entityManager.persist(mathe3PgroupA);
+        //entityManager.persist(mathe3PgroupA);
         Group mathe3PgroupB = Group.builder().lecturer(lec_schwaneke).slots(20).room(r17).term(ws1920).dayOfWeek((DayOfWeek.THURSDAY)).groupChar('B')
                 .courseComponent(mathe3P).startTime(LocalTime.of(11,45)).endTime(LocalTime.of(11,30)).build();
-        entityManager.persist(mathe3PgroupB);
+        //entityManager.persist(mathe3PgroupB);
 
 
         // Swap Offer
 
         SwapOffer esperMathe3P_B_to_A = SwapOffer.builder().student(stu_esper).timestamp(new Timestamp(System.currentTimeMillis())).fromGroup(mathe3PgroupB).toGroup(mathe3PgroupA).build();
-        entityManager.persist(esperMathe3P_B_to_A);
+        //entityManager.persist(esperMathe3P_B_to_A);
         SwapOffer esperProg3P_A_to_B = SwapOffer.builder().student(stu_esper).timestamp(new Timestamp(System.currentTimeMillis())).fromGroup(prog3PgroupA).toGroup(prog3PgroupB).build();
-        entityManager.persist(esperProg3P_A_to_B);
+        //entityManager.persist(esperProg3P_A_to_B);
 
         SwapOffer thielMathe3P_B_to_A = SwapOffer.builder().student(stu_thiel).timestamp(new Timestamp(System.currentTimeMillis())).fromGroup(mathe3PgroupB).toGroup(mathe3PgroupA).build();
-        entityManager.persist(thielMathe3P_B_to_A);
+        //entityManager.persist(thielMathe3P_B_to_A);
         SwapOffer thielProg3P_B_to_A = SwapOffer.builder().student(stu_thiel).timestamp(new Timestamp(System.currentTimeMillis())).fromGroup(prog3PgroupB).toGroup(prog3PgroupA).build();
-        entityManager.persist(thielProg3P_B_to_A);
+        //entityManager.persist(thielProg3P_B_to_A);
 
         SwapOffer ahlersMathe3P_A_to_B = SwapOffer.builder().student(stu_ahlers).timestamp(new Timestamp(System.currentTimeMillis())).fromGroup(mathe3PgroupA).toGroup(mathe3PgroupB).build();
-        entityManager.persist(ahlersMathe3P_A_to_B);
+        //entityManager.persist(ahlersMathe3P_A_to_B);
         SwapOffer ahlersProg3P_B_to_A = SwapOffer.builder().student(stu_ahlers).timestamp(new Timestamp(System.currentTimeMillis())).fromGroup(prog3PgroupB).toGroup(prog3PgroupA).build();
-        entityManager.persist(ahlersProg3P_B_to_A);
+        //entityManager.persist(ahlersProg3P_B_to_A);
 
 
         // Student Passed Exam
 
         StudentPassedExam ahlersPassMathe1V = StudentPassedExam.builder().student(stu_ahlers).courseComponent(mathe1V).grade(1.7f).build();
-        entityManager.persist(ahlersPassMathe1V);
+        //entityManager.persist(ahlersPassMathe1V);
         StudentPassedExam ahlersPassMathe1P = StudentPassedExam.builder().student(stu_ahlers).courseComponent(mathe1P).build();
-        entityManager.persist(ahlersPassMathe1P);
+        //entityManager.persist(ahlersPassMathe1P);
         StudentPassedExam ahlersPassProg1V = StudentPassedExam.builder().student(stu_ahlers).courseComponent(prog1V).grade(1.0f).build();
-        entityManager.persist(ahlersPassProg1V);
+        //entityManager.persist(ahlersPassProg1V);
         StudentPassedExam ahlersPassProg1P = StudentPassedExam.builder().student(stu_ahlers).courseComponent(prog1P).build();
-        entityManager.persist(ahlersPassProg1P);
+        //entityManager.persist(ahlersPassProg1P);
 
         StudentPassedExam thielPassMathe2V = StudentPassedExam.builder().student(stu_thiel).courseComponent(mathe2V).grade(1.3f).build();
-        entityManager.persist(thielPassMathe2V);
+        //entityManager.persist(thielPassMathe2V);
         StudentPassedExam thielPassMathe2P = StudentPassedExam.builder().student(stu_thiel).courseComponent(mathe2P).build();
-        entityManager.persist(thielPassMathe2P);
+        //entityManager.persist(thielPassMathe2P);
 
         StudentPassedExam esperPassMathe1V = StudentPassedExam.builder().student(stu_esper).courseComponent(mathe1V).grade(1.3f).build();
-        entityManager.persist(esperPassMathe1V);
+        //entityManager.persist(esperPassMathe1V);
         StudentPassedExam esperPassMathe1P = StudentPassedExam.builder().student(stu_esper).courseComponent(mathe1P).build();
-        entityManager.persist(esperPassMathe1P);
+        //entityManager.persist(esperPassMathe1P);
 
 
         // C O N N E C T I O N     T A B L E S
@@ -890,6 +890,7 @@ public class JSONGenerator {
             e.printStackTrace();
             //System.out.println("JSON new File Error");
         }
+        universityRepository.saveAndFlush(uni);
         return file;
         
     }
