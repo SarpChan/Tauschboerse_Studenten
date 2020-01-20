@@ -23,7 +23,7 @@ public class Curriculum {
 
     @Getter @Setter
     @NotNull
-    private int termPeriod;
+    private int maxTerms;
 
     @Getter @Setter
     @ManyToOne

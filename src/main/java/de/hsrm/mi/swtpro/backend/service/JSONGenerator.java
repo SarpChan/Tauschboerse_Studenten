@@ -7,6 +7,7 @@ import de.hsrm.mi.swtpro.backend.service.repository.StudyProgramRepository;
 import de.hsrm.mi.swtpro.backend.service.repository.UniversityRepository;
 import org.hibernate.Hibernate;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -37,6 +38,8 @@ public class JSONGenerator {
     UniversityRepository universityRepository;
     @Autowired
     StudyProgramRepository studyProgramRepository;
+    @Autowired
+    PasswordEncoder passwordencoder;
 
 
     public File createJSON() {
@@ -53,7 +56,7 @@ public class JSONGenerator {
         entityManager.persist(ws1920);
         ExamRegulation po2017 = ExamRegulation.builder().date(Date.valueOf("2017-10-01")).build();
         entityManager.persist(po2017);
-        User testUser = User.builder().firstName("Test").lastName("User").loginName("testUser").password("test").build();
+        User testUser = User.builder().firstName("Test").lastName("User").loginName("testUser").password(passwordencoder.encode("test")).build();
         entityManager.persist(testUser);
         User passedUser = User.builder().firstName("Passed").lastName("Student").loginName("passedUser").password("test").build();
         entityManager.persist(passedUser);
@@ -69,7 +72,7 @@ public class JSONGenerator {
         entityManager.persist(medieninformatik);
         FieldOfStudy dcsm = FieldOfStudy.builder().title("DCSM").build();
         entityManager.persist(dcsm);
-        Curriculum curriculum = Curriculum.builder().examRegulation(po2017).termPeriod(1).build();
+        Curriculum curriculum = Curriculum.builder().examRegulation(po2017).maxTerms(1).build();
         entityManager.persist(curriculum);
         Module mProgrammieren3 = Module.builder().title("Programmieren 3").creditPoints(5).period(1).build();
         entityManager.persist(mProgrammieren3);
