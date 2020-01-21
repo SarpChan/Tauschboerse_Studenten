@@ -20,23 +20,24 @@ import javax.validation.constraints.*;
 @SuperBuilder
 public class Student extends Role {
 
-    @Getter @Setter
-    //@Pattern(regexp = "[0-9]*")
+    @Getter
+    @Setter
     @NotNull
     private int enrollmentNumber;
 
-    @Getter @Setter
-    //@Pattern(regexp = "[a-zA-Z0-9-+_.]+@[a-z0-9-+_]+")
+    @Getter
+    @Setter
+    @Pattern(regexp = "[a-zA-Z0-9-+_.]+@[a-z0-9-+_.]+")
     @NotEmpty
     private String mail;
 
     @Getter @Setter
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL)
     @NotNull
     private ExamRegulation examRegulation;
 
     @Getter @Setter
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL)
     @NotNull
     private Term enrolmentTerm;
 
@@ -47,7 +48,7 @@ public class Student extends Role {
 
     @Singular("prioritizeGroup")
     @Getter @Setter
-    @OneToMany(mappedBy = "student")
+    @OneToMany(mappedBy = "student",cascade= CascadeType.ALL)
     private Set<StudentPrioritizesGroup> prioritizeGroups;
 
     @Singular("passedExam")
@@ -60,5 +61,8 @@ public class Student extends Role {
     @ManyToMany(mappedBy = "students",cascade= CascadeType.ALL)
     private Set<Group> groups;
 
-
+    @Singular("swapOffer")
+    @Getter @Setter
+    @OneToMany(mappedBy = "student", cascade = CascadeType.ALL)
+    private Set<SwapOffer> swapOffers;
 }

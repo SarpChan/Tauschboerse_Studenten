@@ -46,7 +46,7 @@ public class StudentAttendsCourseTest {
 
     @Test
     public void whenGetStudent_thenReturnStudent(){
-        assertEquals(174217, studentAttendsCourse.getStudent().getEnrollmentNumber());
+        assertEquals(174217,studentAttendsCourse.getStudent().getEnrollmentNumber());
     }
 
     @Test
@@ -72,7 +72,7 @@ public class StudentAttendsCourseTest {
                 .build();
         studentAttendsCourse.setStudent(student);
 
-        assertEquals(151578, studentAttendsCourse.getStudent().getEnrollmentNumber());
+        assertEquals(151578,studentAttendsCourse.getStudent().getEnrollmentNumber());
     }
 
     @Test

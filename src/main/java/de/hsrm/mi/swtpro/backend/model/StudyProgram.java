@@ -40,11 +40,11 @@ public class StudyProgram {
 
     @Singular("fieldOfStudy")
     @Getter @Setter
-    @ManyToMany(fetch = FetchType.LAZY)
+    @ManyToMany(fetch = FetchType.LAZY,cascade = CascadeType.ALL)
     @JoinTable(
             name = "FieldOfStudy_StudyProgram",
             joinColumns = { @JoinColumn(name = "studyProgram_id") },
-            inverseJoinColumns = { @JoinColumn(name = "fieldOfStudy_id") }
+            inverseJoinColumns = { @JoinColumn(name = "field_of_study_id") }
     )
     private Set<FieldOfStudy> fieldsOfStudy;
 

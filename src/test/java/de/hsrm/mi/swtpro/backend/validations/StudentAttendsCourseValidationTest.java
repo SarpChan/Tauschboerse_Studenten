@@ -30,7 +30,7 @@ public class StudentAttendsCourseValidationTest {
         ValidatorFactory factory = Validation.buildDefaultValidatorFactory();
         validator = factory.getValidator();
         student = Student.builder()
-        .enrolementNumber(0)
+        .enrollmentNumber(0)
         .build();
         course = Course.builder()
         .build();

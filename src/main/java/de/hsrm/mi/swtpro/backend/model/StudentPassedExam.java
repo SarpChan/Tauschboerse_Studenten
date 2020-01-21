@@ -25,12 +25,12 @@ public class StudentPassedExam {
     private float grade;
 
     @Getter @Setter
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL)
     @NotNull
     private Student student;
 
     @Getter @Setter
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL)
     @NotNull
     private CourseComponent courseComponent;
 

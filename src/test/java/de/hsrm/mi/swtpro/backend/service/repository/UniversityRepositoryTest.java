@@ -44,6 +44,7 @@ public class UniversityRepositoryTest {
         campus = Campus.builder()
                 .name("unter den Leichen")
                 .university(university)
+                .address("Unter den Eichen, 65197 Wiesbaden")
                 .build();
 
         fieldOfStudy = FieldOfStudy.builder()
