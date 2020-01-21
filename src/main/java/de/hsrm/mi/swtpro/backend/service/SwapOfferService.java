@@ -36,7 +36,7 @@ public class SwapOfferService {
                 return a.getTimestamp().compareTo(b.getTimestamp());
             }
         });
-        for(SwapOffer einzelnesSwapOffer: swapofferList){
+        for (SwapOffer einzelnesSwapOffer : swapofferList) {
             if (einzelnesSwapOffer.getToGroup().getId() == offer.getFromGroup().getId()) { // OB ID der Zielgruppe mit der Startgruppe matcht
                 logger.warn("POSSIBLE MATCG SILKVE");
                 //TODO: In den Gruppen die Studentenliste aktualisieren -> beide studis austauschen bei fragen @vespa001
@@ -65,20 +65,56 @@ public class SwapOfferService {
 
     }
 
-    public Object debugMe(SwapOfferRequest swapOfferRequest) {
-        List<SwapOffer> swapOfferList = new ArrayList<SwapOffer>();
-        logger.warn("HEY: " + studentRepository.findByEnrollmentNumber(swapOfferRequest.getUserID()).get());
-        for (long gID : swapOfferRequest.getToGroupsID()) {
-            SwapOffer offer = SwapOffer.builder().timestamp(Timestamp.from(Instant.now()))
-                    .fromGroup(groupRepository.findById(swapOfferRequest.getFromGroupsID()).get())
-                    .student(studentRepository.findByEnrollmentNumber(swapOfferRequest.getUserID()).get())
-                    .toGroup(groupRepository.findById(gID).get())
-                    .build();
-            swapOfferList.add(offer);
-            swapOfferRepository.save(offer);
-        }
-        return swapOfferList;
+    public void swap(SwapOffer request , SwapOffer found){
+        Student A = request.getStudent();
+        Student B = found.getStudent();
+        logger.warn("Student A "+ A.getMail() +" Student B "+ B.getMail());
+
+        Set<Group> aGroups = A.getGroups();
+        aGroups.remove(groupRepository.getOne(request.getFromGroup().getId()));
+        aGroups.add(groupRepository.getOne(request.getToGroup().getId()));
+        A.setGroups(aGroups);
+
+        Set<Group> bGroups = A.getGroups();
+        bGroups.remove(groupRepository.findById(found.getFromGroup().getId()).get());
+        bGroups.add(groupRepository.findById(found.getToGroup().getId()).get());
+        B.setGroups(bGroups);
+
+      //  studentRepository.save(A);
+    //    studentRepository.save(B);
+        logger.warn("About to remove swapoffer"+ found.getId());
+
+  //     swapOfferRepository.delete(found);
+    //   swapOfferRepository.delete(request);
+
+
     }
 
+
+    public boolean debugMe(SwapOffer requestOffer) {
+        List<SwapOffer> swapofferList = swapOfferRepository.findAll();//findByFromGroup(groupRepository.findById(requestOffer.getToGroup().getId()).get());
+        Collections.sort(swapofferList, new Comparator<SwapOffer>() {
+            @Override
+            public int compare(SwapOffer a, SwapOffer b) {
+                return a.getTimestamp().compareTo(b.getTimestamp());
+            }
+        });
+        logger.warn("TOGROUP: " + requestOffer.getToGroup().getId());
+        SwapOffer foundOffer = null;
+        foundOffer = swapofferList
+                .stream()
+                .filter(e -> e.getFromGroup().equals(requestOffer.getToGroup()))
+                .filter(e -> e.getToGroup().equals(requestOffer.getFromGroup()))
+                .findFirst().get();
+        logger.warn("FOUND SWAP: " +requestOffer.getId() +" <> "+ foundOffer.getId());
+
+
+
+        swap(requestOffer,foundOffer);
+        logger.warn("SWAPPED");
+
+        return false;
+
+    }
 }
 

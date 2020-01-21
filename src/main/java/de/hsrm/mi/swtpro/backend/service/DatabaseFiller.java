@@ -351,19 +351,19 @@ public class DatabaseFiller {
 
                 // Swap Offer
 
-                SwapOffer esperMathe3P_B_to_A = SwapOffer.builder().student(stu_esper).date(new Timestamp(System.currentTimeMillis())).fromGroup(mathe3PgroupB).toGroup(mathe3PgroupA).build();
+                SwapOffer esperMathe3P_B_to_A = SwapOffer.builder().student(stu_esper).timestamp(new Timestamp(System.currentTimeMillis())).fromGroup(mathe3PgroupB).toGroup(mathe3PgroupA).build();
                 //entityManager.persist(esperMathe3P_B_to_A);
-                SwapOffer esperProg3P_A_to_B = SwapOffer.builder().student(stu_esper).date(new Timestamp(System.currentTimeMillis())).fromGroup(prog3PgroupA).toGroup(prog3PgroupB).build();
+                SwapOffer esperProg3P_A_to_B = SwapOffer.builder().student(stu_esper).timestamp(new Timestamp(System.currentTimeMillis())).fromGroup(prog3PgroupA).toGroup(prog3PgroupB).build();
                 //entityManager.persist(esperProg3P_A_to_B);
 
-                SwapOffer thielMathe3P_B_to_A = SwapOffer.builder().student(stu_thiel).date(new Timestamp(System.currentTimeMillis())).fromGroup(mathe3PgroupB).toGroup(mathe3PgroupA).build();
+                SwapOffer thielMathe3P_B_to_A = SwapOffer.builder().student(stu_thiel).timestamp(new Timestamp(System.currentTimeMillis())).fromGroup(mathe3PgroupB).toGroup(mathe3PgroupA).build();
                 //entityManager.persist(thielMathe3P_B_to_A);
-                SwapOffer thielProg3P_B_to_A = SwapOffer.builder().student(stu_thiel).date(new Timestamp(System.currentTimeMillis())).fromGroup(prog3PgroupB).toGroup(prog3PgroupA).build();
+                SwapOffer thielProg3P_B_to_A = SwapOffer.builder().student(stu_thiel).timestamp(new Timestamp(System.currentTimeMillis())).fromGroup(prog3PgroupB).toGroup(prog3PgroupA).build();
                 //entityManager.persist(thielProg3P_B_to_A);
 
-                SwapOffer ahlersMathe3P_A_to_B = SwapOffer.builder().student(stu_ahlers).date(new Timestamp(System.currentTimeMillis())).fromGroup(mathe3PgroupA).toGroup(mathe3PgroupB).build();
+                SwapOffer ahlersMathe3P_A_to_B = SwapOffer.builder().student(stu_ahlers).timestamp(new Timestamp(System.currentTimeMillis())).fromGroup(mathe3PgroupA).toGroup(mathe3PgroupB).build();
                 //entityManager.persist(ahlersMathe3P_A_to_B);
-                SwapOffer ahlersProg3P_B_to_A = SwapOffer.builder().student(stu_ahlers).date(new Timestamp(System.currentTimeMillis())).fromGroup(prog3PgroupB).toGroup(prog3PgroupA).build();
+                SwapOffer ahlersProg3P_B_to_A = SwapOffer.builder().student(stu_ahlers).timestamp(new Timestamp(System.currentTimeMillis())).fromGroup(prog3PgroupB).toGroup(prog3PgroupA).build();
                 //entityManager.persist(ahlersProg3P_B_to_A);
 
 

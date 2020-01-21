@@ -4,7 +4,7 @@ import lombok.Getter;
 
 public class SwapOfferRequest {
     @Getter
-    int userID;
+    long id;
     @Getter
     long fromGroupsID;
     @Getter
