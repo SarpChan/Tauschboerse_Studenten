@@ -43,8 +43,9 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
      */
     @Autowired
     public void configureAuthentication(AuthenticationManagerBuilder authenticationManagerBuilder) throws Exception {
-        authenticationManagerBuilder.authenticationProvider(jwtAuthenticationProvider);
-        authenticationManagerBuilder.userDetailsService(jwtUserDetailsService).passwordEncoder(passwordEncoder);
+        authenticationManagerBuilder.userDetailsService(jwtUserDetailsService).passwordEncoder(passwordEncoder).and().authenticationProvider(jwtAuthenticationProvider);
+        
+        
 
     }
 
@@ -60,9 +61,9 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
             httpSecurity.csrf().disable()
           
-                .authorizeRequests().antMatchers("/authentication/**", "/h2-console/**", "/").permitAll()
-                .antMatchers("/**" ).hasRole("ADMIN")		
-                .antMatchers("/**").hasRole("USER")			
+                .authorizeRequests().antMatchers("/authentication/**", "/h2-console/**","/rest/lists/**").permitAll()
+                //.antMatchers().hasRole("USER")		
+                .antMatchers("/rest/lists/**").hasRole("ADMIN")			
                 .anyRequest().authenticated().and()
                 .exceptionHandling().authenticationEntryPoint(unauthorizedHandler).and()
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
@@ -70,5 +71,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         httpSecurity.addFilterBefore(authenticationTokenFilterBean(), UsernamePasswordAuthenticationFilter.class);
         httpSecurity.headers().cacheControl();
         httpSecurity.headers().frameOptions().disable();
+
+        
     }
 }

@@ -1,6 +1,6 @@
 package de.hsrm.mi.swtpro.backend.controller.login;
 
-import java.util.Optional;
+
 
 import javax.persistence.EntityNotFoundException;
 
@@ -14,7 +14,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import de.hsrm.mi.swtpro.backend.model.User;
 import de.hsrm.mi.swtpro.backend.service.repository.UserRepository;
 
 /**
@@ -42,15 +41,15 @@ public class AuthenticationController {
      */
     @PostMapping(path = "/login", consumes = "application/json", produces = MediaType.APPLICATION_JSON_VALUE)
     public String createAuthenticationToken(@RequestBody AuthenticationRequest authenticationRequest) {
-        String userRight = "";
+        /*String userRight = "";
         Optional<User> optionalUser = userRepository.findByLoginName(authenticationRequest.getUsername());
         if(optionalUser.isPresent()){
             User user = optionalUser.get();
             if(user.getUserRights().toString().equals("ADMIN")){
                 userRight = user.getUserRights().toString();
             }
-        }
-        return authenticationService.generateJWTToken(authenticationRequest.getUsername(), authenticationRequest.getPassword()).getToken() + userRight;
+        }*/
+        return authenticationService.generateJWTToken(authenticationRequest.getUsername(), authenticationRequest.getPassword()).getToken()/* + userRight*/;
     }
 
     /**

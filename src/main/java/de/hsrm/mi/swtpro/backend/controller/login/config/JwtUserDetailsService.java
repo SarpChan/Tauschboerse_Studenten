@@ -23,22 +23,24 @@ public class JwtUserDetailsService implements UserDetailsService {
 
     @Autowired
     PasswordEncoder encoder;
+    
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+      
         Optional<User> optionalUser = userRepository.findByLoginName(username);
         if (!optionalUser.isPresent()) {
             throw new UsernameNotFoundException(username);
         }
         User user = optionalUser.get();
-
-        String userRights = user.getUserRights().toString();
-        org.springframework.security.core.userdetails.User.UserBuilder builder = null;
-        if (user != null) {
-          builder = org.springframework.security.core.userdetails.User.withUsername(username);
-          builder.password(encoder.encode(user.getPassword()));
-          builder.roles(userRights);
-        }
-        return builder.build();
+        
+        //String userRights = user.getUserRights().toString();
+       // org.springframework.security.core.userdetails.User.UserBuilder builder = null;
+        //if (user != null) {
+            
+        return org.springframework.security.core.userdetails.User.withUsername(username).
+         password(encoder.encode(user.getPassword())).roles("ADMIN").build();
+      //  }
+        // builder.build();
     }
 }
