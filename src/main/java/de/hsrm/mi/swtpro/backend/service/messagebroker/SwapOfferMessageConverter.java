@@ -31,6 +31,17 @@ public class SwapOfferMessageConverter implements MessageConverter {
         return message;
     }
 
+    public String toJSON(Object object, Session session) throws JMSException {
+        SwapOffer swapOffer = (SwapOffer) object;
+        String jsontext = null;
+        try {
+            jsontext = mapper.writeValueAsString(swapOffer);
+        } catch (JsonProcessingException e) {
+            logger.error("FEHLER toMessage SwapOffer '{}' -> JSON: {}", swapOffer.toString(), e.getMessage());
+        }
+        return jsontext;
+    }
+
     @Override
     public Object fromMessage(Message message) throws JMSException {
         TextMessage textMessage = (TextMessage) message;

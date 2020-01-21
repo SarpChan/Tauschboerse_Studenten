@@ -5,6 +5,7 @@ import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import lombok.*;
 
 import javax.persistence.*;
+import java.util.HashSet;
 import java.util.Set;
 
 import javax.validation.constraints.*;
@@ -33,9 +34,10 @@ public class Course {
     private String title;
 
     @Getter @Setter
-    @ManyToOne
+    @ManyToOne(cascade= CascadeType.ALL)
     @NotNull
     private User owner;
+
 
     @Singular("module")
     @Getter @Setter
@@ -55,7 +57,7 @@ public class Course {
 
     @Singular("courseComponent")
     @Getter @Setter
-    @OneToMany(mappedBy = "course")
+    @OneToMany(mappedBy = "course",cascade= CascadeType.ALL)
     private Set<CourseComponent> courseComponents;
 
     @Singular("studentAttendsCourse")
@@ -64,7 +66,7 @@ public class Course {
     private Set<StudentAttendsCourse> studentAttendsCourses;
 
     /**
-     * Adds course component to the collection of course components, which belong to this course 
+     * Adds course component to the collection of course components, which belong to this course
      * @param courseComponent
      */
     public void addCourseComponent(CourseComponent courseComponent) {
@@ -72,7 +74,7 @@ public class Course {
     }
 
     /**
-     * Removes course component from the collection of course components, which belong to this course 
+     * Removes course component from the collection of course components, which belong to this course
      * @param courseComponent
      */
     public void removeCourseComponent(CourseComponent courseComponent) {
