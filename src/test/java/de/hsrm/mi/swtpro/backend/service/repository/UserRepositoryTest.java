@@ -33,6 +33,7 @@ public class UserRepositoryTest {
                 .loginName("MaxMu")
                 .firstName("Max")
                 .lastName("Mustermann")
+                .password("password")
                 .build();
 
         role = Administrator.builder()

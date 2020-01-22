@@ -59,8 +59,8 @@ public class BuildingRepositoryTest {
 
         entityManager.persist(university);
         entityManager.persist(campus);
-        entityManager.persist(room);
         entityManager.persist(building);
+        entityManager.persist(room);
     }
 
     @Test

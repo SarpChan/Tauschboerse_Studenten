@@ -42,22 +42,9 @@ public class CurriculumValidationTest {
     }
 
     @Test
-    public void whenTermPeriodeNull_thenConstraintViolation(){
-        Curriculum curriculum =  Curriculum.builder()
-        .id(10)
-        
-        .examRegulation(examRegulation)
-        .build();
-    
-        Set<ConstraintViolation<Curriculum>> violations = validator.validate(curriculum);
-        assertFalse(violations.isEmpty());
-    }
-
-    @Test
     public void whenExamRegulationNull_thenConstraintViolation() {
         Curriculum curriculum =  Curriculum.builder()
-        .id(10)
-        .termPeriod(1)
+        .maxTerms(1)
         .build();
     
         Set<ConstraintViolation<Curriculum>> violations = validator.validate(curriculum);

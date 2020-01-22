@@ -1,9 +1,7 @@
 package de.hsrm.mi.swtpro.backend.service.repository;
 
-import de.hsrm.mi.swtpro.backend.model.Curriculum;
-import de.hsrm.mi.swtpro.backend.model.ExamRegulation;
+import de.hsrm.mi.swtpro.backend.model.*;
 import de.hsrm.mi.swtpro.backend.model.Module;
-import de.hsrm.mi.swtpro.backend.model.ModuleInCurriculum;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -12,6 +10,8 @@ import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import javax.persistence.EntityManager;
+
+import java.sql.Date;
 
 import static org.hamcrest.Matchers.*;
 import static org.junit.Assert.assertThat;
@@ -40,13 +40,20 @@ public class CurriculumRepositoryTest {
                 .build();
 
 
+        StudyProgram studyProg = StudyProgram.builder()
+                .title("test")
+                .degree("E")
+                .build();
+
         examRegulation = ExamRegulation.builder()
+                .date(new Date(System.currentTimeMillis()))
+                .studyProgram(studyProg)
                 .rule(17)
                 .build();
 
         Curriculum curriculum = Curriculum.builder()
                 .examRegulation(examRegulation)
-                .termPeriod(1)
+                .maxTerms(1)
                 .build();
 
         moduleInCurriculum = ModuleInCurriculum.builder()
@@ -56,28 +63,29 @@ public class CurriculumRepositoryTest {
                 .build();
 
         entityManager.persist(module);
-        entityManager.persist(moduleInCurriculum);
+        entityManager.persist(studyProg);
         entityManager.persist(examRegulation);
         entityManager.persist(curriculum);
+        entityManager.persist(moduleInCurriculum);
         id = curriculum.getId();
     }
 
     @Test
     public void whenFindAll_thenReturnCurriculumList(){
         assertThat(curriculumRepository.findAll(),hasItem(
-                hasProperty("termPeriod",is(1))
+                hasProperty("maxTerms",is(1))
         ));
     }
 
     @Test
     public void whenFindById_thenReturnCurriculumList(){
         assertTrue(curriculumRepository.findById(id).isPresent());
-        assertThat(curriculumRepository.findById(id).get(), hasProperty("termPeriod",is(1)));
+        assertThat(curriculumRepository.findById(id).get(), hasProperty("maxTerms",is(1)));
     }
 
     @Test
     public void whenFindByPeriod_thenReturnCurriculumList(){
-        assertThat(curriculumRepository.findByTermPeriod(1),hasItem(
+        assertThat(curriculumRepository.findByMaxTerms(1),hasItem(
                 hasProperty("id",is(id))
         ));
     }
@@ -85,14 +93,14 @@ public class CurriculumRepositoryTest {
     @Test
     public void whenFindByModules_thenReturnCurriculumList(){
         assertThat(curriculumRepository.findByModulesInCurriculum(moduleInCurriculum),hasItem(
-                hasProperty("termPeriod",is(1))
+                hasProperty("maxTerms",is(1))
         ));
     }
 
     @Test
     public void whenFindByExamRegulation_thenReturnCurriculumList(){
         assertThat(curriculumRepository.findByExamRegulation(examRegulation),
-                hasItem(hasProperty("termPeriod",is(1)))
+                hasItem(hasProperty("maxTerms",is(1)))
         );
     }
 }

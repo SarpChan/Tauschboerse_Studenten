@@ -44,7 +44,7 @@ public class ModuleFilterFactory extends FilterFactory<Module> {
     private List<Module> filterForExamRegulation(List<Module> modules, Filter forExamRegulationFilter){
        return modules.stream().filter(module -> module.getModulesInCurriculum().stream().anyMatch(moduleInCurriculum -> {
             if(forExamRegulationFilter.getComparator().getComparatorType() == ComparatorType.EQUALS) {
-                return moduleInCurriculum.getCurriculum().getExamRegulation().getId() ==  new Long(forExamRegulationFilter.getComparator().getComparatorValue().toString());
+                return moduleInCurriculum.getCurriculum().getExamRegulation().getId() == Long.parseLong(forExamRegulationFilter.getComparator().getComparatorValue().toString());
             }
             return false;
         })).collect(Collectors.toList());
