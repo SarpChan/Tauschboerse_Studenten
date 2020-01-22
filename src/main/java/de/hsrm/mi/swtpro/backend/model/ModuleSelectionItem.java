@@ -15,7 +15,7 @@ import java.util.Set;
 @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
 @AllArgsConstructor
 @Builder
-public class ModuleItem {
+public class ModuleSelectionItem {
 
     @Id
     @Getter @Setter

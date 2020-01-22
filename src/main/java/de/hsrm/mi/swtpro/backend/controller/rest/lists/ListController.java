@@ -56,13 +56,13 @@ public class ListController {
     GroupRepository groupRepository;
 
     @GetMapping(path = "/module/prioritize", consumes = "application/json", produces = MediaType.APPLICATION_JSON_VALUE)
-    public List<ModuleItem> getModuleItem() {
+    public List<ModuleSelectionItem> getModuleItem() {
         List<Module> filteredModules = moduleRepository.findAll();
         ModuleFilterFactory moduleFilterFactory = ModuleFilterFactory.builder().filters(filters).build();
         filteredModules = moduleFilterFactory.filter(filteredModules);
 
 
-        List<ModuleItem> moduleItems = new List<ModuleItem>;
+        List<ModuleSelectionItem> moduleSelectionItems = new List<ModuleSelectionItem>;
 
         Date today = Calendar.getInstance().getTime();
         List<Term> terms = termRepository.findByEndDateBefore(today);
@@ -79,7 +79,7 @@ public class ListController {
 
             for(Module module : modules) {
 
-                ModuleItem moduleItem = ModuleItem.builder()
+                ModuleSelectionItem moduleSelectionItem = ModuleSelectionItem.builder()
                         .id(module.getId())
                         .title(module.getTitle())
                         .creditPoints(module.getCreditPoints())
@@ -109,17 +109,15 @@ public class ListController {
                                     .roomNumber(group.getRoom().getNumber())
                                     .build();
 
-                            moduleItem.getTimetableModules().add(timetableModule);
+                            moduleSelectionItem.getTimetableModules().add(timetableModule);
                         }
                     }
                 }
 
-                moduleItems.add(moduleItem);
+                moduleSelectionItems.add(moduleSelectionItem);
             }
-
         }
 
-        return moduleItems;
+        return moduleSelectionItems;
     }
-
 }
