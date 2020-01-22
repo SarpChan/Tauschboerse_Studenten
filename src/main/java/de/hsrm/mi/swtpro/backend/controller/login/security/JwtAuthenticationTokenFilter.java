@@ -29,6 +29,7 @@ public class JwtAuthenticationTokenFilter extends OncePerRequestFilter {
             String  authenticationToken = requestHeader.substring(7);
             JwtAuthentication authentication = new JwtAuthentication(authenticationToken);
             SecurityContextHolder.getContext().setAuthentication(authentication);
+
         }
         chain.doFilter(request, response);
     }
