@@ -36,7 +36,7 @@ public class DatabaseFiller {
             }
         }*/
 
-        readJSON(jsonGenerator.createJSON());
+        //readJSON(jsonGenerator.createJSON());
     }
 
     public void readJSON(File universityJSON){

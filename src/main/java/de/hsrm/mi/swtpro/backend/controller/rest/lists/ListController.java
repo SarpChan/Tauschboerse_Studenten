@@ -17,7 +17,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import de.hsrm.mi.swtpro.backend.controller.login.security.TokenService;
-import sun.tools.jstat.Token;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.*;
@@ -52,18 +51,26 @@ public class ListController {
 
     @Autowired
     ModuleRepository moduleRepository;
+    @Autowired
     ModuleInCurriculumRepository moduleInCurriculumRepository;
+    @Autowired
     CourseComponentRepository courseComponentRepository;
+    @Autowired
     TermRepository termRepository;
+    @Autowired
     GroupRepository groupRepository;
+    @Autowired
     TokenService tokenService;
+    @Autowired
     UserRepository userRepository;
+    @Autowired
     StudentRepository studentRepository;
 
-    @GetMapping(path = "/module/prioritize", consumes = "application/json", produces = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping(path = "/module/prioritize", produces = MediaType.APPLICATION_JSON_VALUE)
     public List<ModuleSelectionItem> getModuleItem(HttpServletRequest request) {
 
         String username = tokenService.getUsername(request);
+
         Optional<User> users = userRepository.findByLoginName(username);
 
         if(users.isPresent()) {
@@ -93,13 +100,12 @@ public class ListController {
                     for (Module module : modules) {
 
                         ModuleSelectionItem moduleItem = ModuleSelectionItem.builder()
-                                .id(module.getId())
                                 .title(module.getTitle())
                                 .creditPoints(module.getCreditPoints())
                                 .semester(moduleInCurriculum.getTermPeriod())
                                 .build();
 
-                        List<Course> courses = courseRepository.findByModuleAndTerm(module, term);
+                        List<Course> courses = courseRepository.findByModulesAndTerms(module, term);
 
                         for (Course course : courses) {
                             List<CourseComponent> courseComponents = courseComponentRepository.findByCourse(course);
