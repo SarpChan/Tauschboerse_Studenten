@@ -51,13 +51,13 @@ public class MessageSender  {
         jmsTemplate.send(queueMap.get("SwapMessageQueue" + userid), session -> 
             session.createTextMessage(
                 //converter.toJSON(swapOffer, session) + 
-                timestamp + " Du hast erfolgreich von der Gruppe " + swapOffer.getFromGroup().getCourseComponent().getCourse().getTitle() 
+                timestamp.getTime() + " Du hast erfolgreich von der Gruppe " + swapOffer.getFromGroup().getCourseComponent().getCourse().getTitle() 
             + " " + swapOffer.getFromGroup().getGroupChar() + " zu " + swapOffer.getToGroup().getGroupChar() + " getauscht.") );
     }
 
     public void sendNewsMessage(TimetableModule module) {
         logger.info("sendingMessage: " + module);
         Timestamp timestamp = new Timestamp(System.currentTimeMillis());
-        jmsTemplate.send(topic, session -> session.createTextMessage(timestamp + " Das Modul " + module.getCourseTitle() + " wurde verändert.") );
+        jmsTemplate.send(topic, session -> session.createTextMessage(timestamp.getTime() + " Das Modul " + module.getCourseTitle() + " wurde verändert.") );
     }
 }
