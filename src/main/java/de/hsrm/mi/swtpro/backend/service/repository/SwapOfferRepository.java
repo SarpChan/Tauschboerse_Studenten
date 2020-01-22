@@ -15,5 +15,5 @@ public interface SwapOfferRepository extends JpaRepository<SwapOffer,Long> {
     public List<SwapOffer> findByFromGroup(Group group);
     public List<SwapOffer> findByToGroup(Group group);
     public List<SwapOffer> findByStudent(Student student);
-    public List<SwapOffer> findByTimestamp(Timestamp date);
+    public List<SwapOffer> findByDate(Timestamp date);
 }
