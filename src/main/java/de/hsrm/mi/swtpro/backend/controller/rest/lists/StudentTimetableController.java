@@ -37,6 +37,7 @@ public class StudentTimetableController {
     TokenService tokenService;
     StudentRepository studentRepository;
     Student student;
+    User user;
 
     @Value("${security.jwt.token.header:Authorization}")
     private String tokenHeader;
@@ -44,51 +45,50 @@ public class StudentTimetableController {
     @GetMapping(path = "/student_timetable", produces = MediaType.APPLICATION_JSON_VALUE)
     public List<TimetableModule> getModules(HttpServletRequest request) {
         final String requestHeader = request.getHeader(this.tokenHeader);
-        if (requestHeader != null && requestHeader.startsWith("Bearer ")) {
-            String  authenticationToken = requestHeader.substring(7);
-            System.out.println(authenticationToken);
-            Optional<User> user = userRepository.findByLoginName(tokenService.getUsernameFromToken(authenticationToken));
-            /* List<Role> roles = new ArrayList<Role>();
-            user.get().getRoles().forEach(role -> roles.add(role));
-            for(Role role:roles){
-                Optional<Student> optionalStudent = studentRepository.findById(role.getId());
-                if (optionalStudent.isPresent()) {
-                    student = optionalStudent.get();
-                }
-            } */
-            user.get().getRoles().forEach(role -> { 
-                if(studentRepository.findById(role.getId()).isPresent()){
-                    student = studentRepository.findById(role.getId()).get();
-                }
-            });
-        }
-        Set<StudentAttendsCourse> studentAttendsCourse = student.getAttendCourses();
-        List<Module> allModules = new ArrayList<Module>();
-        studentAttendsCourse.forEach(course -> course.getCourse().getModules().forEach(module -> allModules.add(module)));
         List<TimetableModule> timetable = new ArrayList<TimetableModule>();
-        for(Module module: allModules){
-            for(Course course: module.getCourses()){
-                for(CourseComponent courseComponent : course.getCourseComponents()){
-                    for(Group group: courseComponent.getGroups()){
-                        TimetableModule timetableModule = TimetableModule.builder()
-                        .groupID(group.getId())
-                        .groupChar(group.getGroupChar())
-                        .dayOfWeek(group.getDayOfWeek())
-                        .startTime(group.getStartTime())
-                        .endTime(group.getEndTime())
-                        .lecturerName(group.getLecturer().getUser().getLastName())
-                        .lecturerNameAbbreviation("Placeholder Abbreviation")
-                        .courseComponentID(courseComponent.getId())
-                        .courseType(courseComponent.getType())
-                        .courseTitle(course.getTitle())
-                        .courseTitleAbbreviation("Placeholder Abbreviation")
-                        .roomNumber(group.getRoom().getNumber())
-                        .build();
-                        timetable.add(timetableModule);
+        if (requestHeader != null && requestHeader.startsWith("Bearer ")) {
+            String authenticationToken = requestHeader.substring(7);
+            System.out.println(authenticationToken);
+            Optional<User> optionalUser = userRepository
+                    .findByLoginName(tokenService.getUsernameFromToken(authenticationToken));
+            /*
+             * List<Role> roles = new ArrayList<Role>(); user.get().getRoles().forEach(role
+             * -> roles.add(role)); for(Role role:roles){ Optional<Student> optionalStudent
+             * = studentRepository.findById(role.getId()); if (optionalStudent.isPresent())
+             * { student = optionalStudent.get(); } }
+             */
+            if (optionalUser.isPresent()) {
+                user = optionalUser.get();
+                user.getRoles().forEach(role -> {
+                    if (studentRepository.findById(role.getId()).isPresent()) {
+                        student = studentRepository.findById(role.getId()).get();
+                    }
+                });
+
+                Set<StudentAttendsCourse> studentAttendsCourse = student.getAttendCourses();
+                List<Module> allModules = new ArrayList<Module>();
+                studentAttendsCourse
+                        .forEach(course -> course.getCourse().getModules().forEach(module -> allModules.add(module)));
+                for (Module module : allModules) {
+                    for (Course course : module.getCourses()) {
+                        for (CourseComponent courseComponent : course.getCourseComponents()) {
+                            for (Group group : courseComponent.getGroups()) {
+                                TimetableModule timetableModule = TimetableModule.builder().groupID(group.getId())
+                                        .groupChar(group.getGroupChar()).dayOfWeek(group.getDayOfWeek())
+                                        .startTime(group.getStartTime()).endTime(group.getEndTime())
+                                        .lecturerName(group.getLecturer().getUser().getLastName())
+                                        .lecturerNameAbbreviation("Placeholder Abbreviation")
+                                        .courseComponentID(courseComponent.getId())
+                                        .courseType(courseComponent.getType()).courseTitle(course.getTitle())
+                                        .courseTitleAbbreviation("Placeholder Abbreviation")
+                                        .roomNumber(group.getRoom().getNumber()).build();
+                                timetable.add(timetableModule);
+                            }
+                        }
                     }
                 }
             }
-        } 
+        }
         return timetable;
     }
 }
