@@ -52,12 +52,19 @@ public class ListController {
 
     @Autowired
     ModuleRepository moduleRepository;
+    @Autowired
     ModuleInCurriculumRepository moduleInCurriculumRepository;
+    @Autowired
     CourseComponentRepository courseComponentRepository;
+    @Autowired
     TermRepository termRepository;
+    @Autowired
     GroupRepository groupRepository;
+    @Autowired
     TokenService tokenService;
+    @Autowired
     UserRepository userRepository;
+    @Autowired
     StudentRepository studentRepository;
 
     @GetMapping(path = "/module/prioritize", consumes = "application/json", produces = MediaType.APPLICATION_JSON_VALUE)
