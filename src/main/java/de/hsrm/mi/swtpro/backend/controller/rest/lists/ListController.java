@@ -75,6 +75,7 @@ public class ListController {
                     .fromDay(swapOffer.getFromGroup().getDayOfWeek())
                     .toDay(swapOffer.getToGroup().getDayOfWeek())
                     .build();
+
             swapOffers.add(swapOfferFront);
         }
 
@@ -112,6 +113,7 @@ public class ListController {
                     .fromDay(swapOffer.getFromGroup().getDayOfWeek())
                     .toDay(swapOffer.getToGroup().getDayOfWeek())
                     .build();
+
             frontSwapOffers.add(swapOfferFront);
         }
         return frontSwapOffers;
