@@ -16,6 +16,7 @@ import de.hsrm.mi.swtpro.backend.service.repository.StudentRepository;
 import de.hsrm.mi.swtpro.backend.service.repository.UserRepository;
 
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestHeader;
@@ -33,31 +34,21 @@ import javax.servlet.http.HttpServletRequest;
 @RequestMapping("/rest/lists")
 public class StudentTimetableController {
 
+    @Autowired
     UserRepository userRepository;
     TokenService tokenService;
     StudentRepository studentRepository;
     Student student;
 
-    @Value("${security.jwt.token.header:Authorization}")
-    private String tokenHeader;
-
-    @GetMapping(path = "/student_timetable", produces = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping(path = "/timetable/student", consumes = "application/json", produces = MediaType.APPLICATION_JSON_VALUE)
     public List<TimetableModule> getModules(HttpServletRequest request) {
         List<TimetableModule> timetable = new ArrayList<TimetableModule>();
-        final String requestHeader = request.getHeader(this.tokenHeader);
-        if (requestHeader != null && requestHeader.startsWith("Bearer ")) {
-            String  authenticationToken = requestHeader.substring(7);
-            System.out.println(authenticationToken);
-            Optional<User> optionalUser = userRepository.findByLoginName(tokenService.getUsernameFromToken(authenticationToken));
-            List<Role> roles = new ArrayList<Role>();
-            if(optionalUser.isPresent()){
-                optionalUser.get().getRoles().forEach(role -> roles.add(role));
-                for(Role role:roles){
-                    Optional<Student> optionalStudent = studentRepository.findById(role.getId());
-                    if (optionalStudent.isPresent()) {
-                        student = optionalStudent.get();
-                    }
-                }
+        String username = tokenService.getUsername(request);
+        Optional<User> optionalUser = userRepository.findByLoginName(username);
+        if(optionalUser.isPresent()) {
+            Optional<Student> optionalStudent = studentRepository.findByUser(optionalUser.get());
+            if(optionalStudent.isPresent()) {
+                student = optionalStudent.get();
                 Set<StudentAttendsCourse> studentAttendsCourse = student.getAttendCourses();
                 List<Module> allModules = new ArrayList<Module>();
                 studentAttendsCourse.forEach(course -> course.getCourse().getModules().forEach(module -> allModules.add(module)));

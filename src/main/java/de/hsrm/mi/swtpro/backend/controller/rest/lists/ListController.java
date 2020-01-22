@@ -17,7 +17,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import de.hsrm.mi.swtpro.backend.controller.login.security.TokenService;
-import sun.tools.jstat.Token;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.*;
