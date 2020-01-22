@@ -108,11 +108,11 @@ public class TokenService {
     }
 
     /**
-     * returns Username of logged in user
+     * returns username of logged in user
      * @param request
      * @return
      */
-    public String getUsername(HttpServletRequest request) {
+    public String getUsernameFromRequest(HttpServletRequest request) {
         return getUsernameFromToken(getToken(request));
     }
 }

@@ -2,8 +2,12 @@ package de.hsrm.mi.swtpro.backend.service.helper;
 
 import de.hsrm.mi.swtpro.backend.model.*;
 import de.hsrm.mi.swtpro.backend.model.Module;
+import de.hsrm.mi.swtpro.backend.service.repository.TermRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 public class Generator {
@@ -37,8 +41,21 @@ public class Generator {
         return timetableModules;
     }
 
-    public List<ModuleSelectionItem> moduleItemFromModule(List<Module> modules) {
+    public List<ModuleSelectionItem> moduleSelectionItemFromModule(List<Module> modules) {
         List<ModuleSelectionItem> moduleSelectionItems = new ArrayList<>();
         return moduleSelectionItems;
+    }
+
+    @Autowired
+    TermRepository termRepository;
+
+    /**
+     * get the running term depending on current date
+     * @return current term
+     */
+    public Term getCurrentTerm() {
+        Date today = Calendar.getInstance().getTime();
+        List<Term> terms = termRepository.findByEndDateBefore(today);
+        return terms.get(0);
     }
 }
