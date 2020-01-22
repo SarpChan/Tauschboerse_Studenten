@@ -53,7 +53,7 @@ public class CurriculumRepositoryTest {
 
         Curriculum curriculum = Curriculum.builder()
                 .examRegulation(examRegulation)
-                .termPeriod(1)
+                .maxTerms(1)
                 .build();
 
         moduleInCurriculum = ModuleInCurriculum.builder()
@@ -73,19 +73,19 @@ public class CurriculumRepositoryTest {
     @Test
     public void whenFindAll_thenReturnCurriculumList(){
         assertThat(curriculumRepository.findAll(),hasItem(
-                hasProperty("termPeriod",is(1))
+                hasProperty("maxTerms",is(1))
         ));
     }
 
     @Test
     public void whenFindById_thenReturnCurriculumList(){
         assertTrue(curriculumRepository.findById(id).isPresent());
-        assertThat(curriculumRepository.findById(id).get(), hasProperty("termPeriod",is(1)));
+        assertThat(curriculumRepository.findById(id).get(), hasProperty("maxTerms",is(1)));
     }
 
     @Test
     public void whenFindByPeriod_thenReturnCurriculumList(){
-        assertThat(curriculumRepository.findByTermPeriod(1),hasItem(
+        assertThat(curriculumRepository.findByMaxTerms(1),hasItem(
                 hasProperty("id",is(id))
         ));
     }
@@ -93,14 +93,14 @@ public class CurriculumRepositoryTest {
     @Test
     public void whenFindByModules_thenReturnCurriculumList(){
         assertThat(curriculumRepository.findByModulesInCurriculum(moduleInCurriculum),hasItem(
-                hasProperty("termPeriod",is(1))
+                hasProperty("maxTerms",is(1))
         ));
     }
 
     @Test
     public void whenFindByExamRegulation_thenReturnCurriculumList(){
         assertThat(curriculumRepository.findByExamRegulation(examRegulation),
-                hasItem(hasProperty("termPeriod",is(1)))
+                hasItem(hasProperty("maxTerms",is(1)))
         );
     }
 }

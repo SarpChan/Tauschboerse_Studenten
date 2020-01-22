@@ -1,7 +1,6 @@
 package de.hsrm.mi.swtpro.backend.service.repository;
 
 import de.hsrm.mi.swtpro.backend.model.*;
-import org.assertj.core.util.Lists;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -14,7 +13,6 @@ import java.sql.Date;
 import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.time.LocalTime;
-import java.util.List;
 
 import static org.hamcrest.Matchers.*;
 import static org.junit.Assert.assertThat;
@@ -23,6 +21,7 @@ import static org.junit.Assert.assertTrue;
 @RunWith(SpringRunner.class)
 @DataJpaTest
 public class TermRepositoryTest {
+
 
 
     @Autowired
@@ -68,7 +67,7 @@ public class TermRepositoryTest {
                 .build();
 
         student = Student.builder()
-                .enrollmentNumber(152093)
+                .enrolmentNumber(152093)
                 .enrolmentTerm(term)
                 .examRegulation(examReg)
                 .mail("a@b.c")
@@ -177,10 +176,10 @@ public class TermRepositoryTest {
     }
 
     @Test
-    public void whenFindByEnrolledStudent_thenReturnTerm() {
-        assertTrue(termRepository.findByEnroledStudents(student).isPresent());
-        assertThat(termRepository.findByEnroledStudents(student).get(),
-                hasProperty("period", is(2)));
+    public void whenFindByEnroledStudent_thenReturnTerm(){
+            assertTrue(termRepository.findByEnroledStudents(student).isPresent());
+            assertThat(termRepository.findByEnroledStudents(student).get(),
+                    hasProperty("period", is(2)));
     }
 
     @Test
