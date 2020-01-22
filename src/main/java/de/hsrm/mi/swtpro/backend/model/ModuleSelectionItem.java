@@ -5,46 +5,40 @@ import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import lombok.*;
 
 import javax.persistence.*;
+import javax.validation.constraints.Min;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import java.util.Set;
 
-/**
- * A user has a first name and last name as well as a username and password
- * A user can be an admin
- */
 @Entity
 @NoArgsConstructor
 @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
 @AllArgsConstructor
 @Builder
-public class User {
+public class ModuleSelectionItem {
 
     @Id
-    @Getter @Setter 
+    @Getter @Setter
     @GeneratedValue
     @NotNull
     private long id;
 
     @Getter @Setter
-    @NotEmpty
-    private String firstName;
+    @NotEmpty(message = "Modulname fehlt")
+    private String title;
 
     @Getter @Setter
-    @NotEmpty
-    private String lastName;
+    @Min(value = 0)
+    private int creditPoints;
 
     @Getter @Setter
-    @NotEmpty
-    private String loginName;
+    @NotNull
+    private int semester;
+    // in welchem semester ist das modul im curiculum vorgesehen
 
+    @Singular("timetableModule")
     @Getter @Setter
-    @NotEmpty
-    private String password;
+    @OneToMany(mappedBy = "module")
+    private Set<TimetableModule> timetableModules ;
 
-    @Singular("role")
-    @Getter @Setter 
-    @OneToMany(mappedBy = "user",cascade = CascadeType.ALL)
-    private Set<Role> roles;
-    
 }
