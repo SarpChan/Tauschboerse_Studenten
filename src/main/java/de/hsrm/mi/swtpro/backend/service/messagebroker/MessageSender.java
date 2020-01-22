@@ -1,5 +1,6 @@
 package de.hsrm.mi.swtpro.backend.service.messagebroker;
 
+import java.sql.Timestamp;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -46,13 +47,17 @@ public class MessageSender  {
 
     public void sendSwapOfferMessage(SwapOffer swapOffer, String userid) {
         logger.info("sendingMessage: " + swapOffer);
+        Timestamp timestamp = new Timestamp(System.currentTimeMillis());
         jmsTemplate.send(queueMap.get("SwapMessageQueue" + userid), session -> 
-            session.createTextMessage(converter.toJSON(swapOffer, session) + "Du hast erfolgreich von der Gruppe " + swapOffer.getFromGroup().getCourseComponent().getCourse().getTitle() 
+            session.createTextMessage(
+                //converter.toJSON(swapOffer, session) + 
+                timestamp + " Du hast erfolgreich von der Gruppe " + swapOffer.getFromGroup().getCourseComponent().getCourse().getTitle() 
             + " " + swapOffer.getFromGroup().getGroupChar() + " zu " + swapOffer.getToGroup().getGroupChar() + " getauscht.") );
     }
 
     public void sendNewsMessage(TimetableModule module) {
         logger.info("sendingMessage: " + module);
-        jmsTemplate.send(topic, session -> session.createTextMessage("Das Modul " + module.getCourseTitle() + " wurde verändert.") );
+        Timestamp timestamp = new Timestamp(System.currentTimeMillis());
+        jmsTemplate.send(topic, session -> session.createTextMessage(timestamp + " Das Modul " + module.getCourseTitle() + " wurde verändert.") );
     }
 }
