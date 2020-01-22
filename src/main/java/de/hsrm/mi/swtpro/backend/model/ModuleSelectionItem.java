@@ -4,7 +4,7 @@ import lombok.*;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
-import java.util.Set;
+import java.util.List;
 
 @NoArgsConstructor
 @AllArgsConstructor
@@ -25,6 +25,6 @@ public class ModuleSelectionItem {
     // in welchem semester ist das modul im curiculum vorgesehen
 
     @Getter @Setter
-    private Set<TimetableModule> timetableModules ;
+    private List<TimetableModule> timetableModules ;
 
 }

@@ -2,17 +2,14 @@ package de.hsrm.mi.swtpro.backend.service.helper;
 
 import de.hsrm.mi.swtpro.backend.model.*;
 import de.hsrm.mi.swtpro.backend.model.Module;
-import de.hsrm.mi.swtpro.backend.service.repository.TermRepository;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 
-public class Generator {
+@Component
+public class ServiceGenerator {
 
-    public List<TimetableModule> timetableModuleFromModules(List<Module> modules) {
+    public List<TimetableModule> timetableModuleFromModules(Module ... modules) {
         List<TimetableModule> timetableModules = new ArrayList<>();
 
         for(Module module: modules) {
@@ -41,21 +38,27 @@ public class Generator {
         return timetableModules;
     }
 
-    public List<ModuleSelectionItem> moduleSelectionItemFromModule(List<Module> modules) {
+    /**
+     * returns JSON style module table
+     * @param curriculum
+     * @return
+     */
+    public List<ModuleSelectionItem> moduleSelectionItemFromCurriculum(Curriculum curriculum) {
         List<ModuleSelectionItem> moduleSelectionItems = new ArrayList<>();
+
+        for (ModuleInCurriculum moduleInCurriculum : curriculum.getModulesInCurriculum()) {
+            Module module = moduleInCurriculum.getModule();
+
+            ModuleSelectionItem moduleSelectionItem = ModuleSelectionItem.builder()
+                .title(module.getTitle())
+                .creditPoints(module.getCreditPoints())
+                .semester(moduleInCurriculum.getTermPeriod())
+                .timetableModules(timetableModuleFromModules(module))
+                .build();
+
+            moduleSelectionItems.add(moduleSelectionItem);
+        }
         return moduleSelectionItems;
     }
 
-    @Autowired
-    TermRepository termRepository;
-
-    /**
-     * get the running term depending on current date
-     * @return current term
-     */
-    public Term getCurrentTerm() {
-        Date today = Calendar.getInstance().getTime();
-        List<Term> terms = termRepository.findByEndDateBefore(today);
-        return terms.get(0);
-    }
 }

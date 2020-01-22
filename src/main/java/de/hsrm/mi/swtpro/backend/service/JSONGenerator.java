@@ -26,7 +26,7 @@ import java.util.HashSet;
 
 
 /**
- * The JSON Generator is used to generate a JSON file with sample entitys with all their relations for
+ * The JSON ServiceGenerator is used to generate a JSON file with sample entitys with all their relations for
  * the whole model.
  */
 @Component
