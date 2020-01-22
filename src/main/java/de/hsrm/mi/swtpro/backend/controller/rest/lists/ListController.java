@@ -61,7 +61,7 @@ public class ListController {
     StudentRepository studentRepository;
 
     @GetMapping(path = "/module/prioritize", consumes = "application/json", produces = MediaType.APPLICATION_JSON_VALUE)
-    public List<ModuleItem> getModuleItem(HttpServletRequest request) {
+    public List<ModuleSelectionItem> getModuleItem(HttpServletRequest request) {
 
         String username = tokenService.getUsername(request);
         Optional<User> users = userRepository.findByLoginName(username);
@@ -75,7 +75,7 @@ public class ListController {
 //                ModuleFilterFactory moduleFilterFactory = ModuleFilterFactory.builder().filters(filters).build();
 //                filteredModules = moduleFilterFactory.filter(filteredModules);
 
-                List<ModuleItem> moduleItems = new ArrayList<>();
+                List<ModuleSelectionItem> moduleItems = new ArrayList<>();
 
                 Date today = Calendar.getInstance().getTime();
                 List<Term> terms = termRepository.findByEndDateBefore(today);
@@ -92,7 +92,7 @@ public class ListController {
 
                     for (Module module : modules) {
 
-                        ModuleItem moduleItem = ModuleItem.builder()
+                        ModuleSelectionItem moduleItem = ModuleSelectionItem.builder()
                                 .id(module.getId())
                                 .title(module.getTitle())
                                 .creditPoints(module.getCreditPoints())
