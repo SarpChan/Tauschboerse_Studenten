@@ -33,7 +33,7 @@ public class MessageSenderConfig {
     private ConnectionFactory connectionFactory;
 
     @Bean(name="myDurableTopicFactory")
-    public DefaultJmsListenerContainerFactory makeTopicFactory() {
+    public DefaultJmsListenerContainerFactory makeDurableTopicFactory() {
         logger.info("DefaultJmsListenerContainerFactory myTopicFactory() gezogen");
         DefaultJmsListenerContainerFactory factory = new DefaultJmsListenerContainerFactory();
         factory.setConnectionFactory(connectionFactory);
@@ -42,6 +42,18 @@ public class MessageSenderConfig {
         //factory.setConcurrency("3-10");
         factory.setClientId("brokerClientId");
         factory.setSubscriptionDurable(true);
+        return factory;
+    }
+
+    @Bean(name="myTopicFactory")
+    public DefaultJmsListenerContainerFactory makeTopicFactory() {
+        logger.info("DefaultJmsListenerContainerFactory myTopicFactory() gezogen");
+        DefaultJmsListenerContainerFactory factory = new DefaultJmsListenerContainerFactory();
+        factory.setConnectionFactory(connectionFactory);
+        factory.setPubSubDomain(true);  
+        factory.setMessageConverter(new SwapOfferMessageConverter());
+        //factory.setConcurrency("3-10");
+        factory.setClientId("brokerClientId");
         return factory;
     }
 

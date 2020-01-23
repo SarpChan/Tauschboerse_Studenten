@@ -1,5 +1,8 @@
 package de.hsrm.mi.swtpro.backend.service.messagebroker;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -16,8 +19,11 @@ public class Test {
 
     @GetMapping("/test")
     public void send () {
+        List<String> l = new ArrayList<>();
+        l.add("1");
+        //ms.addSwapMessageQueue(l);
         SwapOffer s = SwapOffer.builder().student(new Student()).fromGroup(new Group()).toGroup(new Group()).build();
-        
-        //ms.sendSwapOfferMessage(s);
+        System.out.println("IM HERE");
+        ms.sendPersonalSwapOfferMessage(s, "1");
     }
 }
