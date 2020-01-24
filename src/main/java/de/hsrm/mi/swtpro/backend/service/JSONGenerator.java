@@ -25,7 +25,7 @@ import java.util.HashSet;
 
 
 /**
- * The JSON Generator is used to generate a JSON file with sample entitys with all their relations for
+ * The  is used to generate a JSON file with sample entitys with all their relations for
  * the whole model.
  */
 @Component
@@ -56,7 +56,7 @@ public class JSONGenerator {
         entityManager.persist(ws1920);
         ExamRegulation po2017 = ExamRegulation.builder().date(Date.valueOf("2017-10-01")).build();
         entityManager.persist(po2017);
-        User testUser = User.builder().firstName("Test").lastName("User").loginName("testUser").password(passwordencoder.encode("test")).build();
+        User testUser = User.builder().firstName("Test").lastName("User").loginName("testUser").password(passwordencoder.encode("test")).userRights(UserRights.ADMIN).build();
         entityManager.persist(testUser);
         User passedUser = User.builder().firstName("Passed").lastName("Student").loginName("passedUser").password("test").build();
         entityManager.persist(passedUser);

@@ -6,6 +6,11 @@ public enum UserRights {
 
     private final String userRights;
     UserRights(String userRights) {
-        this.userRights = userRights; }
+        this.userRights = userRights;
+     }
+
+    public String getUserRights(){
+        return userRights;
+    }
     
     }
