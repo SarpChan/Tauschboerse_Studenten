@@ -7,6 +7,7 @@ import de.hsrm.mi.swtpro.backend.service.repository.StudyProgramRepository;
 import de.hsrm.mi.swtpro.backend.service.repository.UniversityRepository;
 import org.hibernate.Hibernate;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -38,6 +39,8 @@ public class JSONGenerator {
     UniversityRepository universityRepository;
     @Autowired
     StudyProgramRepository studyProgramRepository;
+    @Autowired 
+    PasswordEncoder passwordEncoder;
 
 
     public File createJSON() {
@@ -123,7 +126,7 @@ public class JSONGenerator {
         //entityManager.persist(vesper);
         User tthiel = User.builder().firstName("Tobi").lastName("Thiel").loginName("tthiel").password("tthiel").build();
         //entityManager.persist(tthiel);
-        User jwirt = User.builder().firstName("Julia").lastName("Wirt").loginName("jwirt").password("jwirt").build();
+        User jwirt = User.builder().firstName("Julia").lastName("Wirt").loginName("jwirt").password(passwordEncoder.encode("jwirt")).build();
         //entityManager.persist(jwirt);
         User jmuel = User.builder().firstName("Julius").lastName("Muel").loginName("jmuel").password("jmuel").build();
         //entityManager.persist(jmuel);
