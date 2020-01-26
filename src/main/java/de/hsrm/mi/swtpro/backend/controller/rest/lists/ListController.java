@@ -1,13 +1,14 @@
 package de.hsrm.mi.swtpro.backend.controller.rest.lists;
 
 import de.hsrm.mi.swtpro.backend.model.Course;
+import de.hsrm.mi.swtpro.backend.model.CustomFieldOfStudy;
 import de.hsrm.mi.swtpro.backend.model.SwapOffer;
 import de.hsrm.mi.swtpro.backend.model.filter.Filter;
 import de.hsrm.mi.swtpro.backend.service.filterfactories.CourseFilterFactory;
 import de.hsrm.mi.swtpro.backend.service.filterfactories.SwapOfferFilterFactory;
 import de.hsrm.mi.swtpro.backend.service.repository.CourseRepository;
+import de.hsrm.mi.swtpro.backend.service.repository.FieldOfStudyRepository;
 import de.hsrm.mi.swtpro.backend.service.repository.SwapOfferRepository;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -16,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/rest/lists")
@@ -30,6 +32,14 @@ public class ListController {
         CourseFilterFactory filterFactory = CourseFilterFactory.builder().filters(filters).build();
         allCourses = filterFactory.filter(allCourses);
         return allCourses;
+    }
+
+    @Autowired
+    FieldOfStudyRepository fieldOfStudyRepository;
+
+    @GetMapping(path = "/fieldOfStudy", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+    public List<CustomFieldOfStudy> getFieldOfStudy() {
+        return fieldOfStudyRepository.findAll().stream().map(CustomFieldOfStudy::fromOriginal).collect(Collectors.toList());
     }
 
 
