@@ -12,6 +12,10 @@ import java.util.List;
 public class ModuleSelectionItem {
 
     @Getter @Setter
+    @NotNull
+    private long id;
+
+    @Getter @Setter
     @NotEmpty(message = "Modulname fehlt")
     private String title;
 
