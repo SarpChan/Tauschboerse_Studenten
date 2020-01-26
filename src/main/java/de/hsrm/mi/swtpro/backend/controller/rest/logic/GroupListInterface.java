@@ -1,14 +1,13 @@
 package de.hsrm.mi.swtpro.backend.controller.rest.logic;
 
+
 import de.hsrm.mi.swtpro.backend.controller.exceptions.GroupNotFoundException;
 import de.hsrm.mi.swtpro.backend.controller.login.security.JwtAuthentication;
 import de.hsrm.mi.swtpro.backend.controller.login.security.TokenService;
 import de.hsrm.mi.swtpro.backend.controller.rest.crud.GroupCrudController;
 import de.hsrm.mi.swtpro.backend.controller.rest.crud.StudentCrudController;
-import de.hsrm.mi.swtpro.backend.controller.rest.crud.UserCrudController;
-import de.hsrm.mi.swtpro.backend.controller.rest.logic.SwapOfferInterface;
-import de.hsrm.mi.swtpro.backend.model.*;
-import de.hsrm.mi.swtpro.backend.model.Module;
+import de.hsrm.mi.swtpro.backend.model.CourseComponent;
+import de.hsrm.mi.swtpro.backend.model.Student;
 import de.hsrm.mi.swtpro.backend.service.SwapOfferService;
 import de.hsrm.mi.swtpro.backend.service.repository.*;
 import org.slf4j.Logger;
@@ -28,11 +27,10 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.util.List;
 
 @RestController
 @RequestMapping("/rest")
-public class GroupListInterface extends OncePerRequestFilter {
+public class GroupListInterface {
     Logger logger = LoggerFactory.getLogger(GroupListInterface.class);
     @Autowired
     StudentRepository studentRepository;
@@ -59,30 +57,33 @@ public class GroupListInterface extends OncePerRequestFilter {
 
 
     @GetMapping(path = "/group/dropdowncollection/{groupID}",produces = MediaType.APPLICATION_JSON_VALUE)
-    public CourseComponent collectGroupsForDropdown( @PathVariable  long groupID) throws ServletException, IOException,GroupNotFoundException {
-
-         //   Student student = studentRepository.findByUser(userRepository.findByLoginName("tthiel").get()).get();
-            CourseComponent selectedComponent =  groupRepository.findById(groupID).get().getCourseComponent();
-         //   List<Group> groupsInComponent = groupRepository.findByCourseComponent(selectedComponent);
+    public Student collectGroupsForDropdown(HttpServletRequest request,@PathVariable long groupID) throws ServletException, IOException, GroupNotFoundException {
+        //final String requestHeader = request.getHeader(this.tokenHeader);
+        CourseComponent selectedComponent = null;
+        //   List<Group> groupsInComponent = groupRepository.findByCourseComponent(selectedComponent);
         /*    Group attendedGroup = student.getGroups().stream()
                     .filter(g -> g.getCourseComponent().equals(selectedComponent))
                     .findAny().get();
             groupsInComponent.remove(attendedGroup);*/
-                return selectedComponent;
-     /*   final String requestHeader = request.getHeader(this.tokenHeader);
+        //     return selectedComponent;
+        Student student = studentRepository.findByUser(userRepository.findByLoginName("tthiel").get()).get();
 
-        if (requestHeader != null && requestHeader.startsWith("Bearer ")) {
+       /* if (requestHeader != null && requestHeader.startsWith("Bearer ")) {
             String authenticationToken = requestHeader.substring(7);
-            JwtAuthentication authentication = new JwtAuthentication(authenticationToken);
-            SecurityContextHolder.getContext().setAuthentication(authentication);
             logger.warn("TOKEN: " + tokenService.getUsernameFromToken(authenticationToken));
-        }
 
-        throw new GroupNotFoundException("Groups or Student not found :("); */
+            selectedComponent = groupRepository.findById(groupID).get().getCourseComponent();
+
+        }*/
+
+        return student;
+
+
     }
 
+/*
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
 
-    }
+    }*/
 }
