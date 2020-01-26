@@ -1,11 +1,11 @@
 package de.hsrm.mi.swtpro.backend.controller.rest.lists;
 
-import de.hsrm.mi.swtpro.backend.controller.rest.CampusCrudController;
-import de.hsrm.mi.swtpro.backend.controller.rest.CourseComponentCrudController;
+
 import de.hsrm.mi.swtpro.backend.controller.rest.CourseCrudController;
-import de.hsrm.mi.swtpro.backend.controller.rest.GroupCrudController;
-import de.hsrm.mi.swtpro.backend.controller.rest.LecturerCrudController;
-import de.hsrm.mi.swtpro.backend.controller.rest.RoomCrudController;
+import de.hsrm.mi.swtpro.backend.controller.rest.crud.CourseComponentCrudController;
+import de.hsrm.mi.swtpro.backend.controller.rest.crud.GroupCrudController;
+import de.hsrm.mi.swtpro.backend.controller.rest.crud.LecturerCrudController;
+import de.hsrm.mi.swtpro.backend.controller.rest.crud.RoomCrudController;
 import de.hsrm.mi.swtpro.backend.model.Course;
 import de.hsrm.mi.swtpro.backend.model.CourseComponent;
 import de.hsrm.mi.swtpro.backend.model.ExamRegulation;

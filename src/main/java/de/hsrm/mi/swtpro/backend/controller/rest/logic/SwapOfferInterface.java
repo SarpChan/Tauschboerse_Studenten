@@ -189,7 +189,7 @@ public class SwapOfferInterface {
     @GetMapping(path = "/swapoffer/{enrollmentnumber}", produces = MediaType.APPLICATION_JSON_VALUE)
     public List<SwapOffer> selectByIDSwapOffers(@PathVariable int enrollmentnumber){
         //:TODO if Abfrage isPresent statt ".get()"
-        return swapOfferRepository.findByStudent(studentRepository.findByEnrollmentNumber(enrollmentnumber).get());
+        return swapOfferRepository.findByStudent(studentRepository.findByEnrolmentNumber(enrollmentnumber).get());
     }
 
 
