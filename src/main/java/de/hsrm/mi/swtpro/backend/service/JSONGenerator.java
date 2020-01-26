@@ -7,6 +7,7 @@ import de.hsrm.mi.swtpro.backend.service.repository.StudyProgramRepository;
 import de.hsrm.mi.swtpro.backend.service.repository.UniversityRepository;
 import org.hibernate.Hibernate;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -25,7 +26,7 @@ import java.util.HashSet;
 
 
 /**
- * The JSON Generator is used to generate a JSON file with sample entitys with all their relations for
+ * The JSON ServiceGenerator is used to generate a JSON file with sample entitys with all their relations for
  * the whole model.
  */
 @Component
@@ -38,6 +39,9 @@ public class JSONGenerator {
     UniversityRepository universityRepository;
     @Autowired
     StudyProgramRepository studyProgramRepository;
+
+    @Autowired
+    PasswordEncoder passwordEncoder;
 
 
     public File createJSON() {
@@ -119,7 +123,7 @@ public class JSONGenerator {
 
         User nahlers = User.builder().firstName("Nicklas").lastName("Ahlers").loginName("nahlers").password("nahlers").build();
         //entityManager.persist(nahlers);
-        User vesper = User.builder().firstName("Vanessa").lastName("Esper").loginName("vesper").password("vesper").build();
+        User vesper = User.builder().firstName("Vanessa").lastName("Esper").loginName("vesper").password(passwordEncoder.encode("vesper")).build();
         //entityManager.persist(vesper);
         User tthiel = User.builder().firstName("Tobi").lastName("Thiel").loginName("tthiel").password("tthiel").build();
         //entityManager.persist(tthiel);
