@@ -10,7 +10,7 @@ import java.util.List;
 
 @Repository
 public interface CurriculumRepository extends JpaRepository<Curriculum, Long> {
-    List<Curriculum> findByTermPeriod(int period);
+    List<Curriculum> findByMaxTerms(int maxTerm);
 
     List<Curriculum> findByModulesInCurriculum(ModuleInCurriculum module);
 

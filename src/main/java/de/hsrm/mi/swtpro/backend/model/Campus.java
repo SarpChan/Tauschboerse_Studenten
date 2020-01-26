@@ -34,7 +34,7 @@ public class Campus {
     private String address;
 
     @Getter @Setter
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "university_id")
     @NotNull
     private University university;

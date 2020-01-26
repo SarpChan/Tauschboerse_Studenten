@@ -29,13 +29,13 @@ public class StudentPrioritizesGroup {
     private int priority;
 
     @Getter @Setter
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name="student_id")
     @NotNull
     private Student student;
 
     @Getter @Setter
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name="group_id")
     @NotNull
     private Group group;

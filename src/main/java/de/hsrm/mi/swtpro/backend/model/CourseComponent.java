@@ -42,18 +42,19 @@ public class CourseComponent {
     private String exam;
 
     @Getter @Setter
-    @ManyToOne
+    @ManyToOne(cascade= CascadeType.ALL)
     @NotNull
     private Course course;
 
     @Singular("group")
     @Getter @Setter
-    @OneToMany(mappedBy = "courseComponent",cascade= CascadeType.ALL)
+    @OneToMany(mappedBy = "courseComponent",cascade = CascadeType.ALL)
     private Set<Group> groups;
 
+    @Singular("studentPassedExam")
     @Getter @Setter
-    @OneToOne
-    private StudentPassedExam studentPassedExam;
+    @OneToMany(mappedBy = "courseComponent",cascade= CascadeType.ALL)
+    private Set<StudentPassedExam> studentsPassedExam;
 
     /**
      * Adds group to the collection of groups, which belong to this lesson
