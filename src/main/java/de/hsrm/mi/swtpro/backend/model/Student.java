@@ -7,6 +7,7 @@ import lombok.experimental.SuperBuilder;
 
 import javax.persistence.*;
 import java.util.Set;
+import javax.persistence.OneToOne;
 import javax.validation.constraints.*;
 
 /**
@@ -20,14 +21,13 @@ import javax.validation.constraints.*;
 @SuperBuilder
 public class Student extends Role {
 
-    @Getter
-    @Setter
+    @Getter @Setter
+    //@Pattern(regexp = "[0-9]*")
     @NotNull
-    private int enrollmentNumber;
+    private int enrolmentNumber;
 
-    @Getter
-    @Setter
-    @Pattern(regexp = "[a-zA-Z0-9-+_.]+@[a-z0-9-+_.]+")
+    @Getter @Setter
+    //@Pattern(regexp = "[a-zA-Z0-9-+_.]+@[a-z0-9-+_]+")
     @NotEmpty
     private String mail;
 

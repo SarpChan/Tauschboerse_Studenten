@@ -23,6 +23,7 @@ import static org.junit.Assert.assertTrue;
 public class TermRepositoryTest {
 
 
+
     @Autowired
     EntityManager entityManager;
     @Autowired
@@ -66,7 +67,7 @@ public class TermRepositoryTest {
                 .build();
 
         student = Student.builder()
-                .enrollmentNumber(152093)
+                .enrolmentNumber(152093)
                 .enrolmentTerm(term)
                 .examRegulation(examReg)
                 .mail("a@b.c")
@@ -175,10 +176,10 @@ public class TermRepositoryTest {
     }
 
     @Test
-    public void whenFindByEnrolledStudent_thenReturnTerm() {
-        assertTrue(termRepository.findByEnroledStudents(student).isPresent());
-        assertThat(termRepository.findByEnroledStudents(student).get(),
-                hasProperty("period", is(2)));
+    public void whenFindByEnroledStudent_thenReturnTerm(){
+            assertTrue(termRepository.findByEnroledStudents(student).isPresent());
+            assertThat(termRepository.findByEnroledStudents(student).get(),
+                    hasProperty("period", is(2)));
     }
 
     @Test

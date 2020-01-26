@@ -26,11 +26,14 @@ public class JwtAuthenticationTokenFilter extends OncePerRequestFilter {
         final String requestHeader = request.getHeader(this.tokenHeader);
 
         if (requestHeader != null && requestHeader.startsWith("Bearer ")) {
-            String  authenticationToken = requestHeader.substring(7);
+            String authenticationToken = requestHeader.substring(7);
             JwtAuthentication authentication = new JwtAuthentication(authenticationToken);
             SecurityContextHolder.getContext().setAuthentication(authentication);
-
         }
         chain.doFilter(request, response);
+    }
+
+    public String getTokenHeader() {
+        return tokenHeader;
     }
 }

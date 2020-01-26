@@ -20,12 +20,7 @@ public class ModuleInCurriculum {
     @NotNull
     private long id;
 
-    /**
-     * Shows in which term the referred module takes place,
-     * without regarding if it is a winter or summer term.
-     */
-    @Getter
-    @Setter
+    @Getter @Setter
     @NotNull
     private int termPeriod;
 
