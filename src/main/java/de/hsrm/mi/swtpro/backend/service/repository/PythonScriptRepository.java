@@ -10,6 +10,7 @@ import de.hsrm.mi.swtpro.backend.model.Script;
 @Repository
 public  interface PythonScriptRepository extends JpaRepository<Script,Long>{
     List<Script> findByUserId(long userId);
+    List<Script> findByTitle(String title);
 
     
 }

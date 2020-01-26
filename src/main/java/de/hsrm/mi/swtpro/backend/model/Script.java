@@ -19,6 +19,14 @@ public class Script {
     private long userId;
 
     @Getter @Setter
+    @NotNull
+    private String title;
+
+    @Getter @Setter
+    @NotNull
+    private String diskSpace;
+
+    @Getter @Setter
     private String script;
 
 }
