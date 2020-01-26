@@ -7,6 +7,7 @@ import de.hsrm.mi.swtpro.backend.controller.rest.GroupCrudController;
 import de.hsrm.mi.swtpro.backend.controller.rest.LecturerCrudController;
 import de.hsrm.mi.swtpro.backend.controller.rest.RoomCrudController;
 import de.hsrm.mi.swtpro.backend.model.Course;
+import de.hsrm.mi.swtpro.backend.model.Group;
 import de.hsrm.mi.swtpro.backend.model.CourseComponent;
 import de.hsrm.mi.swtpro.backend.model.ExamRegulation;
 import de.hsrm.mi.swtpro.backend.model.Module;
