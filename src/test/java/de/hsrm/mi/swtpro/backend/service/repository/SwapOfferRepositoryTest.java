@@ -133,7 +133,7 @@ public class SwapOfferRepositoryTest {
                 .toGroup(toGroup)
                 .fromGroup(fromGroup)
                 .student(student)
-                .date(new Timestamp(564738))
+                .timestamp(new Timestamp(564738))
                 .build();
 
         entityManager.persist(user);
