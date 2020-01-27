@@ -24,6 +24,7 @@ public class TimetableController {
 
     @Autowired
     ModuleRepository moduleRepository;
+    @Autowired
     ServiceGenerator serviceGenerator;
 
     @PostMapping(path = "/timetable", consumes = "application/json", produces = MediaType.APPLICATION_JSON_VALUE)
