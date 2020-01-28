@@ -12,6 +12,9 @@ import de.hsrm.mi.swtpro.backend.model.Student;
 import de.hsrm.mi.swtpro.backend.model.StudentAttendsCourse;
 import de.hsrm.mi.swtpro.backend.model.TimetableModule;
 import de.hsrm.mi.swtpro.backend.model.User;
+import de.hsrm.mi.swtpro.backend.service.helper.ServiceGetter;
+import de.hsrm.mi.swtpro.backend.service.helper.ServiceGenerator;
+import de.hsrm.mi.swtpro.backend.service.helper.ServiceGetter;
 import de.hsrm.mi.swtpro.backend.service.repository.StudentRepository;
 import de.hsrm.mi.swtpro.backend.service.repository.UserRepository;
 
@@ -21,6 +24,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -33,62 +38,49 @@ import javax.servlet.http.HttpServletRequest;
 @RequestMapping("/rest/lists")
 public class StudentTimetableController {
 
-    UserRepository userRepository;
+
+    @Autowired
     TokenService tokenService;
+    @Autowired
+    ServiceGenerator serviceGenerator;
+    @Autowired
+    ServiceGetter serviceGetter;
+    UserRepository userRepository;
     StudentRepository studentRepository;
     Student student;
     User user;
 
-    @Value("${security.jwt.token.header:Authorization}")
-    private String tokenHeader;
-
     @GetMapping(path = "/student_timetable", produces = MediaType.APPLICATION_JSON_VALUE)
     public List<TimetableModule> getModules(HttpServletRequest request) {
-        final String requestHeader = request.getHeader(this.tokenHeader);
         List<TimetableModule> timetable = new ArrayList<TimetableModule>();
-        if (requestHeader != null && requestHeader.startsWith("Bearer ")) {
-            String authenticationToken = requestHeader.substring(7);
-            System.out.println(authenticationToken);
-            Optional<User> optionalUser = userRepository
-                    .findByLoginName(tokenService.getUsernameFromToken(authenticationToken));
-            /*
-             * List<Role> roles = new ArrayList<Role>(); user.get().getRoles().forEach(role
-             * -> roles.add(role)); for(Role role:roles){ Optional<Student> optionalStudent
-             * = studentRepository.findById(role.getId()); if (optionalStudent.isPresent())
-             * { student = optionalStudent.get(); } }
-             */
-            if (optionalUser.isPresent()) {
-                user = optionalUser.get();
-                user.getRoles().forEach(role -> {
-                    if (studentRepository.findById(role.getId()).isPresent()) {
-                        student = studentRepository.findById(role.getId()).get();
-                    }
-                });
+        String username = tokenService.getUsernameFromRequest(request);
+        Student student = serviceGetter.getStudentFromUsername(username);
 
-                Set<StudentAttendsCourse> studentAttendsCourse = student.getAttendCourses();
-                List<Module> allModules = new ArrayList<Module>();
-                studentAttendsCourse
-                        .forEach(course -> course.getCourse().getModules().forEach(module -> allModules.add(module)));
-                for (Module module : allModules) {
-                    for (Course course : module.getCourses()) {
-                        for (CourseComponent courseComponent : course.getCourseComponents()) {
-                            for (Group group : courseComponent.getGroups()) {
-                                TimetableModule timetableModule = TimetableModule.builder().groupID(group.getId())
-                                        .groupChar(group.getGroupChar()).dayOfWeek(group.getDayOfWeek())
-                                        .startTime(group.getStartTime()).endTime(group.getEndTime())
-                                        .lecturerName(group.getLecturer().getUser().getLastName())
-                                        .lecturerNameAbbreviation("Placeholder Abbreviation")
-                                        .courseComponentID(courseComponent.getId())
-                                        .courseType(courseComponent.getType()).courseTitle(course.getTitle())
-                                        .courseTitleAbbreviation("Placeholder Abbreviation")
-                                        .roomNumber(group.getRoom().getNumber()).build();
-                                timetable.add(timetableModule);
+        Set<StudentAttendsCourse> studentAttendsCourse = student.getAttendCourses();
+        List<Module> allModules = new ArrayList<Module>();
+        for(StudentAttendsCourse sAc : studentAttendsCourse){
+            for(Module module: sAc.getCourse().getModules()){
+                allModules.add(module);
+            }
+        }     
+        for (Module module : allModules) {
+            for (Course course : module.getCourses()) {
+                for (CourseComponent courseComponent : course.getCourseComponents()) {
+                    for (Group group : courseComponent.getGroups()) {
+                        TimetableModule timetableModule = TimetableModule.builder().groupID(group.getId())
+                            .groupChar(group.getGroupChar()).dayOfWeek(group.getDayOfWeek())
+                            .startTime(group.getStartTime()).endTime(group.getEndTime())
+                            .lecturerName(group.getLecturer().getUser().getLastName())
+                            .lecturerNameAbbreviation("Placeholder Abbreviation")
+                            .courseComponentID(courseComponent.getId())
+                            .courseType(courseComponent.getType()).courseTitle(course.getTitle())
+                            .courseTitleAbbreviation("Placeholder Abbreviation")
+                            .roomNumber(group.getRoom().getNumber()).build();
+                            timetable.add(timetableModule);
                             }
                         }
                     }
                 }
-            }
-        }
         return timetable;
     }
 }
