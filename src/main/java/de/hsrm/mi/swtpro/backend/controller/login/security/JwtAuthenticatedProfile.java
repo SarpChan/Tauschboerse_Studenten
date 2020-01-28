@@ -2,25 +2,26 @@ package de.hsrm.mi.swtpro.backend.controller.login.security;
 
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
-
-import java.util.ArrayList;
 import java.util.Collection;
 
 /**
- * JwtAuthenticatedProfile contains the logged in user
+ * JwtAuthenticatedProfile contains the logged in 
+ * user with the authorities
  */
 public class JwtAuthenticatedProfile implements Authentication {
 
     private static final long serialVersionUID = 1L;
     private final String username;
+    private final Collection<? extends GrantedAuthority> authorities;
 
-    public JwtAuthenticatedProfile(String username) {
+    public JwtAuthenticatedProfile(String username, Collection<? extends GrantedAuthority> authorities) {
         this.username = username;
+        this.authorities = authorities;
     }
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return new ArrayList<>();
+        return authorities;
     }
 
     @Override

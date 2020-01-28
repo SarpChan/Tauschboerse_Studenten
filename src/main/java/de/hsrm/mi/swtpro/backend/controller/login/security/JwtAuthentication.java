@@ -2,13 +2,11 @@ package de.hsrm.mi.swtpro.backend.controller.login.security;
 
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
-
-import java.util.Arrays;
 import java.util.Collection;
 
 /**
- * JwtAuthenticatedProfile contains the token from the logged in user
+ * JwtAuthenticatedProfile contains the token from the 
+ * user for the authentication
  */
 public class JwtAuthentication implements Authentication {
   
@@ -18,13 +16,11 @@ public class JwtAuthentication implements Authentication {
 
     public JwtAuthentication(String token) {
         this.token = token;
-     
-        
     }
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return null;// Arrays.asList(new SimpleGrantedAuthority("ADMIN"));
+        return null;
     }
 
     @Override
