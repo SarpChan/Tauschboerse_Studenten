@@ -26,7 +26,7 @@ import java.util.HashSet;
 
 
 /**
- * The JSON ServiceGenerator is used to generate a JSON file with sample entitys with all their relations for
+ * The  is used to generate a JSON file with sample entitys with all their relations for
  * the whole model.
  */
 @Component
@@ -83,103 +83,27 @@ public class JSONGenerator {
         // Terms
 
         Term ws1920 = Term.builder().startDate(Date.valueOf("2019-10-01")).endDate(Date.valueOf("2020-03-31")).period(1).build();
-        //entityManager.persist(ws1920);
-        Term ss2019 = Term.builder().startDate(Date.valueOf("2019-04-01")).endDate(Date.valueOf("2019-08-31")).period(2).build();
-        //entityManager.persist(ss2019);
-
-
-        // Fields of Study
-
-        FieldOfStudy informatik = FieldOfStudy.builder().title("Informatik").university(uni).build();
-        //entityManager.persist(informatik);
-
-
-        // Study Program
-
-        StudyProgram medieninformatik = StudyProgram.builder().title("Medieninformatik").degree("Bachelor").fieldOfStudy(informatik).build();
-        //entityManager.persist(medieninformatik);
-        StudyProgram angewandteinformatik = StudyProgram.builder().title("Angewandte Informatik").degree("Bachelor").fieldOfStudy(informatik).build();
-        //entityManager.persist(angewandteinformatik);
-
-
-        // PO
-
-        ExamRegulation po2017 = ExamRegulation.builder().date(Date.valueOf("2017-10-01")).studyProgram(medieninformatik).build();
-        //entityManager.persist(po2017);
-        ExamRegulation po2016 = ExamRegulation.builder().date(Date.valueOf("2016-10-01")).studyProgram(angewandteinformatik).build();
-        //entityManager.persist(po2016);
-
-
-        // User
-
-        User wweitz = User.builder().firstName("Wolfgang").lastName("Weitz").loginName("wweitz").password("wweitz").build();
-        //entityManager.persist(wweitz);
-        User jberdux = User.builder().firstName("Joerg").lastName("Berdux").loginName("jberdux").password("jberdux").build();
-        //entityManager.persist(jberdux);
-        User rreichenauer = User.builder().firstName("Roland").lastName("Reichenauer").loginName("rreichenauer").password("rreichenauer").build();
-        //entityManager.persist(rreichenauer);
-        User uschwaneke = User.builder().firstName("Ulrich").lastName("Schwaneke").loginName("uschwaneke").password("uschwaneke").build();
-        //entityManager.persist(uschwaneke);
-
-        User nahlers = User.builder().firstName("Nicklas").lastName("Ahlers").loginName("nahlers").password("nahlers").build();
-        //entityManager.persist(nahlers);
-        User vesper = User.builder().firstName("Vanessa").lastName("Esper").loginName("vesper").password(passwordEncoder.encode("vesper")).build();
-        //entityManager.persist(vesper);
-        User tthiel = User.builder().firstName("Tobi").lastName("Thiel").loginName("tthiel").password("tthiel").build();
-        //entityManager.persist(tthiel);
-        User jwirt = User.builder().firstName("Julia").lastName("Wirt").loginName("jwirt").password("jwirt").build();
-        //entityManager.persist(jwirt);
-        User jmuel = User.builder().firstName("Julius").lastName("Muel").loginName("jmuel").password("jmuel").build();
-        //entityManager.persist(jmuel);
-        User ydeuster = User.builder().firstName("Yen").lastName("Deuster").loginName("ydeuster").password("ydeuster").build();
-        //entityManager.persist(ydeuster);
-
-
-        // Roles
-
-        Student stu_esper = Student.builder().user(vesper).enrolmentNumber(1076576)
-                .enrolmentTerm(ss2019).mail("esper@mail.com").examRegulation(po2017).build();
-        //entityManager.persist(stu_esper);
-        Student stu_ahlers = Student.builder().user(nahlers).enrolmentNumber(1076688)
-                .enrolmentTerm(ss2019).mail("ahlers@mail.com").examRegulation(po2017).build();
-        //entityManager.persist(stu_ahlers);
-        Student stu_deuster = Student.builder().user(ydeuster).enrolmentNumber(1075577)
-                .enrolmentTerm(ss2019).mail("deuster@mail.com").examRegulation(po2017).build();
-        //entityManager.persist(stu_deuster);
-        Student stu_wirt = Student.builder().user(jwirt).enrolmentNumber(1078833)
-                .enrolmentTerm(ss2019).mail("wirt@mail.com").examRegulation(po2017).build();
-        //entityManager.persist(stu_wirt);
-        Student stu_thiel = Student.builder().user(tthiel).enrolmentNumber(1074411)
-                .enrolmentTerm(ss2019).mail("thiel@mail.com").examRegulation(po2017).build();
-        //entityManager.persist(stu_thiel);
-
-        Lecturer lec_weitz = Lecturer.builder().priviledge(1).user(wweitz).build();
-        //entityManager.persist(lec_weitz);
-        Lecturer lec_berdux = Lecturer.builder().priviledge(1).user(jberdux).build();
-        //entityManager.persist(lec_berdux);
-        Lecturer lec_reichenauer = Lecturer.builder().priviledge(1).user(rreichenauer).build();
-        //entityManager.persist(lec_reichenauer);
-        Lecturer lec_schwaneke = Lecturer.builder().priviledge(1).user(uschwaneke).build();
-        //entityManager.persist(lec_schwaneke);
-
-        Administrator adm_weitz = Administrator.builder().priviledge(1).user(wweitz).build();
-        //entityManager.persist(adm_weitz);
-
-
-        // Curriculum
-
-        Curriculum curriculumMi = Curriculum.builder().examRegulation(po2017).maxTerms(7).build();
-        //entityManager.persist(curriculumMi);
-        Curriculum curriculumAi = Curriculum.builder().examRegulation(po2016).maxTerms(7).build();
-        //entityManager.persist(curriculumAi);
-
-
-        // Modules
-
-        Module mProgrammieren1 = Module.builder().title("Programmieren 1").creditPoints(5).period(1).build();
-        //entityManager.persist(mProgrammieren1);
-        Module mProgrammieren2 = Module.builder().title("Programmieren 2").creditPoints(5).period(1).build();
-        //entityManager.persist(mProgrammieren2);
+        entityManager.persist(ws1920);
+        ExamRegulation po2017 = ExamRegulation.builder().date(Date.valueOf("2017-10-01")).build();
+        entityManager.persist(po2017);
+        User testUser = User.builder().firstName("Test").lastName("User").loginName("testUser").password(passwordencoder.encode("test")).userRights(UserRights.ADMIN).build();
+        entityManager.persist(testUser);
+        User passedUser = User.builder().firstName("Passed").lastName("Student").loginName("passedUser").password("test").build();
+        entityManager.persist(passedUser);
+        Student testStudent = Student.builder().user(testUser).enrollmentNumber(123456)
+                .enrolmentTerm(ws1920).mail("test@test.com").examRegulation(po2017).build();
+        entityManager.persist(testStudent);
+        Student passedStudent = Student.builder().user(passedUser).enrollmentNumber(987654)
+                .enrolmentTerm(ws1920).mail("passed@test.com").examRegulation(po2017).build();
+        entityManager.persist(passedStudent);
+        Lecturer testLecturer = Lecturer.builder().priviledge(1).user(testUser).build();
+        entityManager.persist(testLecturer);
+        StudyProgram medieninformatik = StudyProgram.builder().title("Medieninformatik").degree("Bachlor").build();
+        entityManager.persist(medieninformatik);
+        FieldOfStudy dcsm = FieldOfStudy.builder().title("DCSM").build();
+        entityManager.persist(dcsm);
+        Curriculum curriculum = Curriculum.builder().examRegulation(po2017).termPeriod(1).build();
+        entityManager.persist(curriculum);
         Module mProgrammieren3 = Module.builder().title("Programmieren 3").creditPoints(5).period(1).build();
         //entityManager.persist(mProgrammieren3);
         Module mMathe1 = Module.builder().title("Mathe 1").creditPoints(5).period(1).build();
