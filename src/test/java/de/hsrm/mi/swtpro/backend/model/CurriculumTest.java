@@ -34,7 +34,7 @@ public class CurriculumTest {
         curriculum = Curriculum.builder()
                 .examRegulation(examRegulation)
                 .moduleInCurriculum(moduleInCurriculum)
-                .termPeriod(2)
+                .maxTerms(2)
                 .build();
     }
 
@@ -51,8 +51,8 @@ public class CurriculumTest {
     }
 
     @Test
-    public void whenGetTermPeriod_thenReturnTermPeriod(){
-        assertEquals(2,curriculum.getTermPeriod());
+    public void whenGetMaxTerms_thenReturnMaxTerms(){
+        assertEquals(2,curriculum.getMaxTerms());
     }
 
     @Test
@@ -74,8 +74,8 @@ public class CurriculumTest {
     }
 
     @Test
-    public void whenSetTermPeriod_thenSaveTermPeriod(){
-        curriculum.setTermPeriod(1);
-        assertEquals(1, curriculum.getTermPeriod());
+    public void whenSetMaxTerm_thenSaveMaxTerms(){
+        curriculum.setMaxTerms(1);
+        assertEquals(1, curriculum.getMaxTerms());
     }
 }

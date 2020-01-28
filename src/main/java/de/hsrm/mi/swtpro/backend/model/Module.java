@@ -43,7 +43,7 @@ public class Module {
 
     @Singular("moduleInCurriculum")
     @Getter @Setter
-    @OneToMany(mappedBy = "module")
+    @OneToMany(mappedBy = "module",cascade = CascadeType.ALL)
     private Set<ModuleInCurriculum> modulesInCurriculum ;
 
     @Singular("course")

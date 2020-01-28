@@ -24,7 +24,7 @@ public class Student extends Role {
     @Getter @Setter
     //@Pattern(regexp = "[0-9]*")
     @NotNull
-    private int enrollmentNumber;
+    private int enrolmentNumber;
 
     @Getter @Setter
     //@Pattern(regexp = "[a-zA-Z0-9-+_.]+@[a-z0-9-+_]+")
@@ -32,12 +32,12 @@ public class Student extends Role {
     private String mail;
 
     @Getter @Setter
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL)
     @NotNull
     private ExamRegulation examRegulation;
 
     @Getter @Setter
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL)
     @NotNull
     private Term enrolmentTerm;
 
@@ -48,7 +48,7 @@ public class Student extends Role {
 
     @Singular("prioritizeGroup")
     @Getter @Setter
-    @OneToMany(mappedBy = "student")
+    @OneToMany(mappedBy = "student",cascade= CascadeType.ALL)
     private Set<StudentPrioritizesGroup> prioritizeGroups;
 
     @Singular("passedExam")
@@ -61,5 +61,8 @@ public class Student extends Role {
     @ManyToMany(mappedBy = "students",cascade= CascadeType.ALL)
     private Set<Group> groups;
 
-
+    @Singular("swapOffer")
+    @Getter @Setter
+    @OneToMany(mappedBy = "student", cascade = CascadeType.ALL)
+    private Set<SwapOffer> swapOffers;
 }

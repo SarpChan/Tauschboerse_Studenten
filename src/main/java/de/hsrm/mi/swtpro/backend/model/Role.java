@@ -8,12 +8,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.experimental.SuperBuilder;
 
-import java.util.Set;
-
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.ManyToOne;
+import javax.persistence.*;
 
 @Entity
 @NoArgsConstructor
@@ -31,6 +26,7 @@ public abstract class Role {
     private Role role;*/
 
     @Getter @Setter
-    @ManyToOne
+    @ManyToOne(targetEntity = User.class, fetch = FetchType.LAZY,cascade = CascadeType.ALL)
+    @JoinColumn(name = "user_id")
     private User user;
 }

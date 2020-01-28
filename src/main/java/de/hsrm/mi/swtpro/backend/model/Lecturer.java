@@ -5,6 +5,7 @@ import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.OneToMany;
 import java.util.HashSet;
@@ -21,7 +22,7 @@ public class Lecturer extends Role {
 
     @Singular("group")
     @Getter @Setter
-    @OneToMany(mappedBy = "lecturer")
+    @OneToMany(mappedBy = "lecturer",cascade = CascadeType.ALL)
     private Set<Group> groups ;
 
 }

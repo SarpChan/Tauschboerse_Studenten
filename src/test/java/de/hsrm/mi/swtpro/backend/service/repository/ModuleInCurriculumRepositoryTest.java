@@ -1,9 +1,8 @@
 package de.hsrm.mi.swtpro.backend.service.repository;
 
 
-import de.hsrm.mi.swtpro.backend.model.Curriculum;
+import de.hsrm.mi.swtpro.backend.model.*;
 import de.hsrm.mi.swtpro.backend.model.Module;
-import de.hsrm.mi.swtpro.backend.model.ModuleInCurriculum;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -12,6 +11,8 @@ import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import javax.persistence.EntityManager;
+
+import java.sql.Date;
 
 import static junit.framework.TestCase.assertTrue;
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -32,8 +33,23 @@ public class ModuleInCurriculumRepositoryTest {
 
     @Before
     public void setUp(){
-        module = Module.builder().build();
-        curriculum = Curriculum.builder().build();
+        module = Module.builder()
+                .title("Titel")
+                .build();
+
+        StudyProgram studyProg = StudyProgram.builder()
+                .title("test")
+                .degree("E")
+                .build();
+
+        ExamRegulation examReg = ExamRegulation.builder()
+                .date(new Date(System.currentTimeMillis()))
+                .studyProgram(studyProg)
+                .build();
+
+        curriculum = Curriculum.builder()
+                .examRegulation(examReg)
+                .build();
 
         ModuleInCurriculum moduleInCurriculum = ModuleInCurriculum.builder()
                 .module(module)
@@ -41,6 +57,8 @@ public class ModuleInCurriculumRepositoryTest {
                 .termPeriod(2)
                 .build();
 
+        entityManager.persist(studyProg);
+        entityManager.persist(examReg);
         entityManager.persist(curriculum);
         entityManager.persist(module);
         entityManager.persist(moduleInCurriculum);
