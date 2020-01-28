@@ -54,8 +54,8 @@ public class StudentCrudController {
      */
     @GetMapping(path = "/student/read/{enrolmentNumber}", produces = MediaType.APPLICATION_JSON_VALUE)
     public Student findStudent(@PathVariable int enrolmentNumber) throws StudentNotFoundException {
-        if (studentRepository.findByEnrolmentNumber(enrolmentNumber).isPresent()) {
-            return studentRepository.findByEnrolmentNumber(enrolmentNumber).get();
+        if (studentRepository.findByEnrollmentNumber(enrolmentNumber).isPresent()) {
+            return studentRepository.findByEnrollmentNumber(enrolmentNumber).get();
         } else {
             throw new StudentNotFoundException("Student not found");
         }
@@ -71,8 +71,8 @@ public class StudentCrudController {
      */
     @DeleteMapping(path = "/student/delete/{enrolmentNumber}", consumes = "application/json")
     public void deleteStudent(@PathVariable int enrolmentNumber) throws StudentNotFoundException {
-        if (studentRepository.findByEnrolmentNumber(enrolmentNumber).isPresent()) {
-            studentRepository.delete(studentRepository.findByEnrolmentNumber(enrolmentNumber).get());
+        if (studentRepository.findByEnrollmentNumber(enrolmentNumber).isPresent()) {
+            studentRepository.delete(studentRepository.findByEnrollmentNumber(enrolmentNumber).get());
         } else {
             throw new StudentNotFoundException("Student not found");
         }

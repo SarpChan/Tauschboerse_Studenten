@@ -40,7 +40,7 @@ public class SwapOfferService {
             if (einzelnesSwapOffer.getToGroup().getId() == offer.getFromGroup().getId()) { // OB ID der Zielgruppe mit der Startgruppe matcht
                 logger.warn("POSSIBLE MATCG SILKVE");
                 //TODO: In den Gruppen die Studentenliste aktualisieren -> beide studis austauschen bei fragen @vespa001
-                Student A = studentRepository.findByEnrolmentNumber(offer.getStudent().getEnrolmentNumber()).get();
+                Student A = studentRepository.findByEnrollmentNumber(offer.getStudent().getEnrollmentNumber()).get();
                 Student B = einzelnesSwapOffer.getStudent();
 
                 Set<Group> aGroups = A.getGroups();

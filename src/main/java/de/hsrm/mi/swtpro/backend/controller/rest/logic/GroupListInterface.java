@@ -2,11 +2,11 @@ package de.hsrm.mi.swtpro.backend.controller.rest.logic;
 
 
 import de.hsrm.mi.swtpro.backend.controller.exceptions.GroupNotFoundException;
-import de.hsrm.mi.swtpro.backend.controller.login.security.JwtAuthentication;
 import de.hsrm.mi.swtpro.backend.controller.login.security.TokenService;
 import de.hsrm.mi.swtpro.backend.controller.rest.crud.GroupCrudController;
 import de.hsrm.mi.swtpro.backend.controller.rest.crud.StudentCrudController;
 import de.hsrm.mi.swtpro.backend.model.CourseComponent;
+import de.hsrm.mi.swtpro.backend.model.Group;
 import de.hsrm.mi.swtpro.backend.model.Student;
 import de.hsrm.mi.swtpro.backend.service.SwapOfferService;
 import de.hsrm.mi.swtpro.backend.service.repository.*;
@@ -15,18 +15,16 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.MediaType;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.filter.OncePerRequestFilter;
 
-import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.HashSet;
+import java.util.Set;
 
 @RestController
 @RequestMapping("/rest")
@@ -56,34 +54,47 @@ public class GroupListInterface {
     private String tokenHeader;
 
 
-    @GetMapping(path = "/group/dropdowncollection/{groupID}",produces = MediaType.APPLICATION_JSON_VALUE)
-    public Student collectGroupsForDropdown(HttpServletRequest request,@PathVariable long groupID) throws ServletException, IOException, GroupNotFoundException {
-        //final String requestHeader = request.getHeader(this.tokenHeader);
-        CourseComponent selectedComponent = null;
-        //   List<Group> groupsInComponent = groupRepository.findByCourseComponent(selectedComponent);
-        /*    Group attendedGroup = student.getGroups().stream()
-                    .filter(g -> g.getCourseComponent().equals(selectedComponent))
-                    .findAny().get();
-            groupsInComponent.remove(attendedGroup);*/
-        //     return selectedComponent;
-        Student student = studentRepository.findByUser(userRepository.findByLoginName("tthiel").get()).get();
-
-       /* if (requestHeader != null && requestHeader.startsWith("Bearer ")) {
-            String authenticationToken = requestHeader.substring(7);
+    @GetMapping(path = "/group/dropdowncollection/{groupID}", produces = MediaType.APPLICATION_JSON_VALUE)
+    public Set<Long> collectGroupsForDropdown(HttpServletRequest request, @PathVariable long groupID) throws ServletException, IOException, GroupNotFoundException {
+        final String requestHeader = request.getHeader(this.tokenHeader);
+        String authenticationToken = "";
+        Student student = null;
+        Set<Long> groupsInComponent = new HashSet<>();
+        if (requestHeader != null && requestHeader.startsWith("Bearer ")) {
+            authenticationToken = requestHeader.substring(7);
             logger.warn("TOKEN: " + tokenService.getUsernameFromToken(authenticationToken));
+            student = studentRepository.findByUser(userRepository.findByLoginName(tokenService.getUsernameFromToken(authenticationToken)).get()).get();
+            CourseComponent selectedComponent = groupRepository.findById(groupID).get().getCourseComponent();
+            Set<Group> groupsList = selectedComponent.getGroups();
+            groupsList.stream()
+                    .forEach(e -> {
+                        groupsInComponent.add(e.getId());
+                        logger.warn("Kurs: " + e.getCourseComponent().getCourse().getTitle() + " Typ: " + e.getCourseComponent().getType().name() + " Gruppe: " + e.getGroupChar() + " - " + e.getId());
+                    });
+            Long attendedGroupId = null;
+            if (student.getGroups().stream()
+                    .filter(g -> g.getCourseComponent().equals(selectedComponent))
+                    .findAny()
+                    .isPresent()) {
+                attendedGroupId = student.getGroups().stream()
+                        .filter(g -> g.getCourseComponent().equals(selectedComponent))
+                        .findAny().get().getId();
+            }
+            assert attendedGroupId != null:tokenService.getUsernameFromToken(authenticationToken) + " does not attend in " +
+                    "Kurs: " + selectedComponent.getCourse().getTitle() + " Typ: " + selectedComponent.getType().name();
 
-            selectedComponent = groupRepository.findById(groupID).get().getCourseComponent();
+            if (groupsInComponent.contains(attendedGroupId)) {
+                groupsInComponent.remove(student.getGroups().stream()
+                        .filter(g -> g.getCourseComponent().equals(selectedComponent))
+                        .findAny().get().getId());
+            } else {
+                throw new GroupNotFoundException(tokenService.getUsernameFromToken(authenticationToken) + " does not attend in " +
+                        "Kurs: " + selectedComponent.getCourse().getTitle() + " Typ: " + selectedComponent.getType().name());
+            }
+            logger.warn("RESULT: " + groupsInComponent);
 
-        }*/
-
-        return student;
-
-
+            return groupsInComponent;
+        }
+        return groupsInComponent;
     }
-
-/*
-    @Override
-    protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
-
-    }*/
 }
