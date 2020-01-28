@@ -133,7 +133,7 @@ public class SwapOfferRepositoryTest {
                 .toGroup(toGroup)
                 .fromGroup(fromGroup)
                 .student(student)
-                .date(new Timestamp(564738))
+                .timestamp(new Timestamp(564738))
                 .build();
 
         entityManager.persist(user);
@@ -157,7 +157,7 @@ public class SwapOfferRepositoryTest {
     @Test
     public void whenFindAll_thenReturnSwapOfferList() {
         assertThat(swapOfferRepository.findAll(), hasItem(
-                hasProperty("date", is(new Timestamp(564738)))
+                hasProperty("timestamp", is(new Timestamp(564738)))
         ));
     }
 
@@ -165,26 +165,26 @@ public class SwapOfferRepositoryTest {
     public void whenFindById_thenReturnSwapOffer() {
         assertTrue(swapOfferRepository.findById(id).isPresent());
         assertThat(swapOfferRepository.findById(id).get(),
-                hasProperty("date", is(new Timestamp(564738))));
+                hasProperty("timestamp", is(new Timestamp(564738))));
     }
 
     @Test
     public void whenFindByToGroup_thenReturnSwapOfferList() {
         assertThat(swapOfferRepository.findByToGroup(toGroup), hasItem(
-                hasProperty("date", is(new Timestamp(564738)))
+                hasProperty("timestamp", is(new Timestamp(564738)))
         ));
     }
 
     @Test
     public void whenFindByFromGroup_thenReturnSwapOfferList() {
         assertThat(swapOfferRepository.findByFromGroup(fromGroup), hasItem(
-                hasProperty("date", is(new Timestamp(564738)))
+                hasProperty("timestamp", is(new Timestamp(564738)))
         ));
     }
 
     @Test
     public void whenFindByDate_thenReturnSwapOfferList() {
-        assertThat(swapOfferRepository.findByDate(new Timestamp(564738)),
-                hasItem(hasProperty("date", is(new Timestamp(564738)))));
+        assertThat(swapOfferRepository.findByTimestamp(new Timestamp(564738)),
+                hasItem(hasProperty("timestamp", is(new Timestamp(564738)))));
     }
 }

@@ -67,7 +67,7 @@ public class TermRepositoryTest {
                 .build();
 
         student = Student.builder()
-                .enrolmentNumber(152093)
+                .enrollmentNumber(152093)
                 .enrolmentTerm(term)
                 .examRegulation(examReg)
                 .mail("a@b.c")

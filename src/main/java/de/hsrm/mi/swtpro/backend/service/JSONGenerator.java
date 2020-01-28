@@ -136,19 +136,19 @@ public class JSONGenerator {
 
         // Roles
 
-        Student stu_esper = Student.builder().user(vesper).enrolmentNumber(1076576)
+        Student stu_esper = Student.builder().user(vesper).enrollmentNumber(1076576)
                 .enrolmentTerm(ss2019).mail("esper@mail.com").examRegulation(po2017).build();
         //entityManager.persist(stu_esper);
-        Student stu_ahlers = Student.builder().user(nahlers).enrolmentNumber(1076688)
+        Student stu_ahlers = Student.builder().user(nahlers).enrollmentNumber(1076688)
                 .enrolmentTerm(ss2019).mail("ahlers@mail.com").examRegulation(po2017).build();
         //entityManager.persist(stu_ahlers);
-        Student stu_deuster = Student.builder().user(ydeuster).enrolmentNumber(1075577)
+        Student stu_deuster = Student.builder().user(ydeuster).enrollmentNumber(1075577)
                 .enrolmentTerm(ss2019).mail("deuster@mail.com").examRegulation(po2017).build();
         //entityManager.persist(stu_deuster);
-        Student stu_wirt = Student.builder().user(jwirt).enrolmentNumber(1078833)
+        Student stu_wirt = Student.builder().user(jwirt).enrollmentNumber(1078833)
                 .enrolmentTerm(ss2019).mail("wirt@mail.com").examRegulation(po2017).build();
         //entityManager.persist(stu_wirt);
-        Student stu_thiel = Student.builder().user(tthiel).enrolmentNumber(1074411)
+        Student stu_thiel = Student.builder().user(tthiel).enrollmentNumber(1074411)
                 .enrolmentTerm(ss2019).mail("thiel@mail.com").examRegulation(po2017).build();
         //entityManager.persist(stu_thiel);
 
@@ -167,9 +167,9 @@ public class JSONGenerator {
 
         // Curriculum
 
-        Curriculum curriculumMi = Curriculum.builder().examRegulation(po2017).maxTerms(1).build();
+        Curriculum curriculumMi = Curriculum.builder().examRegulation(po2017).maxTerms(7).build();
         //entityManager.persist(curriculumMi);
-        Curriculum curriculumAi = Curriculum.builder().examRegulation(po2016).maxTerms(1).build();
+        Curriculum curriculumAi = Curriculum.builder().examRegulation(po2016).maxTerms(7).build();
         //entityManager.persist(curriculumAi);
 
 

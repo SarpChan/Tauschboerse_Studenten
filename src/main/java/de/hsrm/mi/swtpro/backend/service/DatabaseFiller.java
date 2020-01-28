@@ -29,12 +29,12 @@ public class DatabaseFiller {
 
     @PostConstruct
     public void fillDatabase(){
-        /*String[] args = appArgs.getSourceArgs();
+        String[] args = appArgs.getSourceArgs();
         for (int i = 0; i < args.length ; i++) {
             if(args[i].equals("fillDatabase")){
                 readJSON(jsonGenerator.createJSON());
             }
-        }*/
+        }
 
         //readJSON(jsonGenerator.createJSON());
     }
