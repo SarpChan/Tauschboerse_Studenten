@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 import javax.servlet.http.HttpServletRequest;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/rest/lists")
@@ -31,6 +31,14 @@ public class ListController {
         CourseFilterFactory filterFactory = CourseFilterFactory.builder().filters(filters).build();
         allCourses = filterFactory.filter(allCourses);
         return allCourses;
+    }
+
+    @Autowired
+    FieldOfStudyRepository fieldOfStudyRepository;
+
+    @GetMapping(path = "/fieldOfStudy", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+    public List<CustomFieldOfStudy> getFieldOfStudy() {
+        return fieldOfStudyRepository.findAll().stream().map(CustomFieldOfStudy::fromOriginal).collect(Collectors.toList());
     }
 
 
