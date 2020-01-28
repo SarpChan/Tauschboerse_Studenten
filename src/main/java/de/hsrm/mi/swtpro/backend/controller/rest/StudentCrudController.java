@@ -48,14 +48,14 @@ public class StudentCrudController {
     /**
      * Find a Student object from the Model
      *
-     * @param enrolmentNumber recieves key from student
+     * @param EnrollmentNumber recieves key from student
      * @return Student object
      * @throws StudentNotFoundException
      */
-    @GetMapping(path = "/student/read/{enrolmentNumber}", produces = MediaType.APPLICATION_JSON_VALUE)
-    public Student findStudent(@PathVariable int enrolmentNumber) throws StudentNotFoundException {
-        if (studentRepository.findByEnrolmentNumber(enrolmentNumber).isPresent()) {
-            return studentRepository.findByEnrolmentNumber(enrolmentNumber).get();
+    @GetMapping(path = "/student/read/{EnrollmentNumber}", produces = MediaType.APPLICATION_JSON_VALUE)
+    public Student findStudent(@PathVariable int EnrollmentNumber) throws StudentNotFoundException {
+        if (studentRepository.findByEnrollmentNumber(EnrollmentNumber).isPresent()) {
+            return studentRepository.findByEnrollmentNumber(EnrollmentNumber).get();
         } else {
             throw new StudentNotFoundException("Student not found");
         }
@@ -65,14 +65,14 @@ public class StudentCrudController {
     /**
      * Remove a Student object from the Model
      *
-     * @param enrolmentNumber recieves a Student id via DELETE request
+     * @param EnrollmentNumber recieves a Student id via DELETE request
      * @return void
      * @throws StudentNotFoundException
      */
-    @DeleteMapping(path = "/student/delete/{enrolmentNumber}", consumes = "application/json")
-    public void deleteStudent(@PathVariable int enrolmentNumber) throws StudentNotFoundException {
-        if (studentRepository.findByEnrolmentNumber(enrolmentNumber).isPresent()) {
-            studentRepository.findByEnrolmentNumber(enrolmentNumber);
+    @DeleteMapping(path = "/student/delete/{EnrollmentNumber}", consumes = "application/json")
+    public void deleteStudent(@PathVariable int EnrollmentNumber) throws StudentNotFoundException {
+        if (studentRepository.findByEnrollmentNumber(EnrollmentNumber).isPresent()) {
+            studentRepository.findByEnrollmentNumber(EnrollmentNumber);
         } else {
             throw new StudentNotFoundException("Student not found");
         }
