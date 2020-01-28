@@ -53,10 +53,8 @@ public class StudentTimetableController {
 
     @GetMapping(path = "/student_timetable", produces = MediaType.APPLICATION_JSON_VALUE)
     public List<TimetableModule> getModules(HttpServletRequest request) {
-        List<TimetableModule> timetable = new ArrayList<TimetableModule>();
         String username = tokenService.getUsernameFromRequest(request);
         Student student = serviceGetter.getStudentFromUsername(username);
-
         Set<StudentAttendsCourse> studentAttendsCourse = student.getAttendCourses();
         List<Module> allModules = new ArrayList<Module>();
         for(StudentAttendsCourse sAc : studentAttendsCourse){
@@ -64,24 +62,6 @@ public class StudentTimetableController {
                 allModules.add(module);
             }
         }     
-        for (Module module : allModules) {
-            for (Course course : module.getCourses()) {
-                for (CourseComponent courseComponent : course.getCourseComponents()) {
-                    for (Group group : courseComponent.getGroups()) {
-                        TimetableModule timetableModule = TimetableModule.builder().groupID(group.getId())
-                            .groupChar(group.getGroupChar()).dayOfWeek(group.getDayOfWeek())
-                            .startTime(group.getStartTime()).endTime(group.getEndTime())
-                            .lecturerName(group.getLecturer().getUser().getLastName())
-                            .lecturerNameAbbreviation("Placeholder Abbreviation")
-                            .courseComponentID(courseComponent.getId())
-                            .courseType(courseComponent.getType()).courseTitle(course.getTitle())
-                            .courseTitleAbbreviation("Placeholder Abbreviation")
-                            .roomNumber(group.getRoom().getNumber()).build();
-                            timetable.add(timetableModule);
-                            }
-                        }
-                    }
-                }
-        return timetable;
+        return serviceGenerator.timetableModuleFromModules(allModules);
     }
 }
