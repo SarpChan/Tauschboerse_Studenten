@@ -20,13 +20,23 @@ public class Script {
 
     @Getter @Setter
     @NotNull
-    private String title;
+    private String fileName;
 
     @Getter @Setter
     @NotNull
-    private String diskSpace;
+    private String fileType;
 
     @Getter @Setter
     private String script;
+
+    @Lob
+    @Getter
+    private byte[] data;
+
+    public Script(String fileName, String fileType, byte [] data){
+        this.fileName = fileName;
+        this.fileType = fileType;
+        this.data= data;
+    }
 
 }
