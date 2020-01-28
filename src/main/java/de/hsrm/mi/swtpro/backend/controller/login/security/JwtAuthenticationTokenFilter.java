@@ -3,7 +3,6 @@ package de.hsrm.mi.swtpro.backend.controller.login.security;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -22,9 +21,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collection;
 import java.util.Optional;
 
 /**
@@ -51,8 +48,7 @@ public class JwtAuthenticationTokenFilter extends OncePerRequestFilter {
             throws ServletException, IOException {
 
         final String requestHeader = request.getHeader(this.tokenHeader);
-        System.out.println("War hier JwtAuthenticationTokenFilter " + requestHeader);
-
+      
         if (requestHeader != null && requestHeader.startsWith("Bearer ")) {
             String authenticationToken = requestHeader.substring(7);
             String loginname = tokenService.getUsernameFromToken(authenticationToken);
@@ -61,25 +57,18 @@ public class JwtAuthenticationTokenFilter extends OncePerRequestFilter {
                 throw new UsernameNotFoundException(loginname);
             }
             User user = optionalUser.get();
-         
             UserRights userRights = user.getUserRights();
+            String userRight;
             if(userRights != null){
-                String userRight = userRights.getUserRights();
-                System.out.println("USER Rights" + userRight);
-
-            }
-           
-
-           // org.springframework.security.core.userdetails.User.UserBuilder builder = null;
-            //if (user != null) {
-            
+                userRight = userRights.getUserRights();
+            }else{
+                userRight = "USER";
+            } 
             UserDetails detailUser = jwtUserDetailsService.loadUserByUsername(loginname);
-            UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(detailUser, null, Arrays.asList(new SimpleGrantedAuthority("USER")));
+			UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(detailUser, null, Arrays.asList(new SimpleGrantedAuthority(userRight)));
             authentication.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
+            //JwtAuthentication authentication = new JwtAuthentication(authenticationToken);
 
-            System.out.println("JwtAuthenticationTokenFilter loginname " + loginname + " " + " " + detailUser + " " + authenticationToken) ;
-            System.out.println("JwtAuthenticationTokenFilter authentication " + authentication.toString()) ;
-            
             SecurityContextHolder.getContext().setAuthentication(authentication);
         }
         chain.doFilter(request, response);

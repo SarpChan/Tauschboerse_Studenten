@@ -30,9 +30,6 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     private JwtAuthenticationProvider jwtAuthenticationProvider;
 
     @Autowired
-    private JwtUserDetailsService jwtUserDetailsService;
-
-    @Autowired
     PasswordEncoder passwordEncoder;
 
     @Override
@@ -51,7 +48,6 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Autowired
     public void configureAuthentication(AuthenticationManagerBuilder authenticationManagerBuilder) throws Exception {
         authenticationManagerBuilder.authenticationProvider(jwtAuthenticationProvider);
-       // authenticationManagerBuilder.userDetailsService(jwtUserDetailsService).passwordEncoder(passwordEncoder);
         
         
 
@@ -71,7 +67,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
           
                 .authorizeRequests().antMatchers("/authentication/**", "/h2-console/**").permitAll()
                 //.antMatchers("/rest/lists/**").hasAuthority("USER")		
-                //.antMatchers("/rest/lists/**").hasAuthority("ADMIN")			
+                .antMatchers("/rest/lists/**","rest/building/**").hasAuthority("ADMIN")			
                 .anyRequest().authenticated().and()
                 .exceptionHandling().authenticationEntryPoint(unauthorizedHandler).and()
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);

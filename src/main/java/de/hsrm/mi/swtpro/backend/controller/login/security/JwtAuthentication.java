@@ -2,7 +2,9 @@ package de.hsrm.mi.swtpro.backend.controller.login.security;
 
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 
+import java.util.Arrays;
 import java.util.Collection;
 
 /**
@@ -16,12 +18,13 @@ public class JwtAuthentication implements Authentication {
 
     public JwtAuthentication(String token) {
         this.token = token;
+     
         
     }
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return null;
+        return null;// Arrays.asList(new SimpleGrantedAuthority("ADMIN"));
     }
 
     @Override

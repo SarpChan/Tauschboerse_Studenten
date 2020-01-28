@@ -35,15 +35,10 @@ public class JwtUserDetailsService implements UserDetailsService {
             throw new UsernameNotFoundException(username);
         }
         User user = optionalUser.get();
-     
-        //String userRights = user.getUserRights().toString();
-       // org.springframework.security.core.userdetails.User.UserBuilder builder = null;
-        //if (user != null) {
             
-        return org.springframework.security.core.userdetails.User//(username, encoder.encode(user.getPassword()) , Arrays.asList(new SimpleGrantedAuthority("ADMIN")));
-        .withUsername(username).
-         password(encoder.encode(user.getPassword())).authorities(Arrays.asList(new SimpleGrantedAuthority("ADMIN"))).build();
-      //  }
-        // builder.build();
+        return org.springframework.security.core.userdetails.User
+        .withUsername(username)
+        .password(encoder.encode(user.getPassword())).authorities(Arrays.asList(new SimpleGrantedAuthority("ADMIN"))).build();
+    
     }
 }

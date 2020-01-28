@@ -30,24 +30,24 @@ public class JwtAuthenticationProvider implements AuthenticationProvider {
 
     @Override
     public Authentication authenticate(Authentication authentication) throws AuthenticationException {
-       
-
         try {
             String token = (String) authentication.getCredentials();
             String username = jwtService.getUsernameFromToken(token);
+            System.out.println("AuthenticationProvider !!!!!!!!!!" + username);
 
             return jwtService.validateToken(token)
                     .map(aBoolean -> new JwtAuthenticatedProfile(username))
                     .orElseThrow(() -> new JwtAuthenticationException("JWT Token validation failed"));
 
         } catch (JwtException exception) {
-            log.error(String.format("Invalid Token: %s", exception.getMessage()));
+            //log.error(String.format("Invalid Token: %s", exception.getMessage()));
             throw new JwtAuthenticationException("Failed to verify token");
         }
     }
 
     @Override
     public boolean supports(Class<?> authentication) {
-        return JwtAuthentication.class.equals(authentication);
+        return JwtAuthentication.class.equals(
+            authentication);
     }
 }
