@@ -80,12 +80,12 @@ public class SwapOfferService {
         bGroups.add(groupRepository.findById(found.getToGroup().getId()).get());
         B.setGroups(bGroups);
 
-      //  studentRepository.save(A);
-    //    studentRepository.save(B);
+        studentRepository.save(A);
+        studentRepository.save(B);
         logger.warn("About to remove swapoffer"+ found.getId());
 
-  //     swapOfferRepository.delete(found);
-    //   swapOfferRepository.delete(request);
+       swapOfferRepository.delete(found);
+      swapOfferRepository.delete(request);
 
 
     }
