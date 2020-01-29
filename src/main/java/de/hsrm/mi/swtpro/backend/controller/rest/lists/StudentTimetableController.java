@@ -46,10 +46,10 @@ public class StudentTimetableController {
     ServiceGenerator serviceGenerator;
     @Autowired
     ServiceGetter serviceGetter;
+    @Autowired
     UserRepository userRepository;
-    StudentRepository studentRepository;
-    Student student;
-    User user;
+    @Autowired
+    StudentRepository studentRepository; 
 
     @GetMapping(path = "/student_timetable", produces = MediaType.APPLICATION_JSON_VALUE)
     public List<TimetableModule> getModules(HttpServletRequest request) {

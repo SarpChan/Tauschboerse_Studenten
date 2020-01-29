@@ -19,6 +19,7 @@ public class ServiceGenerator {
                 }
             }
             for (Course course : module.getCourses()) {
+                
                 for (CourseComponent courseComponent : course.getCourseComponents()) {
                     for (Group group : courseComponent.getGroups()) {
                         TimetableModule timetableModule = TimetableModule.builder()
