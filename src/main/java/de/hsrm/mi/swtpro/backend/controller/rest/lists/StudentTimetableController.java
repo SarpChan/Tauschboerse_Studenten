@@ -46,14 +46,17 @@ public class StudentTimetableController {
     ServiceGenerator serviceGenerator;
     @Autowired
     ServiceGetter serviceGetter;
+    @Autowired
     UserRepository userRepository;
+    @Autowired
     StudentRepository studentRepository;
+    @Autowired
     Student student;
     User user;
 
     @GetMapping(path = "/student_timetable", produces = MediaType.APPLICATION_JSON_VALUE)
     public List<TimetableModule> getModules(HttpServletRequest request) {
-        String username = tokenService.getUsernameF romRequest(request);
+        String username = tokenService.getUsernameFromRequest(request);
         Student student = serviceGetter.getStudentFromUsername(username);
         Set<StudentAttendsCourse> studentAttendsCourse = student.getAttendCourses();
         List<Module> allModules = new ArrayList<Module>();
