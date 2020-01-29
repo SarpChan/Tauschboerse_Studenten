@@ -67,13 +67,13 @@ public class MessageSender {
     public void sendSwapOfferMessage(SwapOffer swapOffer, String action) {
         MessageBrokerPublicMessage message = null;
         if(action.equals("add")) {
-            message = new MessageBrokerPublicMessage(action, String.valueOf(swapOffer.getId()));
-        } else if (action.equals("delete")){
             try {
                 message = new MessageBrokerPublicMessage(action, publicMessageConverter.swapOfferToJSON(swapOffer));
             } catch (JMSException e) {
                 e.printStackTrace();
             }
+        } else if (action.equals("delete")){
+            message = new MessageBrokerPublicMessage(action, String.valueOf(swapOffer.getId()));
         }
         final MessageBrokerPublicMessage messageWrapper = message;
         jmsTemplate.send(swapOfferTopic, session -> publicMessageConverter.toMessage(messageWrapper, session));
