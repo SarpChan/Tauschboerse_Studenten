@@ -31,7 +31,6 @@ public class ModuleFilterFactory extends FilterFactory<Module> {
                 filterableModules.addAll(filterForExamRegulation(moduleFilter,filter));
             }
             else if(filter.getAttribute().equals("term")){
-                System.out.println("TERM");
                 List<Module> moduleFilter = new ArrayList<>(filterableModules);
                 filterableModules.clear();
                 filterableModules.addAll(filterForTerm(moduleFilter,filter));
@@ -64,7 +63,6 @@ public class ModuleFilterFactory extends FilterFactory<Module> {
     */
 
     private List<Module> filterForTerm(List<Module> modules, Filter forTerm){
-        System.out.println(Integer.parseInt(forTerm.getComparator().getComparatorValue().toString()));
         return modules.stream().filter(module -> module.getModulesInCurriculum().stream().anyMatch(moduleInCurriculum -> {
              if(forTerm.getComparator().getComparatorType() == ComparatorType.EQUALS) {
                  return moduleInCurriculum.getTermPeriod() == Integer.parseInt(forTerm.getComparator().getComparatorValue().toString());
