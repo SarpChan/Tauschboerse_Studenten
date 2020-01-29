@@ -29,8 +29,8 @@ public class SwapOfferController {
     @Autowired
     GroupRepository groupRepository;
 
-    @PostMapping(path = "/createswapoffer", consumes = "application/json", produces = MediaType.APPLICATION_JSON_VALUE)
-    public List<DisplayCourseComponent> getSwapOfferCourses(HttpServletRequest request) {
+    @PostMapping(path = "/availableSwaps", consumes = "application/json", produces = MediaType.APPLICATION_JSON_VALUE)
+    public List<DisplayCourseComponent> getAvailableSwaps(HttpServletRequest request) {
         Student student = serviceGetter.getStudentFromUsername(tokenService.getUsernameFromRequest(request));
 
         return serviceGenerator.swapOfferCoursesFromStudent(student);
