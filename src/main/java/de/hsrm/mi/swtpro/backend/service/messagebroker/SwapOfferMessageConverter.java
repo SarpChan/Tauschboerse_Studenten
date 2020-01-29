@@ -8,11 +8,13 @@ import de.hsrm.mi.swtpro.backend.model.SwapOffer;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import org.springframework.stereotype.Component;
 
 /**
  * converts swapOffers into messages and the other way around
  * used to send and receive messages form Queue
  */
+@Component
 public class SwapOfferMessageConverter implements MessageConverter {
     private static final Logger logger = LoggerFactory.getLogger(SwapOfferMessageConverter.class);
 
