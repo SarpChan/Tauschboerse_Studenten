@@ -35,6 +35,7 @@ public class AdministratorRepositoryTest {
                 .firstName("Max")
                 .lastName("Mustermann")
                 .loginName("backfisch")
+                .password("password")
                 .build();
 
         Administrator administrator = Administrator.builder()

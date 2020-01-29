@@ -9,6 +9,6 @@ import java.util.List;
 
 @Repository
 public interface AdministratorRepository extends JpaRepository<Administrator, Long> {
-    List<Administrator> findByPriviledge(int priviliegde);
+    List<Administrator> findByPriviledge(int priviledge);
     List<Administrator> findByUser(User user);
 }

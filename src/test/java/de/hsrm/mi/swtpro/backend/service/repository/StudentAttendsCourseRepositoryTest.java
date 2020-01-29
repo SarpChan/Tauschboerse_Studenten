@@ -1,10 +1,7 @@
 package de.hsrm.mi.swtpro.backend.service.repository;
 
 
-import de.hsrm.mi.swtpro.backend.model.Course;
-import de.hsrm.mi.swtpro.backend.model.Student;
-import de.hsrm.mi.swtpro.backend.model.StudentAttendsCourse;
-import de.hsrm.mi.swtpro.backend.model.Term;
+import de.hsrm.mi.swtpro.backend.model.*;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -13,6 +10,8 @@ import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import javax.persistence.EntityManager;
+
+import java.sql.Date;
 
 import static junit.framework.TestCase.assertTrue;
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -34,9 +33,40 @@ public class StudentAttendsCourseRepositoryTest {
 
     @Before
     public void setUp(){
-        term = Term.builder().build();
-        student = Student.builder().build();
-        course = Course.builder().build();
+        User user = User.builder()
+                .firstName("Lukas")
+                .lastName("wede")
+                .loginName("w001")
+                .password("password")
+                .build();
+
+        term = Term.builder()
+                .startDate(new Date(System.currentTimeMillis()))
+                .endDate(new Date(System.currentTimeMillis()))
+                .period(1)
+                .build();
+
+        StudyProgram studyProg = StudyProgram.builder()
+                .title("test")
+                .degree("E")
+                .build();
+
+        ExamRegulation examReg = ExamRegulation.builder()
+                .date(new Date(System.currentTimeMillis()))
+                .studyProgram(studyProg)
+                .build();
+
+        student = Student.builder().user(user)
+                .mail("3@e.de")
+                .enrollmentNumber(10)
+                .examRegulation(examReg)
+                .enrolmentTerm(term)
+                .build();
+
+        course = Course.builder()
+                .owner(user)
+                .title("A")
+                .build();
 
         StudentAttendsCourse studentAttendsCourse = StudentAttendsCourse.builder()
                 .term(term)
@@ -45,6 +75,9 @@ public class StudentAttendsCourseRepositoryTest {
                 .build();
 
         entityManager.persist(term);
+        entityManager.persist(user);
+        entityManager.persist(studyProg);
+        entityManager.persist(examReg);
         entityManager.persist(student);
         entityManager.persist(course);
         entityManager.persist(studentAttendsCourse);

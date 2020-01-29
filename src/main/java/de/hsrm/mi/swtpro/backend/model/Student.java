@@ -7,7 +7,6 @@ import lombok.experimental.SuperBuilder;
 
 import javax.persistence.*;
 import java.util.Set;
-import javax.persistence.OneToOne;
 import javax.validation.constraints.*;
 
 /**
@@ -21,44 +20,51 @@ import javax.validation.constraints.*;
 @SuperBuilder
 public class Student extends Role {
 
-    @Getter @Setter
-    //@Pattern(regexp = "[0-9]*")
+    @Getter
+    @Setter
     @NotNull
     private int enrollmentNumber;
 
-    @Getter @Setter
-    //@Pattern(regexp = "[a-zA-Z0-9-+_.]+@[a-z0-9-+_]+")
+    @Getter
+    @Setter
+    @Pattern(regexp = "[a-zA-Z0-9-+_.]+@[a-z0-9-+_.]+")
     @NotEmpty
     private String mail;
 
-    @Getter @Setter
+    @Getter
+    @Setter
     @ManyToOne
     @NotNull
     private ExamRegulation examRegulation;
 
-    @Getter @Setter
+    @Getter
+    @Setter
     @ManyToOne
     @NotNull
     private Term enrolmentTerm;
 
     @Singular("attendCourse")
-    @Getter @Setter
-    @OneToMany(mappedBy = "student",cascade= CascadeType.ALL)
+    @Getter
+    @Setter
+    @OneToMany(mappedBy = "student", cascade = CascadeType.ALL)
     private Set<StudentAttendsCourse> attendCourses;
 
     @Singular("prioritizeGroup")
-    @Getter @Setter
+    @Getter
+    @Setter
     @OneToMany(mappedBy = "student")
     private Set<StudentPrioritizesGroup> prioritizeGroups;
 
     @Singular("passedExam")
-    @Getter @Setter
-    @OneToMany(mappedBy = "student",cascade= CascadeType.ALL)
+    @Getter
+    @Setter
+    @OneToMany(mappedBy = "student", cascade = CascadeType.ALL)
     private Set<StudentPassedExam> passedExams;
 
     @Singular("group")
-    @Getter @Setter
-    @ManyToMany(mappedBy = "students",cascade= CascadeType.ALL)
+    @Getter
+    @Setter
+    @ManyToMany(mappedBy = "students", cascade = CascadeType.ALL)
     private Set<Group> groups;
 
 

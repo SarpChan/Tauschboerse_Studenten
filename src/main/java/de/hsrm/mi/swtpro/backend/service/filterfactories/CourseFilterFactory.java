@@ -11,8 +11,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
-//@NoArgsConstructor
-@AllArgsConstructor
+@NoArgsConstructor
 @SuperBuilder
 public class CourseFilterFactory extends FilterFactory<Course> {
 
@@ -36,7 +35,7 @@ public class CourseFilterFactory extends FilterFactory<Course> {
         return courses.stream().filter(course -> course.getModules().stream().anyMatch(module -> {
             return module.getModulesInCurriculum().stream().anyMatch(moduleInCurriculum -> {
                 if (forExamRegulationFilter.getComparator().getComparatorType() == ComparatorType.EQUALS) {
-                    return moduleInCurriculum.getCurriculum().getExamRegulation().getId() == (long) forExamRegulationFilter.getComparator().getComparatorValue();
+                    return moduleInCurriculum.getCurriculum().getExamRegulation().getId() == Long.parseLong(forExamRegulationFilter.getComparator().getComparatorValue().toString());
                 }
                 return false;
             });
