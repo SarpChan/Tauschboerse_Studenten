@@ -11,6 +11,7 @@ import de.hsrm.mi.swtpro.backend.service.repository.StudentRepository;
 import de.hsrm.mi.swtpro.backend.service.repository.SwapOfferRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.*;
 import java.util.stream.Collectors;
@@ -63,6 +64,7 @@ public class ServerApi {
         return filterFactory.filter(this.getAllSwapOffers());
     }
 
+    @Transactional
     public boolean tripleSwap(long[] offerIds) {
         assert offerIds.length == 3 : "size for offers is incorrect";
         List<Long> ids = new ArrayList<>();
