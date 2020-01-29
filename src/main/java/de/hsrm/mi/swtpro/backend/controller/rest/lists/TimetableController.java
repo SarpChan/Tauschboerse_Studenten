@@ -41,6 +41,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.time.DayOfWeek;
 import java.util.List;
 import java.util.Optional;
 
@@ -124,11 +125,11 @@ public class TimetableController {
     public  ResponseEntity<String> updateTimetable(@RequestBody TimetableModule timetableModule) {
         try{
             Group group = groupRepository.getOne(timetableModule.getGroupID());
-            CourseComponent courseComponent = courseComponentRepository.getOne(group.getCourseComponent().getId());
-            Course course = courseRepository.getOne(group.getCourseComponent().getCourse().getId());
-            Room room = roomRepository.getOne(group.getRoom().getId());
-            group.setStartTime(timetableModule.getStartTime());
-            group.setEndTime(timetableModule.getEndTime());
+            CourseComponent courseComponent = group.getCourseComponent();
+            Course course = group.getCourseComponent().getCourse();
+            Room room = group.getRoom();
+            //group.setStartTime(timetableModule.getStartTime());
+            //group.setEndTime(timetableModule.getEndTime());
             group.setDayOfWeek(timetableModule.getDayOfWeek());
             group.setGroupChar(timetableModule.getGroupChar());
             course.setTitle(timetableModule.getCourseTitle());
