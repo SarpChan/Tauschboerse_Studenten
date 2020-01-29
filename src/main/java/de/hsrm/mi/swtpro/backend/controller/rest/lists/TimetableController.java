@@ -99,7 +99,15 @@ public class TimetableController {
         .build();
         Filter [] filters = {filter};
         ModuleFilterFactory filterFactory = ModuleFilterFactory.builder().filters(filters).build();
+        System.out.println(allModules);
+        for(Module module : allModules){
+            System.out.println(module.getTitle());
+        }
         allModules = filterFactory.filter(allModules);
+        System.out.println("________________________HELLO____________");
+        for(Module module : allModules){
+            System.out.println(module.getTitle());
+        }
         return serviceGenerator.timetableModuleFromModules(allModules);
     }
 
