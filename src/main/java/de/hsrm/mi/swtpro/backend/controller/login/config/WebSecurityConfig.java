@@ -30,9 +30,6 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     private JwtAuthenticationProvider jwtAuthenticationProvider;
 
     @Autowired
-    private JwtUserDetailsService jwtUserDetailsService;
-
-    @Autowired
     PasswordEncoder passwordEncoder;
 
     @Override
@@ -51,10 +48,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Autowired
     public void configureAuthentication(AuthenticationManagerBuilder authenticationManagerBuilder) throws Exception {
         authenticationManagerBuilder.authenticationProvider(jwtAuthenticationProvider);
-       // authenticationManagerBuilder.userDetailsService(jwtUserDetailsService).passwordEncoder(passwordEncoder);
         
-        
-
     }
 
     @Bean
@@ -63,15 +57,17 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     }
 
 
-
     @Override
     protected void configure(HttpSecurity httpSecurity) throws Exception {
         
             httpSecurity.csrf().disable()
           
                 .authorizeRequests().antMatchers("/authentication/**", "/h2-console/**").permitAll()
-                //.antMatchers("/rest/lists/**").hasAuthority("USER")		
-                //.antMatchers("/rest/lists/**").hasAuthority("ADMIN")			
+                .antMatchers().hasAuthority("USER")		
+                .antMatchers("rest/building/**","rest/campus/**", "rest/coursecomponents/**", "rest/curriculum/**", "rest/examregulation/**", "rest/fieldofstudy/**" ,
+                "rest/group/**", "rest/lecture/**", "rest/module/**", "rest/modulelnCurriculum/**", "rest/pyScribt/**", "rest/room/**", "rest/studentAttendsCourse/**", "rest/student/**", 
+                "rest/studentPassedExam/**", "rest/studentPrioritzesGroup/**", "rest/studyprogram/**", 
+                "rest/swapOffer/**", "rest/term/**", "rest/university/**", "rest/user/**").hasAuthority("ADMIN")			
                 .anyRequest().authenticated().and()
                 .exceptionHandling().authenticationEntryPoint(unauthorizedHandler).and()
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);

@@ -19,6 +19,7 @@ public class ServiceGenerator {
                 }
             }
             for (Course course : module.getCourses()) {
+                
                 for (CourseComponent courseComponent : course.getCourseComponents()) {
                     for (Group group : courseComponent.getGroups()) {
                         TimetableModule timetableModule = TimetableModule.builder()
@@ -32,7 +33,7 @@ public class ServiceGenerator {
                                 .courseComponentID(courseComponent.getId())
                                 .courseType(courseComponent.getType())
                                 .courseTitle(course.getTitle())
-                                .courseTitleAbbreviation(course.getTitle().substring(0, 12))
+                                .courseTitleAbbreviation(course.getTitle().substring(0, 3))
                                 .roomNumber(group.getRoom().getNumber())
                                 .term(term)
                                 .build();
