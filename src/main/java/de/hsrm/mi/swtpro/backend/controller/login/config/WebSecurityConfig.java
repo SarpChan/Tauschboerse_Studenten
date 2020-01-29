@@ -49,15 +49,12 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     public void configureAuthentication(AuthenticationManagerBuilder authenticationManagerBuilder) throws Exception {
         authenticationManagerBuilder.authenticationProvider(jwtAuthenticationProvider);
         
-        
-
     }
 
     @Bean
     public JwtAuthenticationTokenFilter authenticationTokenFilterBean() {
         return new JwtAuthenticationTokenFilter();
     }
-
 
 
     @Override
