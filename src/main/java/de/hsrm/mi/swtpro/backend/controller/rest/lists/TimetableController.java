@@ -12,19 +12,23 @@ import de.hsrm.mi.swtpro.backend.model.CourseComponent;
 import de.hsrm.mi.swtpro.backend.model.ExamRegulation;
 import de.hsrm.mi.swtpro.backend.model.Group;
 import de.hsrm.mi.swtpro.backend.model.Module;
+import de.hsrm.mi.swtpro.backend.model.ModuleInCurriculum;
 import de.hsrm.mi.swtpro.backend.model.TimetableModule;
 import de.hsrm.mi.swtpro.backend.model.filter.Comparator;
 import de.hsrm.mi.swtpro.backend.model.filter.ComparatorType;
 import de.hsrm.mi.swtpro.backend.model.filter.Filter;
 import de.hsrm.mi.swtpro.backend.service.filterfactories.ModuleFilterFactory;
-import de.hsrm.mi.swtpro.backend.service.messagebroker.MessageSender;
 import de.hsrm.mi.swtpro.backend.service.repository.CourseRepository;
 import de.hsrm.mi.swtpro.backend.service.repository.GroupRepository;
 import de.hsrm.mi.swtpro.backend.service.helper.ServiceGenerator;
+import de.hsrm.mi.swtpro.backend.service.messagebroker.MessageSender;
+import de.hsrm.mi.swtpro.backend.service.repository.ModuleInCurriculumRepository;
 import de.hsrm.mi.swtpro.backend.service.repository.ModuleRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -34,6 +38,8 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+
+import javax.servlet.http.HttpServletRequest;
 
 @RestController
 @RequestMapping("/rest/lists")
@@ -51,8 +57,15 @@ public class TimetableController {
     @Autowired
     MessageSender ms;
     
-
+    @Autowired
     ServiceGenerator serviceGenerator;
+
+    /**
+     * The methode handles the POST request
+     * to get the modules of a timetable for a given exam regulation
+     * @param examRegulation
+     * @return list of timetable modules
+     */
 
     @PostMapping(path = "/timetable", consumes = "application/json", produces = MediaType.APPLICATION_JSON_VALUE)
     public List<TimetableModule> getModules(@RequestBody ExamRegulation examRegulation) {
@@ -95,6 +108,29 @@ public class TimetableController {
         return timetable;
     }
 
+    /**
+     * The methode handles the POST request
+     * to get the modules of a timetable for a specific term
+     * @param 
+     * @return list of timetable modules
+     */
+
+    @GetMapping(path = "/date_timetable/{term}", produces = MediaType.APPLICATION_JSON_VALUE)
+    public List<TimetableModule> getModulesForTerm(@PathVariable int term) {
+        List<Module> allModules = moduleRepository.findAll();
+        Comparator comparator = Comparator.builder()
+        .comparatorType(ComparatorType.EQUALS)
+        .comparatorValue(term)
+        .build();
+        Filter filter = Filter.builder()
+        .attribute("term")
+        .comparator(comparator)
+        .build();
+        Filter [] filters = {filter};
+        ModuleFilterFactory filterFactory = ModuleFilterFactory.builder().filters(filters).build();
+        allModules = filterFactory.filter(allModules);
+        return serviceGenerator.timetableModuleFromModules(allModules);
+    }
 
     /**
      * The methode handles the POST request
@@ -103,24 +139,20 @@ public class TimetableController {
      * @return
      */
     @PostMapping(path = "/timetableUpdate", consumes = "application/json", produces = MediaType.APPLICATION_JSON_VALUE)
-    public  ResponseEntity<String> updateTimetable(@RequestBody List<TimetableModule> timetableModuleList) {
+    public  ResponseEntity<String> updateTimetable(@RequestBody TimetableModule timetableModule) {
         try{
-        for(TimetableModule module : timetableModuleList){
-            Optional<Group> group = groupRepository.findById(module.getGroupID());
+            Optional<Group> group = groupRepository.findById(timetableModule.getGroupID());
             groupCrudController.updateGroup(group.get());
             lecturerCrudController.updateLecturer(group.get().getLecturer());
             courseCrudController.updateCourse(group.get().getCourseComponent().getCourse());
             courseComponentCrudController.updateCourseComponent(group.get().getCourseComponent());
             roomCrudController.updateRoom(group.get().getRoom());
 
-            ms.sendNewsMessage(module);
-        }   
+            ms.sendNewsMessage(timetableModule);
 
-        return new ResponseEntity<>("timetableUpdate Succses",HttpStatus.OK);
-    }catch(Exception e){
-        return new ResponseEntity<>(e.getMessage(),HttpStatus.CONFLICT);
-
-    }
-        
+            return new ResponseEntity<>("timetableUpdate Succses",HttpStatus.OK);
+        }catch(Exception e){
+            return new ResponseEntity<>(e.getMessage(),HttpStatus.CONFLICT);
+        }
     }
 }

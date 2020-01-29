@@ -32,5 +32,7 @@ public class TimetableModule {
     private CourseType courseType;
     @Getter @Setter
     private int roomNumber;
+    @Getter @Setter
+    private int term;
 }
 
