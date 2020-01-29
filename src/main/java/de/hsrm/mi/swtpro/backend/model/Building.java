@@ -33,7 +33,7 @@ public class Building {
     private String name;
 
     @Getter @Setter
-    @ManyToOne(targetEntity = Campus.class, fetch = FetchType.LAZY)
+    @ManyToOne(targetEntity = Campus.class, fetch = FetchType.LAZY,cascade = CascadeType.ALL)
     @JoinColumn(name = "campus_id")
     @NotNull
     private Campus campus;

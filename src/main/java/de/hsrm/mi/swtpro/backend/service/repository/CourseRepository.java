@@ -15,5 +15,5 @@ public interface CourseRepository extends JpaRepository<Course,Long> {
     List<Course> findByOwner(User user);
     List<Course> findByTerms(Term term);
     List<Course> findByStudentAttendsCourses(StudentAttendsCourse studentAttendsCourse);
-
+    List<Course> findByModulesAndTerms(Module module, Term term);
 }

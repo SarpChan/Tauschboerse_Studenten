@@ -21,4 +21,5 @@ public interface GroupRepository extends JpaRepository<Group,Long> {
     List<Group> findByEndTime(LocalTime time);
     List<Group> findByStartTime(LocalTime time);
     List<Group> findBySlots(int slots);
+    List<Group> findByCourseComponentAndTerm(CourseComponent courseComponent, Term term);
 }
