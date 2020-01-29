@@ -327,7 +327,7 @@ public class DatabaseFiller {
                         .courseComponent(mathe1P).startTime(LocalTime.of(10, 00)).endTime(LocalTime.of(11, 30)).build();
                 //entityManager.persist(mathe1PgroupA);
                 Group mathe1PgroupB = Group.builder().lecturer(lec_reichenauer).slots(20).room(r11).term(ws1920).dayOfWeek((DayOfWeek.WEDNESDAY)).groupChar('B')
-                        .courseComponent(mathe1P).startTime(LocalTime.of(11, 45)).endTime(LocalTime.of(11, 30)).build();
+                        .courseComponent(mathe1P).startTime(LocalTime.of(11, 30)).endTime(LocalTime.of(15, 45)).build();
                 //entityManager.persist(mathe1PgroupB);
 
                 Group mathe2Vgroup = Group.builder().lecturer(lec_reichenauer).slots(110).room(r11).term(ss2019).dayOfWeek((DayOfWeek.WEDNESDAY)).groupChar('A')
@@ -350,6 +350,7 @@ public class DatabaseFiller {
                         .courseComponent(mathe3P).startTime(LocalTime.of(11, 45)).endTime(LocalTime.of(11, 30)).build();
                 //entityManager.persist(mathe3PgroupB);
 
+                //Hallo i bims ein Kommentar
 
                 // Swap Offer
 
