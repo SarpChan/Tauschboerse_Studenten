@@ -29,13 +29,6 @@ public class MessageBrokerMessage{
         this.message = sb.toString();
     }
 
-    public MessageBrokerMessage(String action, Object serializedObject){
-        switch(action){
-            case "add":
-
-        }
-    }
-
     public long getTimestamp(){
         return this.timestamp;
     }
