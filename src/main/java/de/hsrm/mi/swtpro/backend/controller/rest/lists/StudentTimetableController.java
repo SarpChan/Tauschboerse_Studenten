@@ -40,8 +40,16 @@ import javax.servlet.http.HttpServletRequest;
 public class StudentTimetableController {
 
 
-
-    
+    @Autowired
+    TokenService tokenService;
+    @Autowired
+    ServiceGenerator serviceGenerator;
+    @Autowired
+    ServiceGetter serviceGetter;
+    @Autowired
+    UserRepository userRepository;
+    @Autowired
+    StudentRepository studentRepository; 
 
     @GetMapping(path = "/student_timetable", produces = MediaType.APPLICATION_JSON_VALUE)
     public List<TimetableModule> getModules(HttpServletRequest request) {
