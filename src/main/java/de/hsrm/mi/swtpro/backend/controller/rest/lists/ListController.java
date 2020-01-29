@@ -1,4 +1,4 @@
-
+package de.hsrm.mi.swtpro.backend.controller.rest.lists;
 import de.hsrm.mi.swtpro.backend.model.*;
 import de.hsrm.mi.swtpro.backend.model.filter.Filter;
 import de.hsrm.mi.swtpro.backend.service.filterfactories.CourseFilterFactory;
