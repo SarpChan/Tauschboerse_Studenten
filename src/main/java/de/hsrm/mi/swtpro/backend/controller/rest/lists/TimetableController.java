@@ -35,6 +35,8 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.List;
 import java.util.Optional;
 
+import javax.servlet.http.HttpServletRequest;
+
 @RestController
 @RequestMapping("/rest/lists")
 public class TimetableController {
