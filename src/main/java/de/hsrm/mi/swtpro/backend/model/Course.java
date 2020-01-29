@@ -35,13 +35,14 @@ public class Course {
 
     @Getter @Setter
     @ManyToOne(cascade= CascadeType.ALL)
+    @JoinColumn(name="owner_id")
     @NotNull
     private User owner;
 
 
     @Singular("module")
     @Getter @Setter
-    @ManyToMany
+    @ManyToMany(cascade = CascadeType.ALL)
     @JoinTable(name = "course_module",
             joinColumns = @JoinColumn(name = "course_id", referencedColumnName = "id"),
             inverseJoinColumns = @JoinColumn(name = "module_id", referencedColumnName = "id"))
@@ -49,7 +50,7 @@ public class Course {
 
     @Singular("term")
     @Getter @Setter
-    @ManyToMany
+    @ManyToMany(cascade = CascadeType.ALL)
     @JoinTable(name = "course_term",
             joinColumns = @JoinColumn(name = "course_id", referencedColumnName = "id"),
             inverseJoinColumns = @JoinColumn(name = "term_id", referencedColumnName = "id"))
@@ -62,7 +63,7 @@ public class Course {
 
     @Singular("studentAttendsCourse")
     @Getter @Setter
-    @OneToMany(mappedBy = "course")
+    @OneToMany(mappedBy = "course",cascade= CascadeType.ALL)
     private Set<StudentAttendsCourse> studentAttendsCourses;
 
     /**

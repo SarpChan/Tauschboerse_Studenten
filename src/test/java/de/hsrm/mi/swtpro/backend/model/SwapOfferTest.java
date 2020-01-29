@@ -33,7 +33,7 @@ public class SwapOfferTest {
         .build();
 
         swapOffer = SwapOffer.builder()
-        .date(new Timestamp(System.currentTimeMillis()))
+        .timestamp(new Timestamp(System.currentTimeMillis()))
         .student(student)
         .fromGroup(fromGroup)
         .toGroup(toGroup)

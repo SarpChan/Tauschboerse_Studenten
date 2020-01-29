@@ -34,7 +34,7 @@ public class FieldOfStudy {
 
     @Getter
     @Setter
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "university_id")
     @NotNull
     private University university;
@@ -42,7 +42,7 @@ public class FieldOfStudy {
     @Singular("studyProgram")
     @Getter
     @Setter
-    @ManyToMany(cascade = CascadeType.ALL)
+    @ManyToMany(mappedBy = "fieldsOfStudy", cascade = CascadeType.ALL)
     private Set<StudyProgram> studyPrograms;
 
 }

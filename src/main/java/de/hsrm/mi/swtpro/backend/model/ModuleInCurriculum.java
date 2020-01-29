@@ -15,30 +15,23 @@ import javax.validation.constraints.NotNull;
 public class ModuleInCurriculum {
 
     @Id
-    @Getter
-    @Setter
+    @Getter @Setter
     @GeneratedValue
     @NotNull
     private long id;
 
-    /**
-     * Shows in which term the referred module takes place,
-     * without regarding if it is a winter or summer term.
-     */
-    @Getter
-    @Setter
+    @Getter @Setter
     @NotNull
     private int termPeriod;
 
-    @Getter
-    @Setter
-    @ManyToOne
+    @Getter @Setter
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name="curriculum_id")
     @NotNull
     private Curriculum curriculum;
 
-    @Getter
-    @Setter
-    @ManyToOne(cascade = CascadeType.ALL)
+    @Getter @Setter
+    @ManyToOne(cascade= CascadeType.ALL)
     @NotNull
     private Module module;
 }

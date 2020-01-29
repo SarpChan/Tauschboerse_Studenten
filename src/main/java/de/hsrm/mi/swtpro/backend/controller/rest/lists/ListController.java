@@ -1,21 +1,16 @@
 package de.hsrm.mi.swtpro.backend.controller.rest.lists;
 
-import de.hsrm.mi.swtpro.backend.model.Course;
-import de.hsrm.mi.swtpro.backend.model.CustomFieldOfStudy;
-import de.hsrm.mi.swtpro.backend.model.SwapOffer;
+import de.hsrm.mi.swtpro.backend.model.*;
 import de.hsrm.mi.swtpro.backend.model.filter.Filter;
 import de.hsrm.mi.swtpro.backend.service.filterfactories.CourseFilterFactory;
 import de.hsrm.mi.swtpro.backend.service.filterfactories.SwapOfferFilterFactory;
-import de.hsrm.mi.swtpro.backend.service.repository.CourseRepository;
-import de.hsrm.mi.swtpro.backend.service.repository.FieldOfStudyRepository;
-import de.hsrm.mi.swtpro.backend.service.repository.SwapOfferRepository;
+import de.hsrm.mi.swtpro.backend.service.repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -53,6 +48,5 @@ public class ListController {
         allSwapOffers = filterFactory.filter(allSwapOffers);
         return allSwapOffers;
     }
-
 
 }
