@@ -1,8 +1,8 @@
 package de.hsrm.mi.swtpro.backend.controller.rest;
 
-
 import de.hsrm.mi.swtpro.backend.controller.exceptions.SwapOfferNotFoundException;
 import de.hsrm.mi.swtpro.backend.model.SwapOffer;
+import de.hsrm.mi.swtpro.backend.service.messagebroker.MessageSender;
 import de.hsrm.mi.swtpro.backend.service.repository.SwapOfferRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
@@ -19,6 +19,9 @@ public class SwapOfferCrudController {
 
     @Autowired
     SwapOfferRepository swapOfferRepository;
+
+    @Autowired
+    MessageSender messageSender;
 
     /**
      * Insert a SwapOffer object into the Model
@@ -69,7 +72,8 @@ public class SwapOfferCrudController {
     @DeleteMapping(path = "/swapOffer/delete/{swapOfferId}", consumes = "application/json")
     public void deleteSwapOffer(@PathVariable long swapOfferId) throws SwapOfferNotFoundException {
         if (swapOfferRepository.findById(swapOfferId).isPresent()) {
-            swapOfferRepository.deleteById(swapOfferId);
+            messageSender.sendSwapOfferMessage(swapOfferRepository.getOne(swapOfferId), "delete");
+            swapOfferRepository.deleteById(swapOfferId);  
         } else {
             throw new SwapOfferNotFoundException("SwapOffer not found");
         }
