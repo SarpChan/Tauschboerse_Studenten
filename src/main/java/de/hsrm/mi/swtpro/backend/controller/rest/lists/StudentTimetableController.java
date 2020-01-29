@@ -49,10 +49,7 @@ public class StudentTimetableController {
     @Autowired
     UserRepository userRepository;
     @Autowired
-    StudentRepository studentRepository;
-    @Autowired
-    Student student;
-    User user;
+    StudentRepository studentRepository; 
 
     @GetMapping(path = "/student_timetable", produces = MediaType.APPLICATION_JSON_VALUE)
     public List<TimetableModule> getModules(HttpServletRequest request) {
