@@ -1,11 +1,12 @@
 package de.hsrm.mi.swtpro.backend.controller.rest;
 
+import java.io.FileNotFoundException;
 import java.net.URISyntaxException;
-import java.net.http.HttpHeaders;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ByteArrayResource;
 import org.springframework.core.io.Resource;
+import org.springframework.http.HttpHeaders;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
@@ -14,7 +15,6 @@ import org.springframework.http.ResponseEntity;
 
 import de.hsrm.mi.swtpro.backend.model.Script;
 import de.hsrm.mi.swtpro.backend.service.pyScriptService.PyScriptStorageService;
-import de.hsrm.mi.swtpro.backend.service.repository.PythonScriptRepository;
 
 @RestController
 @RequestMapping("/rest")
@@ -33,7 +33,7 @@ public class PythonScriptCrudController{
     }
 
     @GetMapping(path="/pyScript/download/{fileId}",  consumes = "application/json")
-    public ResponseEntity<Resource> downloadFile(@PathVariable final long fileId) {
+    public ResponseEntity<Resource> downloadFile(@PathVariable final long fileId) throws FileNotFoundException {
         // Load file from database
         final Script script = pyScriptService.getFile(fileId);
 
