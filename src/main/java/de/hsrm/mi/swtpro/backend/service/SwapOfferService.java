@@ -1,5 +1,6 @@
 package de.hsrm.mi.swtpro.backend.service;
 
+import de.hsrm.mi.swtpro.backend.controller.exceptions.GroupNotFoundException;
 import de.hsrm.mi.swtpro.backend.model.Group;
 import de.hsrm.mi.swtpro.backend.model.Student;
 import de.hsrm.mi.swtpro.backend.model.SwapOffer;
@@ -40,16 +41,18 @@ public class SwapOfferService {
         });
         for (SwapOffer einzelnesSwapOffer : swapofferList) {
             if (einzelnesSwapOffer.getToGroup().getId() == offer.getFromGroup().getId()) { // OB ID der Zielgruppe mit der Startgruppe matcht
-                //TODO: In den Gruppen die Studentenliste aktualisieren -> beide studis austauschen bei fragen @vespa001
-              swap(einzelnesSwapOffer,offer);
-                return true;
+                if(einzelnesSwapOffer.getFromGroup().getGroupChar()!=offer.getFromGroup().getGroupChar()) {
+                    swap(einzelnesSwapOffer,offer);
+                    return true;
+
+                }
             }
         }
         return false;
 
     }
 @Transactional
-    public void swap(SwapOffer request , SwapOffer found){
+    public void swap(SwapOffer request , SwapOffer found) {
         Student A = request.getStudent();
         Student B = found.getStudent();
         logger.warn("Student A "+ A.getMail() +" Student B "+ B.getMail());
@@ -59,19 +62,18 @@ public class SwapOfferService {
         aGroups.add(groupRepository.getOne(request.getToGroup().getId()));
         A.setGroups(aGroups);
 
-        Set<Group> bGroups = A.getGroups();
+        Set<Group> bGroups = B.getGroups();
         bGroups.remove(groupRepository.findById(found.getFromGroup().getId()).get());
         bGroups.add(groupRepository.findById(found.getToGroup().getId()).get());
         B.setGroups(bGroups);
 
         studentRepository.save(A);
         studentRepository.save(B);
-        logger.warn("About to remove swapoffer"+ found.getId());
+        logger.warn("REMOVE"+ found.getId());
 
         if(swapOfferRepository.findById(found.getId()).isPresent())swapOfferRepository.delete(found);
        if(swapOfferRepository.findById(request.getId()).isPresent())swapOfferRepository.delete(request);
     }
-
 
     public boolean debugMe(SwapOffer requestOffer) {
         List<SwapOffer> swapofferList = swapOfferRepository.findAll();//findByFromGroup(groupRepository.findById(requestOffer.getToGroup().getId()).get());

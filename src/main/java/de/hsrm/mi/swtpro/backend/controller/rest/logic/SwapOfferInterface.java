@@ -22,6 +22,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.MediaType;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
 import java.sql.Timestamp;
@@ -60,40 +61,50 @@ public class SwapOfferInterface {
      * @return boolean
      */
     List<SwapOffer> swapOfferList = new ArrayList<SwapOffer>();
+    @Transactional
+    void wipeInvalidatedSwapOffers(SwapOffer offer) {
+        logger.warn("WIPE OLD OFFERS WITH FROMGROUP ID: "+ offer.getFromGroup().getId());
 
+        swapOfferRepository.findByStudent(offer.getStudent()).stream()
+                .filter(e-> e.getFromGroup() == offer.getFromGroup())
+                .forEach(e -> swapOfferRepository.delete(e));
+
+
+    }
     @PostMapping(path = "/swapoffer/insert", consumes = "application/json", produces = MediaType.APPLICATION_JSON_VALUE)
     public boolean checkAndInsertSwapOffer(@RequestBody SwapOfferRequest swapOfferRequest) {
-        AtomicBoolean swapOfferExists = new AtomicBoolean(false);
         for (long swapOfferToGroupID : swapOfferRequest.getToGroupsID()) {
-            SwapOffer offer = SwapOffer.builder().timestamp(Timestamp.from(Instant.now()))
-                    .fromGroup(groupRepository.findById(swapOfferRequest.getFromGroupsID()).get())
-                    .student(studentRepository.findById(swapOfferRequest.getId()).get())
-                    .toGroup(groupRepository.findById(swapOfferToGroupID).get())
-                    .build();
+            if (swapOfferToGroupID != swapOfferRequest.getFromGroupsID()) {
+                AtomicBoolean swapOfferExists = new AtomicBoolean(false);
+                SwapOffer offer = SwapOffer.builder().timestamp(Timestamp.from(Instant.now()))
+                        .fromGroup(groupRepository.findById(swapOfferRequest.getFromGroupsID()).get())
+                        .student(studentRepository.findById(swapOfferRequest.getId()).get())
+                        .toGroup(groupRepository.findById(swapOfferToGroupID).get())
+                        .build();
 
-            swapOfferRepository.findByStudent(studentRepository.findById(swapOfferRequest.getId()).get()).forEach(e -> {
-                if (e.getFromGroup() == offer.getFromGroup() && e.getToGroup() == offer.getToGroup()) {
-                    swapOfferExists.set(true);
-                }
+                swapOfferRepository.findByStudent(studentRepository.findById(swapOfferRequest.getId()).get()).forEach(e -> {
+                    if (e.getFromGroup() == offer.getFromGroup() && e.getToGroup() == offer.getToGroup()) {
+                        swapOfferExists.set(true);
+                    }
 
-            });
-
-            if (swapOfferService.isMatched(offer)) {
-                logger.warn("MATCH FOUND");
-
-            } else {
-
-                if (swapOfferExists.get()) {
-                    logger.warn("Offer already Exists");
+                });
+                if (swapOfferService.isMatched(offer)) {
+                    logger.warn("MATCH FOUND");
+                    wipeInvalidatedSwapOffers(offer);
+                    return true;
                 } else {
-                    swapOfferList.add(offer);
-                    swapOfferRepository.save(offer);
+                    if (swapOfferExists.get()) {
+                        logger.warn("Offer already Exists");
+                    } else {
+                        logger.warn("Insert new Swapoffer ID: " + offer.getId());
+                        swapOfferList.add(offer);
+                        swapOfferRepository.save(offer);
+                    }
                 }
-
+            } else {
+                logger.warn("You cant swap inside one group :(");
             }
         }
-
-
         return false;
     }
 
@@ -128,67 +139,24 @@ public class SwapOfferInterface {
                 .filter(e -> e.getFromGroup().equals(offer.getFromGroup()))
                 .anyMatch(e -> e.getToGroup().equals(offer.getToGroup()));
     }
-    @PostMapping(path = "/swapoffer/debugme", consumes = "application/json", produces = MediaType.APPLICATION_JSON_VALUE)
-    public Object debugme(@RequestBody SwapOfferRequest swapOfferRequest) {
-        SwapOffer offer = SwapOffer.builder().timestamp(Timestamp.from(Instant.now()))
-                .fromGroup(getGroup(swapOfferRequest.getFromGroupsID()))
-                .student(getStudent(swapOfferRequest.getId()))
-                .toGroup(getGroup(swapOfferRequest.getToGroupsID()[0]))
-                .build();
-         return swapOfferService.debugMe(offer);
-    }
 
 
     @GetMapping(path = "/swapoffer/removematches")
     public void debug() {
         for(SwapOffer offer:swapOfferRepository.findAll()) {
-            if (swapOfferService.debugMe(offer)) {
-                logger.warn("MATCH FOUND");
+            if (swapOfferService.isMatched(offer)) {
+                logger.warn("MATCH REMOVED");
             }
         }
     }
-    @PostMapping(path = "/swapoffer/debug", consumes = "application/json", produces = MediaType.APPLICATION_JSON_VALUE)
-    public boolean debug(@RequestBody SwapOfferRequest swapOfferRequest) {
-        //   return swapOfferService.debugMe(swapOfferRequest);
-        AtomicBoolean swapOfferExists = new AtomicBoolean(false);
-        for (long swapOfferToGroupID : swapOfferRequest.getToGroupsID()) {
-            SwapOffer offer = SwapOffer.builder().timestamp(Timestamp.from(Instant.now()))
-                    .fromGroup(getGroup(swapOfferRequest.getFromGroupsID()))
-                    .student(getStudent(swapOfferRequest.getId()))
-                    .toGroup(getGroup(swapOfferToGroupID))
-                    .build();
-         //   logger.warn("STUDENT: "+ swapOfferService.debugMe(offer)) ;
-        if (swapOfferService.debugMe(offer)) {
-             logger.warn("MATCH FOUND");
-        } /*else {
-            if (swapOfferExists(offer)) {
-                    logger.warn("Offer already Exists");
-                } else {
-
-                swapOfferList.add(offer);
-                    swapOfferRepository.save(offer);
-                logger.warn("Insert new swap offer id: "+getSwapOffer(offer.getStudent(),offer.getFromGroup()));
-
-            }
-
-            }*/
-        }
-
-
-        return false;
-    }
-
 
     @GetMapping(path = "/swapoffer/all", produces = MediaType.APPLICATION_JSON_VALUE)
     public List<SwapOffer> selectAllSwapOffers(){
-        //:TODO Hier sollen alle Tauschangebote an das Frontend gesendent werden
         return swapOfferRepository.findAll();
     }
 
-
     @GetMapping(path = "/swapoffer/{enrollmentnumber}", produces = MediaType.APPLICATION_JSON_VALUE)
     public List<SwapOffer> selectByIDSwapOffers(@PathVariable int enrollmentnumber){
-        //:TODO if Abfrage isPresent statt ".get()"
         return swapOfferRepository.findByStudent(studentRepository.findByEnrollmentNumber(enrollmentnumber).get());
     }
 
