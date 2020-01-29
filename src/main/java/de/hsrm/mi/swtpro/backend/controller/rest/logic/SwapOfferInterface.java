@@ -139,7 +139,7 @@ public class SwapOfferInterface {
     }
 
 
-    @GetMapping(path = "/swapoffer/getdebug")
+    @GetMapping(path = "/swapoffer/removematches")
     public void debug() {
         for(SwapOffer offer:swapOfferRepository.findAll()) {
             if (swapOfferService.debugMe(offer)) {

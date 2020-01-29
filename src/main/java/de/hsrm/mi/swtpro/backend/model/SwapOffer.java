@@ -32,7 +32,7 @@ public class SwapOffer {
     private Timestamp timestamp;
 
     @Getter @Setter
-    @ManyToOne(targetEntity = Student.class, fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
+    @ManyToOne(targetEntity = Student.class, fetch = FetchType.EAGER, cascade = CascadeType.PERSIST)
     @NotNull
     private Student student;
 

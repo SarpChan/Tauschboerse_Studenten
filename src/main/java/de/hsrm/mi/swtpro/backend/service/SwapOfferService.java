@@ -12,6 +12,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
 import java.sql.Timestamp;
 import java.time.Instant;
 import java.util.*;
@@ -38,33 +40,15 @@ public class SwapOfferService {
         });
         for (SwapOffer einzelnesSwapOffer : swapofferList) {
             if (einzelnesSwapOffer.getToGroup().getId() == offer.getFromGroup().getId()) { // OB ID der Zielgruppe mit der Startgruppe matcht
-                logger.warn("POSSIBLE MATCG SILKVE");
                 //TODO: In den Gruppen die Studentenliste aktualisieren -> beide studis austauschen bei fragen @vespa001
-                Student A = studentRepository.findByEnrollmentNumber(offer.getStudent().getEnrollmentNumber()).get();
-                Student B = einzelnesSwapOffer.getStudent();
-
-                Set<Group> aGroups = A.getGroups();
-                aGroups.remove(groupRepository.findById(offer.getFromGroup().getId()).get());
-                aGroups.add(groupRepository.findById(offer.getToGroup().getId()).get());
-                A.setGroups(aGroups);
-
-                Set<Group> bGroups = A.getGroups();
-                bGroups.remove(groupRepository.findById(offer.getToGroup().getId()).get());
-                bGroups.add(groupRepository.findById(offer.getFromGroup().getId()).get());
-                B.setGroups(bGroups);
-
-                studentRepository.save(A);
-                studentRepository.save(B);
-                logger.warn("About to remove swapoffer", einzelnesSwapOffer.getToGroup().toString());
-
-                swapOfferRepository.delete(einzelnesSwapOffer);
+              swap(einzelnesSwapOffer,offer);
                 return true;
             }
         }
         return false;
 
     }
-
+@Transactional
     public void swap(SwapOffer request , SwapOffer found){
         Student A = request.getStudent();
         Student B = found.getStudent();
@@ -84,10 +68,8 @@ public class SwapOfferService {
         studentRepository.save(B);
         logger.warn("About to remove swapoffer"+ found.getId());
 
-       swapOfferRepository.delete(found);
-      swapOfferRepository.delete(request);
-
-
+        if(swapOfferRepository.findById(found.getId()).isPresent())swapOfferRepository.delete(found);
+       if(swapOfferRepository.findById(request.getId()).isPresent())swapOfferRepository.delete(request);
     }
 
 
@@ -99,19 +81,25 @@ public class SwapOfferService {
                 return a.getTimestamp().compareTo(b.getTimestamp());
             }
         });
-        logger.warn("TOGROUP: " + requestOffer.getToGroup().getId());
         SwapOffer foundOffer = null;
-        foundOffer = swapofferList
+        if(swapofferList
                 .stream()
                 .filter(e -> e.getFromGroup().equals(requestOffer.getToGroup()))
                 .filter(e -> e.getToGroup().equals(requestOffer.getFromGroup()))
-                .findFirst().get();
-        logger.warn("FOUND SWAP: " +requestOffer.getId() +" <> "+ foundOffer.getId());
+                .findFirst().isPresent()) {
+
+            foundOffer = swapofferList
+                    .stream()
+                    .filter(e -> e.getFromGroup().equals(requestOffer.getToGroup()))
+                    .filter(e -> e.getToGroup().equals(requestOffer.getFromGroup()))
+                    .findFirst().get();
+          //  logger.warn("FOUND SWAP: " + requestOffer.getId() + " <> " + foundOffer.getId());
 
 
+            swap(requestOffer, foundOffer);
+            return true;
+        }
 
-        swap(requestOffer,foundOffer);
-        logger.warn("SWAPPED");
 
         return false;
 
