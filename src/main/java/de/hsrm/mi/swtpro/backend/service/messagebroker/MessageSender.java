@@ -1,6 +1,5 @@
 package de.hsrm.mi.swtpro.backend.service.messagebroker;
 
-import java.sql.Timestamp;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -12,9 +11,10 @@ import org.apache.activemq.command.ActiveMQTopic;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jms.annotation.EnableJms;
 import org.springframework.jms.core.JmsTemplate;
-import org.springframework.jms.core.MessagePostProcessor;
 import org.springframework.stereotype.Component;
 
+import de.hsrm.mi.swtpro.backend.model.MessageBrokerMessage;
+import de.hsrm.mi.swtpro.backend.model.MessageBrokerPublicMessage;
 import de.hsrm.mi.swtpro.backend.model.SwapOffer;
 import de.hsrm.mi.swtpro.backend.model.TimetableModule;
 import de.hsrm.mi.swtpro.backend.model.User;
@@ -36,7 +36,10 @@ public class MessageSender {
 
     @Autowired
     private JmsTemplate jmsTemplate;
-
+    @Autowired
+    MBPublicMessageConverter publicMessageConverter;
+    @Autowired
+    MBMessageConverter messageConverter;
     @Autowired
     UserRepository userRepo;
 
@@ -53,42 +56,31 @@ public class MessageSender {
             addSwapMessageQueues();
         }
 
-        Timestamp timestamp = new Timestamp(System.currentTimeMillis());
+        String courseTitle = swapOffer.getFromGroup().getCourseComponent().getCourse().getTitle();
+        char fromGroupChar = swapOffer.getFromGroup().getGroupChar();
+        char toGroupChar = swapOffer.getToGroup().getGroupChar();
 
-        Map<String, Long> map = new HashMap<>();
-        map.put("timestamp", timestamp.getTime());
-        
-        jmsTemplate.convertAndSend(queueMap.get("SwapMessageQueue" + userid), map, new MessagePostProcessor() {
-        public Message postProcessMessage(Message message) throws JMSException {
-            message.setStringProperty("message", " Du hast erfolgreich von der Gruppe "
-            + swapOffer.getFromGroup().getCourseComponent().getCourse().getTitle() + " "
-            + swapOffer.getFromGroup().getGroupChar() + " zu " + swapOffer.getToGroup().getGroupChar()
-            + " getauscht.");
-            return message;
-        }
-        });
+        final MessageBrokerMessage message = new MessageBrokerMessage(courseTitle, fromGroupChar, toGroupChar);  
+        jmsTemplate.send(queueMap.get("SwapMessageQueue" + userid), session -> messageConverter.toMessage(message, session));
     }
 
     public void sendSwapOfferMessage(SwapOffer swapOffer, String action) {
-
-        Map<String, String> map = new HashMap<>();
-        map.put("action", action);
-        map.put("data", String.valueOf(swapOffer.getId()));
-        
-        jmsTemplate.convertAndSend(swapOfferTopic, map);
+        MessageBrokerPublicMessage message = null;
+        if(action.equals("add")) {
+            message = new MessageBrokerPublicMessage(action, String.valueOf(swapOffer.getId()));
+        } else if (action.equals("delete")){
+            try {
+                message = new MessageBrokerPublicMessage(action, publicMessageConverter.swapOfferToJSON(swapOffer));
+            } catch (JMSException e) {
+                e.printStackTrace();
+            }
+        }
+        final MessageBrokerPublicMessage messageWrapper = message;
+        jmsTemplate.send(swapOfferTopic, session -> publicMessageConverter.toMessage(messageWrapper, session));
     }
 
     public void sendNewsMessage(TimetableModule module) {
-        Timestamp timestamp = new Timestamp(System.currentTimeMillis());
-
-        Map<String, Long> map = new HashMap<>();
-        map.put("timestamp", timestamp.getTime());
-        
-        jmsTemplate.convertAndSend(newsTopic, map, new MessagePostProcessor() {
-        public Message postProcessMessage(Message message) throws JMSException {
-            message.setStringProperty("message", " Das Modul " + module.getCourseTitle() + " wurde verändert.");
-            return message;
-        }
-        });
+        final MessageBrokerMessage message = new MessageBrokerMessage(module.getCourseTitle());
+        jmsTemplate.send(newsTopic, session -> messageConverter.toMessage(message, session));
     }
 }

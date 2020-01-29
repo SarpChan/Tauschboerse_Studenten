@@ -33,6 +33,7 @@ public class SwapOfferCrudController {
     @PostMapping(path = "/swapOffer/create", consumes = "application/json", produces = MediaType.APPLICATION_JSON_VALUE)
     public SwapOffer createSwapOffer(@RequestBody SwapOffer swapOffer) throws URISyntaxException {
         swapOfferRepository.save(swapOffer);
+        messageSender.sendSwapOfferMessage(swapOffer, "add");
         return swapOffer;
     }
 

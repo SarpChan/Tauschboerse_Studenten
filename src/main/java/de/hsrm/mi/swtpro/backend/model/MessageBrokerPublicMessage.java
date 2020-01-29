@@ -14,7 +14,7 @@ public class MessageBrokerPublicMessage{
         this.data = data;
     }
 
-    public long getTimestamp(){
+	public long getTimestamp(){
         return this.timestamp;
     }
 
@@ -25,14 +25,5 @@ public class MessageBrokerPublicMessage{
     public String getData(){
         return this.data;
     }
-    /*
-         switch(action){
-            case "remove":
-                this.data = ((int)data) + "";
-                break;
-            case "add":
-                SwapOffer toSerialize = (SwapOffer) data;
-
-        }
-    */
+    
 }
