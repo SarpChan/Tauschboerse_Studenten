@@ -17,6 +17,10 @@ public class DisplayCourseComponent {
 
     @Getter @Setter
     @NotNull
+    private long courseId;
+
+    @Getter @Setter
+    @NotNull
     private String title;
 
     @Getter @Setter
