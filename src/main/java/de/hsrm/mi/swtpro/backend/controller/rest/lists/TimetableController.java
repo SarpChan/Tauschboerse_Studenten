@@ -85,7 +85,7 @@ public class TimetableController {
      */
 
     @GetMapping(path = "/date_timetable", produces = MediaType.APPLICATION_JSON_VALUE)
-    public List<TimetableModule> getCurrentModules() {
+    public List<TimetableModule> getCurrentModules(HttpServletRequest request) {
         List<Module> allModules = moduleRepository.findAll();
         Comparator comparator = Comparator.builder()
         .comparatorType(ComparatorType.EQUALS)
