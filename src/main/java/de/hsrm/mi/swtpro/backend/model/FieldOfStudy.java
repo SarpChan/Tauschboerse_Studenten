@@ -5,7 +5,8 @@ import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import lombok.*;
 
 import javax.persistence.*;
-import javax.validation.constraints.*;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 import java.util.Set;
 
 /**
@@ -20,24 +21,28 @@ import java.util.Set;
 public class FieldOfStudy {
 
     @Id
-    @Getter @Setter
+    @Getter
+    @Setter
     @GeneratedValue
     @NotNull
     private long id;
 
-    @Getter @Setter
+    @Getter
+    @Setter
     @NotEmpty
     private String title;
 
-    @Getter @Setter
-    @ManyToOne
-    @JoinColumn(name="university_id")
+    @Getter
+    @Setter
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "university_id")
     @NotNull
     private University university;
 
     @Singular("studyProgram")
-    @Getter @Setter
-    @ManyToMany(cascade= CascadeType.ALL)
-    private Set<StudyProgram> studyPrograms ;
+    @Getter
+    @Setter
+    @ManyToMany(mappedBy = "fieldsOfStudy", cascade = CascadeType.ALL)
+    private Set<StudyProgram> studyPrograms;
 
 }

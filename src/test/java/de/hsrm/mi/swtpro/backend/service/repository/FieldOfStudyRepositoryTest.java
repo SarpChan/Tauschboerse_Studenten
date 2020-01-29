@@ -13,6 +13,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 import javax.persistence.EntityManager;
 import java.util.Collections;
 import java.util.HashSet;
+import java.util.List;
 
 import static org.hamcrest.Matchers.*;
 import static org.junit.Assert.assertThat;
@@ -46,20 +47,21 @@ public class FieldOfStudyRepositoryTest {
                 .address("76213876 uertoi3 09ujwdfij")
                 .build();
 
-        studyProgram = StudyProgram.builder()
-                .title("Dongel")
-                .build();
 
         FieldOfStudy fieldOfStudy = FieldOfStudy.builder()
                 .title("Faulenzen")
-                .studyPrograms(new HashSet<>(Collections.singleton(studyProgram)))
                 .university(university)
                 .build();
 
+        studyProgram = StudyProgram.builder()
+                .title("Dongel")
+                .degree("Bachelor")
+                .fieldOfStudy(fieldOfStudy)
+                .build();
 
         entityManager.persist(university);
-        entityManager.persist(studyProgram);
         entityManager.persist(fieldOfStudy);
+        entityManager.persist(studyProgram);
         id = fieldOfStudy.getId();
     }
 
@@ -79,6 +81,8 @@ public class FieldOfStudyRepositoryTest {
 
     @Test
     public void whenFindByStudyProgram_thenReturnFieldOfStudyList(){
+        List c = fieldOfStudyRepository.findByStudyPrograms(studyProgram);
+        List c1 = fieldOfStudyRepository.findAll();
         assertThat(fieldOfStudyRepository.findByStudyPrograms(studyProgram),hasItem(
                 hasProperty("title",is("Faulenzen"))
         ));

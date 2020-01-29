@@ -3,6 +3,7 @@ package de.hsrm.mi.swtpro.backend.service.repository;
 import de.hsrm.mi.swtpro.backend.model.ExamRegulation;
 import de.hsrm.mi.swtpro.backend.model.FieldOfStudy;
 import de.hsrm.mi.swtpro.backend.model.StudyProgram;
+import de.hsrm.mi.swtpro.backend.model.University;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -11,6 +12,8 @@ import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import javax.persistence.EntityManager;
+
+import java.sql.Date;
 
 import static org.hamcrest.Matchers.*;
 import static org.junit.Assert.assertThat;
@@ -31,8 +34,14 @@ public class StudyProgramRepositoryTest {
 
     @Before
     public void setUp(){
+        University university = University.builder()
+                .name("Hochschule RheinMain")
+                .address("Kurt-Schumacher-Ring 18, 65197 Wiesbaden")
+                .build();
 
         fieldOfStudy = FieldOfStudy.builder()
+                .title("Medieninformatik")
+                .university(university)
                 .build();
 
         StudyProgram  studyProgram = StudyProgram.builder()
@@ -43,8 +52,10 @@ public class StudyProgramRepositoryTest {
 
         examRegulation = ExamRegulation.builder()
                 .studyProgram(studyProgram)
+                .date(new Date(System.currentTimeMillis()))
                 .build();
 
+        entityManager.persist(university);
         entityManager.persist(studyProgram);
         entityManager.persist(fieldOfStudy);
         entityManager.persist(examRegulation);

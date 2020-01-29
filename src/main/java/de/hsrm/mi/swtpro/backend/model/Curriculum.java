@@ -23,10 +23,11 @@ public class Curriculum {
 
     @Getter @Setter
     @NotNull
-    private int termPeriod;
+    private int maxTerms;
 
     @Getter @Setter
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name="exam_regulation_id")
     @NotNull
     private ExamRegulation examRegulation;
 

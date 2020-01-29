@@ -42,22 +42,22 @@ public class Term {
 
     @Singular("course")
     @Getter @Setter
-    @ManyToMany(mappedBy = "terms")
+    @ManyToMany(mappedBy = "terms",cascade = CascadeType.ALL)
     private Set<Course> courses;
 
     @Singular("group")
     @Getter @Setter
-    @OneToMany(mappedBy = "term")
+    @OneToMany(mappedBy = "term",cascade = CascadeType.ALL)
     private Set<Group> groups;
 
     @Singular("studentAttendsCourse")
     @Getter @Setter
-    @OneToMany(mappedBy = "term")
+    @OneToMany(mappedBy = "term",cascade = CascadeType.ALL)
     private Set<StudentAttendsCourse> studentAttendsCourses;
 
     @Singular("enroledStudent")
     @Getter @Setter
-    @OneToMany(mappedBy = "enrolmentTerm")
+    @OneToMany(mappedBy = "enrolmentTerm",cascade = CascadeType.ALL)
     private Set<Student> enroledStudents;
 
     /**
