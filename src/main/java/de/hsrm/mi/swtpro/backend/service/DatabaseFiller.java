@@ -107,26 +107,26 @@ public class DatabaseFiller {
 
                 // User
 
-                User wweitz = User.builder().firstName("Wolfgang").lastName("Weitz").loginName("wweitz").password(passwordEncoder.encode("wweitz")).build();
+                User wweitz = User.builder().firstName("Wolfgang").lastName("Weitz").loginName("wweitz").password(passwordEncoder.encode("wweitz")).userRights(UserRights.ADMIN).build();
                 //entityManager.persist(wweitz);
-                User jberdux = User.builder().firstName("Joerg").lastName("Berdux").loginName("jberdux").password(passwordEncoder.encode("jberdux")).build();
+                User jberdux = User.builder().firstName("Joerg").lastName("Berdux").loginName("jberdux").password(passwordEncoder.encode("jberdux")).userRights(UserRights.ADMIN).build();
                 //entityManager.persist(jberdux);
-                User rreichenauer = User.builder().firstName("Roland").lastName("Reichenauer").loginName("rreichenauer").password(passwordEncoder.encode("rreichenauer")).build();
+                User rreichenauer = User.builder().firstName("Roland").lastName("Reichenauer").loginName("rreichenauer").password(passwordEncoder.encode("rreichenauer")).userRights(UserRights.ADMIN).build();
                 //entityManager.persist(rreichenauer);
-                User uschwaneke = User.builder().firstName("Ulrich").lastName("Schwaneke").loginName("uschwaneke").password(passwordEncoder.encode("uschwaneke")).build();
+                User uschwaneke = User.builder().firstName("Ulrich").lastName("Schwaneke").loginName("uschwaneke").password(passwordEncoder.encode("uschwaneke")).userRights(UserRights.ADMIN).build();
                 //entityManager.persist(uschwaneke);
 
-                User nahlers = User.builder().firstName("Nicklas").lastName("Ahlers").loginName("nahlers").password(passwordEncoder.encode("nahlers")).build();
+                User nahlers = User.builder().firstName("Nicklas").lastName("Ahlers").loginName("nahlers").password(passwordEncoder.encode("nahlers")).userRights(UserRights.USER).build();
                 //entityManager.persist(nahlers);
-                User vesper = User.builder().firstName("Vanessa").lastName("Esper").loginName("vesper").password(passwordEncoder.encode("vesper")).build();
+                User vesper = User.builder().firstName("Vanessa").lastName("Esper").loginName("vesper").password(passwordEncoder.encode("vesper")).userRights(UserRights.USER).build();
                 //entityManager.persist(vesper);
-                User tthiel = User.builder().firstName("Tobi").lastName("Thiel").loginName("tthiel").password(passwordEncoder.encode("tthiel")).build();
+                User tthiel = User.builder().firstName("Tobi").lastName("Thiel").loginName("tthiel").password(passwordEncoder.encode("tthiel")).userRights(UserRights.USER).build();
                 //entityManager.persist(tthiel);
-                User jwirt = User.builder().firstName("Julia").lastName("Wirt").loginName("jwirt").password(passwordEncoder.encode("jwirt")).build();
+                User jwirt = User.builder().firstName("Julia").lastName("Wirt").loginName("jwirt").password(passwordEncoder.encode("jwirt")).userRights(UserRights.USER).build();
                 //entityManager.persist(jwirt);
-                User jmuel = User.builder().firstName("Julius").lastName("Muel").loginName("jmuel").password(passwordEncoder.encode("jmuel")).build();
+                User jmuel = User.builder().firstName("Julius").lastName("Muel").loginName("jmuel").password(passwordEncoder.encode("jmuel")).userRights(UserRights.USER).build();
                 //entityManager.persist(jmuel);
-                User ydeuster = User.builder().firstName("Yen").lastName("Deuster").loginName("ydeuster").password(passwordEncoder.encode("ydeuster")).build();
+                User ydeuster = User.builder().firstName("Yen").lastName("Deuster").loginName("ydeuster").password(passwordEncoder.encode("ydeuster")).userRights(UserRights.USER).build();
                 //entityManager.persist(ydeuster);
 
 
@@ -291,7 +291,7 @@ public class DatabaseFiller {
                         .courseComponent(prog3P).startTime(LocalTime.of(10, 00)).endTime(LocalTime.of(11, 30)).build();
                 //entityManager.persist(prog1PgroupA);
                 Group prog1PgroupB = Group.builder().lecturer(lec_berdux).slots(20).room(r12).term(ws1920).dayOfWeek((DayOfWeek.MONDAY)).groupChar('B')
-                        .courseComponent(prog3P).startTime(LocalTime.of(11, 45)).endTime(LocalTime.of(11, 30)).build();
+                        .courseComponent(prog3P).startTime(LocalTime.of(11, 30)).endTime(LocalTime.of(11, 45)).build();
                 //entityManager.persist(prog1PgroupB);
 
                 Group prog2Vgroup = Group.builder().lecturer(lec_berdux).slots(80).room(r11).term(ss2019).dayOfWeek((DayOfWeek.MONDAY)).groupChar('A')
@@ -301,7 +301,7 @@ public class DatabaseFiller {
                         .courseComponent(prog3P).startTime(LocalTime.of(10, 00)).endTime(LocalTime.of(11, 30)).build();
                 //entityManager.persist(prog2PgroupA);
                 Group prog2PgroupB = Group.builder().lecturer(lec_berdux).slots(20).room(r13).term(ss2019).dayOfWeek((DayOfWeek.MONDAY)).groupChar('B')
-                        .courseComponent(prog3P).startTime(LocalTime.of(11, 45)).endTime(LocalTime.of(11, 30)).build();
+                        .courseComponent(prog3P).startTime(LocalTime.of(11, 30)).endTime(LocalTime.of(11, 45)).build();
                 //entityManager.persist(prog2PgroupB);
 
                 Group prog3Vgroup = Group.builder().lecturer(lec_weitz).slots(90).room(r11).term(ws1920).dayOfWeek((DayOfWeek.TUESDAY)).groupChar('A')
@@ -311,13 +311,13 @@ public class DatabaseFiller {
                         .courseComponent(prog3P).startTime(LocalTime.of(10, 0)).endTime(LocalTime.of(11, 30)).build();
                 //entityManager.persist(prog3PgroupA);
                 Group prog3PgroupB = Group.builder().lecturer(lec_weitz).slots(20).room(r12).term(ws1920).dayOfWeek((DayOfWeek.TUESDAY)).groupChar('B')
-                        .courseComponent(prog3P).startTime(LocalTime.of(11, 45)).endTime(LocalTime.of(11, 30)).build();
+                        .courseComponent(prog3P).startTime(LocalTime.of(11, 30)).endTime(LocalTime.of(11, 45)).build();
                 //entityManager.persist(prog3PgroupB);
                 Group prog3PgroupC = Group.builder().lecturer(lec_weitz).slots(20).room(r13).term(ws1920).dayOfWeek((DayOfWeek.TUESDAY)).groupChar('C')
                         .courseComponent(prog3P).startTime(LocalTime.of(10, 0)).endTime(LocalTime.of(11, 30)).build();
                 //entityManager.persist(prog3PgroupC);
                 Group prog3PgroupD = Group.builder().lecturer(lec_weitz).slots(20).room(r13).term(ws1920).dayOfWeek((DayOfWeek.TUESDAY)).groupChar('D')
-                        .courseComponent(prog3P).startTime(LocalTime.of(11, 45)).endTime(LocalTime.of(11, 30)).build();
+                        .courseComponent(prog3P).startTime(LocalTime.of(11, 30)).endTime(LocalTime.of(11, 45)).build();
                 //entityManager.persist(prog3PgroupD);
 
                 Group mathe1Vgroup = Group.builder().lecturer(lec_reichenauer).slots(100).room(r11).term(ws1920).dayOfWeek((DayOfWeek.WEDNESDAY)).groupChar('A')
@@ -327,7 +327,7 @@ public class DatabaseFiller {
                         .courseComponent(mathe1P).startTime(LocalTime.of(10, 00)).endTime(LocalTime.of(11, 30)).build();
                 //entityManager.persist(mathe1PgroupA);
                 Group mathe1PgroupB = Group.builder().lecturer(lec_reichenauer).slots(20).room(r11).term(ws1920).dayOfWeek((DayOfWeek.WEDNESDAY)).groupChar('B')
-                        .courseComponent(mathe1P).startTime(LocalTime.of(11, 45)).endTime(LocalTime.of(11, 30)).build();
+                        .courseComponent(mathe1P).startTime(LocalTime.of(11, 30)).endTime(LocalTime.of(15, 45)).build();
                 //entityManager.persist(mathe1PgroupB);
 
                 Group mathe2Vgroup = Group.builder().lecturer(lec_reichenauer).slots(110).room(r11).term(ss2019).dayOfWeek((DayOfWeek.WEDNESDAY)).groupChar('A')
@@ -337,7 +337,7 @@ public class DatabaseFiller {
                         .courseComponent(mathe1P).startTime(LocalTime.of(10, 00)).endTime(LocalTime.of(11, 30)).build();
                 //entityManager.persist(mathe2PgroupA);
                 Group mathe2PgroupB = Group.builder().lecturer(lec_reichenauer).slots(20).room(r11).term(ss2019).dayOfWeek((DayOfWeek.WEDNESDAY)).groupChar('B')
-                        .courseComponent(mathe1P).startTime(LocalTime.of(11, 45)).endTime(LocalTime.of(11, 30)).build();
+                        .courseComponent(mathe1P).startTime(LocalTime.of(11, 30)).endTime(LocalTime.of(13, 30)).build();
                 //entityManager.persist(mathe2PgroupB);
 
                 Group mathe3Vgroup = Group.builder().lecturer(lec_schwaneke).slots(120).room(r14).term(ws1920).dayOfWeek((DayOfWeek.THURSDAY)).groupChar('A')
@@ -347,10 +347,10 @@ public class DatabaseFiller {
                         .courseComponent(mathe3P).startTime(LocalTime.of(10, 00)).endTime(LocalTime.of(11, 30)).build();
                 //entityManager.persist(mathe3PgroupA);
                 Group mathe3PgroupB = Group.builder().lecturer(lec_schwaneke).slots(20).room(r17).term(ws1920).dayOfWeek((DayOfWeek.THURSDAY)).groupChar('B')
-                        .courseComponent(mathe3P).startTime(LocalTime.of(11, 45)).endTime(LocalTime.of(11, 30)).build();
+                        .courseComponent(mathe3P).startTime(LocalTime.of(11, 45)).endTime(LocalTime.of(14, 30)).build();
                 //entityManager.persist(mathe3PgroupB);
 
-
+                //T
                 // Swap Offer
 
                 SwapOffer esperMathe3P_B_to_A = SwapOffer.builder().student(stu_esper).timestamp(new Timestamp(System.currentTimeMillis())).fromGroup(mathe3PgroupB).toGroup(mathe3PgroupA).build();
@@ -892,5 +892,4 @@ public class DatabaseFiller {
             e.printStackTrace();
         }
     }
-
 }
