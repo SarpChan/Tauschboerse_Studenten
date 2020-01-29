@@ -50,8 +50,7 @@ public class TimetableController {
     CourseComponentCrudController courseComponentCrudController;
     CourseCrudController courseCrudController;
     RoomCrudController roomCrudController;
-    
-
+    @Autowired
     ServiceGenerator serviceGenerator;
 
     /**
@@ -99,6 +98,7 @@ public class TimetableController {
         .build();
         Filter [] filters = {filter};
         ModuleFilterFactory filterFactory = ModuleFilterFactory.builder().filters(filters).build();
+        allModules = filterFactory.filter(allModules);
         return serviceGenerator.timetableModuleFromModules(allModules);
     }
 
