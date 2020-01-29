@@ -127,7 +127,6 @@ public class TimetableController {
             CourseComponent courseComponent = courseComponentRepository.getOne(group.getCourseComponent().getId());
             Course course = courseRepository.getOne(group.getCourseComponent().getCourse().getId());
             Room room = roomRepository.getOne(group.getRoom().getId());
-            User user = userRepository.getOne(group.getLecturer().getId());
             group.setStartTime(timetableModule.getStartTime());
             group.setEndTime(timetableModule.getEndTime());
             group.setDayOfWeek(timetableModule.getDayOfWeek());
@@ -139,8 +138,6 @@ public class TimetableController {
             courseComponentRepository.save(courseComponent);
             room.setNumber(timetableModule.getRoomNumber());
             roomRepository.save(room);
-            user.setFirstName(timetableModule.getLecturerName());
-            userRepository.save(user);
         return new ResponseEntity<>("timetableUpdate Succses",HttpStatus.OK);
         }catch(Exception e){
             return new ResponseEntity<>(e.getMessage(),HttpStatus.CONFLICT);
