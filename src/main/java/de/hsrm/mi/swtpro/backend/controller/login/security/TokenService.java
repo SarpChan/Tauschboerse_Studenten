@@ -4,8 +4,10 @@ import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.*;
 import java.util.function.Function;
 
@@ -81,5 +83,36 @@ public class TokenService {
      */
     public Optional<Boolean> validateToken(String token) {
         return  isTokenNotExpired(token) ? Optional.of(Boolean.TRUE) : Optional.empty();
+    }
+
+    /**
+     * returns token of logged in user
+     * @param request
+     * @return
+     */
+
+    @Value("${security.jwt.token.header:Authorization}")
+    private String tokenHeader;
+
+    public String getToken(HttpServletRequest request) {
+        final String requestHeader = request.getHeader(this.tokenHeader);
+        String authenticationToken = null;
+
+        if (requestHeader != null && requestHeader.startsWith("Bearer ")) {
+            authenticationToken = requestHeader.substring(7);
+            JwtAuthentication authentication = new JwtAuthentication(authenticationToken);
+            SecurityContextHolder.getContext().setAuthentication(authentication);
+        }
+
+        return authenticationToken;
+    }
+
+    /**
+     * returns username of logged in user
+     * @param request
+     * @return
+     */
+    public String getUsernameFromRequest(HttpServletRequest request) {
+        return getUsernameFromToken(getToken(request));
     }
 }

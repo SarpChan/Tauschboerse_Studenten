@@ -18,6 +18,7 @@ import de.hsrm.mi.swtpro.backend.model.filter.Filter;
 import de.hsrm.mi.swtpro.backend.service.filterfactories.ModuleFilterFactory;
 import de.hsrm.mi.swtpro.backend.service.repository.CourseRepository;
 import de.hsrm.mi.swtpro.backend.service.repository.GroupRepository;
+import de.hsrm.mi.swtpro.backend.service.helper.ServiceGenerator;
 import de.hsrm.mi.swtpro.backend.service.repository.ModuleRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -28,7 +29,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -47,6 +47,7 @@ public class TimetableController {
     RoomCrudController roomCrudController;
     
 
+    ServiceGenerator serviceGenerator;
 
     @PostMapping(path = "/timetable", consumes = "application/json", produces = MediaType.APPLICATION_JSON_VALUE)
     public List<TimetableModule> getModules(@RequestBody ExamRegulation examRegulation) {
@@ -62,31 +63,8 @@ public class TimetableController {
         Filter [] filters = {filter};
         ModuleFilterFactory filterFactory = ModuleFilterFactory.builder().filters(filters).build();
         allModules = filterFactory.filter(allModules);
-        List<TimetableModule> timetable = new ArrayList<TimetableModule>();
-        for(Module module: allModules){
-            for(Course course: module.getCourses()){
-                for(CourseComponent courseComponent : course.getCourseComponents()){
-                    for(Group group: courseComponent.getGroups()){
-                        TimetableModule timetableModule = TimetableModule.builder()
-                        .groupID(group.getId())
-                        .groupChar(group.getGroupChar())
-                        .dayOfWeek(group.getDayOfWeek())
-                        .startTime(group.getStartTime())
-                        .endTime(group.getEndTime())
-                        .lecturerName(group.getLecturer().getUser().getLastName())
-                        .lecturerNameAbbreviation("Placeholder Abbreviation")
-                        .courseComponentID(courseComponent.getId())
-                        .courseType(courseComponent.getType())
-                        .courseTitle(course.getTitle())
-                        .courseTitleAbbreviation("Placeholder Abbreviation")
-                        .roomNumber(group.getRoom().getNumber())
-                        .build();
-                        timetable.add(timetableModule);
-                    }
-                }
-            }
-        }
-        return timetable;
+
+        return serviceGenerator.timetableModuleFromModules(allModules);
     }
 
 

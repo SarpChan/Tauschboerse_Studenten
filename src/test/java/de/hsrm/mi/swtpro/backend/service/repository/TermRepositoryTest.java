@@ -23,6 +23,7 @@ import static org.junit.Assert.assertTrue;
 public class TermRepositoryTest {
 
 
+
     @Autowired
     EntityManager entityManager;
     @Autowired
@@ -175,10 +176,10 @@ public class TermRepositoryTest {
     }
 
     @Test
-    public void whenFindByEnrolledStudent_thenReturnTerm() {
-        assertTrue(termRepository.findByEnroledStudents(student).isPresent());
-        assertThat(termRepository.findByEnroledStudents(student).get(),
-                hasProperty("period", is(2)));
+    public void whenFindByEnroledStudent_thenReturnTerm(){
+            assertTrue(termRepository.findByEnroledStudents(student).isPresent());
+            assertThat(termRepository.findByEnroledStudents(student).get(),
+                    hasProperty("period", is(2)));
     }
 
     @Test
