@@ -37,10 +37,6 @@ public class Script {
     @NotNull
     private String fileType;
 
-    @Getter
-    @Setter
-    private String script;
-
     @Lob
     @Getter
     private byte[] data;
