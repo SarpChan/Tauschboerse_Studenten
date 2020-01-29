@@ -36,6 +36,7 @@ dependencies {
 	testImplementation('org.springframework.boot:spring-boot-starter-test') {
 		exclude group: 'org.junit.vintage', module: 'junit-vintage-engine'
 	}
+    compile group: 'commons-fileupload', name: 'commons-fileupload', version: '1.4'
 	runtimeOnly 'com.h2database:h2'
 	compile 'com.fasterxml.jackson.core:jackson-core:2.10.1'
 	//compileOnly 'org.projectlombok:lombok:1.18.10'

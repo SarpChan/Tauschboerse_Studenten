@@ -22,20 +22,20 @@ public class PythonScriptCrudController{
     @Autowired 
     PyScriptStorageService pyScriptService;
 
-    @PostMapping(path="/pyScript/upload", consumes = "application/json", produces = MediaType.APPLICATION_JSON_VALUE)
-    public String uploadScript(@RequestParam("file") final MultipartFile file) throws URISyntaxException {
-        final Script script = pyScriptService.storeFile(file);
+    @PostMapping(path="/pyScript/upload", consumes = MediaType.MULTIPART_FORM_DATA_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+    public String uploadScript(@RequestParam("file") MultipartFile file) throws URISyntaxException {
+         Script script = pyScriptService.storeFile(file);
 
-        final String downloadUri = ServletUriComponentsBuilder.fromCurrentContextPath().path("/pyScript/upload/")
+         String downloadUri = ServletUriComponentsBuilder.fromCurrentContextPath().path("/pyScript/download/")
                 .path(Long.toString(script.getId())).toUriString();
 
         return script.getFileName() + downloadUri;
     }
 
     @GetMapping(path="/pyScript/download/{fileId}",  consumes = "application/json")
-    public ResponseEntity<Resource> downloadFile(@PathVariable final long fileId) throws FileNotFoundException {
+    public ResponseEntity<Resource> downloadFile(@PathVariable  long fileId) throws FileNotFoundException {
         // Load file from database
-        final Script script = pyScriptService.getFile(fileId);
+         Script script = pyScriptService.getFile(fileId);
 
         return ResponseEntity.ok().contentType(MediaType.parseMediaType(script.getFileType()))
                 .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + script.getFileName() + "\"")
