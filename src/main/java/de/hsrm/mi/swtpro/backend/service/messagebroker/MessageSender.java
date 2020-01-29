@@ -21,7 +21,7 @@ import de.hsrm.mi.swtpro.backend.model.User;
 import de.hsrm.mi.swtpro.backend.service.repository.UserRepository;
 
 /**
- * sends messages
+ * Sends messages to Topics/Queues
  */
 @Component
 @EnableJms
@@ -43,6 +43,9 @@ public class MessageSender {
     @Autowired
     UserRepository userRepo;
 
+    /**
+     * creates a SwapMessageQueue for all users
+     */
     public void addSwapMessageQueues() {
         for(User user : userRepo.findAll()) { 
             String queuename = "SwapMessageQueue" + user.getId();
@@ -51,6 +54,11 @@ public class MessageSender {
         }
     }
 
+    /**
+     * sendsa message to a user's personal queue to inform him that his swapOffer has been accepted
+     * @param swapOffer the acceped swapOffer
+     * @param userid the user's id
+     */
     public void sendPersonalSwapOfferMessage(SwapOffer swapOffer, String userid) {
         if(queueMap.isEmpty()) {
             addSwapMessageQueues();
@@ -64,6 +72,11 @@ public class MessageSender {
         jmsTemplate.send(queueMap.get("SwapMessageQueue" + userid), session -> messageConverter.toMessage(message, session));
     }
 
+    /**
+     * sends a message to the SwapOfferTopic to inform all active clients that a swapOffer has been added or removed
+     * @param swapOffer added/removed  swapOffer
+     * @param action "add" or "delete"
+     */
     public void sendSwapOfferMessage(SwapOffer swapOffer, String action) {
         MessageBrokerPublicMessage message = null;
         if(action.equals("add")) {
@@ -79,6 +92,10 @@ public class MessageSender {
         jmsTemplate.send(swapOfferTopic, session -> publicMessageConverter.toMessage(messageWrapper, session));
     }
 
+    /**
+     * sends a message to the NewsTopic to inform clients about a change in their timetable
+     * @param module
+     */
     public void sendNewsMessage(TimetableModule module) {
         final MessageBrokerMessage message = new MessageBrokerMessage(module.getCourseTitle());
         jmsTemplate.send(newsTopic, session -> messageConverter.toMessage(message, session));

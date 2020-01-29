@@ -16,8 +16,9 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.stereotype.Component;
 
 /**
- * converts swapOffers into messages and the other way around
- * used to send and receive messages form Queue
+/**
+ * Converts MessageBrokerPersonalMessages into Json and creates a TextMessage
+ * Used to send messages to Queues/Topics
  */
 @Component
 public class MBPublicMessageConverter implements MessageConverter {
@@ -25,6 +26,11 @@ public class MBPublicMessageConverter implements MessageConverter {
 
     ObjectMapper mapper = new ObjectMapper();
 
+    /**
+     * @param object MessageBrokerPublicMessage that gets converted
+     * @param session session
+     * @return TextMessage containing the serialised MessageBrokerPublicMessage
+     */
     @Override
     public Message toMessage(Object object, Session session) throws JMSException {
         MessageBrokerPublicMessage message = (MessageBrokerPublicMessage) object;
@@ -32,14 +38,18 @@ public class MBPublicMessageConverter implements MessageConverter {
         try {
             jsontext = mapper.writeValueAsString(message);
         } catch (JsonProcessingException e) {
-            logger.error("FEHLER toMessage SwapOffer '{}' -> JSON: {}", message.toString(), e.getMessage());
+            logger.error("FEHLER toMessage '{}' -> JSON: {}", message.toString(), e.getMessage());
         }
         TextMessage msg = session.createTextMessage(jsontext);
         return msg;
     }
 
-    public String swapOfferToJSON(Object object) throws JMSException {
-        SwapOffer swapOffer = (SwapOffer) object;
+    /**
+     * Creates a swapOfferFront from swapOffer and converts it into a Json String
+     * @param swapOffer swapOffer that gets serialised
+     * @return serialised swapOffer as String
+     */
+    public String swapOfferToJSON(SwapOffer swapOffer) throws JMSException {
         String courseName = swapOffer.getFromGroup().getCourseComponent().getCourse().getTitle();
         String courseType = swapOffer.getFromGroup().getCourseComponent().getType().name();
         DayOfWeek fromDay = swapOffer.getFromGroup().getDayOfWeek();
@@ -62,15 +72,6 @@ public class MBPublicMessageConverter implements MessageConverter {
 
     @Override
     public Object fromMessage(Message message) throws JMSException {
-        TextMessage textMessage = (TextMessage) message;
-        String jsontext = textMessage.getText();
-
-        SwapOffer swapOffer = null;
-        try {
-            swapOffer = mapper.readValue(jsontext, SwapOffer.class);
-        } catch (JsonProcessingException e) {
-            logger.error("FEHLER fromMessage JSON '{}' -> SwapOffer", jsontext, e.getMessage());
-        }
-        return swapOffer;
+        return null;
     }
 }

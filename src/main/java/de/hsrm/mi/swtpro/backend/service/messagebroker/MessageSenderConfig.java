@@ -14,7 +14,7 @@ import org.springframework.util.ErrorHandler;
 
 /**
  * Adds connector (Broker) for tcp
- * Configuration for Queues und durable!! Topics
+ * Configuration for Queues und durable Topics
  */
 @Configuration
 @EnableJms
