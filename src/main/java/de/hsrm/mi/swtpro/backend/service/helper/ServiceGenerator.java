@@ -27,7 +27,7 @@ public class ServiceGenerator {
                                 .courseComponentID(courseComponent.getId())
                                 .courseType(courseComponent.getType())
                                 .courseTitle(course.getTitle())
-                                .courseTitleAbbreviation(course.getTitle().substring(0, 12))
+                                .courseTitleAbbreviation(course.getTitle().substring(0, 3))
                                 .roomNumber(group.getRoom().getNumber())
                                 .build();
                         timetableModules.add(timetableModule);
