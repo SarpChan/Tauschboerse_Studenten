@@ -72,10 +72,11 @@ public class ServiceGenerator {
      */
     public List<ModuleSelectionItem> moduleSelectionItemFromCurriculum(Curriculum curriculum) {
         List<ModuleSelectionItem> moduleSelectionItems = new ArrayList<>();
-        Set<CourseType> moduleTypeSet = new HashSet<>();
+        
         List<CourseType> moduleTypes;
 
         for (ModuleInCurriculum moduleInCurriculum : curriculum.getModulesInCurriculum()) {
+            Set<CourseType> moduleTypeSet = new HashSet<>();
             Module module = moduleInCurriculum.getModule();
 
             for(Course course :module.getCourses()){
