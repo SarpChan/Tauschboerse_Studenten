@@ -131,13 +131,10 @@ public class TimetableController {
             group.setEndTime(timetableModule.getEndTime());
             group.setDayOfWeek(timetableModule.getDayOfWeek());
             group.setGroupChar(timetableModule.getGroupChar());
-            groupRepository.save(group);
             course.setTitle(timetableModule.getCourseTitle());
-            courseRepository.save(course);
             courseComponent.setType(timetableModule.getCourseType());
-            courseComponentRepository.save(courseComponent);
             room.setNumber(timetableModule.getRoomNumber());
-            roomRepository.save(room);
+            groupRepository.save(group);
         return new ResponseEntity<>("timetableUpdate Succses",HttpStatus.OK);
         }catch(Exception e){
             return new ResponseEntity<>(e.getMessage(),HttpStatus.CONFLICT);
