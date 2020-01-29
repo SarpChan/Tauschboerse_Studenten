@@ -65,7 +65,7 @@ public class ModuleFilterFactory extends FilterFactory<Module> {
     private List<Module> filterForTerm(List<Module> modules, Filter forTerm){
         return modules.stream().filter(module -> module.getModulesInCurriculum().stream().anyMatch(moduleInCurriculum -> {
              if(forTerm.getComparator().getComparatorType() == ComparatorType.EQUALS) {
-                 return moduleInCurriculum.getTermPeriod() == Long.parseLong(forTerm.getComparator().getComparatorValue().toString());
+                 return moduleInCurriculum.getTermPeriod() == Integer.parseInt(forTerm.getComparator().getComparatorValue().toString());
              }
              return false;
          })).collect(Collectors.toList());
