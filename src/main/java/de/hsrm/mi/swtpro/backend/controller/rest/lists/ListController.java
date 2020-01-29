@@ -27,6 +27,13 @@ public class ListController {
         return allCourses;
     }
 
+    @Autowired
+    FieldOfStudyRepository fieldOfStudyRepository;
+
+    @GetMapping(path = "/fieldOfStudy", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+    public List<CustomFieldOfStudy> getFieldOfStudy() {
+        return fieldOfStudyRepository.findAll().stream().map(CustomFieldOfStudy::fromOriginal).collect(Collectors.toList());
+    }
 
     @Autowired
     SwapOfferRepository swapOfferRepository;
