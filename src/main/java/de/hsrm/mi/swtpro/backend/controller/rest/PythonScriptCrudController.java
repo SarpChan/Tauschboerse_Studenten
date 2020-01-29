@@ -50,6 +50,6 @@ public class PythonScriptCrudController{
      */
     @DeleteMapping(path = "/script/delete/{scriptId}", consumes = "application/json")
     public void deleteModule(@PathVariable final long scriptId) {
-        pyScriptService.deletFile(scriptId);
+        pyScriptService.deleteFile(scriptId);
     }
 }

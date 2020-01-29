@@ -1,13 +1,13 @@
 package de.hsrm.mi.swtpro.backend.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 
 import javax.script.ScriptEngine;
 import javax.script.ScriptEngineManager;
 import javax.script.ScriptException;
 
-@Component
+@Service
 public class PythonEvaluator {
 
     private ScriptEngine engine;
@@ -21,8 +21,8 @@ public class PythonEvaluator {
 
     public void runScriptForSwapOffer(String script) {
         try {
-            if(script.contains("def onNewSwapOffer():")) {
-                engine.put("serverApi",serverApi);
+            if (script.contains("def onNewSwapOffer():")) {
+                engine.put("serverApi", serverApi);
                 engine.eval(script);
                 engine.eval("onNewSwapOffer()");
             }

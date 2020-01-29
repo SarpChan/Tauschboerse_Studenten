@@ -1,6 +1,5 @@
 package de.hsrm.mi.swtpro.backend.service;
 
-import com.sun.tools.javac.util.ArrayUtils;
 import de.hsrm.mi.swtpro.backend.model.Group;
 import de.hsrm.mi.swtpro.backend.model.Student;
 import de.hsrm.mi.swtpro.backend.model.SwapOffer;
