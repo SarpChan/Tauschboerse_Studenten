@@ -23,6 +23,7 @@ import org.springframework.web.bind.annotation.RestController;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -55,11 +56,11 @@ public class GroupListInterface {
 
 
     @GetMapping(path = "/group/dropdowncollection/{groupID}", produces = MediaType.APPLICATION_JSON_VALUE)
-    public Set<Long> collectGroupsForDropdown(HttpServletRequest request, @PathVariable long groupID) throws ServletException, IOException, GroupNotFoundException {
+    public HashMap<Long,Character> collectGroupsForDropdown(HttpServletRequest request, @PathVariable long groupID) throws ServletException, IOException, GroupNotFoundException {
         final String requestHeader = request.getHeader(this.tokenHeader);
         String authenticationToken = "";
         Student student = null;
-        Set<Long> groupsInComponent = new HashSet<>();
+        HashMap<Long,Character> groupsInComponent = new HashMap<Long,Character>();
         if (requestHeader != null && requestHeader.startsWith("Bearer ")) {
             authenticationToken = requestHeader.substring(7);
             logger.warn("TOKEN: " + tokenService.getUsernameFromToken(authenticationToken));
@@ -68,7 +69,7 @@ public class GroupListInterface {
             Set<Group> groupsList = selectedComponent.getGroups();
             groupsList.stream()
                     .forEach(e -> {
-                        groupsInComponent.add(e.getId());
+                        groupsInComponent.put(e.getId(),e.getGroupChar());
                         logger.warn("Kurs: " + e.getCourseComponent().getCourse().getTitle() + " Typ: " + e.getCourseComponent().getType().name() + " Gruppe: " + e.getGroupChar() + " - " + e.getId());
                     });
             Long attendedGroupId = null;
@@ -83,7 +84,7 @@ public class GroupListInterface {
             assert attendedGroupId != null:tokenService.getUsernameFromToken(authenticationToken) + " does not attend in " +
                     "Kurs: " + selectedComponent.getCourse().getTitle() + " Typ: " + selectedComponent.getType().name();
 
-            if (groupsInComponent.contains(attendedGroupId)) {
+            if (groupsInComponent.containsKey(attendedGroupId)) {
                 groupsInComponent.remove(student.getGroups().stream()
                         .filter(g -> g.getCourseComponent().equals(selectedComponent))
                         .findAny().get().getId());
