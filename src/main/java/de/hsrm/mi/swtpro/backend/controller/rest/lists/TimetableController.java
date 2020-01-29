@@ -2,15 +2,18 @@ package de.hsrm.mi.swtpro.backend.controller.rest.lists;
 
 import de.hsrm.mi.swtpro.backend.model.ExamRegulation;
 import de.hsrm.mi.swtpro.backend.model.Module;
+import de.hsrm.mi.swtpro.backend.model.ModuleInCurriculum;
 import de.hsrm.mi.swtpro.backend.model.TimetableModule;
 import de.hsrm.mi.swtpro.backend.model.filter.Comparator;
 import de.hsrm.mi.swtpro.backend.model.filter.ComparatorType;
 import de.hsrm.mi.swtpro.backend.model.filter.Filter;
 import de.hsrm.mi.swtpro.backend.service.filterfactories.ModuleFilterFactory;
 import de.hsrm.mi.swtpro.backend.service.helper.ServiceGenerator;
+import de.hsrm.mi.swtpro.backend.service.repository.ModuleInCurriculumRepository;
 import de.hsrm.mi.swtpro.backend.service.repository.ModuleRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -41,6 +44,23 @@ public class TimetableController {
         ModuleFilterFactory filterFactory = ModuleFilterFactory.builder().filters(filters).build();
         allModules = filterFactory.filter(allModules);
 
+        return serviceGenerator.timetableModuleFromModules(allModules);
+    }
+
+    @GetMapping(path = "/date_timetable", produces = MediaType.APPLICATION_JSON_VALUE)
+    public List<TimetableModule> getCurrentModules() {
+        List<Module> allModules = moduleRepository.findAll();
+        Comparator comparator = Comparator.builder()
+        .comparatorType(ComparatorType.EQUALS)
+        .comparatorValue(1)
+        .build();
+        Filter filter = Filter.builder()
+        .attribute("term")
+        .comparator(comparator)
+        .build();
+        Filter [] filters = {filter};
+        ModuleFilterFactory filterFactory = ModuleFilterFactory.builder().filters(filters).build();
+        allModules = filterFactory.filter(allModules);
         return serviceGenerator.timetableModuleFromModules(allModules);
     }
 }
