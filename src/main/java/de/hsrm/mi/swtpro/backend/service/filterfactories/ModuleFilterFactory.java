@@ -33,7 +33,7 @@ public class ModuleFilterFactory extends FilterFactory<Module> {
             else if(filter.getAttribute().equals("term")){
                 List<Module> moduleFilter = new ArrayList<>(filterableModules);
                 filterableModules.clear();
-                filterableModules.addAll(filterForExamRegulation(moduleFilter,filter));
+                filterableModules.addAll(filterForTerm(moduleFilter,filter));
             }
         });
         return filterableModules;
