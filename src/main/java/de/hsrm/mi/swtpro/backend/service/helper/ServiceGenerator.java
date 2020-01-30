@@ -152,6 +152,7 @@ public class ServiceGenerator {
 
                     DisplayCourseComponent dpCourseComponent = DisplayCourseComponent.builder()
                             .id(courseComponent.getId())
+                            .myGroupId(group.getId())
                             .courseId(course.getId())
                             .title(course.getTitle())
                             .type(courseComponent.getType().toString())
