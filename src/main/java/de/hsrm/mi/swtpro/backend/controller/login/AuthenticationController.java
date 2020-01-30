@@ -1,19 +1,16 @@
 package de.hsrm.mi.swtpro.backend.controller.login;
 
 
-import javax.persistence.EntityNotFoundException;
-
+import de.hsrm.mi.swtpro.backend.model.User;
+import de.hsrm.mi.swtpro.backend.service.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.ExceptionHandler;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
-import de.hsrm.mi.swtpro.backend.service.repository.UserRepository;
+import javax.persistence.EntityNotFoundException;
+import java.util.Optional;
 
 /**
  * The authentication controller contains the POST request to login
@@ -40,15 +37,17 @@ public class AuthenticationController {
      */
     @PostMapping(path = "/login", consumes = "application/json", produces = MediaType.APPLICATION_JSON_VALUE)
     public String createAuthenticationToken(@RequestBody AuthenticationRequest authenticationRequest) {
-        /*String userRight = "";
+        /*String userRight = "";*/
         Optional<User> optionalUser = userRepository.findByLoginName(authenticationRequest.getUsername());
-        if(optionalUser.isPresent()){
+        String userId = "";
+        if (optionalUser.isPresent()) {
             User user = optionalUser.get();
-            if(user.getUserRights().toString().equals("ADMIN")){
+            userId = user.getId() + "";
+            /*if(user.getUserRights().toString().equals("ADMIN")){
                 userRight = user.getUserRights().toString();
-            }
-        }*/
-        return authenticationService.generateJWTToken(authenticationRequest.getUsername(), authenticationRequest.getPassword()).getToken()/* + userRight*/;
+            }*/
+        }
+        return authenticationService.generateJWTToken(authenticationRequest.getUsername(), authenticationRequest.getPassword()).getToken() + " " + userId/* + userRight*/;
     }
 
     /**

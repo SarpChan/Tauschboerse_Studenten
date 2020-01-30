@@ -15,9 +15,7 @@ import de.hsrm.mi.swtpro.backend.model.filter.Filter;
 import de.hsrm.mi.swtpro.backend.service.filterfactories.ModuleFilterFactory;
 import de.hsrm.mi.swtpro.backend.service.helper.ServiceGenerator;
 import de.hsrm.mi.swtpro.backend.service.messagebroker.MessageSender;
-import de.hsrm.mi.swtpro.backend.service.repository.CourseRepository;
 import de.hsrm.mi.swtpro.backend.service.repository.GroupRepository;
-import de.hsrm.mi.swtpro.backend.service.helper.ServiceGenerator;
 import de.hsrm.mi.swtpro.backend.service.repository.ModuleRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -116,17 +114,12 @@ public class TimetableController {
             courseComponentCrudController.updateCourseComponent(group.get().getCourseComponent());
             roomCrudController.updateRoom(group.get().getRoom());
 
-            ms.sendNewsMessage(module);
+            ms.sendNewsMessage(timetableModule);
+            return new ResponseEntity<>("timetableUpdate Success", HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.CONFLICT);
         }
-
-        return new ResponseEntity<>("timetableUpdate Success", HttpStatus.OK);
-    }catch(
-    Exception e)
-
-    {
-        return new ResponseEntity<>(e.getMessage(), HttpStatus.CONFLICT);
 
     }
 
-}
 }
