@@ -11,9 +11,15 @@ public class ServiceGenerator {
 
     public List<TimetableModule> timetableModuleFromModules(List<Module> modules) {
         List<TimetableModule> timetableModules = new ArrayList<>();
-
+        int term = 0;
         for(Module module: modules) {
+            for(ModuleInCurriculum moduleInCurriculum : module.getModulesInCurriculum()){
+                if(moduleInCurriculum.getModule().equals(module)){
+                    term = moduleInCurriculum.getTermPeriod();
+                }
+            }
             for (Course course : module.getCourses()) {
+                
                 for (CourseComponent courseComponent : course.getCourseComponents()) {
                     for (Group group : courseComponent.getGroups()) {
                         TimetableModule timetableModule = TimetableModule.builder()
@@ -27,8 +33,9 @@ public class ServiceGenerator {
                                 .courseComponentID(courseComponent.getId())
                                 .courseType(courseComponent.getType())
                                 .courseTitle(course.getTitle())
-                                .courseTitleAbbreviation(course.getTitle().substring(0, 12))
+                                .courseTitleAbbreviation(course.getTitle().substring(0, 3))
                                 .roomNumber(group.getRoom().getNumber())
+                                .term(term)
                                 .build();
                         timetableModules.add(timetableModule);
                     }
@@ -40,8 +47,13 @@ public class ServiceGenerator {
 
     public List<TimetableModule> timetableModuleFromModule(Module module) {
         List<TimetableModule> timetableModules = new ArrayList<>();
-
-        for (Course course : module.getCourses()) {
+        int term = 0;
+        for(ModuleInCurriculum moduleInCurriculum : module.getModulesInCurriculum()){
+            if(moduleInCurriculum.getModule().equals(module)){
+                term = moduleInCurriculum.getTermPeriod();
+            }
+        }
+        for (Course course : module.getCourses()) {   
             for (CourseComponent courseComponent : course.getCourseComponents()) {
                 for (Group group : courseComponent.getGroups()) {
                     TimetableModule timetableModule = TimetableModule.builder()
@@ -57,6 +69,7 @@ public class ServiceGenerator {
                             .courseTitle(course.getTitle())
                             .courseTitleAbbreviation(course.getTitle().substring(0, 12))
                             .roomNumber(group.getRoom().getNumber())
+                            .term(term)
                             .build();
                     timetableModules.add(timetableModule);
                 }
@@ -72,10 +85,11 @@ public class ServiceGenerator {
      */
     public List<ModuleSelectionItem> moduleSelectionItemFromCurriculum(Curriculum curriculum) {
         List<ModuleSelectionItem> moduleSelectionItems = new ArrayList<>();
-        Set<CourseType> moduleTypeSet = new HashSet<>();
+        
         List<CourseType> moduleTypes;
 
         for (ModuleInCurriculum moduleInCurriculum : curriculum.getModulesInCurriculum()) {
+            Set<CourseType> moduleTypeSet = new HashSet<>();
             Module module = moduleInCurriculum.getModule();
 
             for(Course course :module.getCourses()){

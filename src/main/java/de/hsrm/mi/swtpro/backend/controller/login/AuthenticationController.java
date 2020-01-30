@@ -1,6 +1,10 @@
 package de.hsrm.mi.swtpro.backend.controller.login;
 
+<<<<<<< HEAD
 import java.util.Optional;
+=======
+
+>>>>>>> origin/feature/swapOfferInterface
 
 import javax.persistence.EntityNotFoundException;
 
@@ -14,7 +18,10 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+<<<<<<< HEAD
 import de.hsrm.mi.swtpro.backend.model.User;
+=======
+>>>>>>> origin/feature/swapOfferInterface
 import de.hsrm.mi.swtpro.backend.service.repository.UserRepository;
 
 /**
