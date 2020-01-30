@@ -107,26 +107,26 @@ public class DatabaseFiller {
 
                 // User
 
-                User wweitz = User.builder().firstName("Wolfgang").lastName("Weitz").loginName("wweitz").password(passwordEncoder.encode("wweitz")).build();
+                User wweitz = User.builder().firstName("Wolfgang").lastName("Weitz").loginName("wweitz").password(passwordEncoder.encode("wweitz")).userRights(UserRights.ADMIN).build();
                 //entityManager.persist(wweitz);
-                User jberdux = User.builder().firstName("Joerg").lastName("Berdux").loginName("jberdux").password(passwordEncoder.encode("jberdux")).build();
+                User jberdux = User.builder().firstName("Joerg").lastName("Berdux").loginName("jberdux").password(passwordEncoder.encode("jberdux")).userRights(UserRights.ADMIN).build();
                 //entityManager.persist(jberdux);
-                User rreichenauer = User.builder().firstName("Roland").lastName("Reichenauer").loginName("rreichenauer").password(passwordEncoder.encode("rreichenauer")).build();
+                User rreichenauer = User.builder().firstName("Roland").lastName("Reichenauer").loginName("rreichenauer").password(passwordEncoder.encode("rreichenauer")).userRights(UserRights.ADMIN).build();
                 //entityManager.persist(rreichenauer);
-                User uschwaneke = User.builder().firstName("Ulrich").lastName("Schwaneke").loginName("uschwaneke").password(passwordEncoder.encode("uschwaneke")).build();
+                User uschwaneke = User.builder().firstName("Ulrich").lastName("Schwaneke").loginName("uschwaneke").password(passwordEncoder.encode("uschwaneke")).userRights(UserRights.ADMIN).build();
                 //entityManager.persist(uschwaneke);
 
-                User nahlers = User.builder().firstName("Nicklas").lastName("Ahlers").loginName("nahlers").password(passwordEncoder.encode("nahlers")).build();
+                User nahlers = User.builder().firstName("Nicklas").lastName("Ahlers").loginName("nahlers").password(passwordEncoder.encode("nahlers")).userRights(UserRights.USER).build();
                 //entityManager.persist(nahlers);
-                User vesper = User.builder().firstName("Vanessa").lastName("Esper").loginName("vesper").password(passwordEncoder.encode("vesper")).build();
+                User vesper = User.builder().firstName("Vanessa").lastName("Esper").loginName("vesper").password(passwordEncoder.encode("vesper")).userRights(UserRights.USER).build();
                 //entityManager.persist(vesper);
-                User tthiel = User.builder().firstName("Tobi").lastName("Thiel").loginName("tthiel").password(passwordEncoder.encode("tthiel")).build();
+                User tthiel = User.builder().firstName("Tobi").lastName("Thiel").loginName("tthiel").password(passwordEncoder.encode("tthiel")).userRights(UserRights.USER).build();
                 //entityManager.persist(tthiel);
-                User jwirt = User.builder().firstName("Julia").lastName("Wirt").loginName("jwirt").password(passwordEncoder.encode("jwirt")).build();
+                User jwirt = User.builder().firstName("Julia").lastName("Wirt").loginName("jwirt").password(passwordEncoder.encode("jwirt")).userRights(UserRights.USER).build();
                 //entityManager.persist(jwirt);
-                User jmuel = User.builder().firstName("Julius").lastName("Muel").loginName("jmuel").password(passwordEncoder.encode("jmuel")).build();
+                User jmuel = User.builder().firstName("Julius").lastName("Muel").loginName("jmuel").password(passwordEncoder.encode("jmuel")).userRights(UserRights.USER).build();
                 //entityManager.persist(jmuel);
-                User ydeuster = User.builder().firstName("Yen").lastName("Deuster").loginName("ydeuster").password(passwordEncoder.encode("ydeuster")).build();
+                User ydeuster = User.builder().firstName("Yen").lastName("Deuster").loginName("ydeuster").password(passwordEncoder.encode("ydeuster")).userRights(UserRights.USER).build();
                 //entityManager.persist(ydeuster);
 
 
@@ -350,7 +350,7 @@ public class DatabaseFiller {
                         .courseComponent(mathe3P).startTime(LocalTime.of(11, 45)).endTime(LocalTime.of(13, 15)).build();
                 //entityManager.persist(mathe3PgroupB);
 
-
+                //T
                 // Swap Offer
 
                 SwapOffer esperMathe3P_B_to_A = SwapOffer.builder().student(stu_esper).timestamp(new Timestamp(System.currentTimeMillis())).fromGroup(mathe3PgroupB).toGroup(mathe3PgroupA).build();
@@ -892,5 +892,4 @@ public class DatabaseFiller {
             e.printStackTrace();
         }
     }
-
 }

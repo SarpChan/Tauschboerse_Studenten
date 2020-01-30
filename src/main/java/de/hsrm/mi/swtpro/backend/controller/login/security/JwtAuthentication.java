@@ -2,16 +2,17 @@ package de.hsrm.mi.swtpro.backend.controller.login.security;
 
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
-
 import java.util.Collection;
 
 /**
- * JwtAuthenticatedProfile contains the token from the logged in user
+ * JwtAuthenticatedProfile contains the token from the 
+ * user for the authentication
  */
 public class JwtAuthentication implements Authentication {
   
     private static final long serialVersionUID = 1L;
     private final String token;
+   
 
     public JwtAuthentication(String token) {
         this.token = token;
