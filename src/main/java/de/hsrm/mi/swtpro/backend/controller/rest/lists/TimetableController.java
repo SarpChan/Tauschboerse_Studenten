@@ -1,44 +1,29 @@
 package de.hsrm.mi.swtpro.backend.controller.rest.lists;
 
-import de.hsrm.mi.swtpro.backend.controller.rest.CampusCrudController;
-import de.hsrm.mi.swtpro.backend.controller.rest.CourseComponentCrudController;
 import de.hsrm.mi.swtpro.backend.controller.rest.CourseCrudController;
 import de.hsrm.mi.swtpro.backend.controller.rest.crud.CourseComponentCrudController;
 import de.hsrm.mi.swtpro.backend.controller.rest.crud.GroupCrudController;
 import de.hsrm.mi.swtpro.backend.controller.rest.crud.LecturerCrudController;
 import de.hsrm.mi.swtpro.backend.controller.rest.crud.RoomCrudController;
-import de.hsrm.mi.swtpro.backend.model.Course;
-import de.hsrm.mi.swtpro.backend.model.CourseComponent;
 import de.hsrm.mi.swtpro.backend.model.ExamRegulation;
 import de.hsrm.mi.swtpro.backend.model.Group;
 import de.hsrm.mi.swtpro.backend.model.Module;
-import de.hsrm.mi.swtpro.backend.model.ModuleInCurriculum;
 import de.hsrm.mi.swtpro.backend.model.TimetableModule;
 import de.hsrm.mi.swtpro.backend.model.filter.Comparator;
 import de.hsrm.mi.swtpro.backend.model.filter.ComparatorType;
 import de.hsrm.mi.swtpro.backend.model.filter.Filter;
 import de.hsrm.mi.swtpro.backend.service.filterfactories.ModuleFilterFactory;
-import de.hsrm.mi.swtpro.backend.service.repository.CourseRepository;
-import de.hsrm.mi.swtpro.backend.service.repository.GroupRepository;
 import de.hsrm.mi.swtpro.backend.service.helper.ServiceGenerator;
-import de.hsrm.mi.swtpro.backend.service.repository.ModuleInCurriculumRepository;
+import de.hsrm.mi.swtpro.backend.service.repository.GroupRepository;
 import de.hsrm.mi.swtpro.backend.service.repository.ModuleRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-
-import javax.servlet.http.HttpServletRequest;
 
 @RestController
 @RequestMapping("/rest/lists")
@@ -123,7 +108,7 @@ public class TimetableController {
             courseCrudController.updateCourse(group.get().getCourseComponent().getCourse());
             courseComponentCrudController.updateCourseComponent(group.get().getCourseComponent());
             roomCrudController.updateRoom(group.get().getRoom());
-            return new ResponseEntity<>("timetableUpdate Succses", HttpStatus.OK);
+            return new ResponseEntity<>("timetableUpdate Success", HttpStatus.OK);
         } catch (Exception e) {
             return new ResponseEntity<>(e.getMessage(), HttpStatus.CONFLICT);
         }
