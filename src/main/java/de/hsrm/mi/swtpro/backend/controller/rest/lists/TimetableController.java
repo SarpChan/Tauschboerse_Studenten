@@ -14,6 +14,8 @@ import de.hsrm.mi.swtpro.backend.model.filter.ComparatorType;
 import de.hsrm.mi.swtpro.backend.model.filter.Filter;
 import de.hsrm.mi.swtpro.backend.service.filterfactories.ModuleFilterFactory;
 import de.hsrm.mi.swtpro.backend.service.helper.ServiceGenerator;
+import de.hsrm.mi.swtpro.backend.service.messagebroker.MessageSender;
+import de.hsrm.mi.swtpro.backend.service.repository.CourseRepository;
 import de.hsrm.mi.swtpro.backend.service.repository.GroupRepository;
 import de.hsrm.mi.swtpro.backend.service.helper.ServiceGenerator;
 import de.hsrm.mi.swtpro.backend.service.repository.ModuleRepository;
@@ -39,11 +41,20 @@ public class TimetableController {
     CourseComponentCrudController courseComponentCrudController;
     CourseCrudController courseCrudController;
     RoomCrudController roomCrudController;
-    /*@Autowired
-    MessageSender ms;*/
+    @Autowired
+    MessageSender ms;
 
 
+    @Autowired
     ServiceGenerator serviceGenerator;
+
+    /**
+     * The methode handles the POST request
+     * to get the modules of a timetable for a given exam regulation
+     *
+     * @param examRegulation
+     * @return list of timetable modules
+     */
 
     @PostMapping(path = "/timetable", consumes = "application/json", produces = MediaType.APPLICATION_JSON_VALUE)
     public List<TimetableModule> getModules(@RequestBody ExamRegulation examRegulation) {
@@ -105,10 +116,17 @@ public class TimetableController {
             courseComponentCrudController.updateCourseComponent(group.get().getCourseComponent());
             roomCrudController.updateRoom(group.get().getRoom());
 
-            //ms.sendNewsMessage(module);
-            return new ResponseEntity<>("timetableUpdate Success", HttpStatus.OK);
-        } catch (Exception e) {
-            return new ResponseEntity<>(e.getMessage(), HttpStatus.CONFLICT);
+            ms.sendNewsMessage(module);
         }
+
+        return new ResponseEntity<>("timetableUpdate Success", HttpStatus.OK);
+    }catch(
+    Exception e)
+
+    {
+        return new ResponseEntity<>(e.getMessage(), HttpStatus.CONFLICT);
+
     }
+
+}
 }
