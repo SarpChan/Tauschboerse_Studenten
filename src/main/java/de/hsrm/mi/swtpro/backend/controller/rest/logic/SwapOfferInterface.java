@@ -4,6 +4,7 @@ package de.hsrm.mi.swtpro.backend.controller.rest.logic;
 import de.hsrm.mi.swtpro.backend.controller.exceptions.GroupNotFoundException;
 import de.hsrm.mi.swtpro.backend.controller.exceptions.StudentNotFoundException;
 import de.hsrm.mi.swtpro.backend.controller.exceptions.SwapOfferNotFoundException;
+import de.hsrm.mi.swtpro.backend.controller.login.security.TokenService;
 import de.hsrm.mi.swtpro.backend.controller.rest.crud.GroupCrudController;
 import de.hsrm.mi.swtpro.backend.controller.rest.crud.StudentCrudController;
 import de.hsrm.mi.swtpro.backend.controller.rest.crud.UserCrudController;
@@ -13,6 +14,7 @@ import de.hsrm.mi.swtpro.backend.model.SwapOffer;
 import de.hsrm.mi.swtpro.backend.model.User;
 import de.hsrm.mi.swtpro.backend.model.requestModel.SwapOfferRequest;
 import de.hsrm.mi.swtpro.backend.service.SwapOfferService;
+import de.hsrm.mi.swtpro.backend.service.helper.ServiceGetter;
 import de.hsrm.mi.swtpro.backend.service.repository.GroupRepository;
 import de.hsrm.mi.swtpro.backend.service.repository.StudentRepository;
 import de.hsrm.mi.swtpro.backend.service.repository.SwapOfferRepository;
@@ -25,6 +27,7 @@ import org.springframework.http.MediaType;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
 import java.sql.Timestamp;
 import java.time.Instant;
 import java.util.ArrayList;
@@ -50,6 +53,10 @@ public class SwapOfferInterface {
     StudentCrudController studentCrudController;
     @Autowired
     GroupCrudController groupCrudController;
+    @Autowired
+    TokenService tokenService;
+    @Autowired
+    ServiceGetter serviceGetter;
 
     @Autowired
     SwapOfferService swapOfferService;
@@ -72,17 +79,19 @@ public class SwapOfferInterface {
 
     }
     @PostMapping(path = "/swapoffer/insert", consumes = "application/json", produces = MediaType.APPLICATION_JSON_VALUE)
-    public boolean checkAndInsertSwapOffer(@RequestBody SwapOfferRequest swapOfferRequest) {
+    public boolean checkAndInsertSwapOffer(HttpServletRequest request, @RequestBody SwapOfferRequest swapOfferRequest) {
+        String username = tokenService.getUsernameFromRequest(request);
+        Student student = serviceGetter.getStudentFromUsername(username);
         for (long swapOfferToGroupID : swapOfferRequest.getToGroupsID()) {
             if (swapOfferToGroupID != swapOfferRequest.getFromGroupsID()) {
                 AtomicBoolean swapOfferExists = new AtomicBoolean(false);
                 SwapOffer offer = SwapOffer.builder().timestamp(Timestamp.from(Instant.now()))
                         .fromGroup(groupRepository.findById(swapOfferRequest.getFromGroupsID()).get())
-                        .student(studentRepository.findById(swapOfferRequest.getId()).get())
+                        .student(student)
                         .toGroup(groupRepository.findById(swapOfferToGroupID).get())
                         .build();
 
-                swapOfferRepository.findByStudent(studentRepository.findById(swapOfferRequest.getId()).get()).forEach(e -> {
+                swapOfferRepository.findByStudent(student).forEach(e -> {
                     if (e.getFromGroup() == offer.getFromGroup() && e.getToGroup() == offer.getToGroup()) {
                         swapOfferExists.set(true);
                     }
