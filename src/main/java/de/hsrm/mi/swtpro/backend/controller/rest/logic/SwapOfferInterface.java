@@ -73,7 +73,7 @@ public class SwapOfferInterface {
         logger.warn("WIPE OLD OFFERS WITH FROMGROUP ID: "+ offer.getFromGroup().getId());
 
         swapOfferRepository.findByStudent(offer.getStudent()).stream()
-                .filter(e-> e.getFromGroup() == offer.getFromGroup())
+                .filter(e-> e.getFromGroup() != offer.getFromGroup())
                 .forEach(e -> swapOfferRepository.delete(e));
 
 
