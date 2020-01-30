@@ -1,9 +1,12 @@
 package de.hsrm.mi.swtpro.backend.model;
 
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.Setter;
+
 import java.time.DayOfWeek;
 import java.time.LocalTime;
-
-import lombok.*;
 
 @AllArgsConstructor
 @Builder
@@ -32,5 +35,7 @@ public class TimetableModule {
     private CourseType courseType;
     @Getter @Setter
     private int roomNumber;
+    @Getter @Setter
+    private int term;
 }
 

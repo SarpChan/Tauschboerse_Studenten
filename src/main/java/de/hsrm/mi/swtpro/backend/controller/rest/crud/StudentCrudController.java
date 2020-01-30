@@ -1,4 +1,4 @@
-package de.hsrm.mi.swtpro.backend.controller.rest;
+package de.hsrm.mi.swtpro.backend.controller.rest.crud;
 
 
 import de.hsrm.mi.swtpro.backend.controller.exceptions.StudentNotFoundException;
@@ -52,10 +52,10 @@ public class StudentCrudController {
      * @return Student object
      * @throws StudentNotFoundException
      */
-    @GetMapping(path = "/student/read/{EnrollmentNumber}", produces = MediaType.APPLICATION_JSON_VALUE)
-    public Student findStudent(@PathVariable int EnrollmentNumber) throws StudentNotFoundException {
-        if (studentRepository.findByEnrollmentNumber(EnrollmentNumber).isPresent()) {
-            return studentRepository.findByEnrollmentNumber(EnrollmentNumber).get();
+    @GetMapping(path = "/student/read/{enrolmentNumber}", produces = MediaType.APPLICATION_JSON_VALUE)
+    public Student findStudent(@PathVariable int enrolmentNumber) throws StudentNotFoundException {
+        if (studentRepository.findByEnrollmentNumber(enrolmentNumber).isPresent()) {
+            return studentRepository.findByEnrollmentNumber(enrolmentNumber).get();
         } else {
             throw new StudentNotFoundException("Student not found");
         }
@@ -69,10 +69,10 @@ public class StudentCrudController {
      * @return void
      * @throws StudentNotFoundException
      */
-    @DeleteMapping(path = "/student/delete/{EnrollmentNumber}", consumes = "application/json")
-    public void deleteStudent(@PathVariable int EnrollmentNumber) throws StudentNotFoundException {
-        if (studentRepository.findByEnrollmentNumber(EnrollmentNumber).isPresent()) {
-            studentRepository.findByEnrollmentNumber(EnrollmentNumber);
+    @DeleteMapping(path = "/student/delete/{enrolmentNumber}", consumes = "application/json")
+    public void deleteStudent(@PathVariable int enrolmentNumber) throws StudentNotFoundException {
+        if (studentRepository.findByEnrollmentNumber(enrolmentNumber).isPresent()) {
+            studentRepository.delete(studentRepository.findByEnrollmentNumber(enrolmentNumber).get());
         } else {
             throw new StudentNotFoundException("Student not found");
         }

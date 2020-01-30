@@ -20,4 +20,5 @@ public class Administrator extends Role {
 
     @Getter @Setter
     private int priviledge;
+
 }
