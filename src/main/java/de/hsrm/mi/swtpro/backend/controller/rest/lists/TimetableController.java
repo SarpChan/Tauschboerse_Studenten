@@ -39,8 +39,8 @@ public class TimetableController {
     CourseComponentCrudController courseComponentCrudController;
     CourseCrudController courseCrudController;
     RoomCrudController roomCrudController;
-    @Autowired
-    MessageSender ms;
+    /*@Autowired
+    MessageSender ms;*/
 
 
     ServiceGenerator serviceGenerator;
@@ -105,7 +105,7 @@ public class TimetableController {
             courseComponentCrudController.updateCourseComponent(group.get().getCourseComponent());
             roomCrudController.updateRoom(group.get().getRoom());
 
-            ms.sendNewsMessage(module);
+            //ms.sendNewsMessage(module);
             return new ResponseEntity<>("timetableUpdate Success", HttpStatus.OK);
         } catch (Exception e) {
             return new ResponseEntity<>(e.getMessage(), HttpStatus.CONFLICT);
