@@ -82,7 +82,7 @@ public class TimetableController {
     /**
      * The methode handles the POST request
      * to get the modules of a timetable for a specific term
-     * @param 
+     * @param
      * @return list of timetable modules
      */
 
@@ -106,7 +106,7 @@ public class TimetableController {
     /**
      * The methode handles the POST request
      * to update the modules of a timetable
-     * @param timetableModuleList
+     * @param timetableModule
      * @return
      */
     @PostMapping(path = "/timetableUpdate", consumes = "application/json", produces = MediaType.APPLICATION_JSON_VALUE)

@@ -29,6 +29,9 @@ public class ModuleSelectionItem {
     // in welchem semester ist das modul im curiculum vorgesehen
 
     @Getter @Setter
+    private List<CourseType>moduleTypes;
+
+    @Getter @Setter
     private List<TimetableModule> timetableModules ;
 
 }

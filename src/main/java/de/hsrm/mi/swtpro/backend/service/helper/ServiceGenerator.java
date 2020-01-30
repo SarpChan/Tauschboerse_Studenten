@@ -85,9 +85,19 @@ public class ServiceGenerator {
      */
     public List<ModuleSelectionItem> moduleSelectionItemFromCurriculum(Curriculum curriculum) {
         List<ModuleSelectionItem> moduleSelectionItems = new ArrayList<>();
+        
+        List<CourseType> moduleTypes;
 
         for (ModuleInCurriculum moduleInCurriculum : curriculum.getModulesInCurriculum()) {
+            Set<CourseType> moduleTypeSet = new HashSet<>();
             Module module = moduleInCurriculum.getModule();
+
+            for(Course course :module.getCourses()){
+                for(CourseComponent courseComponent: course.getCourseComponents()){
+                    moduleTypeSet.add(courseComponent.getType());
+                }
+            }
+            moduleTypes = new ArrayList<>(moduleTypeSet);
 
             ModuleSelectionItem moduleSelectionItem = ModuleSelectionItem.builder()
                 .id(module.getId())
@@ -95,6 +105,7 @@ public class ServiceGenerator {
                 .creditPoints(module.getCreditPoints())
                 .semester(moduleInCurriculum.getTermPeriod())
                 .timetableModules(timetableModuleFromModule(module))
+                .moduleTypes(moduleTypes)
                 .build();
 
             moduleSelectionItems.add(moduleSelectionItem);
