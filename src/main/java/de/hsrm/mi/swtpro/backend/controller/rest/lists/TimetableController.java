@@ -43,18 +43,29 @@ public class TimetableController {
      * @return list of timetable modules
      */
 
-    @PostMapping(path = "/timetable", consumes = "application/json", produces = MediaType.APPLICATION_JSON_VALUE)
-    public List<TimetableModule> getModules(@RequestBody ExamRegulation examRegulation) {
+    @PostMapping(path = "/timetable/{term}", consumes = "application/json", produces = MediaType.APPLICATION_JSON_VALUE)
+    public List<TimetableModule> getModules(@RequestBody ExamRegulation examRegulation ,@PathVariable int term) {
         List<Module> allModules = moduleRepository.findAll();
-        Comparator comparator = Comparator.builder()
+        Comparator comparatorByExR = Comparator.builder()
         .comparatorType(ComparatorType.EQUALS)
         .comparatorValue(examRegulation.getId())
         .build();
-        Filter filter = Filter.builder()
+
+        Comparator comparatorByTerm = Comparator.builder()
+                .comparatorType(ComparatorType.EQUALS)
+                .comparatorValue(examRegulation.getId())
+                .build();
+
+        Filter filterByTerm = Filter.builder()
+                .attribute("term")
+                .comparator(comparatorByTerm)
+                .build();
+
+        Filter filterByExR = Filter.builder()
         .attribute("examRegulationId")
-        .comparator(comparator)
+        .comparator(comparatorByExR )
         .build();
-        Filter [] filters = {filter};
+        Filter [] filters = {filterByTerm,filterByExR};
         ModuleFilterFactory filterFactory = ModuleFilterFactory.builder().filters(filters).build();
         allModules = filterFactory.filter(allModules);
 
