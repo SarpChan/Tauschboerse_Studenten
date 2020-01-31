@@ -105,7 +105,7 @@ public class TimetableController {
         .attribute("term")
         .comparator(comparatorTerm)
         .build();
-        Filter [] filters = {filterExam, filterTerm};
+        Filter [] filters = {filterExam,};
         ModuleFilterFactory filterFactory = ModuleFilterFactory.builder().filters(filters).build();
         allModules = filterFactory.filter(allModules);
 
@@ -144,7 +144,7 @@ public class TimetableController {
      */
     @PostMapping(path = "/timetableUpdate", consumes = "application/json", produces = MediaType.APPLICATION_JSON_VALUE)
     public  ResponseEntity<String> updateTimetable(@RequestBody TimetableModule timetableModule) {
-        try{ r
+        try{ 
             Optional<Group> group = groupRepository.findById(timetableModule.getGroupID());
             groupCrudController.updateGroup(group.get());
             lecturerCrudController.updateLecturer(group.get().getLecturer());
