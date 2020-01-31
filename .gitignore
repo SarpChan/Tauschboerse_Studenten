@@ -37,3 +37,4 @@ out/
 bin/
 /lombok.config
 bin/main/application.properties
+!/gradlew

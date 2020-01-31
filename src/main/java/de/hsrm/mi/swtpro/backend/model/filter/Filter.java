@@ -13,3 +13,4 @@ public class Filter {
     @Setter
     private Comparator comparator;
 }
+
