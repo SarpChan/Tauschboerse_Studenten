@@ -79,7 +79,7 @@ public class TimetableController {
      * @return list of timetable modules
      */
 
-    @GetMapping(path = "/timetable/{examRegulation}{term}", consumes = "application/json", produces = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping(path = "/term_timetable/{examRegulation}/{term}", consumes = "application/json", produces = MediaType.APPLICATION_JSON_VALUE)
     public List<TimetableModule> getModulesforExamAndTerm(@PathVariable int examRegulation, @PathVariable int term) {
         List<Module> allModules = moduleRepository.findAll();
         Comparator comparatorExam = Comparator.builder()
