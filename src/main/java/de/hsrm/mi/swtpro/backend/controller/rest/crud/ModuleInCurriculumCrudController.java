@@ -1,4 +1,4 @@
-package de.hsrm.mi.swtpro.backend.controller.rest;
+package de.hsrm.mi.swtpro.backend.controller.rest.crud;
 
 
 import de.hsrm.mi.swtpro.backend.controller.exceptions.ModuleInCurriculumNotFoundException;
