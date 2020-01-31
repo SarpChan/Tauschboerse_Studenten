@@ -2,7 +2,7 @@ package de.hsrm.mi.swtpro.backend.controller.rest.lists;
 
 import de.hsrm.mi.swtpro.backend.controller.login.security.JwtAuthentication;
 import de.hsrm.mi.swtpro.backend.controller.login.security.TokenService;
-import de.hsrm.mi.swtpro.backend.controller.rest.StudentCrudController;
+import de.hsrm.mi.swtpro.backend.controller.rest.crud.StudentCrudController;
 import de.hsrm.mi.swtpro.backend.model.Course;
 import de.hsrm.mi.swtpro.backend.model.CourseComponent;
 import de.hsrm.mi.swtpro.backend.model.Group;

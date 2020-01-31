@@ -4,7 +4,6 @@ import java.util.HashMap;
 import java.util.Map;
 
 import javax.jms.JMSException;
-import javax.jms.Message;
 
 import org.apache.activemq.command.ActiveMQQueue;
 import org.apache.activemq.command.ActiveMQTopic;
@@ -55,11 +54,11 @@ public class MessageSender {
     }
 
     /**
-     * sendsa message to a user's personal queue to inform him that his swapOffer has been accepted
+     * sends a message to a user's personal queue to inform him that his swapOffer has been accepted
      * @param swapOffer the acceped swapOffer
      * @param userid the user's id
      */
-    public void sendPersonalSwapOfferMessage(SwapOffer swapOffer, String userid) {
+    public void sendPersonalSwapOfferMessage(SwapOffer swapOffer, long userid) {
         if(queueMap.isEmpty()) {
             addSwapMessageQueues();
         }
