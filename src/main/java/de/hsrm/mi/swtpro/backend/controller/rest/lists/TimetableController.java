@@ -81,7 +81,7 @@ public class TimetableController {
 
     /**
      * The methode handles the POST request
-     * to get the modules of a timetable for a specific term
+     * to get the modules of a timetable for a specific term regardless of the exam regulation
      * @param
      * @return list of timetable modules
      */
@@ -111,7 +111,7 @@ public class TimetableController {
      */
     @PostMapping(path = "/timetableUpdate", consumes = "application/json", produces = MediaType.APPLICATION_JSON_VALUE)
     public  ResponseEntity<String> updateTimetable(@RequestBody TimetableModule timetableModule) {
-        try{
+        try{ r
             Optional<Group> group = groupRepository.findById(timetableModule.getGroupID());
             groupCrudController.updateGroup(group.get());
             lecturerCrudController.updateLecturer(group.get().getLecturer());
