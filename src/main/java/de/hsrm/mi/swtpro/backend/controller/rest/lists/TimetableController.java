@@ -105,7 +105,7 @@ public class TimetableController {
         .attribute("term")
         .comparator(comparatorTerm)
         .build();
-        Filter [] filters = {filterExam,};
+        Filter [] filters = {filterExam, filterTerm};
         ModuleFilterFactory filterFactory = ModuleFilterFactory.builder().filters(filters).build();
         allModules = filterFactory.filter(allModules);
 
