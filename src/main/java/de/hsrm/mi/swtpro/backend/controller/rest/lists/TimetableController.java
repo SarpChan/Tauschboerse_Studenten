@@ -104,10 +104,10 @@ public class TimetableController {
             Room room = group.getRoom();
             group.setStartTime(timetableModule.getStartTime());
             group.setEndTime(timetableModule.getEndTime());
-            group.setDayOfWeek(timetableModule.getDayOfWeek());
+            group.setDayOfWeek(timetableModule.getDayOfWeek().minus(1));
             group.setGroupChar(timetableModule.getGroupChar());
             course.setTitle(timetableModule.getCourseTitle());
-            //courseComponent.setType(timetableModule.getCourseType());
+            courseComponent.setType(timetableModule.getCourseType());
             room.setNumber(timetableModule.getRoomNumber());
 
             groupRepository.saveAndFlush(group);
