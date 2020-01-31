@@ -53,9 +53,9 @@ public class TimetableController {
 
         Comparator comparatorByTerm = Comparator.builder()
                 .comparatorType(ComparatorType.EQUALS)
-                .comparatorValue(examRegulation.getId())
+                .comparatorValue(term)
                 .build();
-
+        //filter ist falssch da Term nicht die ID ist sondern die POs in der ExamR.
         Filter filterByTerm = Filter.builder()
                 .attribute("term")
                 .comparator(comparatorByTerm)
@@ -63,7 +63,7 @@ public class TimetableController {
 
         Filter filterByExR = Filter.builder()
         .attribute("examRegulationId")
-        .comparator(comparatorByExR )
+        .comparator(comparatorByExR)
         .build();
         Filter [] filters = {filterByTerm,filterByExR};
         ModuleFilterFactory filterFactory = ModuleFilterFactory.builder().filters(filters).build();
