@@ -11,7 +11,6 @@ import de.hsrm.mi.swtpro.backend.controller.rest.crud.UserCrudController;
 import de.hsrm.mi.swtpro.backend.model.Group;
 import de.hsrm.mi.swtpro.backend.model.Student;
 import de.hsrm.mi.swtpro.backend.model.SwapOffer;
-import de.hsrm.mi.swtpro.backend.model.User;
 import de.hsrm.mi.swtpro.backend.model.requestModel.SwapOfferRequest;
 import de.hsrm.mi.swtpro.backend.service.SwapOfferService;
 import de.hsrm.mi.swtpro.backend.service.helper.ServiceGetter;
@@ -22,7 +21,6 @@ import de.hsrm.mi.swtpro.backend.service.repository.UserRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.MediaType;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
@@ -57,9 +55,41 @@ public class SwapOfferInterface {
     TokenService tokenService;
     @Autowired
     ServiceGetter serviceGetter;
-
     @Autowired
     SwapOfferService swapOfferService;
+
+    List<SwapOffer> swapOfferList = new ArrayList<SwapOffer>();
+
+
+    @GetMapping(path = "/swapoffer/accept/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
+    public boolean acceptSwapOffer(HttpServletRequest request, @PathVariable long id) {
+        SwapOffer offer = null;
+        SwapOffer matchingOffer;
+        String loginname = tokenService.getUsernameFromRequest(request);
+
+        if (swapOfferRepository.findById(id).isPresent()) offer = swapOfferRepository.findById(id).get();
+
+        if(offer!=null){
+            matchingOffer = SwapOffer.builder().timestamp(Timestamp.from(Instant.now()))
+                    .fromGroup(offer.getToGroup())
+                    .student(serviceGetter.getStudentFromUsername(loginname))
+                    .toGroup(offer.getFromGroup())
+                    .build();
+            swapOfferService.swap(offer,matchingOffer);
+            return true;
+        }
+        return false;
+    }
+
+
+    @Transactional
+    void wipeInvalidatedSwapOffers(SwapOffer offer) {
+        logger.warn("WIPE OLD OFFERS WITH FROMGROUP ID: " + offer.getFromGroup().getId() + " STUDENT: " + offer.getStudent().getMail());
+        swapOfferRepository.findByStudent(offer.getStudent()).stream()
+                .filter(e -> e.getFromGroup() == offer.getFromGroup())
+                .forEach(e -> swapOfferRepository.delete(e));
+    }
+
     /**
      * Iterates over list of groups to change, checks if recent iterations already created a match if not then create a SwapOffer for each Element
      * e.g. A->B , A->C , A->D ,....
@@ -67,17 +97,7 @@ public class SwapOfferInterface {
      * @param swapOfferRequest
      * @return boolean
      */
-    List<SwapOffer> swapOfferList = new ArrayList<SwapOffer>();
-    @Transactional
-    void wipeInvalidatedSwapOffers(SwapOffer offer) {
-        logger.warn("WIPE OLD OFFERS WITH FROMGROUP ID: "+ offer.getFromGroup().getId());
 
-        swapOfferRepository.findByStudent(offer.getStudent()).stream()
-                .filter(e-> e.getFromGroup() != offer.getFromGroup())
-                .forEach(e -> swapOfferRepository.delete(e));
-
-
-    }
     @PostMapping(path = "/swapoffer/insert", consumes = "application/json", produces = MediaType.APPLICATION_JSON_VALUE)
     public boolean checkAndInsertSwapOffer(HttpServletRequest request, @RequestBody SwapOfferRequest swapOfferRequest) {
         String username = tokenService.getUsernameFromRequest(request);
@@ -117,27 +137,29 @@ public class SwapOfferInterface {
         return false;
     }
 
-    Student getStudent(long id) throws StudentNotFoundException{
-        if(studentRepository.findById(id).isPresent()){
+    Student getStudent(long id) throws StudentNotFoundException {
+        if (studentRepository.findById(id).isPresent()) {
             return studentRepository.findById(id).get();
-        }else{
+        } else {
             throw new StudentNotFoundException("Student not found");
         }
     }
+
     Group getGroup(long groupID) throws GroupNotFoundException {
-        if(groupRepository.findById(groupID).isPresent()){
+        if (groupRepository.findById(groupID).isPresent()) {
             return groupRepository.findById(groupID).get();
-        }else{
+        } else {
             throw new GroupNotFoundException("Group not found");
         }
     }
+
     SwapOffer getSwapOffer(Student student, Group toGroup) throws SwapOfferNotFoundException {
         Optional<SwapOffer> offer = swapOfferRepository.findByStudent(student)
                 .stream()
                 .filter(e -> e.getToGroup().equals(toGroup)).findFirst();
-        if(offer.isPresent()){
+        if (offer.isPresent()) {
             return offer.get();
-        }else{
+        } else {
             throw new SwapOfferNotFoundException("Swapoffer not found");
         }
     }
@@ -152,7 +174,7 @@ public class SwapOfferInterface {
 
     @GetMapping(path = "/swapoffer/removematches")
     public void debug() {
-        for(SwapOffer offer:swapOfferRepository.findAll()) {
+        for (SwapOffer offer : swapOfferRepository.findAll()) {
             if (swapOfferService.isMatched(offer)) {
                 logger.warn("MATCH REMOVED");
             }
@@ -160,15 +182,14 @@ public class SwapOfferInterface {
     }
 
     @GetMapping(path = "/swapoffer/all", produces = MediaType.APPLICATION_JSON_VALUE)
-    public List<SwapOffer> selectAllSwapOffers(){
+    public List<SwapOffer> selectAllSwapOffers() {
         return swapOfferRepository.findAll();
     }
 
     @GetMapping(path = "/swapoffer/{enrollmentnumber}", produces = MediaType.APPLICATION_JSON_VALUE)
-    public List<SwapOffer> selectByIDSwapOffers(@PathVariable int enrollmentnumber){
+    public List<SwapOffer> selectByIDSwapOffers(@PathVariable int enrollmentnumber) {
         return swapOfferRepository.findByStudent(studentRepository.findByEnrollmentNumber(enrollmentnumber).get());
     }
-
 
 
 }

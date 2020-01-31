@@ -66,7 +66,7 @@ public class SwapOfferService {
 
         studentRepository.save(A);
         studentRepository.save(B);
-        logger.warn("REMOVE" + found.getId());
+        logger.warn("REMOVE: " + found.getId());
 
         if (swapOfferRepository.findById(found.getId()).isPresent())
             swapOfferRepository.delete(found);
