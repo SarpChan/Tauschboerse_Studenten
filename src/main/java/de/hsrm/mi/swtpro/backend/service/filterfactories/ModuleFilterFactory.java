@@ -13,17 +13,17 @@ import java.util.stream.Collectors;
 public class ModuleFilterFactory extends FilterFactory<Module> {
 
     /**
-    * This list contains all filterable modules 
+    * This list contains all filterable modules
     * @param toFilter the list of modules to be filtered
     * @return returns a list of the filtered modules
     */
-        
+
     @Override
     public List<Module> filter(List<Module> toFilter) {
         final List<Module> filterableModules = new ArrayList<>(toFilter);
         if (isFiltersEmpty()) {
             return toFilter;
-        }            
+        }
         Arrays.stream(this.filters).forEach(filter -> {
             if(filter.getAttribute().equals("examRegulationId")) {
                 List<Module> moduleFilter = new ArrayList<>(filterableModules);

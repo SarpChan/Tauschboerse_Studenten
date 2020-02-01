@@ -8,6 +8,7 @@ import de.hsrm.mi.swtpro.backend.service.repository.GroupRepository;
 import de.hsrm.mi.swtpro.backend.service.repository.ModuleRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -29,7 +30,7 @@ public class SwapOfferController {
     @Autowired
     GroupRepository groupRepository;
 
-    @PostMapping(path = "/availableSwaps", consumes = "application/json", produces = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping(path = "/availableSwaps", produces = MediaType.APPLICATION_JSON_VALUE)
     public List<DisplayCourseComponent> getAvailableSwaps(HttpServletRequest request) {
         Student student = serviceGetter.getStudentFromUsername(tokenService.getUsernameFromRequest(request));
 

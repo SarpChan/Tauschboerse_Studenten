@@ -1,4 +1,4 @@
-package de.hsrm.mi.swtpro.backend.controller.rest;
+package de.hsrm.mi.swtpro.backend.controller.rest.crud;
 
 
 import de.hsrm.mi.swtpro.backend.controller.exceptions.StudentNotFoundException;
@@ -48,7 +48,7 @@ public class StudentCrudController {
     /**
      * Find a Student object from the Model
      *
-     * @param enrolmentNumber recieves key from student
+     * @param EnrollmentNumber recieves key from student
      * @return Student object
      * @throws StudentNotFoundException
      */
@@ -65,14 +65,14 @@ public class StudentCrudController {
     /**
      * Remove a Student object from the Model
      *
-     * @param enrolmentNumber recieves a Student id via DELETE request
+     * @param EnrollmentNumber recieves a Student id via DELETE request
      * @return void
      * @throws StudentNotFoundException
      */
     @DeleteMapping(path = "/student/delete/{enrolmentNumber}", consumes = "application/json")
     public void deleteStudent(@PathVariable int enrolmentNumber) throws StudentNotFoundException {
         if (studentRepository.findByEnrollmentNumber(enrolmentNumber).isPresent()) {
-            studentRepository.findByEnrollmentNumber(enrolmentNumber);
+            studentRepository.delete(studentRepository.findByEnrollmentNumber(enrolmentNumber).get());
         } else {
             throw new StudentNotFoundException("Student not found");
         }

@@ -39,17 +39,18 @@ public class TimetableController {
     /**
      * The methode handles the POST request
      * to get the modules of a timetable for a given exam regulation
+     *
      * @param examRegulation
      * @return list of timetable modules
      */
 
     @PostMapping(path = "/timetable/{term}", consumes = "application/json", produces = MediaType.APPLICATION_JSON_VALUE)
-    public List<TimetableModule> getModules(@RequestBody ExamRegulation examRegulation ,@PathVariable int term) {
+    public List<TimetableModule> getModules(@RequestBody ExamRegulation examRegulation, @PathVariable int term) {
         List<Module> allModules = moduleRepository.findAll();
         Comparator comparatorByExR = Comparator.builder()
-        .comparatorType(ComparatorType.EQUALS)
-        .comparatorValue(examRegulation.getId())
-        .build();
+                .comparatorType(ComparatorType.EQUALS)
+                .comparatorValue(examRegulation.getId())
+                .build();
 
         Comparator comparatorByTerm = Comparator.builder()
                 .comparatorType(ComparatorType.EQUALS)
@@ -62,10 +63,10 @@ public class TimetableController {
                 .build();
 
         Filter filterByExR = Filter.builder()
-        .attribute("examRegulationId")
-        .comparator(comparatorByExR)
-        .build();
-        Filter [] filters = {filterByTerm,filterByExR};
+                .attribute("examRegulationId")
+                .comparator(comparatorByExR)
+                .build();
+        Filter[] filters = {filterByTerm, filterByExR};
         ModuleFilterFactory filterFactory = ModuleFilterFactory.builder().filters(filters).build();
         allModules = filterFactory.filter(allModules);
 
@@ -75,6 +76,7 @@ public class TimetableController {
     /**
      * The methode handles the POST request
      * to get the modules of a timetable for a given exam regulation and a specific term
+     *
      * @param examRegulation
      * @return list of timetable modules
      */
@@ -83,22 +85,22 @@ public class TimetableController {
     public List<TimetableModule> getModulesforExamAndTerm(@PathVariable int examRegulation, @PathVariable int term) {
         List<Module> allModules = moduleRepository.findAll();
         Comparator comparatorExam = Comparator.builder()
-        .comparatorType(ComparatorType.EQUALS)
-        .comparatorValue(examRegulation)
-        .build();
+                .comparatorType(ComparatorType.EQUALS)
+                .comparatorValue(examRegulation)
+                .build();
         Filter filterExam = Filter.builder()
-        .attribute("examRegulationId")
-        .comparator(comparatorExam)
-        .build();
+                .attribute("examRegulationId")
+                .comparator(comparatorExam)
+                .build();
         Comparator comparatorTerm = Comparator.builder()
-        .comparatorType(ComparatorType.EQUALS)
-        .comparatorValue(term)
-        .build();
+                .comparatorType(ComparatorType.EQUALS)
+                .comparatorValue(term)
+                .build();
         Filter filterTerm = Filter.builder()
-        .attribute("term")
-        .comparator(comparatorTerm)
-        .build();
-        Filter [] filters = {filterExam, filterTerm};
+                .attribute("term")
+                .comparator(comparatorTerm)
+                .build();
+        Filter[] filters = {filterExam, filterTerm};
         ModuleFilterFactory filterFactory = ModuleFilterFactory.builder().filters(filters).build();
         allModules = filterFactory.filter(allModules);
 
@@ -108,6 +110,7 @@ public class TimetableController {
     /**
      * The methode handles the POST request
      * to get the modules of a timetable for a specific term regardless of the exam regulation
+     *
      * @param
      * @return list of timetable modules
      */
@@ -116,14 +119,14 @@ public class TimetableController {
     public List<TimetableModule> getModulesForTerm(@PathVariable int term) {
         List<Module> allModules = moduleRepository.findAll();
         Comparator comparator = Comparator.builder()
-        .comparatorType(ComparatorType.EQUALS)
-        .comparatorValue(term)
-        .build();
+                .comparatorType(ComparatorType.EQUALS)
+                .comparatorValue(term)
+                .build();
         Filter filter = Filter.builder()
-        .attribute("term")
-        .comparator(comparator)
-        .build();
-        Filter [] filters = {filter};
+                .attribute("term")
+                .comparator(comparator)
+                .build();
+        Filter[] filters = {filter};
         ModuleFilterFactory filterFactory = ModuleFilterFactory.builder().filters(filters).build();
         allModules = filterFactory.filter(allModules);
         return serviceGenerator.timetableModuleFromModules(allModules);
@@ -132,15 +135,16 @@ public class TimetableController {
     /**
      * The methode handles the POST request
      * to update the modules of a timetable
+     *
      * @param timetableModule
      * @return
      */
     @PostMapping(path = "/timetableUpdate", consumes = "application/json", produces = MediaType.APPLICATION_JSON_VALUE)
-    public  ResponseEntity<String> updateTimetable(@RequestBody TimetableModule timetableModule) {
-        try{
+    public ResponseEntity<String> updateTimetable(@RequestBody TimetableModule timetableModule) {
+        try {
             Optional<Group> optionalGroup = groupRepository.findById(timetableModule.getGroupID());
-            if(!optionalGroup.isPresent())
-                return new ResponseEntity<>("Cant find GroupID in Database",HttpStatus.CONFLICT);
+            if (!optionalGroup.isPresent())
+                return new ResponseEntity<>("Cant find GroupID in Database", HttpStatus.CONFLICT);
 
             Group group = optionalGroup.get();
             CourseComponent courseComponent = group.getCourseComponent();
@@ -155,9 +159,9 @@ public class TimetableController {
             room.setNumber(timetableModule.getRoomNumber());
 
             groupRepository.saveAndFlush(group);
-        return new ResponseEntity<>("timetableUpdate Succses",HttpStatus.OK);
-        }catch(Exception e){
-            return new ResponseEntity<>(e.getMessage(),HttpStatus.CONFLICT);
+            return new ResponseEntity<>("timetableUpdate Succses", HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.CONFLICT);
         }
     }
 }

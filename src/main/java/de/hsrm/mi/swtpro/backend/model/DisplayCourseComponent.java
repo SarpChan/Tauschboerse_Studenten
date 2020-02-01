@@ -32,6 +32,10 @@ public class DisplayCourseComponent {
     private char myGroupChar;
 
     @Getter @Setter
+    @NotNull
+    private long myGroupId;
+
+    @Getter @Setter
     @Min(value = 0)
     private int creditPoints;
 

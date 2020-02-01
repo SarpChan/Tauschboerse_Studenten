@@ -41,14 +41,14 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     /**
      * configure AuthenticationManager so that it knows from where to load user for
      * matching credentials use PasswordEncoder
-     * 
+     *
      * @param authenticationManagerBuilder
      * @throws Exception
      */
     @Autowired
     public void configureAuthentication(AuthenticationManagerBuilder authenticationManagerBuilder) throws Exception {
         authenticationManagerBuilder.authenticationProvider(jwtAuthenticationProvider);
-        
+
     }
 
     @Bean
@@ -59,15 +59,15 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity httpSecurity) throws Exception {
-        
+
             httpSecurity.csrf().disable()
-          
-                .authorizeRequests().antMatchers("/authentication/**", "/h2-console/**").permitAll()
-                .antMatchers().hasAuthority("USER")		
+
+                .authorizeRequests().antMatchers("/authentication/**", "/h2-console/**", "/actuator/**", "/test/**").permitAll()
+                .antMatchers().hasAuthority("USER")
                 .antMatchers("rest/building/**","rest/campus/**", "rest/coursecomponents/**", "rest/curriculum/**", "rest/examregulation/**", "rest/fieldofstudy/**" ,
-                "rest/group/**", "rest/lecture/**", "rest/module/**", "rest/modulelnCurriculum/**", "rest/pyScribt/**", "rest/room/**", "rest/studentAttendsCourse/**", "rest/student/**", 
-                "rest/studentPassedExam/**", "rest/studentPrioritzesGroup/**", "rest/studyprogram/**", 
-                "rest/swapOffer/**", "rest/term/**", "rest/university/**", "rest/user/**").hasAuthority("ADMIN")			
+                "rest/group/**", "rest/lecture/**", "rest/module/**", "rest/modulelnCurriculum/**", "rest/pyScribt/**", "rest/room/**", "rest/studentAttendsCourse/**", "rest/student/**",
+                "rest/studentPassedExam/**", "rest/studentPrioritzesGroup/**", "rest/studyprogram/**",
+                "rest/swapOffer/**", "rest/term/**", "rest/university/**", "rest/user/**").hasAuthority("ADMIN")
                 .anyRequest().authenticated().and()
                 .exceptionHandling().authenticationEntryPoint(unauthorizedHandler).and()
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
@@ -76,6 +76,6 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         httpSecurity.headers().cacheControl();
         httpSecurity.headers().frameOptions().disable();
 
-        
+
     }
 }
