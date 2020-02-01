@@ -12,7 +12,7 @@ import org.springframework.jms.annotation.EnableJms;
 import org.springframework.jms.core.JmsTemplate;
 import org.springframework.stereotype.Component;
 
-import de.hsrm.mi.swtpro.backend.model.MessageBrokerMessage;
+import de.hsrm.mi.swtpro.backend.model.MessageBrokerNewsMessage;
 import de.hsrm.mi.swtpro.backend.model.MessageBrokerPersonalMessage;
 import de.hsrm.mi.swtpro.backend.model.MessageBrokerPublicMessage;
 import de.hsrm.mi.swtpro.backend.model.SwapOffer;
@@ -96,7 +96,7 @@ public class MessageSender {
      * @param module
      */
     public void sendNewsMessage(TimetableModule module) {
-        final MessageBrokerMessage message = new MessageBrokerMessage(module.getCourseTitle());
+        final MessageBrokerNewsMessage message = new MessageBrokerNewsMessage(module.getCourseTitle());
         jmsTemplate.send(newsTopic, session -> messageConverter.toMessage(message, session));
     }
 }
