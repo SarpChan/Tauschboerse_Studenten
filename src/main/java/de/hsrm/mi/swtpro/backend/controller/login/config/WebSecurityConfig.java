@@ -41,14 +41,14 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     /**
      * configure AuthenticationManager so that it knows from where to load user for
      * matching credentials use PasswordEncoder
-     * 
+     *
      * @param authenticationManagerBuilder
      * @throws Exception
      */
     @Autowired
     public void configureAuthentication(AuthenticationManagerBuilder authenticationManagerBuilder) throws Exception {
         authenticationManagerBuilder.authenticationProvider(jwtAuthenticationProvider);
-        
+
     }
 
     @Bean
@@ -59,7 +59,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity httpSecurity) throws Exception {
-        
+
             httpSecurity.csrf().disable()
                 .authorizeRequests().antMatchers("/authentication/**", "/h2-console/**", "/actuator/**").permitAll()
                 .antMatchers().hasAuthority("USER")		
@@ -75,6 +75,6 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         httpSecurity.headers().cacheControl();
         httpSecurity.headers().frameOptions().disable();
 
-        
+
     }
 }
