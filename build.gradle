@@ -31,6 +31,14 @@ dependencies {
     compile group: 'org.springframework.boot', name: 'spring-boot-starter-actuator', version: '2.2.2.RELEASE'
     compile group: 'org.python', name: 'jython-standalone', version: '2.7.0'
     implementation 'org.springframework.boot:spring-boot-starter-web'
+
+    implementation 'org.springframework.boot:spring-boot-starter-activemq'
+    // ActiveMQ-Implementierung
+	implementation 'org.apache.activemq:activemq-broker'
+	implementation 'org.apache.activemq:activemq-kahadb-store'
+	// Web-Konsole zur Überwachung des eingebetteten ActiveMQ-Brokers
+	implementation 'io.hawt:hawtio-springboot:2.8.0'
+
 	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
     implementation 'org.springframework.boot:spring-boot-starter-security'
     implementation 'io.jsonwebtoken:jjwt:0.2' 

@@ -48,7 +48,7 @@ public class StudentCrudController {
     /**
      * Find a Student object from the Model
      *
-     * @param enrolmentNumber recieves key from student
+     * @param EnrollmentNumber recieves key from student
      * @return Student object
      * @throws StudentNotFoundException
      */
@@ -65,7 +65,7 @@ public class StudentCrudController {
     /**
      * Remove a Student object from the Model
      *
-     * @param enrolmentNumber recieves a Student id via DELETE request
+     * @param EnrollmentNumber recieves a Student id via DELETE request
      * @return void
      * @throws StudentNotFoundException
      */
