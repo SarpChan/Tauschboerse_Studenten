@@ -14,6 +14,7 @@ import de.hsrm.mi.swtpro.backend.model.SwapOffer;
 import de.hsrm.mi.swtpro.backend.model.requestModel.SwapOfferRequest;
 import de.hsrm.mi.swtpro.backend.service.SwapOfferService;
 import de.hsrm.mi.swtpro.backend.service.helper.ServiceGetter;
+import de.hsrm.mi.swtpro.backend.service.messagebroker.MessageSender;
 import de.hsrm.mi.swtpro.backend.service.repository.GroupRepository;
 import de.hsrm.mi.swtpro.backend.service.repository.StudentRepository;
 import de.hsrm.mi.swtpro.backend.service.repository.SwapOfferRepository;
@@ -61,6 +62,8 @@ public class SwapOfferInterface {
     ServiceGetter serviceGetter;
     @Autowired
     SwapOfferService swapOfferService;
+    @Autowired
+    MessageSender messageSender;
 
     List<SwapOffer> swapOfferList = new ArrayList<SwapOffer>();
 
@@ -101,7 +104,7 @@ public class SwapOfferInterface {
         logger.warn("WIPE OLD OFFERS WITH FROMGROUP ID: " + offer.getFromGroup().getId() + " STUDENT: " + offer.getStudent().getMail());
         swapOfferRepository.findByStudent(offer.getStudent()).stream()
                 .filter(e -> e.getFromGroup() == offer.getFromGroup())
-                .forEach(e -> swapOfferRepository.delete(e));
+                .forEach(e -> {swapOfferRepository.delete(e); messageSender.sendSwapOfferMessage(e, "delete");});
     }
 
     /**
@@ -148,6 +151,7 @@ public class SwapOfferInterface {
                         logger.warn("Insert new Swapoffer ID: " + offer.getId());
                         swapOfferList.add(offer);
                         swapOfferRepository.save(offer);
+                        messageSender.sendSwapOfferMessage(offer, "add");
                     }
                 }
             } else {
