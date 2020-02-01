@@ -18,6 +18,10 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.Set;
 
+/**
+ * Service for executing major database operations, while maintaining ACID principles.
+ * Partially seperated from the associated REST endpoint.
+ */
 @Service
 public class SwapOfferService {
     Logger logger = LoggerFactory.getLogger(SwapOfferService.class);
@@ -30,6 +34,13 @@ public class SwapOfferService {
     @Autowired
     UserRepository userRepository;
 
+    /**
+     * Method for checking and executing swapoffer if available.
+     * Filtered by offers starting group and sorted by timestamp. Older offers should be preferred.
+     *
+     * @param offer
+     * @return boolean because the internal process of matching offers should be hidden from the outside
+     */
     public boolean isMatched(SwapOffer offer) {
         List<SwapOffer> swapofferList = swapOfferRepository.findByFromGroup(groupRepository.findById(offer.getToGroup().getId()).get());
         Collections.sort(swapofferList, new Comparator<SwapOffer>() {
@@ -45,9 +56,16 @@ public class SwapOfferService {
             }
         }
         return false;
-
     }
 
+    /**
+     * Core logic of swapping offers between students. Seperated from the REST endpoint and with @Transactional it will maintain ACID.
+     * Retrieving both students and their groups, remove the old group and insert a new one.
+     * After this procedure both students will be saved back to the repository.
+     *
+     * @param request SwapOffer from the requesting student.
+     * @param found   SwapOffer found inside the database.
+     */
     @Transactional
     public void swap(SwapOffer request, SwapOffer found) {
         Student A = request.getStudent();
@@ -66,44 +84,12 @@ public class SwapOfferService {
 
         studentRepository.save(A);
         studentRepository.save(B);
-        logger.warn("REMOVE" + found.getId());
+        logger.warn("REMOVE: " + found.getId());
 
         if (swapOfferRepository.findById(found.getId()).isPresent())
             swapOfferRepository.delete(found);
         if (swapOfferRepository.findById(request.getId()).isPresent())
             swapOfferRepository.delete(request);
-    }
-
-    public boolean debugMe(SwapOffer requestOffer) {
-        List<SwapOffer> swapofferList = swapOfferRepository.findAll();//findByFromGroup(groupRepository.findById(requestOffer.getToGroup().getId()).get());
-        Collections.sort(swapofferList, new Comparator<SwapOffer>() {
-            @Override
-            public int compare(SwapOffer a, SwapOffer b) {
-                return a.getTimestamp().compareTo(b.getTimestamp());
-            }
-        });
-        SwapOffer foundOffer = null;
-        if (swapofferList
-                .stream()
-                .filter(e -> e.getFromGroup().equals(requestOffer.getToGroup()))
-                .filter(e -> e.getToGroup().equals(requestOffer.getFromGroup()))
-                .findFirst().isPresent()) {
-
-            foundOffer = swapofferList
-                    .stream()
-                    .filter(e -> e.getFromGroup().equals(requestOffer.getToGroup()))
-                    .filter(e -> e.getToGroup().equals(requestOffer.getFromGroup()))
-                    .findFirst().get();
-            //  logger.warn("FOUND SWAP: " + requestOffer.getId() + " <> " + foundOffer.getId());
-
-
-            swap(requestOffer, foundOffer);
-            return true;
-        }
-
-
-        return false;
-
     }
 }
 
