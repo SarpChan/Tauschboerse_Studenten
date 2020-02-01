@@ -204,6 +204,11 @@ public class SwapOfferInterface {
         }
     }
 
+    /**
+     * Checks if a offer already exists in repository
+     * @param offer to be checked
+     * @return true if swap offer already exists
+     */
     boolean swapOfferExists(SwapOffer offer) {
         return swapOfferRepository.findByStudent(offer.getStudent())
                 .stream()
@@ -220,13 +225,4 @@ public class SwapOfferInterface {
         }
     }
 
-    @GetMapping(path = "/swapoffer/all", produces = MediaType.APPLICATION_JSON_VALUE)
-    public List<SwapOffer> selectAllSwapOffers() {
-        return swapOfferRepository.findAll();
-    }
-
-    @GetMapping(path = "/swapoffer/{enrollmentnumber}", produces = MediaType.APPLICATION_JSON_VALUE)
-    public List<SwapOffer> selectByIDSwapOffers(@PathVariable int enrollmentnumber) {
-        return swapOfferRepository.findByStudent(studentRepository.findByEnrollmentNumber(enrollmentnumber).get());
-    }
 }

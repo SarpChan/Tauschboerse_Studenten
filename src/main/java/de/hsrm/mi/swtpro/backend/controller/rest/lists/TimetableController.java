@@ -27,6 +27,9 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 import java.util.Optional;
 
+/**
+ * Controller to handle most timetable endpoints
+ */
 @RestController
 @RequestMapping("/rest/lists")
 public class TimetableController {

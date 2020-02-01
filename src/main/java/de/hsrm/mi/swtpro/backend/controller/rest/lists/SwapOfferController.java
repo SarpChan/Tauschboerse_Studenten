@@ -15,6 +15,9 @@ import org.springframework.web.bind.annotation.RestController;
 import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
+/**
+ * Controller containing endpoint for available swap offers for a specific user
+ */
 @RestController
 @RequestMapping("/rest/lists")
 public class SwapOfferController {
@@ -30,6 +33,11 @@ public class SwapOfferController {
     @Autowired
     GroupRepository groupRepository;
 
+    /**
+     * GET request for available swap offers of a specific user
+     * @param request to extract username from
+     * @return all swap offers of a specific user
+     */
     @GetMapping(path = "/availableSwaps", produces = MediaType.APPLICATION_JSON_VALUE)
     public List<DisplayCourseComponent> getAvailableSwaps(HttpServletRequest request) {
         Student student = serviceGetter.getStudentFromUsername(tokenService.getUsernameFromRequest(request));
