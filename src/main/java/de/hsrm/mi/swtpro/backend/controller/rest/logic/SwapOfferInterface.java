@@ -158,12 +158,13 @@ public class SwapOfferInterface {
                         logger.warn("Insert new Swapoffer ID: " + offer.getId());
                         swapOfferList.add(offer);
                         swapOfferRepository.save(offer);
+                        
                         messageSender.sendSwapOfferMessage(offer, "add");
 
                         List<Script> matchingScripts = scriptManager.loadAllMatchingScriptsFor("def onNewSwapOffer():");
                         matchingScripts.forEach(s -> pythonEvaluator.runScriptForSwapOffer(s));
 
-                        return offer;
+                        return swapOfferRepository.getOne(offer.getId());
                     }
                 }
             } else {
