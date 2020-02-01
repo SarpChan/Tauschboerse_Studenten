@@ -1,5 +1,6 @@
 package de.hsrm.mi.swtpro.backend.controller.login;
 
+import de.hsrm.mi.swtpro.backend.model.AuthenticationResponse;
 import de.hsrm.mi.swtpro.backend.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -35,18 +36,19 @@ public class AuthenticationController {
      * @return
      */
     @PostMapping(path = "/login", consumes = "application/json", produces = MediaType.APPLICATION_JSON_VALUE)
-    public String createAuthenticationToken(@RequestBody AuthenticationRequest authenticationRequest) {
+    public AuthenticationResponse createAuthenticationToken(@RequestBody AuthenticationRequest authenticationRequest) {
         Optional<User> optionalUser = userRepository.findByLoginName(authenticationRequest.getUsername());
-        String userId = "";
+        long userId = 0L;
         String userRight = "";
         if (optionalUser.isPresent()) {
             User user = optionalUser.get();
-            userId = user.getId() + "";
+            userId = user.getId();
             if (user.getUserRights().toString().equals("ADMIN")) {
                 userRight = user.getUserRights().toString();
             }
         }
-        return authenticationService.generateJWTToken(authenticationRequest.getUsername(), authenticationRequest.getPassword()).getToken() + userRight + " " + userId;
+        String token = authenticationService.generateJWTToken(authenticationRequest.getUsername(), authenticationRequest.getPassword()).getToken();
+        return AuthenticationResponse.builder().userId(userId).userRights(userRight).token(token).build();
     }
 
     /**
