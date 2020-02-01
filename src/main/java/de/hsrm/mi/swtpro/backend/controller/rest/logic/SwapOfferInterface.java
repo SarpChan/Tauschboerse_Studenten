@@ -3,6 +3,7 @@ package de.hsrm.mi.swtpro.backend.controller.rest.logic;
 
 import de.hsrm.mi.swtpro.backend.controller.exceptions.GroupNotFoundException;
 import de.hsrm.mi.swtpro.backend.controller.exceptions.StudentNotFoundException;
+import de.hsrm.mi.swtpro.backend.controller.exceptions.SwapOfferAlreadyExistsException;
 import de.hsrm.mi.swtpro.backend.controller.exceptions.SwapOfferNotFoundException;
 import de.hsrm.mi.swtpro.backend.controller.login.security.TokenService;
 import de.hsrm.mi.swtpro.backend.controller.rest.crud.GroupCrudController;
@@ -26,6 +27,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
@@ -127,7 +129,7 @@ public class SwapOfferInterface {
      */
 
     @PostMapping(path = "/swapoffer/insert", consumes = "application/json", produces = MediaType.APPLICATION_JSON_VALUE)
-    public boolean checkAndInsertSwapOffer(HttpServletRequest request, @RequestBody SwapOfferRequest swapOfferRequest) {
+    public SwapOffer checkAndInsertSwapOffer(HttpServletRequest request, @RequestBody SwapOfferRequest swapOfferRequest) {
         String username = tokenService.getUsernameFromRequest(request);
         Student student = serviceGetter.getStudentFromUsername(username);
         for (long swapOfferToGroupID : swapOfferRequest.getToGroupsID()) {
@@ -143,15 +145,15 @@ public class SwapOfferInterface {
                     if (e.getFromGroup() == offer.getFromGroup() && e.getToGroup() == offer.getToGroup()) {
                         swapOfferExists.set(true);
                     }
-
                 });
                 if (swapOfferService.isMatched(offer)) {
                     logger.warn("MATCH FOUND");
                     wipeInvalidatedSwapOffers(offer);
-                    return true;
+                    return null;
                 } else {
                     if (swapOfferExists.get()) {
                         logger.warn("Offer already Exists");
+                        throw new SwapOfferAlreadyExistsException("Swap Offer already exists");
                     } else {
                         logger.warn("Insert new Swapoffer ID: " + offer.getId());
                         swapOfferList.add(offer);
@@ -160,13 +162,15 @@ public class SwapOfferInterface {
 
                         List<Script> matchingScripts = scriptManager.loadAllMatchingScriptsFor("def onNewSwapOffer():");
                         matchingScripts.forEach(s -> pythonEvaluator.runScriptForSwapOffer(s));
+
+                        return offer;
                     }
                 }
             } else {
                 logger.warn("You cant swap inside one group :(");
             }
         }
-        return false;
+        return null;
     }
 
     Student getStudent(long id) throws StudentNotFoundException {
