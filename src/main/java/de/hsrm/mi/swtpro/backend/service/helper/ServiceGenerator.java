@@ -24,7 +24,7 @@ public class ServiceGenerator {
                 }
             }
             for (Course course : module.getCourses()) {
-                
+
                 for (CourseComponent courseComponent : course.getCourseComponents()) {
                     for (Group group : courseComponent.getGroups()) {
                         TimetableModule timetableModule = TimetableModule.builder()
@@ -34,11 +34,11 @@ public class ServiceGenerator {
                                 .startTime(group.getStartTime())
                                 .endTime(group.getEndTime())
                                 .lecturerName(group.getLecturer().getUser().getLastName())
-                                .lecturerNameAbbreviation(group.getLecturer().getUser().getLastName().substring(0, 3))
+                                .lecturerNameAbbreviation(group.getLecturer().getUser().getLastName().substring(0, Math.min(3,course.getTitle().length())))
                                 .courseComponentID(courseComponent.getId())
                                 .courseType(courseComponent.getType())
                                 .courseTitle(course.getTitle())
-                                .courseTitleAbbreviation(course.getTitle().substring(0, 3))
+                                .courseTitleAbbreviation(course.getTitle().substring(0, Math.min(3,course.getTitle().length())))
                                 .roomNumber(group.getRoom().getNumber())
                                 .term(term)
                                 .build();
@@ -73,11 +73,11 @@ public class ServiceGenerator {
                             .startTime(group.getStartTime())
                             .endTime(group.getEndTime())
                             .lecturerName(group.getLecturer().getUser().getLastName())
-                            .lecturerNameAbbreviation(group.getLecturer().getUser().getLastName().substring(0, 3))
+                            .lecturerNameAbbreviation(group.getLecturer().getUser().getLastName().substring(0, Math.min(3,group.getLecturer().getUser().getLastName().length())))
                             .courseComponentID(courseComponent.getId())
                             .courseType(courseComponent.getType())
                             .courseTitle(course.getTitle())
-                            .courseTitleAbbreviation(course.getTitle().substring(0, 12))
+                            .courseTitleAbbreviation(course.getTitle().substring(0, Math.min(3,course.getTitle().length())))
                             .roomNumber(group.getRoom().getNumber())
                             .term(term)
                             .build();
