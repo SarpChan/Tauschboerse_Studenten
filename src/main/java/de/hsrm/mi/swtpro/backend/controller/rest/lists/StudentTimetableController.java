@@ -55,6 +55,6 @@ public class StudentTimetableController {
                 allModules.add(module);
             }
         }
-        return serviceGenerator.timetableModuleFromModules(allModules);
+        return serviceGenerator.timetableModuleFromModulesForStudent(allModules,student);
     }
 }
