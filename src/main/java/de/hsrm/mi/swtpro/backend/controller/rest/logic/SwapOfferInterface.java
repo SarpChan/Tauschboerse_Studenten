@@ -9,12 +9,15 @@ import de.hsrm.mi.swtpro.backend.controller.rest.crud.GroupCrudController;
 import de.hsrm.mi.swtpro.backend.controller.rest.crud.StudentCrudController;
 import de.hsrm.mi.swtpro.backend.controller.rest.crud.UserCrudController;
 import de.hsrm.mi.swtpro.backend.model.Group;
+import de.hsrm.mi.swtpro.backend.model.Script;
 import de.hsrm.mi.swtpro.backend.model.Student;
 import de.hsrm.mi.swtpro.backend.model.SwapOffer;
 import de.hsrm.mi.swtpro.backend.model.requestModel.SwapOfferRequest;
 import de.hsrm.mi.swtpro.backend.service.SwapOfferService;
 import de.hsrm.mi.swtpro.backend.service.helper.ServiceGetter;
 import de.hsrm.mi.swtpro.backend.service.messagebroker.MessageSender;
+import de.hsrm.mi.swtpro.backend.service.pyScriptService.PythonEvaluator;
+import de.hsrm.mi.swtpro.backend.service.pyScriptService.ScriptManager;
 import de.hsrm.mi.swtpro.backend.service.repository.GroupRepository;
 import de.hsrm.mi.swtpro.backend.service.repository.StudentRepository;
 import de.hsrm.mi.swtpro.backend.service.repository.SwapOfferRepository;
@@ -45,17 +48,9 @@ public class SwapOfferInterface {
     @Autowired
     StudentRepository studentRepository;
     @Autowired
-    UserRepository userRepository;
-    @Autowired
     GroupRepository groupRepository;
     @Autowired
     SwapOfferRepository swapOfferRepository;
-    @Autowired
-    UserCrudController userCrudController;
-    @Autowired
-    StudentCrudController studentCrudController;
-    @Autowired
-    GroupCrudController groupCrudController;
     @Autowired
     TokenService tokenService;
     @Autowired
@@ -64,6 +59,10 @@ public class SwapOfferInterface {
     SwapOfferService swapOfferService;
     @Autowired
     MessageSender messageSender;
+    @Autowired
+    ScriptManager scriptManager;
+    @Autowired
+    PythonEvaluator pythonEvaluator;
 
     List<SwapOffer> swapOfferList = new ArrayList<SwapOffer>();
 
@@ -107,7 +106,10 @@ public class SwapOfferInterface {
         logger.warn("WIPE OLD OFFERS WITH FROMGROUP ID: " + offer.getFromGroup().getId() + " STUDENT: " + offer.getStudent().getMail());
         swapOfferRepository.findByStudent(offer.getStudent()).stream()
                 .filter(e -> e.getFromGroup() == offer.getFromGroup())
-                .forEach(e -> {swapOfferRepository.delete(e); messageSender.sendSwapOfferMessage(e, "delete");});
+                .forEach(e -> {
+                    swapOfferRepository.delete(e);
+                    messageSender.sendSwapOfferMessage(e, "delete");
+                });
     }
 
     /**
@@ -155,6 +157,9 @@ public class SwapOfferInterface {
                         swapOfferList.add(offer);
                         swapOfferRepository.save(offer);
                         messageSender.sendSwapOfferMessage(offer, "add");
+
+                        List<Script> matchingScripts = scriptManager.loadAllMatchingScriptsFor("def onNewSwapOffer():");
+                        matchingScripts.forEach(s -> pythonEvaluator.runScriptForSwapOffer(s));
                     }
                 }
             } else {

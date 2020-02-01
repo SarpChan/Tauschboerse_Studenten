@@ -18,13 +18,13 @@ public class ScriptManager {
 
     public List<Script> loadAllMatchingScriptsFor(String identifier) {
         List<Script> scripts = repository.findAll();
-        filterScriptsFor(scripts, identifier);
+        scripts = filterScriptsFor(scripts, identifier);
         Collections.shuffle(scripts);
         return scripts;
     }
 
-    private void filterScriptsFor(List<Script> scripts, String identifier) {
-        scripts = scripts.stream().filter(script ->
+    private List<Script> filterScriptsFor(List<Script> scripts, String identifier) {
+        return scripts.stream().filter(script ->
                 new String(script.getData()).contains(identifier)
         ).collect(Collectors.toList());
     }
