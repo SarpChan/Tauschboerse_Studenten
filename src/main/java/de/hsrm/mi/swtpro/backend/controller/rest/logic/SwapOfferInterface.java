@@ -13,6 +13,7 @@ import de.hsrm.mi.swtpro.backend.model.Group;
 import de.hsrm.mi.swtpro.backend.model.Script;
 import de.hsrm.mi.swtpro.backend.model.Student;
 import de.hsrm.mi.swtpro.backend.model.SwapOffer;
+import de.hsrm.mi.swtpro.backend.model.SwapOfferFront;
 import de.hsrm.mi.swtpro.backend.model.requestModel.SwapOfferRequest;
 import de.hsrm.mi.swtpro.backend.service.SwapOfferService;
 import de.hsrm.mi.swtpro.backend.service.helper.ServiceGetter;
@@ -123,7 +124,7 @@ public class SwapOfferInterface {
      */
 
     @PostMapping(path = "/swapoffer/insert", consumes = "application/json", produces = MediaType.APPLICATION_JSON_VALUE)
-    public SwapOffer checkAndInsertSwapOffer(HttpServletRequest request,
+    public SwapOfferFront checkAndInsertSwapOffer(HttpServletRequest request,
             @RequestBody SwapOfferRequest swapOfferRequest) {
         String username = tokenService.getUsernameFromRequest(request);
         Student student = serviceGetter.getStudentFromUsername(username);
@@ -157,7 +158,19 @@ public class SwapOfferInterface {
                         List<Script> matchingScripts = scriptManager.loadAllMatchingScriptsFor("def onNewSwapOffer():");
                         matchingScripts.forEach(s -> pythonEvaluator.runScriptForSwapOffer(s));
 
-                        return savedOffer;
+                        return SwapOfferFront.builder()
+                        .Id(savedOffer.getId())
+                        .fromGroup(savedOffer.getFromGroup().getGroupChar())
+                        .toGroup(savedOffer.getToGroup().getGroupChar())
+                        .courseName(savedOffer.getToGroup().getCourseComponent().getCourse().getTitle())
+                        .courseType(savedOffer.getToGroup().getCourseComponent().getType().toString())
+                        .toStartTime(savedOffer.getToGroup().getStartTime())
+                        .toEndTime(savedOffer.getToGroup().getEndTime())
+                        .fromStartTime(savedOffer.getFromGroup().getStartTime())
+                        .fromEndTime(savedOffer.getFromGroup().getEndTime())
+                        .fromDay(savedOffer.getFromGroup().getDayOfWeek())
+                        .toDay(savedOffer.getToGroup().getDayOfWeek())
+                        .build();
                     }
                 }
             } else {
