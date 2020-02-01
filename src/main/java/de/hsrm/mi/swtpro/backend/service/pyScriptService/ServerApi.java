@@ -7,6 +7,7 @@ import de.hsrm.mi.swtpro.backend.model.filter.Comparator;
 import de.hsrm.mi.swtpro.backend.model.filter.ComparatorType;
 import de.hsrm.mi.swtpro.backend.model.filter.Filter;
 import de.hsrm.mi.swtpro.backend.service.filterfactories.SwapOfferFilterFactory;
+import de.hsrm.mi.swtpro.backend.service.messagebroker.MessageSender;
 import de.hsrm.mi.swtpro.backend.service.repository.GroupRepository;
 import de.hsrm.mi.swtpro.backend.service.repository.StudentRepository;
 import de.hsrm.mi.swtpro.backend.service.repository.SwapOfferRepository;
@@ -14,7 +15,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 @Component
@@ -26,6 +30,8 @@ public class ServerApi {
     StudentRepository studentRepository;
     @Autowired
     GroupRepository groupRepository;
+    @Autowired
+    MessageSender messageSender;
 
     public List<SwapOffer> getAllSwapOffers() {
         return this.swapOfferRepository.findAll();
@@ -42,7 +48,9 @@ public class ServerApi {
                         ).build()
                 }).build();
         return filterFactory.filter(this.getAllSwapOffers());
-    }    public List<SwapOffer> getAllSwapOffersWithFromGroupId(long fromGroupId) {
+    }
+
+    public List<SwapOffer> getAllSwapOffersWithFromGroupId(long fromGroupId) {
         SwapOfferFilterFactory filterFactory = SwapOfferFilterFactory.builder()
                 .filters(new Filter[]{Filter.builder()
                         .attribute("fromGroupId")
@@ -84,8 +92,15 @@ public class ServerApi {
             toGroup.addStudent(student);
             groupRepository.save(fromGroup);
             groupRepository.save(toGroup);
+            messageSender.sendPersonalSwapOfferMessage(offer, student.getId());
+
+            swapOfferRepository.findByStudent(offer.getStudent()).stream()
+                    .filter(sOffer -> sOffer.getFromGroup() == offer.getFromGroup())
+                    .forEach(sOffer -> {
+                        swapOfferRepository.delete(sOffer);
+                        messageSender.sendSwapOfferMessage(sOffer, "delete");
+                    });
         });
-        offers.forEach(swapOffer -> swapOfferRepository.delete(swapOffer));
         return true;
     }
 

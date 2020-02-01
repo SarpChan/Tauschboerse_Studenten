@@ -67,8 +67,9 @@ public class SwapOfferInterface {
     /**
      * Method for accepting existing swapoffers filtered by id.
      * Depends on SwapOfferService swap method.
+     *
      * @param request
-     * @param id from SwapOffer's autogernerated DB id
+     * @param id      from SwapOffer's autogernerated DB id
      * @return boolean
      */
     @GetMapping(path = "/swapoffer/accept/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
@@ -77,7 +78,8 @@ public class SwapOfferInterface {
         SwapOffer matchingOffer;
         String loginname = tokenService.getUsernameFromRequest(request);
 
-        if (swapOfferRepository.findById(id).isPresent()) offer = swapOfferRepository.findById(id).get();
+        if (swapOfferRepository.findById(id).isPresent())
+            offer = swapOfferRepository.findById(id).get();
 
         if (offer != null) {
             matchingOffer = SwapOffer.builder().timestamp(Timestamp.from(Instant.now()))
@@ -94,6 +96,7 @@ public class SwapOfferInterface {
     /**
      * Wiping all remaining swapoffers selected by loginname and fromGroupID. Keep's the database clean and prevents
      * swaps with invalidated offers.
+     *
      * @param offer
      */
     @Transactional
@@ -108,11 +111,11 @@ public class SwapOfferInterface {
      * Iterates over list of groups to change, checks if recent iterations already created a match if not then create a SwapOffer for each Element
      * e.g. A->B , A->C , A->D ,....
      * Handles cases like :
-     *  - already existing swapoffers
-     *  - multiple target groups
-     *  - matching correlating groups
-     *  - invalidating offers identical to start group
-     *  - wiping remaining orphants
+     * - already existing swapoffers
+     * - multiple target groups
+     * - matching correlating groups
+     * - invalidating offers identical to start group
+     * - wiping remaining orphants
      *
      * @param swapOfferRequest
      * @return boolean
@@ -175,6 +178,7 @@ public class SwapOfferInterface {
 
     /**
      * Finding swapoffer if only a student and target group is provided
+     *
      * @param student
      * @param toGroup
      * @return the found offer or throw a not found exception
