@@ -5,9 +5,7 @@ import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import lombok.*;
 
 import javax.persistence.*;
-import java.util.HashSet;
 import java.util.Set;
-import javax.validation.constraints.*;
 import javax.validation.constraints.*;
 
 /**
@@ -53,7 +51,7 @@ public class Module {
 
     /**
      * Adds course to the collection of courses fitting this module
-     * @param course
+     * @param course true if set didn't already contain the course
      *
      */
     public void addCourse(Course course) {
@@ -62,7 +60,7 @@ public class Module {
 
     /**
      * Removes course from the collection of courses fitting this module
-     * @param course
+     * @param course true if the set contained the course
      */
     public void removeCourse(Course course) {
         this.courses.remove(course);
@@ -77,7 +75,7 @@ public class Module {
 
     /**
      * Checks if a given course fits this module
-     * @param course
+     * @param course the course to search in the set
      * @return true if course fits this module
      */
     public boolean containsCourse(Course course) {

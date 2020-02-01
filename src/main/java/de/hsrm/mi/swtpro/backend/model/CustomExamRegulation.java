@@ -6,6 +6,12 @@ import lombok.Setter;
 
 import java.util.Date;
 
+/**
+ * Each study program has one or more exam regulations
+ * The exam regulation defines the curriculum, cp for each modules
+ * and additional rules on examination
+ * The CustomExamRegulation is used to send information to Clients
+ */
 @Builder
 public class CustomExamRegulation {
 
@@ -21,6 +27,11 @@ public class CustomExamRegulation {
     @Setter
     private int maxTerms;
 
+    /**
+     * Creates a CustomExamRegulation from a ExamRegulation
+     * @param examRegulation the ExamRegulation to create a CustomExamRegulation from
+     * @return CustomExamRegulation
+     */
     static CustomExamRegulation fromOriginal(ExamRegulation examRegulation) {
         return CustomExamRegulation.builder()
                 .id(examRegulation.getId())

@@ -14,13 +14,18 @@ import org.springframework.util.ErrorHandler;
 
 /**
  * Adds connector (Broker) for tcp
- * Configuration for Queues und durable!! Topics
+ * Configuration for Queues and (durable) Topics
  */
 @Configuration
 @EnableJms
 public class MessageSenderConfig {
     Logger logger = LoggerFactory.getLogger(MessageSenderConfig.class);
 
+    /**
+     * Adds connector for tcp
+     * @return broker
+     * @throws Exception thrown if the connection can't be added
+     */
     @Bean
     public BrokerService broker() throws Exception {
         logger.info("BrokerService broker() gezogen");
@@ -32,6 +37,10 @@ public class MessageSenderConfig {
     @Autowired
     private ConnectionFactory connectionFactory;
 
+    /**
+     * Defines a factory for a durable topic
+     * @return factory
+     */
     @Bean(name="myDurableTopicFactory")
     public DefaultJmsListenerContainerFactory makeDurableTopicFactory() {
         logger.info("DefaultJmsListenerContainerFactory myTopicFactory() gezogen");
@@ -45,6 +54,10 @@ public class MessageSenderConfig {
         return factory;
     }
 
+    /**
+     * Defines a factory for a topic
+     * @return factory
+     */
     @Bean(name="myTopicFactory")
     public DefaultJmsListenerContainerFactory makeTopicFactory() {
         logger.info("DefaultJmsListenerContainerFactory myTopicFactory() gezogen");
@@ -57,6 +70,10 @@ public class MessageSenderConfig {
         return factory;
     }
 
+    /**
+     * Defines a factory for a queue
+     * @return factory
+     */
     @Bean(name="myQueueFactory")
     public DefaultJmsListenerContainerFactory makeQueueFactory() {
         logger.info("DefaultJmsListenerContainerFactory myQueueFactory() gezogen");
@@ -69,11 +86,14 @@ public class MessageSenderConfig {
     }
 
 /**
- * ErrorHandler
+ * ErrorHandler for message broker
  */
 public class MyErrorHandler implements ErrorHandler {
     private Logger logger = LoggerFactory.getLogger(MyErrorHandler.class);
 
+    /**
+     * Writes a logger output in case of an error
+     */
     @Override
     public void handleError(Throwable t) {
         logger.error("\n---\nFEHLER - {}\n---\n", t.getMessage());

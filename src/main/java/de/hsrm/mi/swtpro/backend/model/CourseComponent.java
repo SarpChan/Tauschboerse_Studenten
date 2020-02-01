@@ -60,7 +60,7 @@ public class CourseComponent {
     /**
      * Adds group to the collection of groups, which belong to this lesson
      *
-     * @param group
+     * @param group true if the set didn't already contain group
      */
     public void addGroup(Group group) {
         this.groups.add(group);
@@ -69,7 +69,7 @@ public class CourseComponent {
     /**
      * Removes group from the collection of groups, which belong to this lesson
      *
-     * @param group
+     * @param group true if the set contained group
      */
     public void removeGroup(Group group) {
         this.groups.remove(group);

@@ -6,6 +6,10 @@ import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import java.util.List;
 
+/**
+ * Object that will be serialized and send to a client
+ * and contains information about a module and its course components
+ */
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder

@@ -50,7 +50,7 @@ public class StudyProgram {
 
     /**
      * Adds exam regulation to the collection of exam regulations applicable for this study program 
-     * @param examRegulation
+     * @param examRegulation the examRegulation to add
      */
     public void addExamRegulation(ExamRegulation examRegulation) {
         this.examRegulations.add(examRegulation);
@@ -58,7 +58,7 @@ public class StudyProgram {
 
     /**
      * Removes exam regulation from the collection of exam regulations applicable for this study program
-     * @param examRegulation
+     * @param examRegulation the examRegulation to remove
      */
     public void removeExamRegulation(ExamRegulation examRegulation) {
         this.examRegulations.remove(examRegulation);
@@ -73,7 +73,7 @@ public class StudyProgram {
 
     /**
      * Checks if a given exam regulation applies to given study program
-     * @param examRegulation
+     * @param examRegulation the examRegulation to search 
      * @return true if exam regulation applies to given study program
      */
     public boolean containsExamRegulation(ExamRegulation examRegulation) {

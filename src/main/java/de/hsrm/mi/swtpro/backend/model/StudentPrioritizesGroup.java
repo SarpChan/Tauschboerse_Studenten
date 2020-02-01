@@ -8,8 +8,7 @@ import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 
 /**
-    Relationship between a student and a group
-    The priority indicates
+* Relationship between a student and a group
 */
 @Entity
 @NoArgsConstructor

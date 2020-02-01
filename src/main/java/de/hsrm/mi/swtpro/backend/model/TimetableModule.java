@@ -8,6 +8,10 @@ import lombok.Setter;
 import java.time.DayOfWeek;
 import java.time.LocalTime;
 
+/**
+ * Used to send information about a timetableModule to a client
+ * Contains information about the time, room and lecturer
+ */
 @AllArgsConstructor
 @Builder
 public class TimetableModule {

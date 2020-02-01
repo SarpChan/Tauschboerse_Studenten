@@ -8,6 +8,10 @@ import javax.persistence.*;
 import javax.validation.constraints.*;
 import java.util.Set;
 
+/**
+ * A Curriculum has a maximum number of terms, belongs to one examRegulation 
+ * and has a list of modules that are part of this Curriculum
+ */
 @Entity
 @NoArgsConstructor
 @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")

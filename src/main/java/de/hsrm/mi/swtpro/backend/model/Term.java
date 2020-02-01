@@ -62,7 +62,7 @@ public class Term {
 
     /**
      * Adds course to the collection of courses offered this term
-     * @param course
+     * @param course the course to add
      */
     public void addCourse(Course course) {
         this.courses.add(course);
@@ -70,7 +70,7 @@ public class Term {
 
     /**
      * Removes course from the collection of courses offered this term
-     * @param course
+     * @param course the course to remove
      */
     public void removeCourse(Course course) {
         this.courses.remove(course);
@@ -85,7 +85,7 @@ public class Term {
 
     /**
      * Checks if a given course is being offered this term
-     * @param course
+     * @param course the course to search
      * @return true if course is being offered this term
      */
     public boolean containsCourse(Course course) {

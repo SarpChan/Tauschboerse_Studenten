@@ -7,6 +7,9 @@ import lombok.*;
 import javax.persistence.*;
 import javax.validation.constraints.*;
 
+/**
+ * Defines which Student attends a course in which term
+ */
 @Entity
 @NoArgsConstructor
 @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
