@@ -107,7 +107,7 @@ public class Group {
 
     /**
      * Adds student to the collection of students attending this group
-     * @param student
+     * @param student true if the set didn't already contain the student
      */
     public void addStudent(Student student) {
         this.students.add(student);
@@ -115,7 +115,7 @@ public class Group {
 
     /**
      * Removes student from the collection of students attending this group
-     * @param student
+     * @param student true if the set contained the student
      */
     public void removeStudent(Student student) {
         this.students.remove(student);
@@ -130,7 +130,7 @@ public class Group {
 
     /**
      * Checks if a given student attends this group
-     * @param student
+     * @param student the student to search in the set
      * @return true if student attends this group
      */
     public boolean containsStudent(Student student) {

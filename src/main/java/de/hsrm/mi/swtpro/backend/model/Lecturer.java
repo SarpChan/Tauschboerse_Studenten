@@ -8,9 +8,11 @@ import lombok.experimental.SuperBuilder;
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.OneToMany;
-import java.util.HashSet;
 import java.util.Set;
 
+/**
+ * Lecturer is a Role with special privileges
+ */
 @Entity
 @NoArgsConstructor
 @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")

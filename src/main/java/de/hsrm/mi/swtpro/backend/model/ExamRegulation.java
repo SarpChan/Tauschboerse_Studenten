@@ -10,7 +10,6 @@ import javax.validation.constraints.*;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import java.sql.Date;
-import java.util.HashSet;
 import java.util.Set;
 
 /**

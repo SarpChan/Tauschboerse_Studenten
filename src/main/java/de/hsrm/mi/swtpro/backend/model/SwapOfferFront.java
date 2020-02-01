@@ -15,7 +15,9 @@ import javax.validation.constraints.NotNull;
 import java.time.DayOfWeek;
 import java.time.LocalTime;
 
-
+/**
+ * Used to send information about a swapOffer to a client
+ */
 @Entity
 @NoArgsConstructor
 @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")

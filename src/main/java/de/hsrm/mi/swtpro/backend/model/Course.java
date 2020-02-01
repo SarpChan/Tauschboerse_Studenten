@@ -5,7 +5,6 @@ import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import lombok.*;
 
 import javax.persistence.*;
-import java.util.HashSet;
 import java.util.Set;
 
 import javax.validation.constraints.*;
@@ -67,30 +66,30 @@ public class Course {
     private Set<StudentAttendsCourse> studentAttendsCourses;
 
     /**
-     * Adds course component to the collection of course components, which belong to this course
-     * @param courseComponent
+     * Adds a course component to the collection of course components, that belong to this course
+     * @param courseComponent true if the set didn't already contain the courseComponent
      */
     public void addCourseComponent(CourseComponent courseComponent) {
         this.courseComponents.add(courseComponent);
     }
 
     /**
-     * Removes course component from the collection of course components, which belong to this course
-     * @param courseComponent
+     * Removes a course component from the collection of course components, that belong to this course
+     * @param courseComponent true if the set contained the courseComponent
      */
     public void removeCourseComponent(CourseComponent courseComponent) {
         this.courseComponents.remove(courseComponent);
     }
 
     /**
-     * Empties collection of course components, which belong to this course
+     * Empties the collection of course components, that belong to this course
      */
     public void clearCourseComponents() {
         this.courseComponents.clear();
     }
 
     /**
-     * Checks if the collection of course components contains given component
+     * Checks if the collection of course components contains the given component
      * @param courseComponent true if collection contains given component
      */
     public boolean containsCourseComponent(CourseComponent courseComponent) {

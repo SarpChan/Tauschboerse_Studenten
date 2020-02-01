@@ -12,7 +12,7 @@ import java.util.Set;
 
 /**
  * A user has a first name and last name as well as a username and password
- * A user can be an admin
+ * A user has a role
  */
 @Entity
 @NoArgsConstructor

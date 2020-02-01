@@ -6,6 +6,9 @@ import javax.validation.constraints.NotNull;
 import java.util.Set;
 import lombok.*;
 
+/**
+ * Used to send information about a course to clients
+ */
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder

@@ -7,6 +7,9 @@ import lombok.*;
 import javax.persistence.*;
 import javax.validation.constraints.*;
 
+/**
+ * Defines whether a student passed a course
+ */
 @Entity
 @NoArgsConstructor
 @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")

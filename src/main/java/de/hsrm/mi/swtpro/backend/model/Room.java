@@ -7,7 +7,7 @@ import lombok.*;
 import javax.validation.constraints.*;
 
 import javax.persistence.*;
-import java.util.HashSet;
+
 import java.util.Set;
 
 /**
