@@ -170,9 +170,9 @@ public class DatabaseFiller {
 
                 // Curriculum
 
-                Curriculum curriculumMi = Curriculum.builder().examRegulation(po2017).maxTerms(1).build();
+                Curriculum curriculumMi = Curriculum.builder().examRegulation(po2017).maxTerms(3).build();
                 //entityManager.persist(curriculumMi);
-                Curriculum curriculumAi = Curriculum.builder().examRegulation(po2016).maxTerms(1).build();
+                Curriculum curriculumAi = Curriculum.builder().examRegulation(po2016).maxTerms(3).build();
                 //entityManager.persist(curriculumAi);
 
 
