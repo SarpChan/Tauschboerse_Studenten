@@ -11,6 +11,9 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
+/**
+ * Implementation of FilterFactory for courses
+ */
 @NoArgsConstructor
 @SuperBuilder
 public class CourseFilterFactory extends FilterFactory<Course> {
@@ -31,6 +34,12 @@ public class CourseFilterFactory extends FilterFactory<Course> {
         return filterableCourses;
     }
 
+    /**
+     * This list contains all courses for a given exam regulation
+     * @param courses the list of courses to be filtered
+     * @param forExamRegulationFilter exam regulation filter containing the id to be compared
+     * @return returns a list of the filtered courses
+     */
     private List<Course> filterForExamRegulation(List<Course> courses, Filter forExamRegulationFilter) {
         return courses.stream().filter(course -> course.getModules().stream().anyMatch(module -> {
             return module.getModulesInCurriculum().stream().anyMatch(moduleInCurriculum -> {

@@ -14,6 +14,9 @@ import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
+/**
+ * Service class to avoid multiple implementations.
+ */
 @Component
 public class ServiceGetter {
 

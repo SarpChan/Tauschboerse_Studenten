@@ -39,7 +39,9 @@ public class DatabaseFiller {
     @Autowired
     PythonEvaluator pythonEvaluator;
 
-
+    /**
+     * Method filling database
+     */
     @PostConstruct
     public void fillDatabase(){
         String[] args = appArgs.getSourceArgs();
@@ -893,16 +895,6 @@ public class DatabaseFiller {
 
                 universityRepository.saveAndFlush(uni);
             }
-        }
-    }
-
-    public void readJSON(File universityJSON){
-        try {
-            University university
-                    = new ObjectMapper().readerFor(University.class).readValue(universityJSON);
-            universityRepository.saveAndFlush(university);
-        } catch (IOException e) {
-            e.printStackTrace();
         }
     }
 }

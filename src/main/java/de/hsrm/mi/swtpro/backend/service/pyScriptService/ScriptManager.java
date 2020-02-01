@@ -10,12 +10,20 @@ import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
+/**
+ * Handles persisted python scripts
+ */
 @Service
 public class ScriptManager {
 
     @Autowired
     PythonScriptRepository repository;
 
+    /**
+     * Loads all matching scripts for an explicit method call identifier
+     * @param identifier python script needs to contain this identifier
+     * @return list of all scripts containing this identifier
+     */
     public List<Script> loadAllMatchingScriptsFor(String identifier) {
         List<Script> scripts = repository.findAll();
         scripts = filterScriptsFor(scripts, identifier);

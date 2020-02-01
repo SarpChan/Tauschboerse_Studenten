@@ -8,6 +8,10 @@ import javax.script.ScriptEngine;
 import javax.script.ScriptEngineManager;
 import javax.script.ScriptException;
 
+/**
+ * Python script evaluation class.
+ * Runs python scripts for backend
+ */
 @Service
 public class PythonEvaluator {
 
@@ -16,10 +20,20 @@ public class PythonEvaluator {
     @Autowired
     private ServerApi serverApi;
 
+    /**
+     * Constructor of python evaluator
+     * Initializes python script engine
+     */
     public PythonEvaluator() {
         engine = new ScriptEngineManager().getEngineByName("python");
     }
 
+    /**
+     * Runs python code of given script
+     * Method runs python code of given script and checks for explicit
+     * function calls
+     * @param script containing runnable script
+     */
     public void runScriptForSwapOffer(Script script) {
         String data = new String(script.getData());
         try {

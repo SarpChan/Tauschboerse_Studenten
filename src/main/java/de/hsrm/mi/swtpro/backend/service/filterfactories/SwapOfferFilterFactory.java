@@ -11,6 +11,9 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
+/**
+ * Implementation of FilterFactory for swap offers
+ */
 @NoArgsConstructor
 @SuperBuilder
 public class SwapOfferFilterFactory extends FilterFactory<SwapOffer> {

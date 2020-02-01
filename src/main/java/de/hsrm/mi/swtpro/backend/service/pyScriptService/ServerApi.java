@@ -21,6 +21,9 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
+/**
+ * ServerApi intended to be used in loadable python scripts
+ */
 @Component
 public class ServerApi {
 
@@ -33,10 +36,19 @@ public class ServerApi {
     @Autowired
     MessageSender messageSender;
 
+    /**
+     * Gets every persisted swap offer
+     * @return list of swap offers
+     */
     public List<SwapOffer> getAllSwapOffers() {
         return this.swapOfferRepository.findAll();
     }
 
+    /**
+     * Gets every swap offer with owner id equalling ownId parameter
+     * @param ownId matching id
+     * @return list of filtered swap offers
+     */
     public List<SwapOffer> getAllSwapOffersFromMe(long ownId) {
         SwapOfferFilterFactory filterFactory = SwapOfferFilterFactory.builder()
                 .filters(new Filter[]{Filter.builder()
@@ -50,6 +62,11 @@ public class ServerApi {
         return filterFactory.filter(this.getAllSwapOffers());
     }
 
+    /**
+     * Gets every swap offer based on fromGroupId matching
+     * @param fromGroupId matching id
+     * @return list of filtered swap offers
+     */
     public List<SwapOffer> getAllSwapOffersWithFromGroupId(long fromGroupId) {
         SwapOfferFilterFactory filterFactory = SwapOfferFilterFactory.builder()
                 .filters(new Filter[]{Filter.builder()
@@ -63,6 +80,11 @@ public class ServerApi {
         return filterFactory.filter(this.getAllSwapOffers());
     }
 
+    /**
+     * Gets every swap offer based on toGroupId matching
+     * @param toGroupId matching id
+     * @return list of filtered swap offers
+     */
     public List<SwapOffer> getAllSwapOffersWithToGroupId(long toGroupId) {
         SwapOfferFilterFactory filterFactory = SwapOfferFilterFactory.builder()
                 .filters(new Filter[]{Filter.builder()
@@ -76,6 +98,12 @@ public class ServerApi {
         return filterFactory.filter(this.getAllSwapOffers());
     }
 
+    /**
+     * Swaps 3 swap offers
+     * Updates list of students in the equivalent groups
+     * @param offerIds ids of matching swap offers
+     * @return true if swap was successful
+     */
     @Transactional
     public boolean tripleSwap(long[] offerIds) {
         assert offerIds.length == 3 : "size for offers is incorrect";
