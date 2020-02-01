@@ -60,7 +60,7 @@ jacoco {
     toolVersion = "0.8.5"
 }
 
-mainClassName = "de.hsrm.mi.swtpro.backend.DemoApplication"
+mainClassName = "de.hsrm.mi.swtpro.backend.StuPla_Backend"
 
 doxygen {
     source new File(projectDir, 'src/main/java')
