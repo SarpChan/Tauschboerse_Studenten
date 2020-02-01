@@ -1,4 +1,4 @@
-package de.hsrm.mi.swtpro.backend.service;
+package de.hsrm.mi.swtpro.backend.service.pyScriptService;
 
 import de.hsrm.mi.swtpro.backend.model.Group;
 import de.hsrm.mi.swtpro.backend.model.Student;

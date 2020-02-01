@@ -1,4 +1,4 @@
-package de.hsrm.mi.swtpro.backend.service;
+package de.hsrm.mi.swtpro.backend.service.pyScriptService;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -24,7 +24,7 @@ public class PythonEvaluator {
             if (script.contains("def onNewSwapOffer():")) {
                 engine.put("serverApi", serverApi);
                 engine.eval(script);
-                engine.eval("onNewSwapOffer()");
+                engine.eval("\nonNewSwapOffer()");
             }
         } catch (ScriptException e) {
             e.printStackTrace();

@@ -1,4 +1,4 @@
-package de.hsrm.mi.swtpro.backend.service;
+package de.hsrm.mi.swtpro.backend.service.pyScriptService;
 
 import de.hsrm.mi.swtpro.backend.model.Script;
 import de.hsrm.mi.swtpro.backend.service.repository.PythonScriptRepository;
