@@ -1,8 +1,6 @@
 package de.hsrm.mi.swtpro.backend.controller.login;
 
-
 import de.hsrm.mi.swtpro.backend.model.User;
-import de.hsrm.mi.swtpro.backend.service.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -11,6 +9,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.persistence.EntityNotFoundException;
 import java.util.Optional;
+import de.hsrm.mi.swtpro.backend.service.repository.UserRepository;
 
 /**
  * The authentication controller contains the POST request to login
@@ -37,17 +36,17 @@ public class AuthenticationController {
      */
     @PostMapping(path = "/login", consumes = "application/json", produces = MediaType.APPLICATION_JSON_VALUE)
     public String createAuthenticationToken(@RequestBody AuthenticationRequest authenticationRequest) {
-        /*String userRight = "";*/
         Optional<User> optionalUser = userRepository.findByLoginName(authenticationRequest.getUsername());
         String userId = "";
+        String userRight = "";
         if (optionalUser.isPresent()) {
             User user = optionalUser.get();
             userId = user.getId() + "";
-            /*if(user.getUserRights().toString().equals("ADMIN")){
+            if (user.getUserRights().toString().equals("ADMIN")) {
                 userRight = user.getUserRights().toString();
-            }*/
+            }
         }
-        return authenticationService.generateJWTToken(authenticationRequest.getUsername(), authenticationRequest.getPassword()).getToken() + " " + userId/* + userRight*/;
+        return authenticationService.generateJWTToken(authenticationRequest.getUsername(), authenticationRequest.getPassword()).getToken() + userRight + " " + userId;
     }
 
     /**
