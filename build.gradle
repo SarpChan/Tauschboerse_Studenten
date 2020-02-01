@@ -38,6 +38,8 @@ dependencies {
 	// Web-Konsole zur Überwachung des eingebetteten ActiveMQ-Brokers
 	implementation 'io.hawt:hawtio-springboot:2.8.0'
     
+    compile group: 'org.python', name: 'jython-standalone', version: '2.7.0'
+    implementation 'org.springframework.boot:spring-boot-starter-web'
 	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
     implementation 'org.springframework.boot:spring-boot-starter-security'
     implementation 'io.jsonwebtoken:jjwt:0.2' 
@@ -45,6 +47,7 @@ dependencies {
 	testImplementation('org.springframework.boot:spring-boot-starter-test') {
 		exclude group: 'org.junit.vintage', module: 'junit-vintage-engine'
 	}
+    compile group: 'commons-fileupload', name: 'commons-fileupload', version: '1.4'
 	runtimeOnly 'com.h2database:h2'
 	compile 'com.fasterxml.jackson.core:jackson-core:2.10.1'
 	//compileOnly 'org.projectlombok:lombok:1.18.10'

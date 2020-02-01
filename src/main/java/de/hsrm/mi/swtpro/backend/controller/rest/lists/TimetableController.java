@@ -1,3 +1,4 @@
+
 package de.hsrm.mi.swtpro.backend.controller.rest.lists;
 
 import de.hsrm.mi.swtpro.backend.controller.rest.CourseCrudController;
@@ -121,4 +122,6 @@ public class TimetableController {
         }
     }
 }
+
+
 

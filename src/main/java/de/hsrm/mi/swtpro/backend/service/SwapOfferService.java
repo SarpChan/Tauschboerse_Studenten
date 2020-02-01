@@ -79,18 +79,18 @@ public class SwapOfferService {
         messageSender.sendPersonalSwapOfferMessage(request, A.getUser().getId());
         messageSender.sendPersonalSwapOfferMessage(found, B.getUser().getId());
 
-        Set<Group> aGroups = A.getGroups();
-        aGroups.remove(groupRepository.getOne(request.getFromGroup().getId()));
-        aGroups.add(groupRepository.getOne(request.getToGroup().getId()));
-        A.setGroups(aGroups);
+        Group fromGroup = request.getFromGroup();
+        Group toGroup = request.getToGroup();
 
-        Set<Group> bGroups = B.getGroups();
-        bGroups.remove(groupRepository.findById(found.getFromGroup().getId()).get());
-        bGroups.add(groupRepository.findById(found.getToGroup().getId()).get());
-        B.setGroups(bGroups);
+        fromGroup.removeStudent(A);
+        toGroup.addStudent(A);
 
-        studentRepository.save(A);
-        studentRepository.save(B);
+        toGroup.removeStudent(B);
+        fromGroup.addStudent(B);
+
+        groupRepository.save(fromGroup);
+        groupRepository.save(toGroup);
+
         logger.warn("REMOVE: " + found.getId());
 
         if (swapOfferRepository.findById(found.getId()).isPresent())
