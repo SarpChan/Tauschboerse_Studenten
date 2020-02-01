@@ -122,12 +122,18 @@ public class ServerApi {
             groupRepository.save(toGroup);
             messageSender.sendPersonalSwapOfferMessage(offer, student.getId());
 
-            swapOfferRepository.findByStudent(offer.getStudent()).stream()
-                    .filter(sOffer -> sOffer.getFromGroup() == offer.getFromGroup())
-                    .forEach(sOffer -> {
-                        swapOfferRepository.delete(sOffer);
-                        messageSender.sendSwapOfferMessage(sOffer, "delete");
-                    });
+        });
+        offers.forEach(swapOffer -> {
+            swapOfferRepository.delete(swapOffer);
+            messageSender.sendSwapOfferMessage(swapOffer, "delete");
+        });
+        offers.forEach(swapOffer -> {
+            swapOfferRepository.findByStudentAndFromGroup(swapOffer.getStudent(), swapOffer.getFromGroup()).forEach(
+                    swapOffer1 -> {
+                        swapOfferRepository.delete(swapOffer1);
+                        messageSender.sendSwapOfferMessage(swapOffer, "delete");
+                    }
+            );
         });
         return true;
     }
