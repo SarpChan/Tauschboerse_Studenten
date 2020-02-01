@@ -33,6 +33,10 @@ import java.util.List;
 import java.util.Optional;
 import java.util.concurrent.atomic.AtomicBoolean;
 
+/**
+ * REST endpoint for recieving swapoffers and inserting them with several conditional checks.
+ * Logic is partially separated in SwapOfferService.
+ */
 @RestController
 @RequestMapping("/rest")
 public class SwapOfferInterface {
@@ -60,7 +64,13 @@ public class SwapOfferInterface {
 
     List<SwapOffer> swapOfferList = new ArrayList<SwapOffer>();
 
-
+    /**
+     * Method for accepting existing swapoffers filtered by id.
+     * Depends on SwapOfferService swap method.
+     * @param request
+     * @param id from SwapOffer's autogernerated DB id
+     * @return boolean
+     */
     @GetMapping(path = "/swapoffer/accept/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
     public boolean acceptSwapOffer(HttpServletRequest request, @PathVariable long id) {
         SwapOffer offer = null;
@@ -69,19 +79,23 @@ public class SwapOfferInterface {
 
         if (swapOfferRepository.findById(id).isPresent()) offer = swapOfferRepository.findById(id).get();
 
-        if(offer!=null){
+        if (offer != null) {
             matchingOffer = SwapOffer.builder().timestamp(Timestamp.from(Instant.now()))
                     .fromGroup(offer.getToGroup())
                     .student(serviceGetter.getStudentFromUsername(loginname))
                     .toGroup(offer.getFromGroup())
                     .build();
-            swapOfferService.swap(offer,matchingOffer);
+            swapOfferService.swap(offer, matchingOffer);
             return true;
         }
         return false;
     }
 
-
+    /**
+     * Wiping all remaining swapoffers selected by loginname and fromGroupID. Keep's the database clean and prevents
+     * swaps with invalidated offers.
+     * @param offer
+     */
     @Transactional
     void wipeInvalidatedSwapOffers(SwapOffer offer) {
         logger.warn("WIPE OLD OFFERS WITH FROMGROUP ID: " + offer.getFromGroup().getId() + " STUDENT: " + offer.getStudent().getMail());
@@ -93,6 +107,12 @@ public class SwapOfferInterface {
     /**
      * Iterates over list of groups to change, checks if recent iterations already created a match if not then create a SwapOffer for each Element
      * e.g. A->B , A->C , A->D ,....
+     * Handles cases like :
+     *  - already existing swapoffers
+     *  - multiple target groups
+     *  - matching correlating groups
+     *  - invalidating offers identical to start group
+     *  - wiping remaining orphants
      *
      * @param swapOfferRequest
      * @return boolean
@@ -153,6 +173,13 @@ public class SwapOfferInterface {
         }
     }
 
+    /**
+     * Finding swapoffer if only a student and target group is provided
+     * @param student
+     * @param toGroup
+     * @return the found offer or throw a not found exception
+     * @throws SwapOfferNotFoundException
+     */
     SwapOffer getSwapOffer(Student student, Group toGroup) throws SwapOfferNotFoundException {
         Optional<SwapOffer> offer = swapOfferRepository.findByStudent(student)
                 .stream()
@@ -170,7 +197,6 @@ public class SwapOfferInterface {
                 .filter(e -> e.getFromGroup().equals(offer.getFromGroup()))
                 .anyMatch(e -> e.getToGroup().equals(offer.getToGroup()));
     }
-
 
     @GetMapping(path = "/swapoffer/removematches")
     public void debug() {
@@ -190,6 +216,4 @@ public class SwapOfferInterface {
     public List<SwapOffer> selectByIDSwapOffers(@PathVariable int enrollmentnumber) {
         return swapOfferRepository.findByStudent(studentRepository.findByEnrollmentNumber(enrollmentnumber).get());
     }
-
-
 }
