@@ -1,8 +1,5 @@
 package de.hsrm.mi.swtpro.backend.service.messagebroker;
 
-import java.util.HashMap;
-import java.util.Map;
-
 import javax.jms.JMSException;
 
 import org.apache.activemq.command.ActiveMQQueue;
@@ -17,7 +14,6 @@ import de.hsrm.mi.swtpro.backend.model.MessageBrokerPersonalMessage;
 import de.hsrm.mi.swtpro.backend.model.MessageBrokerPublicMessage;
 import de.hsrm.mi.swtpro.backend.model.SwapOffer;
 import de.hsrm.mi.swtpro.backend.model.TimetableModule;
-import de.hsrm.mi.swtpro.backend.model.User;
 import de.hsrm.mi.swtpro.backend.service.repository.UserRepository;
 
 /**
@@ -42,7 +38,9 @@ public class MessageSender {
     @Autowired
     MBPublicMessageConverter publicMessageConverter;
     @Autowired
-    MBMessageConverter messageConverter;
+    MBNewsMessageConverter messageConverter;
+    @Autowired
+    MBPersonalMessageConverter personalMessageConverter;
     @Autowired
     UserRepository userRepo;
 
@@ -68,7 +66,7 @@ public class MessageSender {
         char toGroupChar = swapOffer.getToGroup().getGroupChar();
 
         final MessageBrokerPersonalMessage message = new MessageBrokerPersonalMessage(courseTitle, fromGroupChar, toGroupChar, userid);  
-        jmsTemplate.send(personalSwapOfferTopic, session -> messageConverter.toMessage(message, session));
+        jmsTemplate.send(personalSwapOfferTopic, session -> personalMessageConverter.toMessage(message, session));
     }
 
     /**
