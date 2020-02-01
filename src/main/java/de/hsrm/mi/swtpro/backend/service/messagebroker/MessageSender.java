@@ -13,6 +13,7 @@ import org.springframework.jms.core.JmsTemplate;
 import org.springframework.stereotype.Component;
 
 import de.hsrm.mi.swtpro.backend.model.MessageBrokerMessage;
+import de.hsrm.mi.swtpro.backend.model.MessageBrokerPersonalMessage;
 import de.hsrm.mi.swtpro.backend.model.MessageBrokerPublicMessage;
 import de.hsrm.mi.swtpro.backend.model.SwapOffer;
 import de.hsrm.mi.swtpro.backend.model.TimetableModule;
@@ -26,12 +27,15 @@ import de.hsrm.mi.swtpro.backend.service.repository.UserRepository;
 @EnableJms
 public class MessageSender {
 
-    private final Map<String, ActiveMQQueue> queueMap = new HashMap<String, ActiveMQQueue>();
+    //private final Map<String, ActiveMQQueue> queueMap = new HashMap<String, ActiveMQQueue>();
 
     private final String TOPICNAME = "NewsMessageTopic";
     private final ActiveMQTopic newsTopic = new ActiveMQTopic(TOPICNAME);
     private final String TOPICNAMESwapOffer = "SwapOfferTopic";
     private final ActiveMQTopic swapOfferTopic = new ActiveMQTopic(TOPICNAMESwapOffer);
+    private final String TOPICNAMEPersonalSwapOffer = "SwapMessagePersonalTopic";
+    private final ActiveMQTopic personalSwapOfferTopic = new ActiveMQTopic(TOPICNAMEPersonalSwapOffer);
+
 
     @Autowired
     private JmsTemplate jmsTemplate;
@@ -44,14 +48,14 @@ public class MessageSender {
 
     /**
      * creates a SwapMessageQueue for all users
-     */
+     
     public void addSwapMessageQueues() {
         for(User user : userRepo.findAll()) { 
             String queuename = "SwapMessageQueue" + user.getId();
             ActiveMQQueue queue = new ActiveMQQueue(queuename);
             queueMap.put(queuename, queue);
         }
-    }
+    }*/
 
     /**
      * sends a message to a user's personal queue to inform him that his swapOffer has been accepted
@@ -59,16 +63,12 @@ public class MessageSender {
      * @param userid the user's id
      */
     public void sendPersonalSwapOfferMessage(SwapOffer swapOffer, long userid) {
-        if(queueMap.isEmpty()) {
-            addSwapMessageQueues();
-        }
-
         String courseTitle = swapOffer.getFromGroup().getCourseComponent().getCourse().getTitle();
         char fromGroupChar = swapOffer.getFromGroup().getGroupChar();
         char toGroupChar = swapOffer.getToGroup().getGroupChar();
 
-        final MessageBrokerMessage message = new MessageBrokerMessage(courseTitle, fromGroupChar, toGroupChar);  
-        jmsTemplate.send(queueMap.get("SwapMessageQueue" + userid), session -> messageConverter.toMessage(message, session));
+        final MessageBrokerPersonalMessage message = new MessageBrokerPersonalMessage(courseTitle, fromGroupChar, toGroupChar, userid);  
+        jmsTemplate.send(personalSwapOfferTopic, session -> messageConverter.toMessage(message, session));
     }
 
     /**
