@@ -60,10 +60,15 @@ public class MBPublicMessageConverter implements MessageConverter {
         LocalTime toEndTime = swapOffer.getToGroup().getEndTime();
         char toGroup = swapOffer.getToGroup().getGroupChar();
         LocalTime toStartTime = swapOffer.getToGroup().getStartTime();
-        SwapOfferFront s = SwapOfferFront.builder().Id(swapOffer.getId()).courseName(courseName).courseType(courseType).fromDay(fromDay).fromEndTime(fromEndTime).fromGroup(fromGroup).fromStartTime(fromStartTime).toDay(toDay).toEndTime(toEndTime).toGroup(toGroup).toStartTime(toStartTime).build();
+        SwapOfferFront s = SwapOfferFront.builder().Id(swapOffer.getId()).courseName(courseName).courseType(courseType).fromDay(fromDay).fromGroup(fromGroup).toDay(toDay).toGroup(toGroup).build();
         String jsontext = null;
         try {
             jsontext = mapper.writeValueAsString(s);
+            jsontext = jsontext.replace("\"toStartTime\":null","\"toStartTime\":\""+toStartTime.toString()+"\"");
+            jsontext = jsontext.replace("\"fromStartTime\":null","\"fromStartTime\":\""+fromStartTime.toString()+"\"");
+            jsontext = jsontext.replace("\"toEndTime\":null","\"toEndTime\":\""+toEndTime.toString()+"\"");
+            jsontext = jsontext.replace("\"fromEndTime\":null","\"fromEndTime\":\""+fromEndTime.toString()+"\"");
+            String s1 = "\"toStartTime\":\""+toStartTime.toString()+"\"";
         } catch (JsonProcessingException e) {
             logger.error("FEHLER toMessage SwapOffer '{}' -> JSON: {}", s.toString(), e.getMessage());
         }
