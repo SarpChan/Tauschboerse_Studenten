@@ -2,6 +2,9 @@ package de.hsrm.mi.swtpro.backend.model.filter;
 
 import lombok.*;
 
+/**
+ * Class to define a comparator type and a value
+ */
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder

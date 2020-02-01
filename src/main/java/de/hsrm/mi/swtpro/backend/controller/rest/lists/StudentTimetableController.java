@@ -20,6 +20,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
+/**
+ * StudentTimetableController containing the endpoint for student specific timetables
+ */
 @RestController
 @RequestMapping("/rest/lists")
 public class StudentTimetableController {
@@ -36,6 +39,11 @@ public class StudentTimetableController {
     @Autowired
     StudentRepository studentRepository;
 
+    /**
+     * GET request for student specific timetable
+     * @param request to extract username from to map timetable to this student
+     * @return list of TimeTableModules
+     */
     @GetMapping(path = "/student_timetable", produces = MediaType.APPLICATION_JSON_VALUE)
     public List<TimetableModule> getModules(HttpServletRequest request) {
         String username = tokenService.getUsernameFromRequest(request);

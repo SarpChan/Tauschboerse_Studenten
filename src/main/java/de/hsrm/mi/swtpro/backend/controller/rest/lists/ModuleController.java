@@ -11,6 +11,9 @@ import javax.servlet.http.HttpServletRequest;
 import java.util.*;
 
 
+/**
+ * Controller containing endpoint for prioritizable modules
+ */
 @RestController
 @RequestMapping("/rest/lists")
 public class ModuleController {
@@ -22,6 +25,12 @@ public class ModuleController {
     @Autowired
     ServiceGetter serviceGetter;
 
+    /**
+     * GET request for prioritizable modules.
+     * Searches for modules that a specific user can prioritize
+     * @param request to extract username from
+     * @return list of ModuleSelectionItems
+     */
     @GetMapping(path = "/module/prioritize", produces = MediaType.APPLICATION_JSON_VALUE)
     public List<ModuleSelectionItem> getModuleItem(HttpServletRequest request) {
 

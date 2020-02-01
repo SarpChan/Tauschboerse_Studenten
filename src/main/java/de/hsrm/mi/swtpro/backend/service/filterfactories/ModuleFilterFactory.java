@@ -9,14 +9,12 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
+
+/**
+ * Implementation of FilterFactory for modules
+ */
 @SuperBuilder
 public class ModuleFilterFactory extends FilterFactory<Module> {
-
-    /**
-    * This list contains all filterable modules
-    * @param toFilter the list of modules to be filtered
-    * @return returns a list of the filtered modules
-    */
 
     @Override
     public List<Module> filter(List<Module> toFilter) {

@@ -7,6 +7,7 @@ import de.hsrm.mi.swtpro.backend.model.filter.Comparator;
 import de.hsrm.mi.swtpro.backend.model.filter.ComparatorType;
 import de.hsrm.mi.swtpro.backend.model.filter.Filter;
 import de.hsrm.mi.swtpro.backend.service.filterfactories.SwapOfferFilterFactory;
+import de.hsrm.mi.swtpro.backend.service.messagebroker.MessageSender;
 import de.hsrm.mi.swtpro.backend.service.repository.GroupRepository;
 import de.hsrm.mi.swtpro.backend.service.repository.StudentRepository;
 import de.hsrm.mi.swtpro.backend.service.repository.SwapOfferRepository;
@@ -14,9 +15,15 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
+/**
+ * ServerApi intended to be used in loadable python scripts
+ */
 @Component
 public class ServerApi {
 
@@ -26,11 +33,22 @@ public class ServerApi {
     StudentRepository studentRepository;
     @Autowired
     GroupRepository groupRepository;
+    @Autowired
+    MessageSender messageSender;
 
+    /**
+     * Gets every persisted swap offer
+     * @return list of swap offers
+     */
     public List<SwapOffer> getAllSwapOffers() {
         return this.swapOfferRepository.findAll();
     }
 
+    /**
+     * Gets every swap offer with owner id equalling ownId parameter
+     * @param ownId matching id
+     * @return list of filtered swap offers
+     */
     public List<SwapOffer> getAllSwapOffersFromMe(long ownId) {
         SwapOfferFilterFactory filterFactory = SwapOfferFilterFactory.builder()
                 .filters(new Filter[]{Filter.builder()
@@ -42,7 +60,14 @@ public class ServerApi {
                         ).build()
                 }).build();
         return filterFactory.filter(this.getAllSwapOffers());
-    }    public List<SwapOffer> getAllSwapOffersWithFromGroupId(long fromGroupId) {
+    }
+
+    /**
+     * Gets every swap offer based on fromGroupId matching
+     * @param fromGroupId matching id
+     * @return list of filtered swap offers
+     */
+    public List<SwapOffer> getAllSwapOffersWithFromGroupId(long fromGroupId) {
         SwapOfferFilterFactory filterFactory = SwapOfferFilterFactory.builder()
                 .filters(new Filter[]{Filter.builder()
                         .attribute("fromGroupId")
@@ -55,6 +80,11 @@ public class ServerApi {
         return filterFactory.filter(this.getAllSwapOffers());
     }
 
+    /**
+     * Gets every swap offer based on toGroupId matching
+     * @param toGroupId matching id
+     * @return list of filtered swap offers
+     */
     public List<SwapOffer> getAllSwapOffersWithToGroupId(long toGroupId) {
         SwapOfferFilterFactory filterFactory = SwapOfferFilterFactory.builder()
                 .filters(new Filter[]{Filter.builder()
@@ -68,6 +98,12 @@ public class ServerApi {
         return filterFactory.filter(this.getAllSwapOffers());
     }
 
+    /**
+     * Swaps 3 swap offers
+     * Updates list of students in the equivalent groups
+     * @param offerIds ids of matching swap offers
+     * @return true if swap was successful
+     */
     @Transactional
     public boolean tripleSwap(long[] offerIds) {
         assert offerIds.length == 3 : "size for offers is incorrect";
@@ -84,8 +120,15 @@ public class ServerApi {
             toGroup.addStudent(student);
             groupRepository.save(fromGroup);
             groupRepository.save(toGroup);
+            messageSender.sendPersonalSwapOfferMessage(offer, student.getId());
+
+            swapOfferRepository.findByStudent(offer.getStudent()).stream()
+                    .filter(sOffer -> sOffer.getFromGroup() == offer.getFromGroup())
+                    .forEach(sOffer -> {
+                        swapOfferRepository.delete(sOffer);
+                        messageSender.sendSwapOfferMessage(sOffer, "delete");
+                    });
         });
-        offers.forEach(swapOffer -> swapOfferRepository.delete(swapOffer));
         return true;
     }
 

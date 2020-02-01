@@ -9,6 +9,11 @@ import java.util.*;
 @Component
 public class ServiceGenerator {
 
+    /**
+     * Creates list of timetable modules based on multiple modules
+     * @param modules list of modules as base for creation
+     * @return list of timetable modules
+     */
     public List<TimetableModule> timetableModuleFromModules(List<Module> modules) {
         List<TimetableModule> timetableModules = new ArrayList<>();
         int term = 0;
@@ -45,6 +50,11 @@ public class ServiceGenerator {
         return timetableModules;
     }
 
+    /**
+     * Creates list of timetable modules based on one module
+     * @param module as base for creation
+     * @return list of timetable modules
+     */
     public List<TimetableModule> timetableModuleFromModule(Module module) {
         List<TimetableModule> timetableModules = new ArrayList<>();
         int term = 0;
@@ -79,9 +89,9 @@ public class ServiceGenerator {
     }
 
     /**
-     * returns JSON style module table
-     * @param curriculum
-     * @return
+     * returns JSON style module selection items
+     * @param curriculum as for list creation
+     * @return list of module selection items
      */
     public List<ModuleSelectionItem> moduleSelectionItemFromCurriculum(Curriculum curriculum) {
         List<ModuleSelectionItem> moduleSelectionItems = new ArrayList<>();
@@ -115,9 +125,9 @@ public class ServiceGenerator {
 
 
     /**
-     * returns JSON style module table
-     * @param student
-     * @return
+     * returns JSON style display course components
+     * @param student as base for list creation
+     * @return list of display course components
      */
     public List<DisplayCourseComponent> swapOfferCoursesFromStudent(Student student) {
 
@@ -170,44 +180,5 @@ public class ServiceGenerator {
 
         return dpCourses;
     }
-
-//    public List<DisplayCourseComponent> swapOfferCoursesFromStudent(Student student) {
-//        List<DisplayCourseComponent> dpCourses = new ArrayList<>();
-//
-//        for(Group group : student.getGroups()) {
-//            CourseComponent courseComponent = group.getCourseComponent();
-//            Course course = courseComponent.getCourse();
-//
-//            List<DisplayGroup> dpGroups = new ArrayList<>();
-//
-//            for(Group grouplist : courseComponent.getGroups()) {
-//                DisplayGroup dpGroup = DisplayGroup.builder()
-//                        .id(grouplist.getId())
-//                        .groupChar(grouplist.getGroupChar())
-//                        .dayOfWeek(grouplist.getDayOfWeek())
-//                        .startTime(grouplist.getStartTime())
-//                        .endTime(grouplist.getEndTime())
-//                        .lecturer(grouplist.getLecturer().getUser().getLastName())
-//                        .room(grouplist.getRoom().getNumber())
-//                        .build();
-//
-//                dpGroups.add(dpGroup);
-//            }
-//
-//            DisplayCourseComponent dpCourseComponent = DisplayCourseComponent.builder()
-//                    .id(courseComponent.getId())
-//                    .courseId(course.getId())
-//                    .title(course.getTitle())
-//                    .type(courseComponent.getType().toString())
-//                    .myGroupChar(group.getGroupChar())
-//                    .creditPoints(courseComponent.getCreditPoints())
-//                    .groups(dpGroups)
-//                    .build();
-//
-//            dpCourses.add(dpCourseComponent);
-//        }
-//
-//        return dpCourses;
-//    }
 
 }

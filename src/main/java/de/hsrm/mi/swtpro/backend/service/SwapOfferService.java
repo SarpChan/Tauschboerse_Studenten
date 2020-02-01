@@ -3,6 +3,8 @@ package de.hsrm.mi.swtpro.backend.service;
 import de.hsrm.mi.swtpro.backend.model.Group;
 import de.hsrm.mi.swtpro.backend.model.Student;
 import de.hsrm.mi.swtpro.backend.model.SwapOffer;
+import de.hsrm.mi.swtpro.backend.model.requestModel.SwapOfferRequest;
+import de.hsrm.mi.swtpro.backend.service.messagebroker.MessageSender;
 import de.hsrm.mi.swtpro.backend.service.repository.GroupRepository;
 import de.hsrm.mi.swtpro.backend.service.repository.StudentRepository;
 import de.hsrm.mi.swtpro.backend.service.repository.SwapOfferRepository;
@@ -33,6 +35,8 @@ public class SwapOfferService {
     GroupRepository groupRepository;
     @Autowired
     UserRepository userRepository;
+    @Autowired
+    MessageSender messageSender;
 
     /**
      * Method for checking and executing swapoffer if available.
@@ -71,6 +75,9 @@ public class SwapOfferService {
         Student A = request.getStudent();
         Student B = found.getStudent();
         logger.warn("Student A " + A.getMail() + " Student B " + B.getMail());
+
+        messageSender.sendPersonalSwapOfferMessage(request, A.getUser().getId());
+        messageSender.sendPersonalSwapOfferMessage(found, B.getUser().getId());
 
         Group fromGroup = request.getFromGroup();
         Group toGroup = request.getToGroup();

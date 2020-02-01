@@ -46,8 +46,7 @@ public class MessageSenderConfig {
         logger.info("DefaultJmsListenerContainerFactory myTopicFactory() gezogen");
         DefaultJmsListenerContainerFactory factory = new DefaultJmsListenerContainerFactory();
         factory.setConnectionFactory(connectionFactory);
-        factory.setPubSubDomain(true);  
-        factory.setMessageConverter(new SwapOfferMessageConverter());
+        factory.setPubSubDomain(true);
         //factory.setConcurrency("3-10");
         factory.setClientId("brokerClientId");
         factory.setSubscriptionDurable(true);
@@ -63,8 +62,7 @@ public class MessageSenderConfig {
         logger.info("DefaultJmsListenerContainerFactory myTopicFactory() gezogen");
         DefaultJmsListenerContainerFactory factory = new DefaultJmsListenerContainerFactory();
         factory.setConnectionFactory(connectionFactory);
-        factory.setPubSubDomain(true);  
-        factory.setMessageConverter(new SwapOfferMessageConverter());
+        factory.setPubSubDomain(true);
         //factory.setConcurrency("3-10");
         factory.setClientId("brokerClientId");
         return factory;
@@ -80,7 +78,6 @@ public class MessageSenderConfig {
         DefaultJmsListenerContainerFactory factory = new DefaultJmsListenerContainerFactory();
         factory.setConnectionFactory(connectionFactory);
         factory.setPubSubDomain(false);
-        factory.setMessageConverter(new SwapOfferMessageConverter());
         factory.setErrorHandler(new MyErrorHandler());
         return factory;
     }

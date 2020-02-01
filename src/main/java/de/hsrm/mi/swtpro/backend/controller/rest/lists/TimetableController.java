@@ -1,5 +1,12 @@
 package de.hsrm.mi.swtpro.backend.controller.rest.lists;
 
+import de.hsrm.mi.swtpro.backend.controller.rest.CourseCrudController;
+import de.hsrm.mi.swtpro.backend.controller.rest.crud.CourseComponentCrudController;
+import de.hsrm.mi.swtpro.backend.controller.rest.crud.GroupCrudController;
+import de.hsrm.mi.swtpro.backend.controller.rest.crud.LecturerCrudController;
+import de.hsrm.mi.swtpro.backend.controller.rest.crud.RoomCrudController;
+import de.hsrm.mi.swtpro.backend.model.ExamRegulation;
+import de.hsrm.mi.swtpro.backend.model.Group;
 import de.hsrm.mi.swtpro.backend.model.Module;
 import de.hsrm.mi.swtpro.backend.model.*;
 import de.hsrm.mi.swtpro.backend.model.filter.Comparator;
@@ -7,6 +14,9 @@ import de.hsrm.mi.swtpro.backend.model.filter.ComparatorType;
 import de.hsrm.mi.swtpro.backend.model.filter.Filter;
 import de.hsrm.mi.swtpro.backend.service.filterfactories.ModuleFilterFactory;
 import de.hsrm.mi.swtpro.backend.service.helper.ServiceGenerator;
+import de.hsrm.mi.swtpro.backend.service.messagebroker.MessageSender;
+import de.hsrm.mi.swtpro.backend.service.repository.GroupRepository;
+import de.hsrm.mi.swtpro.backend.service.repository.ModuleRepository;
 import de.hsrm.mi.swtpro.backend.service.repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -17,6 +27,9 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 import java.util.Optional;
 
+/**
+ * Controller to handle most timetable endpoints
+ */
 @RestController
 @RequestMapping("/rest/lists")
 public class TimetableController {
@@ -25,6 +38,8 @@ public class TimetableController {
     ModuleRepository moduleRepository;
     @Autowired
     GroupRepository groupRepository;
+    @Autowired
+    MessageSender messageSender;
     @Autowired
     CourseRepository courseRepository;
     @Autowired
@@ -157,6 +172,8 @@ public class TimetableController {
             course.setTitle(timetableModule.getCourseTitle());
             courseComponent.setType(timetableModule.getCourseType());
             room.setNumber(timetableModule.getRoomNumber());
+
+            messageSender.sendNewsMessage(timetableModule);
 
             groupRepository.saveAndFlush(group);
             return new ResponseEntity<>("timetableUpdate Succses", HttpStatus.OK);

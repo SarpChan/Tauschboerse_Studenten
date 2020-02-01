@@ -1,5 +1,4 @@
 package de.hsrm.mi.swtpro.backend.controller.rest.lists;
-
 import de.hsrm.mi.swtpro.backend.model.*;
 import de.hsrm.mi.swtpro.backend.model.filter.Filter;
 import de.hsrm.mi.swtpro.backend.service.filterfactories.CourseFilterFactory;
@@ -26,6 +25,9 @@ import javax.servlet.http.HttpServletRequest;
 import java.util.Optional;
 import java.util.*;
 
+/**
+ * Controller containing endpoints for basic lists
+ */
 @RestController
 @RequestMapping("/rest/lists")
 public class ListController {
@@ -33,6 +35,12 @@ public class ListController {
     @Autowired
     CourseRepository courseRepository;
 
+    /**
+     * POST request for Courses
+     * Returns all courses filtered by the provided filter array.
+     * @param filters - array of filters for course list
+     * @return filtered list of courses
+     */
     @PostMapping(path = "/course", consumes = "application/json", produces = MediaType.APPLICATION_JSON_VALUE)
     public List<Course> getCourse(@RequestBody Filter[] filters) {
         List<Course> allCourses = courseRepository.findAll();
@@ -44,6 +52,12 @@ public class ListController {
     @Autowired
     FieldOfStudyRepository fieldOfStudyRepository;
 
+    /**
+     * GET request for FieldOfStudy
+     * Method maps original persisted FieldOfStudy entities to custom entities
+     * requested by front end
+     * @return list of FieldOfStudy
+     */
     @GetMapping(path = "/fieldOfStudy", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     public List<CustomFieldOfStudy> getFieldOfStudy() {
         return fieldOfStudyRepository.findAll().stream().map(CustomFieldOfStudy::fromOriginal).collect(Collectors.toList());
@@ -52,6 +66,12 @@ public class ListController {
     @Autowired
     SwapOfferRepository swapOfferRepository;
 
+    /**
+     * POST request for SwapOffer
+     * Returns all swap offer filtered by the provided filter array.
+     * @param filters - array of filters for swap offer list
+     * @return filtered list of SwapOffers
+     */
     @PostMapping(path = "/swapOffer", consumes = "application/json", produces = MediaType.APPLICATION_JSON_VALUE)
     public List<SwapOffer> getSwapOffer(@RequestBody Filter[] filters) {
         List<SwapOffer> allSwapOffers = swapOfferRepository.findAll();
@@ -68,10 +88,14 @@ public class ListController {
     StudentRepository studentRepository;
 
 
+    /**
+     * GET request for every SwapOffer
+     * Method maps original persisted SwapOffer entities to custom entities
+     * @return list of frontend specific SwapOffer models
+     */
     @GetMapping(path = "/swapOffer/all", produces = MediaType.APPLICATION_JSON_VALUE)
     public List<SwapOfferFront> getSwapOffer() {
         List<SwapOffer> allSwapOffers = swapOfferRepository.findAll();
-        //:TODO Meine Baustelle Siehe TimeTableContoller ab Zeile 47
         List<SwapOfferFront> swapOffers = new ArrayList<SwapOfferFront>();
         for (SwapOffer swapOffer : allSwapOffers) {
             SwapOfferFront swapOfferFront = SwapOfferFront.builder()
@@ -95,6 +119,13 @@ public class ListController {
         return swapOffers;
     }
 
+    /**
+     * GET request for SwapOffers created by requesting user
+     * Method maps original persisted SwapOffer entities to custom entities
+     * and filters all SwapOffers to be created by the requesting user
+     * @param request to extract username from
+     * @return list of frontend specific SwapOffer models
+     */
     @GetMapping(path = "/swapOffer/me", produces = MediaType.APPLICATION_JSON_VALUE)
     public List<SwapOfferFront> getSwapOffer(HttpServletRequest request) {
         String username = tokenService.getUsernameFromRequest(request);

@@ -38,7 +38,6 @@ dependencies {
 	implementation 'org.apache.activemq:activemq-kahadb-store'
 	// Web-Konsole zur Überwachung des eingebetteten ActiveMQ-Brokers
 	implementation 'io.hawt:hawtio-springboot:2.8.0'
-
 	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
     implementation 'org.springframework.boot:spring-boot-starter-security'
     implementation 'io.jsonwebtoken:jjwt:0.2' 

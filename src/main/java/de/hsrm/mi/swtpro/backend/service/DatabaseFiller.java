@@ -1,18 +1,15 @@
 package de.hsrm.mi.swtpro.backend.service;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-import de.hsrm.mi.swtpro.backend.model.*;
 import de.hsrm.mi.swtpro.backend.model.Module;
+import de.hsrm.mi.swtpro.backend.model.*;
 import de.hsrm.mi.swtpro.backend.service.pyScriptService.PythonEvaluator;
 import de.hsrm.mi.swtpro.backend.service.repository.UniversityRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.boot.ApplicationArguments;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.PostConstruct;
-import java.io.File;
-import java.io.IOException;
 import java.sql.Date;
 import java.sql.Timestamp;
 import java.time.DayOfWeek;
@@ -39,15 +36,17 @@ public class DatabaseFiller {
     @Autowired
     PythonEvaluator pythonEvaluator;
 
-
+    /**
+     * Method filling database
+     */
     @PostConstruct
-    public void fillDatabase(){
+    public void fillDatabase() {
         String[] args = appArgs.getSourceArgs();
-        for (int i = 0; i < args.length ; i++) {
-            if(args[i].equals("python")) {
+        for (int i = 0; i < args.length; i++) {
+            /*if(args[i].equals("python")) {
                 String script = "def onNewSwapOffer():\n  serverApi.tripleSwap([52,103,104])";
                 pythonEvaluator.runScriptForSwapOffer(Script.builder().userId(1).data(script.getBytes()).build());
-            }
+            }*/
             if (args[i].equals("fillDatabase")) {
                 University uni = University.builder().name("Hochschule RheinMain").address("Kurt-Schuhmacher-Ring 18").build();
                 //entityManager.persist(uni);
@@ -298,7 +297,7 @@ public class DatabaseFiller {
                         .courseComponent(prog1P).startTime(LocalTime.of(10, 00)).endTime(LocalTime.of(11, 30)).build();
                 //entityManager.persist(prog1PgroupA);
                 Group prog1PgroupB = Group.builder().lecturer(lec_berdux).slots(20).room(r12).term(ws1920).dayOfWeek((DayOfWeek.MONDAY)).groupChar('B')
-                        .courseComponent(prog1P).startTime(LocalTime.of(11, 45)).endTime(LocalTime.of(13 , 15)).build();
+                        .courseComponent(prog1P).startTime(LocalTime.of(11, 45)).endTime(LocalTime.of(13, 15)).build();
                 //entityManager.persist(prog1PgroupB);
 
                 Group prog2Vgroup = Group.builder().lecturer(lec_berdux).slots(80).room(r11).term(ss2019).dayOfWeek((DayOfWeek.MONDAY)).groupChar('A')
@@ -893,16 +892,6 @@ public class DatabaseFiller {
 
                 universityRepository.saveAndFlush(uni);
             }
-        }
-    }
-
-    public void readJSON(File universityJSON){
-        try {
-            University university
-                    = new ObjectMapper().readerFor(University.class).readValue(universityJSON);
-            universityRepository.saveAndFlush(university);
-        } catch (IOException e) {
-            e.printStackTrace();
         }
     }
 }

@@ -14,6 +14,11 @@ public class JwtAuthenticatedProfile implements Authentication {
     private final String username;
     private final Collection<? extends GrantedAuthority> authorities;
 
+    /**
+     * Constructor of JwtAuthenticatedProfile
+     * @param username of logged in user
+     * @param authorities to be granted
+     */
     public JwtAuthenticatedProfile(String username, Collection<? extends GrantedAuthority> authorities) {
         this.username = username;
         this.authorities = authorities;
