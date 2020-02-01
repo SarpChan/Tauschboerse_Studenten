@@ -291,7 +291,7 @@ public class DatabaseFiller {
                         .courseComponent(prog3P).startTime(LocalTime.of(10, 00)).endTime(LocalTime.of(11, 30)).build();
                 //entityManager.persist(prog1PgroupA);
                 Group prog1PgroupB = Group.builder().lecturer(lec_berdux).slots(20).room(r12).term(ws1920).dayOfWeek((DayOfWeek.MONDAY)).groupChar('B')
-                        .courseComponent(prog3P).startTime(LocalTime.of(11, 30)).endTime(LocalTime.of(11, 45)).build();
+                        .courseComponent(prog3P).startTime(LocalTime.of(11, 45)).endTime(LocalTime.of(13 , 15)).build();
                 //entityManager.persist(prog1PgroupB);
 
                 Group prog2Vgroup = Group.builder().lecturer(lec_berdux).slots(80).room(r11).term(ss2019).dayOfWeek((DayOfWeek.MONDAY)).groupChar('A')
@@ -301,7 +301,7 @@ public class DatabaseFiller {
                         .courseComponent(prog3P).startTime(LocalTime.of(10, 00)).endTime(LocalTime.of(11, 30)).build();
                 //entityManager.persist(prog2PgroupA);
                 Group prog2PgroupB = Group.builder().lecturer(lec_berdux).slots(20).room(r13).term(ss2019).dayOfWeek((DayOfWeek.MONDAY)).groupChar('B')
-                        .courseComponent(prog3P).startTime(LocalTime.of(11, 30)).endTime(LocalTime.of(11, 45)).build();
+                        .courseComponent(prog3P).startTime(LocalTime.of(11, 45)).endTime(LocalTime.of(13, 15)).build();
                 //entityManager.persist(prog2PgroupB);
 
                 Group prog3Vgroup = Group.builder().lecturer(lec_weitz).slots(90).room(r11).term(ws1920).dayOfWeek((DayOfWeek.TUESDAY)).groupChar('A')
@@ -311,13 +311,13 @@ public class DatabaseFiller {
                         .courseComponent(prog3P).startTime(LocalTime.of(10, 0)).endTime(LocalTime.of(11, 30)).build();
                 //entityManager.persist(prog3PgroupA);
                 Group prog3PgroupB = Group.builder().lecturer(lec_weitz).slots(20).room(r12).term(ws1920).dayOfWeek((DayOfWeek.TUESDAY)).groupChar('B')
-                        .courseComponent(prog3P).startTime(LocalTime.of(11, 30)).endTime(LocalTime.of(11, 45)).build();
+                        .courseComponent(prog3P).startTime(LocalTime.of(11, 45)).endTime(LocalTime.of(13, 15)).build();
                 //entityManager.persist(prog3PgroupB);
                 Group prog3PgroupC = Group.builder().lecturer(lec_weitz).slots(20).room(r13).term(ws1920).dayOfWeek((DayOfWeek.TUESDAY)).groupChar('C')
                         .courseComponent(prog3P).startTime(LocalTime.of(10, 0)).endTime(LocalTime.of(11, 30)).build();
                 //entityManager.persist(prog3PgroupC);
                 Group prog3PgroupD = Group.builder().lecturer(lec_weitz).slots(20).room(r13).term(ws1920).dayOfWeek((DayOfWeek.TUESDAY)).groupChar('D')
-                        .courseComponent(prog3P).startTime(LocalTime.of(11, 30)).endTime(LocalTime.of(11, 45)).build();
+                        .courseComponent(prog3P).startTime(LocalTime.of(11, 45)).endTime(LocalTime.of(13, 15)).build();
                 //entityManager.persist(prog3PgroupD);
 
                 Group mathe1Vgroup = Group.builder().lecturer(lec_reichenauer).slots(100).room(r11).term(ws1920).dayOfWeek((DayOfWeek.WEDNESDAY)).groupChar('A')
@@ -327,7 +327,7 @@ public class DatabaseFiller {
                         .courseComponent(mathe1P).startTime(LocalTime.of(10, 00)).endTime(LocalTime.of(11, 30)).build();
                 //entityManager.persist(mathe1PgroupA);
                 Group mathe1PgroupB = Group.builder().lecturer(lec_reichenauer).slots(20).room(r11).term(ws1920).dayOfWeek((DayOfWeek.WEDNESDAY)).groupChar('B')
-                        .courseComponent(mathe1P).startTime(LocalTime.of(11, 30)).endTime(LocalTime.of(15, 45)).build();
+                        .courseComponent(mathe1P).startTime(LocalTime.of(11, 45)).endTime(LocalTime.of(13, 15)).build();
                 //entityManager.persist(mathe1PgroupB);
 
                 Group mathe2Vgroup = Group.builder().lecturer(lec_reichenauer).slots(110).room(r11).term(ss2019).dayOfWeek((DayOfWeek.WEDNESDAY)).groupChar('A')
@@ -337,7 +337,7 @@ public class DatabaseFiller {
                         .courseComponent(mathe1P).startTime(LocalTime.of(10, 00)).endTime(LocalTime.of(11, 30)).build();
                 //entityManager.persist(mathe2PgroupA);
                 Group mathe2PgroupB = Group.builder().lecturer(lec_reichenauer).slots(20).room(r11).term(ss2019).dayOfWeek((DayOfWeek.WEDNESDAY)).groupChar('B')
-                        .courseComponent(mathe1P).startTime(LocalTime.of(11, 30)).endTime(LocalTime.of(13, 30)).build();
+                        .courseComponent(mathe1P).startTime(LocalTime.of(11, 45)).endTime(LocalTime.of(13, 15)).build();
                 //entityManager.persist(mathe2PgroupB);
 
                 Group mathe3Vgroup = Group.builder().lecturer(lec_schwaneke).slots(120).room(r14).term(ws1920).dayOfWeek((DayOfWeek.THURSDAY)).groupChar('A')
@@ -347,7 +347,7 @@ public class DatabaseFiller {
                         .courseComponent(mathe3P).startTime(LocalTime.of(10, 00)).endTime(LocalTime.of(11, 30)).build();
                 //entityManager.persist(mathe3PgroupA);
                 Group mathe3PgroupB = Group.builder().lecturer(lec_schwaneke).slots(20).room(r17).term(ws1920).dayOfWeek((DayOfWeek.THURSDAY)).groupChar('B')
-                        .courseComponent(mathe3P).startTime(LocalTime.of(11, 45)).endTime(LocalTime.of(14, 30)).build();
+                        .courseComponent(mathe3P).startTime(LocalTime.of(11, 45)).endTime(LocalTime.of(13, 15)).build();
                 //entityManager.persist(mathe3PgroupB);
 
                 //T

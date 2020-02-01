@@ -85,9 +85,19 @@ public class ServiceGenerator {
      */
     public List<ModuleSelectionItem> moduleSelectionItemFromCurriculum(Curriculum curriculum) {
         List<ModuleSelectionItem> moduleSelectionItems = new ArrayList<>();
+        
+        List<CourseType> moduleTypes;
 
         for (ModuleInCurriculum moduleInCurriculum : curriculum.getModulesInCurriculum()) {
+            Set<CourseType> moduleTypeSet = new HashSet<>();
             Module module = moduleInCurriculum.getModule();
+
+            for(Course course :module.getCourses()){
+                for(CourseComponent courseComponent: course.getCourseComponents()){
+                    moduleTypeSet.add(courseComponent.getType());
+                }
+            }
+            moduleTypes = new ArrayList<>(moduleTypeSet);
 
             ModuleSelectionItem moduleSelectionItem = ModuleSelectionItem.builder()
                 .id(module.getId())
@@ -95,11 +105,57 @@ public class ServiceGenerator {
                 .creditPoints(module.getCreditPoints())
                 .semester(moduleInCurriculum.getTermPeriod())
                 .timetableModules(timetableModuleFromModule(module))
+                .moduleTypes(moduleTypes)
                 .build();
 
             moduleSelectionItems.add(moduleSelectionItem);
         }
         return moduleSelectionItems;
+    }
+
+
+    /**
+     * returns JSON style module table
+     * @param student
+     * @return
+     */
+    public List<DisplayCourseComponent> swapOfferCoursesFromStudent(Student student) {
+        List<DisplayCourseComponent> dpCourses = new ArrayList<>();
+
+        for(Group group : student.getGroups()) {
+            CourseComponent courseComponent = group.getCourseComponent();
+            Course course = courseComponent.getCourse();
+
+            List<DisplayGroup> dpGroups = new ArrayList<>();
+
+            for(Group grouplist : courseComponent.getGroups()) {
+                DisplayGroup dpGroup = DisplayGroup.builder()
+                        .id(grouplist.getId())
+                        .groupChar(grouplist.getGroupChar())
+                        .dayOfWeek(grouplist.getDayOfWeek())
+                        .startTime(grouplist.getStartTime())
+                        .endTime(grouplist.getEndTime())
+                        .lecturer(grouplist.getLecturer().getUser().getLastName())
+                        .room(grouplist.getRoom().getNumber())
+                        .build();
+
+                dpGroups.add(dpGroup);
+            }
+
+            DisplayCourseComponent dpCourseComponent = DisplayCourseComponent.builder()
+                    .id(courseComponent.getId())
+                    .courseId(course.getId())
+                    .title(course.getTitle())
+                    .type(courseComponent.getType().toString())
+                    .myGroupChar(group.getGroupChar())
+                    .creditPoints(courseComponent.getCreditPoints())
+                    .groups(dpGroups)
+                    .build();
+
+            dpCourses.add(dpCourseComponent);
+        }
+
+        return dpCourses;
     }
 
 }
