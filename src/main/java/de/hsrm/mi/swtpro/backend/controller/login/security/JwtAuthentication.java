@@ -12,8 +12,11 @@ public class JwtAuthentication implements Authentication {
   
     private static final long serialVersionUID = 1L;
     private final String token;
-   
 
+    /**
+     * Constructor of JwtAuthentication
+     * @param token for jwt authentication
+     */
     public JwtAuthentication(String token) {
         this.token = token;
     }
