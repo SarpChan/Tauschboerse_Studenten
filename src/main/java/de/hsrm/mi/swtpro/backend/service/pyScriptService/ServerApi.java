@@ -78,13 +78,6 @@ public class ServerApi {
         List<Student> students = offers.stream().map((SwapOffer::getStudent)).collect(Collectors.toList());
         students.forEach(student -> {
             SwapOffer offer = offerMap.get(student.getId());
-            /*
-            Set<Group> groups = student.getGroups();
-            groups.remove(groupRepository.getOne(offer.getFromGroup().getId()));
-            groups.add(groupRepository.getOne(offer.getToGroup().getId()));
-            student.setGroups(groups);
-            studentRepository.save(student);
-             */
             Group fromGroup = offer.getFromGroup();
             Group toGroup = offer.getToGroup();
             fromGroup.removeStudent(student);
