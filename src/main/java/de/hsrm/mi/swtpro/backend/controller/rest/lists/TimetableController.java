@@ -1,7 +1,7 @@
 package de.hsrm.mi.swtpro.backend.controller.rest.lists;
 
+import de.hsrm.mi.swtpro.backend.model.*;
 import de.hsrm.mi.swtpro.backend.model.Module;
-import de.hsrm.mi.swtpro.backend.model.TimetableModule;
 import de.hsrm.mi.swtpro.backend.model.filter.Comparator;
 import de.hsrm.mi.swtpro.backend.model.filter.ComparatorType;
 import de.hsrm.mi.swtpro.backend.model.filter.Filter;

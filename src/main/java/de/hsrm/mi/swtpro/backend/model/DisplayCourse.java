@@ -25,5 +25,5 @@ public class DisplayCourse {
 
     @Singular("courseComponent")
     @Getter @Setter
-    private List<DisplayCourseComponent> courseComponents;
+    private Set<DisplayCourseComponent> courseComponents;
 }
