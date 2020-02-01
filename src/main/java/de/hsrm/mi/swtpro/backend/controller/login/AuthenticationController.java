@@ -1,20 +1,15 @@
 package de.hsrm.mi.swtpro.backend.controller.login;
 
-import java.util.Optional;
-
-import javax.persistence.EntityNotFoundException;
-
+import de.hsrm.mi.swtpro.backend.model.AuthenticationResponse;
+import de.hsrm.mi.swtpro.backend.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.ExceptionHandler;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
-import de.hsrm.mi.swtpro.backend.model.User;
+import javax.persistence.EntityNotFoundException;
+import java.util.Optional;
 import de.hsrm.mi.swtpro.backend.service.repository.UserRepository;
 
 /**
@@ -36,34 +31,36 @@ public class AuthenticationController {
      * The POST gets the username and password in the body and authenticate with the
      * username and password. If username and password are valid, a JWT token is
      * created using the authenticationService and send the token to the client.
-     * 
+     *
      * @param authenticationRequest keeps the passwort and username from the request
      * @return
      */
     @PostMapping(path = "/login", consumes = "application/json", produces = MediaType.APPLICATION_JSON_VALUE)
-    public String createAuthenticationToken(@RequestBody AuthenticationRequest authenticationRequest) {
-        String userRight = "";
+    public AuthenticationResponse createAuthenticationToken(@RequestBody AuthenticationRequest authenticationRequest) {
         Optional<User> optionalUser = userRepository.findByLoginName(authenticationRequest.getUsername());
-        if(optionalUser.isPresent()){
+        long userId = 0L;
+        String userRight = "";
+        if (optionalUser.isPresent()) {
             User user = optionalUser.get();
-            if(user.getUserRights().toString().equals("ADMIN")){
+            userId = user.getId();
+            if (user.getUserRights().toString().equals("ADMIN")) {
                 userRight = user.getUserRights().toString();
             }
         }
-        return authenticationService.generateJWTToken(authenticationRequest.getUsername(), authenticationRequest.getPassword()).getToken() + userRight;
+        String token = authenticationService.generateJWTToken(authenticationRequest.getUsername(), authenticationRequest.getPassword()).getToken();
+        return AuthenticationResponse.builder().userId(userId).userRights(userRight).token(token).build();
     }
 
     /**
      * exception handling
-     * @param ex exception 
+     *
+     * @param ex exception
      * @return
      */
     @ExceptionHandler(EntityNotFoundException.class)
     public ResponseEntity<?> handleEntityNotFoundException(EntityNotFoundException ex) {
         return new ResponseEntity<>(ex.getMessage(), HttpStatus.NOT_FOUND);
     }
-
-
 
 
 }

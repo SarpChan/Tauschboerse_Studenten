@@ -113,4 +113,101 @@ public class ServiceGenerator {
         return moduleSelectionItems;
     }
 
+
+    /**
+     * returns JSON style module table
+     * @param student
+     * @return
+     */
+    public List<DisplayCourseComponent> swapOfferCoursesFromStudent(Student student) {
+
+        List<DisplayCourseComponent> dpCourses = new ArrayList<>();
+        List<CourseComponent> attendCourses = new ArrayList<>();
+
+        for(Group group : student.getGroups()) {
+            CourseComponent courseComponent = group.getCourseComponent();
+            Course course = courseComponent.getCourse();
+
+            if (!attendCourses.contains(courseComponent)) {
+
+                if(courseComponent.getGroups().size() > 1) {
+
+                    List<DisplayGroup> dpGroups = new ArrayList<>();
+
+                    for(Group grouplist : courseComponent.getGroups()) {
+                        if(grouplist.getGroupChar() != group.getGroupChar()) {
+                            DisplayGroup dpGroup = DisplayGroup.builder()
+                                    .id(grouplist.getId())
+                                    .groupChar(grouplist.getGroupChar())
+                                    .dayOfWeek(grouplist.getDayOfWeek())
+                                    .startTime(grouplist.getStartTime())
+                                    .endTime(grouplist.getEndTime())
+                                    .lecturer(grouplist.getLecturer().getUser().getLastName())
+                                    .room(grouplist.getRoom().getNumber())
+                                    .build();
+
+                            dpGroups.add(dpGroup);
+                        }
+                    }
+
+                    DisplayCourseComponent dpCourseComponent = DisplayCourseComponent.builder()
+                            .id(courseComponent.getId())
+                            .myGroupId(group.getId())
+                            .courseId(course.getId())
+                            .title(course.getTitle())
+                            .type(courseComponent.getType().toString())
+                            .myGroupChar(group.getGroupChar())
+                            .creditPoints(courseComponent.getCreditPoints())
+                            .groups(dpGroups)
+                            .build();
+
+                    dpCourses.add(dpCourseComponent);
+
+                }
+                attendCourses.add(courseComponent);
+            }
+        }
+
+        return dpCourses;
+    }
+
+//    public List<DisplayCourseComponent> swapOfferCoursesFromStudent(Student student) {
+//        List<DisplayCourseComponent> dpCourses = new ArrayList<>();
+//
+//        for(Group group : student.getGroups()) {
+//            CourseComponent courseComponent = group.getCourseComponent();
+//            Course course = courseComponent.getCourse();
+//
+//            List<DisplayGroup> dpGroups = new ArrayList<>();
+//
+//            for(Group grouplist : courseComponent.getGroups()) {
+//                DisplayGroup dpGroup = DisplayGroup.builder()
+//                        .id(grouplist.getId())
+//                        .groupChar(grouplist.getGroupChar())
+//                        .dayOfWeek(grouplist.getDayOfWeek())
+//                        .startTime(grouplist.getStartTime())
+//                        .endTime(grouplist.getEndTime())
+//                        .lecturer(grouplist.getLecturer().getUser().getLastName())
+//                        .room(grouplist.getRoom().getNumber())
+//                        .build();
+//
+//                dpGroups.add(dpGroup);
+//            }
+//
+//            DisplayCourseComponent dpCourseComponent = DisplayCourseComponent.builder()
+//                    .id(courseComponent.getId())
+//                    .courseId(course.getId())
+//                    .title(course.getTitle())
+//                    .type(courseComponent.getType().toString())
+//                    .myGroupChar(group.getGroupChar())
+//                    .creditPoints(courseComponent.getCreditPoints())
+//                    .groups(dpGroups)
+//                    .build();
+//
+//            dpCourses.add(dpCourseComponent);
+//        }
+//
+//        return dpCourses;
+//    }
+
 }

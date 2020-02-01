@@ -64,8 +64,8 @@ public class SwapOfferService {
 
     /**
      * Core logic of swapping offers between students. Seperated from the REST endpoint and with @Transactional it will maintain ACID.
-     * Retrieving both students and their groups, remove the old group and insert a new one.
-     * After this procedure both students will be saved back to the repository.
+     * Retrieving both students and their groups, remove both students from their groups and insert them vice versa.
+     * After this procedure both groups will be saved back to the repository. And their corresponding swapoffers removed from the database.
      *
      * @param request SwapOffer from the requesting student.
      * @param found   SwapOffer found inside the database.
