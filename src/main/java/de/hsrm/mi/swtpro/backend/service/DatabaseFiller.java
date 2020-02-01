@@ -45,8 +45,8 @@ public class DatabaseFiller {
         String[] args = appArgs.getSourceArgs();
         for (int i = 0; i < args.length ; i++) {
             if(args[i].equals("python")) {
-                String script = "def onNewSwapOffer():\n  serverApi.tripleSwap([75,78,76])";
-                pythonEvaluator.runScriptForSwapOffer(script);
+                String script = "def onNewSwapOffer():\n  serverApi.tripleSwap([52,103,104])";
+                pythonEvaluator.runScriptForSwapOffer(Script.builder().userId(1).data(script.getBytes()).build());
             }
             if (args[i].equals("fillDatabase")) {
                 University uni = University.builder().name("Hochschule RheinMain").address("Kurt-Schuhmacher-Ring 18").build();
@@ -712,7 +712,7 @@ public class DatabaseFiller {
                 stu_ahlers.getGroups().add(mathe3Vgroup);
                 stu_ahlers.getGroups().add(mathe3PgroupA);
                 stu_ahlers.getGroups().add(prog3Vgroup);
-                stu_ahlers.getGroups().add(prog3PgroupB);
+                stu_ahlers.getGroups().add(prog3PgroupC);
 
                 stu_esper.setGroups(new HashSet<>());
                 stu_esper.getGroups().add(mathe2Vgroup);
@@ -730,7 +730,7 @@ public class DatabaseFiller {
                 stu_thiel.getGroups().add(mathe3Vgroup);
                 stu_thiel.getGroups().add(mathe3PgroupB);
                 stu_thiel.getGroups().add(prog3Vgroup);
-                stu_thiel.getGroups().add(prog3PgroupC);
+                stu_thiel.getGroups().add(prog3PgroupB);
 
                 mathe2Vgroup.setStudents(new HashSet<>());
                 mathe2Vgroup.getStudents().add(stu_esper);
@@ -765,10 +765,10 @@ public class DatabaseFiller {
                 prog3PgroupA.getStudents().add(stu_esper);
 
                 prog3PgroupB.setStudents(new HashSet<>());
-                prog3PgroupB.getStudents().add(stu_ahlers);
+                prog3PgroupB.getStudents().add(stu_thiel);
 
                 prog3PgroupC.setStudents(new HashSet<>());
-                prog3PgroupC.getStudents().add(stu_thiel);
+                prog3PgroupC.getStudents().add(stu_ahlers);
 
 
                 // Connect Groups <-> Room

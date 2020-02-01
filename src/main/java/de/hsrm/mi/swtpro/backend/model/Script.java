@@ -44,6 +44,7 @@ public class Script {
 
     @Lob
     @Getter
+    @Setter
     private byte[] data;
 
 }

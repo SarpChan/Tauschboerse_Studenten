@@ -7,6 +7,7 @@ import de.hsrm.mi.swtpro.backend.model.filter.Comparator;
 import de.hsrm.mi.swtpro.backend.model.filter.ComparatorType;
 import de.hsrm.mi.swtpro.backend.model.filter.Filter;
 import de.hsrm.mi.swtpro.backend.service.filterfactories.SwapOfferFilterFactory;
+import de.hsrm.mi.swtpro.backend.service.repository.GroupRepository;
 import de.hsrm.mi.swtpro.backend.service.repository.StudentRepository;
 import de.hsrm.mi.swtpro.backend.service.repository.SwapOfferRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,22 +24,25 @@ public class ServerApi {
     SwapOfferRepository swapOfferRepository;
     @Autowired
     StudentRepository studentRepository;
-
-    private SwapOffer latestSwapOffer;
-
-    public void setLatestSwapOffer(SwapOffer offer) {
-        latestSwapOffer = offer;
-    }
-
-    public SwapOffer getLatestSwapOffer() {
-        return latestSwapOffer;
-    }
+    @Autowired
+    GroupRepository groupRepository;
 
     public List<SwapOffer> getAllSwapOffers() {
         return this.swapOfferRepository.findAll();
     }
 
-    public List<SwapOffer> getAllSwapOffersWithFromGroupId(long fromGroupId) {
+    public List<SwapOffer> getAllSwapOffersFromMe(long ownId) {
+        SwapOfferFilterFactory filterFactory = SwapOfferFilterFactory.builder()
+                .filters(new Filter[]{Filter.builder()
+                        .attribute("forOwnerId")
+                        .comparator(Comparator.builder()
+                                .comparatorType(ComparatorType.EQUALS)
+                                .comparatorValue(Long.toString(ownId))
+                                .build()
+                        ).build()
+                }).build();
+        return filterFactory.filter(this.getAllSwapOffers());
+    }    public List<SwapOffer> getAllSwapOffersWithFromGroupId(long fromGroupId) {
         SwapOfferFilterFactory filterFactory = SwapOfferFilterFactory.builder()
                 .filters(new Filter[]{Filter.builder()
                         .attribute("fromGroupId")
@@ -74,10 +78,19 @@ public class ServerApi {
         List<Student> students = offers.stream().map((SwapOffer::getStudent)).collect(Collectors.toList());
         students.forEach(student -> {
             SwapOffer offer = offerMap.get(student.getId());
-            Set<Group> next = student.getGroups().stream().filter(group -> group.getId() == offer.getFromGroup().getId()).collect(Collectors.toSet());
-            next.add(offer.getToGroup());
-            student.setGroups(next);
+            /*
+            Set<Group> groups = student.getGroups();
+            groups.remove(groupRepository.getOne(offer.getFromGroup().getId()));
+            groups.add(groupRepository.getOne(offer.getToGroup().getId()));
+            student.setGroups(groups);
             studentRepository.save(student);
+             */
+            Group fromGroup = offer.getFromGroup();
+            Group toGroup = offer.getToGroup();
+            fromGroup.removeStudent(student);
+            toGroup.addStudent(student);
+            groupRepository.save(fromGroup);
+            groupRepository.save(toGroup);
         });
         offers.forEach(swapOffer -> swapOfferRepository.delete(swapOffer));
         return true;
