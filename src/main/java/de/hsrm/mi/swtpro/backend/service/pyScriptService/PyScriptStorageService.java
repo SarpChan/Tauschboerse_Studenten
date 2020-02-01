@@ -11,11 +11,19 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 
+/**
+ * service-Klasse mit allen Methode, die zum speichern und abrufen der Python-Scripts zuständig sind
+ */
 @Service
 public class PyScriptStorageService {
     @Autowired
     PythonScriptRepository pyScriptRepo;
 
+    /**
+     * storeFile überprüft den Filename, erstellt eine Script-Instanz und speichert diese in der Datenbank
+     * @param file das zu speichernde File
+     * @return gespeichertes Script-Object
+     */
     public Script storeFile(final MultipartFile file) {
         final String filename = StringUtils.cleanPath(file.getOriginalFilename());
 
@@ -33,11 +41,21 @@ public class PyScriptStorageService {
         }
     }
 
+    /**
+     * getFile findet ein PythonScript über die ID und gibt es zurück
+     * @param id des Scripts
+     * @return Script
+     * @throws FileNotFoundException falls es kein Script zur ID gibt
+     */
     public Script getFile(long id) throws FileNotFoundException {
         return pyScriptRepo.findById(id)
                 .orElseThrow(() -> new FileNotFoundException("File wurde nicht gefunden " + id));
     }
 
+    /**
+     * deleteFile findet das Pythonscript über die ID und löscht es aus der DB
+     * @param id
+     */
     public void deleteFile(long id) {
 
         if (pyScriptRepo.findById(id).isPresent())

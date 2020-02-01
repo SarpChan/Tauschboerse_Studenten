@@ -6,6 +6,9 @@ import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
+/**
+ * Repository-Klasse für Python-Scripts, die der User hochladen und speichern kann
+ */
 @Repository
 public interface PythonScriptRepository extends JpaRepository<Script, Long> {
     List<Script> findByUserId(long userId);

@@ -1,9 +1,9 @@
 package de.hsrm.mi.swtpro.backend.service;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import de.hsrm.mi.swtpro.backend.controller.login.PasswordEncoderConfigure;
 import de.hsrm.mi.swtpro.backend.model.*;
 import de.hsrm.mi.swtpro.backend.model.Module;
+import de.hsrm.mi.swtpro.backend.service.pyScriptService.PythonEvaluator;
 import de.hsrm.mi.swtpro.backend.service.repository.UniversityRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -36,11 +36,18 @@ public class DatabaseFiller {
     @Autowired
     PasswordEncoder passwordEncoder;
 
+    @Autowired
+    PythonEvaluator pythonEvaluator;
+
 
     @PostConstruct
     public void fillDatabase(){
         String[] args = appArgs.getSourceArgs();
         for (int i = 0; i < args.length ; i++) {
+            if(args[i].equals("python")) {
+                String script = "def onNewSwapOffer():\n  serverApi.tripleSwap([52,103,104])";
+                pythonEvaluator.runScriptForSwapOffer(Script.builder().userId(1).data(script.getBytes()).build());
+            }
             if (args[i].equals("fillDatabase")) {
                 University uni = University.builder().name("Hochschule RheinMain").address("Kurt-Schuhmacher-Ring 18").build();
                 //entityManager.persist(uni);
@@ -360,12 +367,12 @@ public class DatabaseFiller {
 
                 SwapOffer thielMathe3P_B_to_A = SwapOffer.builder().student(stu_thiel).timestamp(new Timestamp(System.currentTimeMillis())).fromGroup(mathe3PgroupB).toGroup(mathe3PgroupA).build();
                 //entityManager.persist(thielMathe3P_B_to_A);
-                SwapOffer thielProg3P_B_to_A = SwapOffer.builder().student(stu_thiel).timestamp(new Timestamp(System.currentTimeMillis())).fromGroup(prog3PgroupB).toGroup(prog3PgroupA).build();
+                SwapOffer thielProg3P_B_to_C = SwapOffer.builder().student(stu_thiel).timestamp(new Timestamp(System.currentTimeMillis())).fromGroup(prog3PgroupB).toGroup(prog3PgroupC).build();
                 //entityManager.persist(thielProg3P_B_to_A);
 
                 SwapOffer ahlersMathe3P_A_to_B = SwapOffer.builder().student(stu_ahlers).timestamp(new Timestamp(System.currentTimeMillis())).fromGroup(mathe3PgroupA).toGroup(mathe3PgroupB).build();
                 //entityManager.persist(ahlersMathe3P_A_to_B);
-                SwapOffer ahlersProg3P_B_to_A = SwapOffer.builder().student(stu_ahlers).timestamp(new Timestamp(System.currentTimeMillis())).fromGroup(prog3PgroupB).toGroup(prog3PgroupA).build();
+                SwapOffer ahlersProg3P_C_to_A = SwapOffer.builder().student(stu_ahlers).timestamp(new Timestamp(System.currentTimeMillis())).fromGroup(prog3PgroupC).toGroup(prog3PgroupA).build();
                 //entityManager.persist(ahlersProg3P_B_to_A);
 
 
@@ -705,7 +712,7 @@ public class DatabaseFiller {
                 stu_ahlers.getGroups().add(mathe3Vgroup);
                 stu_ahlers.getGroups().add(mathe3PgroupA);
                 stu_ahlers.getGroups().add(prog3Vgroup);
-                stu_ahlers.getGroups().add(prog3PgroupB);
+                stu_ahlers.getGroups().add(prog3PgroupC);
 
                 stu_esper.setGroups(new HashSet<>());
                 stu_esper.getGroups().add(mathe2Vgroup);
@@ -758,8 +765,10 @@ public class DatabaseFiller {
                 prog3PgroupA.getStudents().add(stu_esper);
 
                 prog3PgroupB.setStudents(new HashSet<>());
-                prog3PgroupB.getStudents().add(stu_ahlers);
                 prog3PgroupB.getStudents().add(stu_thiel);
+
+                prog3PgroupC.setStudents(new HashSet<>());
+                prog3PgroupC.getStudents().add(stu_ahlers);
 
 
                 // Connect Groups <-> Room
@@ -840,11 +849,11 @@ public class DatabaseFiller {
 
                 stu_thiel.setSwapOffers(new HashSet<>());
                 stu_thiel.getSwapOffers().add(thielMathe3P_B_to_A);
-                stu_thiel.getSwapOffers().add(thielProg3P_B_to_A);
+                stu_thiel.getSwapOffers().add(thielProg3P_B_to_C);
 
                 stu_ahlers.setSwapOffers(new HashSet<>());
                 stu_ahlers.getSwapOffers().add(ahlersMathe3P_A_to_B);
-                stu_ahlers.getSwapOffers().add(ahlersProg3P_B_to_A);
+                stu_ahlers.getSwapOffers().add(ahlersProg3P_C_to_A);
 
 
                 mathe3PgroupA.setSwapOffers(new HashSet<>());
@@ -852,7 +861,7 @@ public class DatabaseFiller {
 
                 mathe3PgroupA.setSwapRequests(new HashSet<>());
                 mathe3PgroupA.getSwapRequests().add(esperMathe3P_B_to_A);
-                mathe3PgroupA.getSwapRequests().add(thielProg3P_B_to_A);
+                mathe3PgroupA.getSwapRequests().add(thielMathe3P_B_to_A);
 
 
                 mathe3PgroupB.setSwapOffers(new HashSet<>());
@@ -867,16 +876,20 @@ public class DatabaseFiller {
                 prog3PgroupA.getSwapOffers().add(esperProg3P_A_to_B);
 
                 prog3PgroupA.setSwapRequests(new HashSet<>());
-                prog3PgroupA.getSwapRequests().add(thielProg3P_B_to_A);
-                prog3PgroupA.getSwapRequests().add(ahlersProg3P_B_to_A);
-
+                prog3PgroupA.getSwapRequests().add(ahlersProg3P_C_to_A);
 
                 prog3PgroupB.setSwapOffers(new HashSet<>());
-                prog3PgroupB.getSwapOffers().add(ahlersProg3P_B_to_A);
-                prog3PgroupB.getSwapOffers().add(thielProg3P_B_to_A);
+                prog3PgroupB.getSwapOffers().add(thielProg3P_B_to_C);
 
                 prog3PgroupB.setSwapRequests(new HashSet<>());
                 prog3PgroupB.getSwapRequests().add(esperProg3P_A_to_B);
+
+                prog3PgroupC.setSwapOffers(new HashSet<>());
+                prog3PgroupC.getSwapOffers().add(ahlersProg3P_C_to_A);
+
+                prog3PgroupC.setSwapRequests(new HashSet<>());
+                prog3PgroupC.getSwapRequests().add(thielProg3P_B_to_C);
+
 
                 universityRepository.saveAndFlush(uni);
             }

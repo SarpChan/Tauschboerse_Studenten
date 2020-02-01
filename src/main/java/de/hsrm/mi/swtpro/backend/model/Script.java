@@ -9,6 +9,11 @@ import javax.persistence.Id;
 import javax.persistence.Lob;
 import javax.validation.constraints.NotNull;
 
+/**
+ * Entity-Klasse für die Python-Scripts
+ * Ein Script hat eine eigene ID, verwaltet die ID vom User, der das Script erstellt/hochlädt,
+ * einen fileName, einen fileType, und wird in einem byte-Array gespeichert
+ */
 @Entity
 @Builder
 @NoArgsConstructor
@@ -39,6 +44,7 @@ public class Script {
 
     @Lob
     @Getter
+    @Setter
     private byte[] data;
 
 }

@@ -65,7 +65,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .authorizeRequests().antMatchers("/authentication/**", "/h2-console/**", "/actuator/**", "/test/**").permitAll()
                 .antMatchers().hasAuthority("USER")
                 .antMatchers("rest/building/**","rest/campus/**", "rest/coursecomponents/**", "rest/curriculum/**", "rest/examregulation/**", "rest/fieldofstudy/**" ,
-                "rest/group/**", "rest/lecture/**", "rest/module/**", "rest/modulelnCurriculum/**", "rest/pyScribt/**", "rest/room/**", "rest/studentAttendsCourse/**", "rest/student/**",
+                "rest/group/**", "rest/lecture/**", "rest/module/**", "rest/modulelnCurriculum/**", "rest/pyScript/**", "rest/room/**", "rest/studentAttendsCourse/**", "rest/student/**",
                 "rest/studentPassedExam/**", "rest/studentPrioritzesGroup/**", "rest/studyprogram/**",
                 "rest/swapOffer/**", "rest/term/**", "rest/university/**", "rest/user/**").hasAuthority("ADMIN")
                 .anyRequest().authenticated().and()
