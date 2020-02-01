@@ -93,10 +93,14 @@ public class SwapOfferService {
 
         logger.warn("REMOVE: " + found.getId());
 
-        if (swapOfferRepository.findById(found.getId()).isPresent())
+        if (swapOfferRepository.findById(found.getId()).isPresent()) {
+            messageSender.sendSwapOfferMessage(found, "delete");
             swapOfferRepository.delete(found);
-        if (swapOfferRepository.findById(request.getId()).isPresent())
+        }   
+        if (swapOfferRepository.findById(request.getId()).isPresent()) {
+            messageSender.sendSwapOfferMessage(found, "delete");
             swapOfferRepository.delete(request);
+        }
     }
 }
 
