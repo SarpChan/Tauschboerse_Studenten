@@ -74,7 +74,40 @@ public class TimetableController {
 
     /**
      * The methode handles the POST request
-     * to get the modules of a timetable for a specific term
+     * to get the modules of a timetable for a given exam regulation and a specific term
+     * @param examRegulation
+     * @return list of timetable modules
+     */
+
+    @GetMapping(path = "/term_timetable/{examRegulation}/{term}", consumes = "application/json", produces = MediaType.APPLICATION_JSON_VALUE)
+    public List<TimetableModule> getModulesforExamAndTerm(@PathVariable int examRegulation, @PathVariable int term) {
+        List<Module> allModules = moduleRepository.findAll();
+        Comparator comparatorExam = Comparator.builder()
+        .comparatorType(ComparatorType.EQUALS)
+        .comparatorValue(examRegulation)
+        .build();
+        Filter filterExam = Filter.builder()
+        .attribute("examRegulationId")
+        .comparator(comparatorExam)
+        .build();
+        Comparator comparatorTerm = Comparator.builder()
+        .comparatorType(ComparatorType.EQUALS)
+        .comparatorValue(term)
+        .build();
+        Filter filterTerm = Filter.builder()
+        .attribute("term")
+        .comparator(comparatorTerm)
+        .build();
+        Filter [] filters = {filterExam, filterTerm};
+        ModuleFilterFactory filterFactory = ModuleFilterFactory.builder().filters(filters).build();
+        allModules = filterFactory.filter(allModules);
+
+        return serviceGenerator.timetableModuleFromModules(allModules);
+    }
+
+    /**
+     * The methode handles the POST request
+     * to get the modules of a timetable for a specific term regardless of the exam regulation
      * @param
      * @return list of timetable modules
      */
