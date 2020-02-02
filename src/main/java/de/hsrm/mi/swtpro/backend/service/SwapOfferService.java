@@ -98,7 +98,7 @@ public class SwapOfferService {
             swapOfferRepository.delete(found);
         }   
         if (swapOfferRepository.findById(request.getId()).isPresent()) {
-            messageSender.sendSwapOfferMessage(found, "delete");
+            messageSender.sendSwapOfferMessage(request, "delete");
             swapOfferRepository.delete(request);
         }
     }
