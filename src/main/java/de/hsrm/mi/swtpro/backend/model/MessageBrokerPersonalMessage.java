@@ -3,11 +3,12 @@ package de.hsrm.mi.swtpro.backend.model;
 
 import java.sql.Timestamp;
 
-public class MessageBrokerMessage{
+public class MessageBrokerPersonalMessage{
     private long timestamp;
     private String message;
+    private long userid;
 
-    public MessageBrokerMessage(String courseTitle, char fromGroupChar, char toGroupChar){
+    public MessageBrokerPersonalMessage(String courseTitle, char fromGroupChar, char toGroupChar, long userid){
         this.timestamp = new Timestamp(System.currentTimeMillis()).getTime();
         StringBuilder sb = new StringBuilder();
         sb.append("Du hast erfolgreich von der Gruppe ")
@@ -18,15 +19,7 @@ public class MessageBrokerMessage{
         .append(toGroupChar)
         .append(" getauscht.");
         this.message = sb.toString();
-    }
-
-    public MessageBrokerMessage(String courseTitle){
-        this.timestamp = new Timestamp(System.currentTimeMillis()).getTime();
-        StringBuilder sb = new StringBuilder();
-        sb.append("Das Modul ")
-        .append(courseTitle)
-        .append(" wurde verändert");
-        this.message = sb.toString();
+        this.userid = userid;
     }
 
     public long getTimestamp(){
@@ -35,6 +28,10 @@ public class MessageBrokerMessage{
 
     public String getMessage(){
         return this.message;
+    }
+
+    public long getUserid(){
+        return this.userid;
     }
 
 

@@ -3,6 +3,7 @@ package de.hsrm.mi.swtpro.backend.controller.rest.logic;
 
 import de.hsrm.mi.swtpro.backend.controller.exceptions.GroupNotFoundException;
 import de.hsrm.mi.swtpro.backend.controller.exceptions.StudentNotFoundException;
+import de.hsrm.mi.swtpro.backend.controller.exceptions.SwapOfferAlreadyExistsException;
 import de.hsrm.mi.swtpro.backend.controller.exceptions.SwapOfferNotFoundException;
 import de.hsrm.mi.swtpro.backend.controller.login.security.TokenService;
 import de.hsrm.mi.swtpro.backend.controller.rest.crud.GroupCrudController;
@@ -12,6 +13,7 @@ import de.hsrm.mi.swtpro.backend.model.Group;
 import de.hsrm.mi.swtpro.backend.model.Script;
 import de.hsrm.mi.swtpro.backend.model.Student;
 import de.hsrm.mi.swtpro.backend.model.SwapOffer;
+import de.hsrm.mi.swtpro.backend.model.SwapOfferFront;
 import de.hsrm.mi.swtpro.backend.model.requestModel.SwapOfferRequest;
 import de.hsrm.mi.swtpro.backend.service.SwapOfferService;
 import de.hsrm.mi.swtpro.backend.service.helper.ServiceGetter;
@@ -26,6 +28,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
@@ -38,8 +41,8 @@ import java.util.Optional;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 /**
- * REST endpoint for recieving swapoffers and inserting them with several conditional checks.
- * Logic is partially separated in SwapOfferService.
+ * REST endpoint for recieving swapoffers and inserting them with several
+ * conditional checks. Logic is partially separated in SwapOfferService.
  */
 @RestController
 @RequestMapping("/rest")
@@ -67,8 +70,8 @@ public class SwapOfferInterface {
     List<SwapOffer> swapOfferList = new ArrayList<SwapOffer>();
 
     /**
-     * Method for accepting existing swapoffers filtered by id.
-     * Depends on SwapOfferService swap method.
+     * Method for accepting existing swapoffers filtered by id. Depends on
+     * SwapOfferService swap method.
      *
      * @param request
      * @param id      from SwapOffer's autogernerated DB id
@@ -84,11 +87,8 @@ public class SwapOfferInterface {
             offer = swapOfferRepository.findById(id).get();
 
         if (offer != null) {
-            matchingOffer = SwapOffer.builder().timestamp(Timestamp.from(Instant.now()))
-                    .fromGroup(offer.getToGroup())
-                    .student(serviceGetter.getStudentFromUsername(loginname))
-                    .toGroup(offer.getFromGroup())
-                    .build();
+            matchingOffer = SwapOffer.builder().timestamp(Timestamp.from(Instant.now())).fromGroup(offer.getToGroup())
+                    .student(serviceGetter.getStudentFromUsername(loginname)).toGroup(offer.getFromGroup()).build();
             swapOfferService.swap(offer, matchingOffer);
             return true;
         }
@@ -96,77 +96,88 @@ public class SwapOfferInterface {
     }
 
     /**
-     * Wiping all remaining swapoffers selected by loginname and fromGroupID. Keep's the database clean and prevents
-     * swaps with invalidated offers.
+     * Wiping all remaining swapoffers selected by loginname and fromGroupID. Keep's
+     * the database clean and prevents swaps with invalidated offers.
      *
      * @param offer
      */
     @Transactional
     void wipeInvalidatedSwapOffers(SwapOffer offer) {
-        logger.warn("WIPE OLD OFFERS WITH FROMGROUP ID: " + offer.getFromGroup().getId() + " STUDENT: " + offer.getStudent().getMail());
+        logger.warn("WIPE OLD OFFERS WITH FROMGROUP ID: " + offer.getFromGroup().getId() + " STUDENT: "
+                + offer.getStudent().getMail());
         swapOfferRepository.findByStudent(offer.getStudent()).stream()
-                .filter(e -> e.getFromGroup() == offer.getFromGroup())
-                .forEach(e -> {
+                .filter(e -> e.getFromGroup() == offer.getFromGroup()).forEach(e -> {
                     swapOfferRepository.delete(e);
                     messageSender.sendSwapOfferMessage(e, "delete");
                 });
     }
 
     /**
-     * Iterates over list of groups to change, checks if recent iterations already created a match if not then create a SwapOffer for each Element
-     * e.g. A->B , A->C , A->D ,....
-     * Handles cases like :
-     * - already existing swapoffers
-     * - multiple target groups
-     * - matching correlating groups
-     * - invalidating offers identical to start group
-     * - wiping remaining orphants
+     * Iterates over list of groups to change, checks if recent iterations already
+     * created a match if not then create a SwapOffer for each Element e.g. A->B ,
+     * A->C , A->D ,.... Handles cases like : - already existing swapoffers -
+     * multiple target groups - matching correlating groups - invalidating offers
+     * identical to start group - wiping remaining orphants
      *
      * @param swapOfferRequest
      * @return boolean
      */
 
     @PostMapping(path = "/swapoffer/insert", consumes = "application/json", produces = MediaType.APPLICATION_JSON_VALUE)
-    public boolean checkAndInsertSwapOffer(HttpServletRequest request, @RequestBody SwapOfferRequest swapOfferRequest) {
+    public SwapOfferFront checkAndInsertSwapOffer(HttpServletRequest request,
+            @RequestBody SwapOfferRequest swapOfferRequest) {
         String username = tokenService.getUsernameFromRequest(request);
         Student student = serviceGetter.getStudentFromUsername(username);
         for (long swapOfferToGroupID : swapOfferRequest.getToGroupsID()) {
             if (swapOfferToGroupID != swapOfferRequest.getFromGroupsID()) {
                 AtomicBoolean swapOfferExists = new AtomicBoolean(false);
                 SwapOffer offer = SwapOffer.builder().timestamp(Timestamp.from(Instant.now()))
-                        .fromGroup(groupRepository.findById(swapOfferRequest.getFromGroupsID()).get())
-                        .student(student)
-                        .toGroup(groupRepository.findById(swapOfferToGroupID).get())
-                        .build();
+                        .fromGroup(groupRepository.findById(swapOfferRequest.getFromGroupsID()).get()).student(student)
+                        .toGroup(groupRepository.findById(swapOfferToGroupID).get()).build();
 
                 swapOfferRepository.findByStudent(student).forEach(e -> {
                     if (e.getFromGroup() == offer.getFromGroup() && e.getToGroup() == offer.getToGroup()) {
                         swapOfferExists.set(true);
                     }
-
                 });
                 if (swapOfferService.isMatched(offer)) {
                     logger.warn("MATCH FOUND");
                     wipeInvalidatedSwapOffers(offer);
-                    return true;
+                    return null;
                 } else {
                     if (swapOfferExists.get()) {
                         logger.warn("Offer already Exists");
+                        throw new SwapOfferAlreadyExistsException("Swap Offer already exists");
                     } else {
                         logger.warn("Insert new Swapoffer ID: " + offer.getId());
                         swapOfferList.add(offer);
-                        swapOfferRepository.save(offer);
+                        SwapOffer savedOffer = swapOfferRepository.save(offer);
+
                         messageSender.sendSwapOfferMessage(offer, "add");
 
                         List<Script> matchingScripts = scriptManager.loadAllMatchingScriptsFor("def onNewSwapOffer():");
                         matchingScripts.forEach(s -> pythonEvaluator.runScriptForSwapOffer(s));
+
+                        return SwapOfferFront.builder()
+                        .Id(savedOffer.getId())
+                        .fromGroup(savedOffer.getFromGroup().getGroupChar())
+                        .toGroup(savedOffer.getToGroup().getGroupChar())
+                        .courseName(savedOffer.getToGroup().getCourseComponent().getCourse().getTitle())
+                        .courseType(savedOffer.getToGroup().getCourseComponent().getType().toString())
+                        .toStartTime(savedOffer.getToGroup().getStartTime())
+                        .toEndTime(savedOffer.getToGroup().getEndTime())
+                        .fromStartTime(savedOffer.getFromGroup().getStartTime())
+                        .fromEndTime(savedOffer.getFromGroup().getEndTime())
+                        .fromDay(savedOffer.getFromGroup().getDayOfWeek())
+                        .toDay(savedOffer.getToGroup().getDayOfWeek())
+                        .build();
                     }
                 }
             } else {
                 logger.warn("You cant swap inside one group :(");
             }
         }
-        return false;
+        return null;
     }
 
     Student getStudent(long id) throws StudentNotFoundException {
@@ -194,8 +205,7 @@ public class SwapOfferInterface {
      * @throws SwapOfferNotFoundException
      */
     SwapOffer getSwapOffer(Student student, Group toGroup) throws SwapOfferNotFoundException {
-        Optional<SwapOffer> offer = swapOfferRepository.findByStudent(student)
-                .stream()
+        Optional<SwapOffer> offer = swapOfferRepository.findByStudent(student).stream()
                 .filter(e -> e.getToGroup().equals(toGroup)).findFirst();
         if (offer.isPresent()) {
             return offer.get();
@@ -206,12 +216,12 @@ public class SwapOfferInterface {
 
     /**
      * Checks if a offer already exists in repository
+     * 
      * @param offer to be checked
      * @return true if swap offer already exists
      */
     boolean swapOfferExists(SwapOffer offer) {
-        return swapOfferRepository.findByStudent(offer.getStudent())
-                .stream()
+        return swapOfferRepository.findByStudent(offer.getStudent()).stream()
                 .filter(e -> e.getFromGroup().equals(offer.getFromGroup()))
                 .anyMatch(e -> e.getToGroup().equals(offer.getToGroup()));
     }
