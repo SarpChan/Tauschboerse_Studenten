@@ -38,6 +38,7 @@ public class ServerApi {
 
     /**
      * Gets every persisted swap offer
+     *
      * @return list of swap offers
      */
     public List<SwapOffer> getAllSwapOffers() {
@@ -46,6 +47,7 @@ public class ServerApi {
 
     /**
      * Gets every swap offer with owner id equalling ownId parameter
+     *
      * @param ownId matching id
      * @return list of filtered swap offers
      */
@@ -64,6 +66,7 @@ public class ServerApi {
 
     /**
      * Gets every swap offer based on fromGroupId matching
+     *
      * @param fromGroupId matching id
      * @return list of filtered swap offers
      */
@@ -82,6 +85,7 @@ public class ServerApi {
 
     /**
      * Gets every swap offer based on toGroupId matching
+     *
      * @param toGroupId matching id
      * @return list of filtered swap offers
      */
@@ -101,6 +105,7 @@ public class ServerApi {
     /**
      * Swaps 3 swap offers
      * Updates list of students in the equivalent groups
+     *
      * @param offerIds ids of matching swap offers
      * @return true if swap was successful
      */
@@ -120,7 +125,7 @@ public class ServerApi {
             toGroup.addStudent(student);
             groupRepository.save(fromGroup);
             groupRepository.save(toGroup);
-            messageSender.sendPersonalSwapOfferMessage(offer, student.getId());
+            messageSender.sendPersonalSwapOfferMessage(offer, student.getUser().getId());
 
         });
         offers.forEach(swapOffer -> {
@@ -131,7 +136,7 @@ public class ServerApi {
             swapOfferRepository.findByStudentAndFromGroup(swapOffer.getStudent(), swapOffer.getFromGroup()).forEach(
                     swapOffer1 -> {
                         swapOfferRepository.delete(swapOffer1);
-                        messageSender.sendSwapOfferMessage(swapOffer, "delete");
+                        messageSender.sendSwapOfferMessage(swapOffer1, "delete");
                     }
             );
         });
