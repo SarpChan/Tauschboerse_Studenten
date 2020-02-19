@@ -1,7 +1,7 @@
 # Tauschboerse_Studenten
 
 Projekt für SWT-Projekt im 5. Semester zum Austesten der Scrumarbeitsweise. 
-Meine Rolle war dabeik die des Product Owners
+Meine Rolle war dabei die des Product Owners
 
 Tauschbörse für Studenten - Server
 
